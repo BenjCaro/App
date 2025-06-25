@@ -2,7 +2,9 @@
     "name": "carbe/app",
     "autoload": {
         "psr-4": {
-            "Carbe\\App\\": "src/"
+            "Carbe\\App\\": "src/",
+            "Carbe\\App\\config\\": "config/"
+
         }
     },
     "authors": [
