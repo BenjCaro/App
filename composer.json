@@ -1,0 +1,15 @@
+{
+    "name": "carbe/app",
+    "autoload": {
+        "psr-4": {
+            "Carbe\\App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "BenjCaro",
+            "email": "carbenjamin@gmail.com"
+        }
+    ],
+    "require": {}
+}
