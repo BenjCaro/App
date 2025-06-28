@@ -13,5 +13,10 @@
             "email": "carbenjamin@gmail.com"
         }
     ],
-    "require": {}
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    },
+    "scripts": {
+    "test": "phpunit"
+}
 }
