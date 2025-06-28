@@ -22,16 +22,16 @@ class BaseModel {
     }
 
     public function findAll() {
-         $stmt = $this->pdo->query("SELECT * FROM {$this->table}");
-         $stmt->execute();
-         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        $stmt = $this->pdo->query("SELECT * FROM {$this->table}");
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 
     public function insert(array $data) {
         $array = array_keys($data);
         $columns = implode( ", " , $array);
         $values = ':' . implode(', :', $array);
-        
+
         $stmt = $this->pdo->prepare("INSERT INTO {$this->table} ($columns) VALUES ($values)"); 
         $stmt->execute($data);
 
