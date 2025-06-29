@@ -8,11 +8,11 @@ class RecipeModel extends BaseModel {
 
     private string $title;
     private string $slug;
-    private int $UserId;
-    private int $CategoryId;
+    private int $id_user;
+    private int $id_category;
     private string $createdAt;
     private int $duration;
-    private string $description;
+    private string $content;
 
     public function __construct(PDO $pdo, array $data = [])
     {
@@ -53,11 +53,11 @@ class RecipeModel extends BaseModel {
   }
 
   public function getDescription() :string {
-     return $this->description;
+     return $this->content;
   }
 
-  public function setDescription(string $description) :void {
-    $this->description = $description;
+  public function setDescription(string $content) :void {
+    $this->content = $content;
   }
 
 

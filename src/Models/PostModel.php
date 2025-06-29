@@ -9,8 +9,8 @@ class PostModel extends BaseModel {
 
    private string $title;
    private string $content;
-   private int $UserId;
-   private int $RecipeId;
+   private int $id_user;
+   private int $id_recipe;
    private $createdAt;
    private bool $isApproved = false;
 
