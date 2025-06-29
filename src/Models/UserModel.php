@@ -25,10 +25,7 @@ class UserModel extends BaseModel {
 
     }
 
-
-  
-  
-    public function getName() :string {
+  public function getName() :string {
     return $this->name;
   }
   

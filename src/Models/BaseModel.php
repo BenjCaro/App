@@ -14,13 +14,14 @@ class BaseModel {
         $this->pdo = $pdo;
     }
 
+
       public function getId() : int {
         return $this->id;
     }
 
     public function findById(int $id) {
         $stmt = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE id = :id");
-        $stmt->execute(['id' => $id]);
+        $stmt->execute(['id' => $this->getId()]);
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
 
     }
@@ -42,13 +43,14 @@ class BaseModel {
     }   
 
     public function hydrate(array $data): void {
-    foreach ($data as $key => $value) {
-        $method = 'set' . ucfirst($key);
-        if (method_exists($this, $method)) {
-            $this->$method($value);
+
+        foreach ($data as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
         }
     }
-}
 
     public function delete() : bool { // supprimer une donnée (ex: un utilisateur, une recette, un commentaire, etc...)
 
