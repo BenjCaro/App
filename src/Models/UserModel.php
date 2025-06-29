@@ -68,7 +68,7 @@ class UserModel extends BaseModel {
   public function save() :bool { // creation d'utilisateur 
 
       $stmt = $this->pdo->prepare("INSERT INTO users (name, firstname, email, password, role) 
-      AS (:name, :firstname, :email, :password, :role)");
+      VALUES (:name, :firstname, :email, :password, :role)");
       
       return $stmt->execute([
         'name' => $this->getName(),
@@ -84,7 +84,7 @@ class UserModel extends BaseModel {
       $stmt = $this->pdo->prepare("UPDATE users SET name = :name, firstname = :firstname, email = :email, password = :password WHERE id = :id");
     
       return $stmt->execute([
-        'name' => $this->getName(),
+          'name' => $this->getName(),
           'firstname' => $this->getFirstname(),
           'email' => $this->getEmail(),
           'password' => $this->getPassword(),
