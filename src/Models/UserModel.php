@@ -6,14 +6,14 @@ use PDO;
 
 class UserModel extends BaseModel {
    
-   protected string $table = 'users';
+  protected string $table = 'users';
 
-   private string $name;
-   private string $firstname;
-   private string $email;
-   private string $password;
-   private string $role;
-   private string $createdAt; 
+  private string $name;
+  private string $firstname;
+  private string $email;
+  private string $password;
+  private string $role;
+  private string $createdAt; 
 
   public function __construct(PDO $pdo, array $data = []) {
         
