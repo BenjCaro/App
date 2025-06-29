@@ -13,11 +13,22 @@ class UserModel extends BaseModel {
    private string $email;
    private string $password;
    private string $role;
-   private string $createAt; 
+   private string $createdAt; 
 
-  // mettre en place un construct et hydrate() (à dev dans le BaseModel)
+  public function __construct(PDO $pdo, array $data = []) {
+        
+      parent::__construct($pdo);
+       
+      if (!empty($data)) {
+            $this->hydrate($data);
+      }
 
-  public function getName() :string {
+    }
+
+
+  
+  
+    public function getName() :string {
     return $this->name;
   }
   
@@ -41,15 +52,51 @@ class UserModel extends BaseModel {
     $this->email = $email;
   }
 
+  public function getPassword() :string {
+   return $this->password;
+  }
+
   public function setPassword(string $password) :void {
     $this->password = password_hash($password, PASSWORD_DEFAULT); 
   }
 
-  public function getRole(string $role) :string {
+  public function getRole() :string {
     return $this->role;
   }
 
-  public function getCreateAt() :string {
-    return $this->createAt;
+  public function getCreatedAt() :string {
+    return $this->createdAt;
   }
+
+  public function save() :bool { // creation d'utilisateur 
+
+      $stmt = $this->pdo->prepare("INSERT INTO users (name, firstname, email, password, role) 
+      AS (:name, :firstname, :email, :password, :role)");
+      
+      return $stmt->execute([
+        'name' => $this->getName(),
+        'firstname' => $this->getFirstname(),
+        'email' => $this->getEmail(),
+        'password' => $this->getPassword(),
+        'role' => $this->getRole()
+      ]);
+  }
+
+  public function update() : bool { // modif utilisateur
+
+      $stmt = $this->pdo->prepare("UPDATE users SET name = :name, firstname = :firstname, email = :email, password = :password WHERE id = :id");
+    
+      return $stmt->execute([
+        'name' => $this->getName(),
+          'firstname' => $this->getFirstname(),
+          'email' => $this->getEmail(),
+          'password' => $this->getPassword(),
+          'role' => $this->getRole(),
+          'id' => $this->getId()
+      ]);
+      
+  }
+
+
+
 }
