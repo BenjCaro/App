@@ -4,12 +4,12 @@ namespace Carbe\App\Models;
 use Carbe\App\Models\BaseModel;
 use PDO;
 
-class CategoryModel extends BaseModel {
-    
-    protected string $table = "categories";
+class IngredientModel extends BaseModel {
+
+    protected string $table = 'ingredients';
 
     private string $name;
-    private string $slug;
+    private string $type;
 
     public function __construct(PDO $pdo, array $data = []) {
         
@@ -21,41 +21,41 @@ class CategoryModel extends BaseModel {
 
     }
 
-      public function getName() :string {
+    public function getName() :string {
         return $this->name;
   }
   
-  public function setName(string $name) :void  {
+    public function setName(string $name) :void  {
        $this->name = $name;
   }
 
-  public function getSlug() : string {
-     return $this->slug;
+  public function getType() :string {
+        return $this->name;
   }
-
-  public function setSlug(string $slug) : void {
-     $this->slug = $slug;
+  
+  public function setType(string $name) :void  {
+       $this->name = $name;
   }
 
   public function save() :bool {
-     $stmt = $this->pdo->prepare("INSERT INTO categories (name, slug)
-     VALUES (:name, :slug)");
+     $stmt = $this->pdo->prepare("INSERT INTO categories (name, type)
+     VALUES (:name, :type)");
      
      return $stmt->execute([
 
         'name' => $this->getName(),
-        'slug' => $this->getSlug()
+        'type' => $this->getType()
      ]);
   }
 
   public function update() :bool {
-    $stmt = $this->pdo->prepare("UPDATE categories SET name = :name, slug = :slug WHERE id= :id");
+    $stmt = $this->pdo->prepare("UPDATE categories SET name = :name, type = :type WHERE id= :id");
 
     return $stmt->execute([
 
         'id' => $this->getId(),
         'name' => $this->getName(),
-        'slug' => $this->getSlug()
+        'type' => $this->getType()
 
     ]);
   }
