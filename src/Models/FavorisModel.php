@@ -32,10 +32,15 @@ class FavorisModel extends BaseModel {
 
     }
 
+    public function removeToFavoris(int $idUser, int $idRecipe) :bool {
+        
+        $stmt = $this->pdo->prepare("DELETE FROM favoris WHERE id_user = :id_user AND id_recipe = :id_recipe");
+        return $stmt->execute([
 
-
+            'id_user' => $idUser,
+            'id_recipe' => $idRecipe  
+        ]);
+    }
 
 }
 
-// INSERT INTO `favoris` (`id_user`, `id_recipe`) VALUES ('1', '1');
-// DELETE FROM favoris WHERE `favoris`.`id_user` = 1 AND `favoris`.`id_recipe` = 1

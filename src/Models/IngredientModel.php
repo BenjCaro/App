@@ -33,8 +33,8 @@ class IngredientModel extends BaseModel {
         return $this->name;
   }
   
-  public function setType(string $name) :void  {
-       $this->name = $name;
+  public function setType(string $type) :void  {
+       $this->type = $type;
   }
 
   public function save() :bool {
