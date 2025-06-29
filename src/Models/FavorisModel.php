@@ -1,0 +1,41 @@
+<?php 
+
+namespace Carbe\App\Models;
+use Carbe\App\Models\BaseModel;
+use PDO;
+
+class FavorisModel extends BaseModel {
+
+    protected string $table = "favoris";
+
+    private int $idUser; 
+    private int $idRecipe;
+
+
+    public function __construct(PDO $pdo, array $data = [])
+    {
+        parent::__construct($pdo);
+       
+      if (!empty($data)) {
+            $this->hydrate($data);
+      }
+    }
+
+    public function addToFavoris(int $idUser, int $idRecipe) :bool {
+
+        $stmt = $this->pdo->prepare("INSERT INTO favoris (id_user, id_recipe) VALUES (:id_user, :id_recipe)");
+        return $stmt->execute([
+
+            'id_user' => $idUser,
+            'id_recipe' => $idRecipe  
+        ]);
+
+    }
+
+
+
+
+}
+
+// INSERT INTO `favoris` (`id_user`, `id_recipe`) VALUES ('1', '1');
+// DELETE FROM favoris WHERE `favoris`.`id_user` = 1 AND `favoris`.`id_recipe` = 1

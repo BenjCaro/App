@@ -10,8 +10,8 @@ class RecipeModel extends BaseModel {
 
     private string $title;
     private string $slug;
-    private int $id_user;
-    private int $id_category;
+    private int $idUser;
+    private int $idCategory;
     private string $createdAt;
     private int $duration;
     private string $content;

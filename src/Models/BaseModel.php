@@ -45,7 +45,8 @@ class BaseModel {
     public function hydrate(array $data): void {
 
         foreach ($data as $key => $value) {
-            $method = 'set' . ucfirst($key);
+            $camelCaseKey = lcfirst(str_replace('_', '', ucwords($key, '_')));
+            $method = 'set' . ucfirst($camelCaseKey);
             if (method_exists($this, $method)) {
                 $this->$method($value);
             }
