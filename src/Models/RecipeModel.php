@@ -6,6 +6,8 @@ use PDO;
 
 class RecipeModel extends BaseModel {
 
+   protected string $table = 'recipes';
+
     private string $title;
     private string $slug;
     private int $id_user;
