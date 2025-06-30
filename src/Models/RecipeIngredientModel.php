@@ -2,6 +2,7 @@
 
 namespace Carbe\App\Models;
 use Carbe\App\Models\BaseModel;
+use Carbe\App\Models\IngredientModel;
 use PDO;
 
 class RecipeIngredientModel extends BaseModel {
@@ -10,6 +11,9 @@ class RecipeIngredientModel extends BaseModel {
     
     private int $quantity;
     private string $unit;
+    private IngredientModel $ingredient;
+
+
 
 
     public function __construct(PDO $pdo, array $data = [])
@@ -20,6 +24,16 @@ class RecipeIngredientModel extends BaseModel {
             $this->hydrate($data);
       }
     }
+
+    public function setIngredient(IngredientModel $ingredient): void {
+    $this->ingredient = $ingredient;
+    
+    }
+
+
+public function getIngredient(): IngredientModel {
+    return $this->ingredient;
+}
 
     public function getQuantity() :int {
         return $this->quantity;
@@ -33,9 +47,10 @@ class RecipeIngredientModel extends BaseModel {
         return $this->unit;
     }
 
-    public function setUnit(string $unit) :void {
-        $this->unit = $unit;
+    public function setUnit(?string $unit) :void {
+        $this->unit = $unit ?? '';
     }
+
 
 
 }
