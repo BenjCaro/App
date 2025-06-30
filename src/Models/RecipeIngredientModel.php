@@ -13,11 +13,7 @@ class RecipeIngredientModel extends BaseModel {
     private string $unit;
     private IngredientModel $ingredient;
 
-
-
-
-    public function __construct(PDO $pdo, array $data = [])
-    {
+    public function __construct(PDO $pdo, array $data = []) {
         parent::__construct($pdo);
        
       if (!empty($data)) {
@@ -31,9 +27,9 @@ class RecipeIngredientModel extends BaseModel {
     }
 
 
-public function getIngredient(): IngredientModel {
-    return $this->ingredient;
-}
+    public function getIngredient(): IngredientModel {
+        return $this->ingredient;
+    }
 
     public function getQuantity() :int {
         return $this->quantity;
