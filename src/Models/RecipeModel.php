@@ -3,6 +3,8 @@
 namespace Carbe\App\Models;
 use Carbe\App\Models\BaseModel;
 use PDO;
+use Exception;
+
 
 class RecipeModel extends BaseModel {
 
@@ -62,5 +64,25 @@ class RecipeModel extends BaseModel {
     $this->content = $content;
   }
 
+  public function getRecipe() {
 
+      if (!$this->getId()) {
+         throw new Exception("L'id de la recette n'est pas défini.");
+      }  
+      
+      $stmt = $this->pdo->prepare("SELECT *
+               FROM recipes AS r
+               JOIN recipes_ingredients ON r.id = recipes_ingredients.id_recipe
+               JOIN ingredients ON ingredients.id = recipes_ingredients.id_ingredient
+               WHERE r.id = :id;");
+      
+      $stmt->execute([
+         'id' => $this->getId()
+      ]);
+   
+
+      $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      $this->hydrate($data[0]);
+      return $data;
+   }
 }

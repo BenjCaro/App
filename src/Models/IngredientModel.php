@@ -30,7 +30,7 @@ class IngredientModel extends BaseModel {
   }
 
   public function getType() :string {
-        return $this->name;
+        return $this->type;
   }
   
   public function setType(string $type) :void  {
@@ -38,7 +38,7 @@ class IngredientModel extends BaseModel {
   }
 
   public function save() :bool {
-     $stmt = $this->pdo->prepare("INSERT INTO categories (name, type)
+     $stmt = $this->pdo->prepare("INSERT INTO ingredients (name, type)
      VALUES (:name, :type)");
      
      return $stmt->execute([
@@ -49,7 +49,7 @@ class IngredientModel extends BaseModel {
   }
 
   public function update() :bool {
-    $stmt = $this->pdo->prepare("UPDATE categories SET name = :name, type = :type WHERE id= :id");
+    $stmt = $this->pdo->prepare("UPDATE ingredients SET name = :name, type = :type WHERE id= :id");
 
     return $stmt->execute([
 

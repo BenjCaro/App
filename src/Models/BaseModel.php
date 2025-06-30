@@ -7,7 +7,7 @@ use PDO;
 class BaseModel {
 
     protected PDO $pdo;
-    protected int $id;
+    protected ?int $id = null;
     protected string $table;
 
     public function __construct(PDO $pdo) {
@@ -15,8 +15,12 @@ class BaseModel {
     }
 
 
-      public function getId() : int {
+      public function getId() : ?int {
         return $this->id;
+    }
+
+    public function setId(int $id) :void {
+        $this->id = $id;
     }
 
     public function findById(int $id) {
