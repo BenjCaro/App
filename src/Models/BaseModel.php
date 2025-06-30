@@ -57,8 +57,6 @@ class BaseModel {
 
         return $objects;
 
-
-        
     }
 
     public function insert(array $data) {

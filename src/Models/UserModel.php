@@ -61,8 +61,18 @@ class UserModel extends BaseModel {
     return $this->role;
   }
 
+  public function setRole(string $role) :void {
+
+    $this->role = $role;
+
+  }
+
   public function getCreatedAt() :string {
     return $this->createdAt;
+  }
+
+  public function setCreatedAt(string $createdAt) :void {
+    $this->createdAt = $createdAt;
   }
 
   public function save() :bool { // creation d'utilisateur 

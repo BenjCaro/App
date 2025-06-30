@@ -2,15 +2,15 @@
 
 namespace Carbe\App\Controllers;
 use Carbe\App\config\Database;
-use Carbe\App\Models\RecipeModel;
+use Carbe\App\Models\CategoryModel;
 
 class HomeController {
 
 
     public function index() {
-    $connectDB = new Database();
-    $pdo = $connectDB->connectDB(); 
+   
+        // require home.php
+    
 
-
-}
+    }
 }

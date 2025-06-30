@@ -10,6 +10,8 @@ use PDO;
  *  classe Database destinée à gérer la connexion à la BDD 
  *  25/06/25 : mise en place d'une connexion à une base de test avec 'root'
  */
+
+ 
 class Database {
 
   public function connectDB() {
