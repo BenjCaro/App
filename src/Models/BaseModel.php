@@ -25,15 +25,40 @@ class BaseModel {
 
     public function findById(int $id) {
         $stmt = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE id = :id");
-        $stmt->execute(['id' => $this->getId()]);
-        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        $stmt->execute(['id' => $id]);
+
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($data) {
+        $object = new static($this->pdo); // instancie la classe enfant qui appelle findById
+        $object->hydrate($data);
+        return $object;
+    }
+
+    return null;
+
 
     }
 
     public function findAll() {
         $stmt = $this->pdo->query("SELECT * FROM {$this->table}");
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        $result= $stmt->fetchAll(PDO::FETCH_ASSOC) ?: null;
+
+        $objects = [];
+
+        foreach($result as $data) {
+
+            $object = new static($this->pdo); // instancie la classe enfant qui appelle findById
+            $object->hydrate($data);
+            $objects[] = $object;
+            
+        }
+
+        return $objects;
+
+
+        
     }
 
     public function insert(array $data) {
