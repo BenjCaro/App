@@ -1,4 +1,10 @@
 <?php
 namespace Carbe\App\Views;
 
-echo('Home');
+?>
+
+<main>
+    
+    <h1>Petit Creux</h1>
+     
+</main>

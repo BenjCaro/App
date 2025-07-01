@@ -11760,5 +11760,19 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+}
+
+main {
+  flex-grow: 1;
+}
+
+h1, .h1 {
+  color: #5E503F;
+}
 
 /*# sourceMappingURL=main.css.map */

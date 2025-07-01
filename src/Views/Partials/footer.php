@@ -1,3 +1,1 @@
-<?php
-
-echo('Footer');
+<footer class="text-center">Petit Creux 2025 tous droits réservés</footer>

@@ -10,7 +10,11 @@ class HomeController extends BaseController {
 
     public function index() {
 
-      $this->render('home');
+      $this->render('home',  [
+        'title' => 'Petit Creux',
+
+      
+      ]);
 
     }
 }
