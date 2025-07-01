@@ -1,16 +1,16 @@
 <?php
 
 namespace Carbe\App\Controllers;
+use Carbe\App\Controllers\BaseController;
 use Carbe\App\config\Database;
-use Carbe\App\Models\CategoryModel;
 
-class HomeController {
 
+
+class HomeController extends BaseController {
 
     public function index() {
-   
-        // require home.php
-    
+
+      $this->render('home');
 
     }
 }
