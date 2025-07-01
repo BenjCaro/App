@@ -1,3 +1,3 @@
 <figure class='banniere'>
-    <img src="/assets/images/banniere.svg" alt="banniere">
+    <img src="/assets/images/banniere_2.webp" alt="banniere">
 </figure>
