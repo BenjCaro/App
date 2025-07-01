@@ -11,7 +11,20 @@ namespace Carbe\App\Views;
         </form>
    </div>
    <h1 class='text-center mt-2'>Inspirez votre prochain repas avec Petit Creux</h1>
-
+    <div>
+        <section>
+        <h2>Mes favoris</h2>
+        </section>
+        <section>
+            <h2>Dernière recette</h2>
+        </section>
+        <section>
+            <h2>Recettes Populaires</h2>
+        </section>
+        <section>
+            <h2>Catégories</h2>
+        </section>
+    </div>
    
      
 </main>
