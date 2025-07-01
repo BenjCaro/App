@@ -11775,4 +11775,14 @@ h1, .h1 {
   color: #5E503F;
 }
 
+.banniere {
+  margin: 0;
+}
+
+.banniere img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
 /*# sourceMappingURL=main.css.map */

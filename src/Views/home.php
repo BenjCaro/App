@@ -3,7 +3,7 @@ namespace Carbe\App\Views;
 
 ?>
 
-<main>
+<main class='container bg-light'>
     
     <h1>Petit Creux</h1>
      
