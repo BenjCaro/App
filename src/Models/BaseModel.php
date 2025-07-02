@@ -48,11 +48,10 @@ class BaseModel {
         $objects = [];
 
         foreach($result as $data) {
-
+            
             $object = new static($this->pdo); // instancie la classe enfant qui appelle findById
             $object->hydrate($data);
-            $objects[] = $object;
-            
+            $objects[] = $object;  
         }
 
         return $objects;

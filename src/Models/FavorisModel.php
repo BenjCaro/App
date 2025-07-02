@@ -11,6 +11,22 @@ class FavorisModel extends BaseModel {
     private int $idUser; 
     private int $idRecipe;
 
+    public function getIdUser(): int {
+    return $this->idUser;
+}
+
+public function setIdUser(int $idUser): void {
+    $this->idUser = $idUser;
+}
+
+public function getIdRecipe(): int {
+    return $this->idRecipe;
+}
+
+public function setIdRecipe(int $idRecipe): void {
+    $this->idRecipe = $idRecipe;
+}
+
 
     public function __construct(PDO $pdo, array $data = [])
     {

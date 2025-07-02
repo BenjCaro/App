@@ -2,6 +2,7 @@
 
 namespace Carbe\App\Models;
 use Carbe\App\Models\BaseModel;
+use Carbe\App\Models\RecipeModel;
 use PDO;
 
 class UserModel extends BaseModel {
@@ -104,6 +105,47 @@ class UserModel extends BaseModel {
       
   }
 
+  public function getFavoris() {
+      $stmt = $this->pdo->prepare("SELECT users.id, name, firstname, email, role, favoris.id_user, recipes.* 
+                                  FROM users
+                                  JOIN favoris ON favoris.id_user = users.id
+                                  JOIN recipes ON favoris.id_recipe = recipes.id
+                                  WHERE users.id = :id");
+
+     $stmt->execute([
+        'id' => $this->getId()
+      ]);
+
+      $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      if (!empty($data)) {
+        $this->hydrate([
+            'id' => $data[0]['id'], 
+            'name' => $data[0]['name'], 
+            'firstname' => $data[0]['firstname'],
+            'email' => $data[0]['email'],
+            'role' => $data[0]['role'],
+        ]);
+    }
+     
+      $recipes = [];
+
+      foreach($data as $row) {
+        $recipe = new RecipeModel($this->pdo);
+        $recipe->hydrate([
+            'id' => $row['id'],
+            'title' => $row['title'],
+            'slug' => $row['slug'],
+            'duration' => $row['duration'],
+            'description' => $row['description']
+
+        ]);
+        $recipes[] = $recipe;
+
+      }
+
+    return $recipes;
+  }
 
 
 }
+
