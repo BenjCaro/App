@@ -149,10 +149,3 @@ class UserModel extends BaseModel {
 
 }
 
-
-
-// SQL pour obtenir tout les favoris d'un utilisateur
-// SELECT users.id, name, firstname, email, role, favoris.id_user, recipes.* FROM `users`
-//JOIN favoris ON favoris.id_user = users.id
-//JOIN recipes ON favoris.id_recipe = recipes.id
-//WHERE users.id = :id

@@ -4,7 +4,8 @@ namespace Carbe\App\Controllers;
 use Carbe\App\Controllers\BaseController;
 use Carbe\App\config\Database;
 use Carbe\App\Models\UserModel;
-
+use Carbe\App\Models\RecipeModel;
+use Carbe\App\Models\CategoryModel;
 
 
 class HomeController extends BaseController {
@@ -20,19 +21,26 @@ class HomeController extends BaseController {
       // affichage des favoris de l'utilisateur connecté
 
       $userModel = new UserModel($pdo);
+      $user = $userModel->findById(1);  
+      $favoris = $user ? $user->getFavoris() : [];
+      // affiche derniere recette ajouté
 
-     $user = $userModel->findById(1);  // $user est maintenant un UserModel hydraté
-     $favoris = $user ? $user->getFavoris() : [];
-
-
-      // affiche derniere recette ajoutée
+      $recipe = new RecipeModel($pdo);
+      $lastRecipe= $recipe->newRecipe();
       // affiche les recettes avec le plus de favoris
+
+      $popularRecipe = $recipe->getMostPopularRecipe();
       // afficher les catégories findAll
+      $category = new CategoryModel($pdo);
+      $categories = $category->findAll();
 
       $this->render('home',  [
         'title' => 'Petit Creux',
         'user' => $user,
-        'favoris' => $favoris
+        'favoris' => $favoris,
+        'lastRecipe' => $lastRecipe,
+        'popularRecipe' => $popularRecipe,
+        'categories' => $categories
 
       ]);
 

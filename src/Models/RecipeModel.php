@@ -21,7 +21,7 @@ class RecipeModel extends BaseModel {
     private int $idCategory;
     private string $createdAt;
     private int $duration;
-    private string $content;
+    private ?string $description;
 
     public function __construct(PDO $pdo, array $data = [])
     {
@@ -48,8 +48,29 @@ class RecipeModel extends BaseModel {
      $this->slug = $slug;
   }
 
+  public function getIdUser(): int {
+    return $this->idUser;
+}
+
+public function setIdUser(int $idUser): void {
+    $this->idUser = $idUser;
+}
+
+public function getIdCategory(): int {
+    return $this->idCategory;
+}
+
+public function setIdCategory(int $idCategory): void {
+    $this->idCategory = $idCategory;
+}
+
+
   public function getCreatedAt() :string {
     return $this->createdAt;
+  }
+
+  public function setCreatedAt(string $createdAt) : void {
+   $this->createdAt = $createdAt;
   }
 
   public function getDuration() :int {
@@ -62,11 +83,11 @@ class RecipeModel extends BaseModel {
   }
 
   public function getDescription() :string {
-     return $this->content;
+     return $this->description;
   }
 
-  public function setDescription(string $content) :void {
-    $this->content = $content;
+  public function setDescription(?string $description) :void {
+    $this->description = $description;
   }
 
    public function getIngredients(): array {
@@ -123,20 +144,39 @@ class RecipeModel extends BaseModel {
 
    }
 
-   /**
-    * public function - getMostFavoritedRecipe() {
-    *     $stmt = $this->pdo->prepare ("SELECT *, COUNT(favoris.id_recipe) FROM recipes
-               *   JOIN favoris ON recipes.id = favoris.id_recipe
-               *   GROUP BY recipes.id
-               *   LIMIT 1;");
-    *
-    *   }
-    * 
+   public function newRecipe() {
+      $stmt = $this->pdo->prepare("SELECT * FROM recipes ORDER BY createdAt DESC LIMIT 1");
+      $stmt->execute();
+      $data = $stmt->fetch(PDO::FETCH_ASSOC);
+      
+      
+      if ($data) {
+         $this->hydrate($data); 
+         return $this;
+      }
 
-    */
-}
+    return null;
+
+   }
+      
+   public function getMostPopularRecipe() {
+         $stmt = $this->pdo->prepare ("SELECT *, COUNT(favoris.id_recipe) FROM recipes
+                     JOIN favoris ON recipes.id = favoris.id_recipe
+                     GROUP BY recipes.id
+                     LIMIT 1;");
+         $stmt->execute();
+         $data = $stmt->fetch(PDO::FETCH_ASSOC);
+         
+         if($data) {
+
+             $this->hydrate($data);
+             return $this;
+               
+            }
+         return null;
+      } 
+
+ 
+ }
 
 
-// recette la plus récente
-//SELECT * FROM `recipes` 
-//ORDER BY createAt DESC LIMIT 1;

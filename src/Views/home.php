@@ -14,23 +14,35 @@ namespace Carbe\App\Views;
     <div>
         <section>
         <h2>Mes favoris</h2>
-            
-        <?php
-
+             <?php
                 foreach ($favoris as $recipe) {
                     echo $recipe->getTitle() . "<br>";
                 }
-                ?>
-
+            ?>
         </section>
         <section>
             <h2>Dernière recette</h2>
+                <?php if ($lastRecipe): ?>
+                <?= htmlspecialchars($lastRecipe->getTitle()) ?>
+                <?php else: ?>
+                <p>Aucune recette trouvée.</p>
+                <?php endif; ?>    
         </section>
         <section>
             <h2>Recettes Populaires</h2>
+            <?php if ($popularRecipe): ?>
+                <?= htmlspecialchars($popularRecipe->getTitle()) ?>
+                <?php else: ?>
+                <p>Aucune recette trouvée.</p>
+                <?php endif; ?>
         </section>
         <section>
             <h2>Catégories</h2>
+               <ul> 
+                    <?php foreach($categories as $category)  { ?>
+                      <li><?= $category->getName() ?></li>
+                    <?php    } ?>
+                </ul>
         </section>
     </div>
    
