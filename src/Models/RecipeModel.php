@@ -122,4 +122,21 @@ class RecipeModel extends BaseModel {
       return $data;
 
    }
+
+   /**
+    * public function - getMostFavoritedRecipe() {
+    *     $stmt = $this->pdo->prepare ("SELECT *, COUNT(favoris.id_recipe) FROM recipes
+               *   JOIN favoris ON recipes.id = favoris.id_recipe
+               *   GROUP BY recipes.id
+               *   LIMIT 1;");
+    *
+    *   }
+    * 
+
+    */
 }
+
+
+// recette la plus récente
+//SELECT * FROM `recipes` 
+//ORDER BY createAt DESC LIMIT 1;

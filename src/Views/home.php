@@ -14,6 +14,14 @@ namespace Carbe\App\Views;
     <div>
         <section>
         <h2>Mes favoris</h2>
+            
+        <?php
+
+                foreach ($favoris as $recipe) {
+                    echo $recipe->getTitle() . "<br>";
+                }
+                ?>
+
         </section>
         <section>
             <h2>Dernière recette</h2>
