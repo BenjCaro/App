@@ -11881,6 +11881,12 @@ span {
   font-family: "Lato";
 }
 
+.main_title {
+  font-size: 48px;
+  height: 200px;
+  margin: 0;
+}
+
 .banniere {
   margin: 0;
 }
