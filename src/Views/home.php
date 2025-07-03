@@ -10,16 +10,16 @@ namespace Carbe\App\Views;
         <button class="btn btn-outline-success" type="submit"><img src="/assets/images/search.svg" alt=""></button>
         </form>
    </div>
-   <h1 class='text-center mt-2'>Inspirez votre prochain repas avec Petit Creux</h1>
+   <h1 class='text-center mt-2 mb-3'>Inspirez votre prochain repas avec Petit Creux</h1>
    
    
    
    <!-- Mise en place des cards -->
-    <div>
-        <section>
-            <div class="card bg-gris" style="width: 18rem;">
-                <div class="card-body">
-                    <h2 class='card-title'>Mes favoris</h2>
+    <div class="grid mb-3">
+        <section class="favoris">
+            <div class="card bg-gris h-100" >
+                <div class="card-body ">
+                    <h2 class='card-title text-center'>Mes favoris</h2>
                         <?php
                     foreach ($favoris as $recipe) {  ?>
                         <h3 class="card-subtitle mb-2 text-body-secondary fs-4"> 
@@ -31,8 +31,8 @@ namespace Carbe\App\Views;
                 </div>
             </div>
         </section>
-        <section>
-            <div class="card bg-gris" style="width: 18rem;">
+        <section class="last_recipe">
+            <div class="card bg-gris h-100">
                 <div class="card-body">
                     <h2 class='card-title'>Dernière Recette</h2>
                         <h3 class="card-subtitle mb-2 text-body-secondary fs-4"> 
@@ -40,12 +40,11 @@ namespace Carbe\App\Views;
                             <span class="fs-6">durée: <?= $lastRecipe->getDuration() . 'mns' ?></span>
                         </h3>
                         <a class="text-secondary" href="/<?= $lastRecipe->getSlug(); ?>">Voir la recette</a>
-                       
-                </div>
+              </div>
             </div>
         </section>
-        <section>
-            <div class="card bg-gris" style="width: 18rem;">
+        <section class="popular_recipe">
+            <div class="card bg-gris h-100" >
                 <div class="card-body">
                     <h2 class='card-title'>Recettes Populaires</h2>
                         <h3 class="card-subtitle mb-2 text-body-secondary fs-4"> 
@@ -56,16 +55,14 @@ namespace Carbe\App\Views;
                 </div>
             </div>
         </section>
-        <section>
-            <div class="card bg-gris" style="width: 18rem;">
+        <section class="categories text-center">
+            <div class="card bg-gris h-100" >
                 <div class="card-body">
                     <h2 class='card-title'>Catégories</h2>
                     <?php foreach($categories as $category)  { ?>
                         <a class="text-secondary" href="/<?= $category->getSlug(); ?>"><?= $category->getName();?></a> <br>
                         <img alt="icone <?=$category->getName(); ?>" src="/assets/images/<?= $category->getImage();?>"/>
-                    <?php    } ?>
-                       
-                       
+                    <?php    } ?>       
                 </div>
             </div>
         </section>

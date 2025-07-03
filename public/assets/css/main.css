@@ -11890,4 +11890,31 @@ span {
   height: 200px;
 }
 
+.grid {
+  display: grid;
+  gap: 1em;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+}
+
+.favoris {
+  grid-column: 1;
+  grid-row: 1/span 4;
+}
+
+.last_recipe {
+  grid-column: 2/span 2;
+  grid-row: 1/span 2;
+}
+
+.popular_recipe {
+  grid-column: 2/span 2;
+  grid-row: 3/span 2;
+}
+
+.categories {
+  grid-column: 1/span 2;
+  grid-row: 5;
+}
+
 /*# sourceMappingURL=main.css.map */
