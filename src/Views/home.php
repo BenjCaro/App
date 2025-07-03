@@ -9,11 +9,11 @@ namespace Carbe\App\Views;
         <button class="btn btn-outline-success" type="submit"><img src="/assets/images/search.svg" alt=""></button>
         </form>
    </div> -->
-   <h1 class='text-center text-cacao'>Inspirez votre prochain repas avec Petit Creux</h1>
+   <h1 class='text-center text-light'>Inspirez votre prochain repas avec <strong>Petit Creux</strong></h1>
    <!-- Mise en place des cards -->
     <div class="grid mt-1 mb-3">
         <section class="favoris">
-            <div class="card bg-gris h-100" >
+            <div class="card bg-gris h-100 border border-primary" >
                 <div class="card-body ">
                     <h2 class='card-title text-center'>Mes favoris</h2>
                         <?php
@@ -29,7 +29,7 @@ namespace Carbe\App\Views;
             </div>
         </section>
         <section class="last_recipe">
-            <div class="card bg-gris h-100">
+            <div class="card bg-gris h-100 border border-primary">
                 <div class="card-body">
                     <h2 class='card-title'>Dernière Recette</h2>
                         <h3 class="card-subtitle mb-2 text-body-secondary fs-4"> 
@@ -42,7 +42,7 @@ namespace Carbe\App\Views;
             </div>
         </section>
         <section class="popular_recipe">
-            <div class="card bg-gris h-100" >
+            <div class="card bg-gris h-100 border border-primary" >
                 <div class="card-body">
                     <h2 class='card-title'>Recettes Populaires</h2>
                         <h3 class="card-subtitle mb-2 text-body-secondary fs-4"> 
@@ -55,7 +55,7 @@ namespace Carbe\App\Views;
             </div>
         </section>
         <section class="categories text-center">
-            <div class="card bg-gris h-100" >
+            <div class="card bg-gris h-100 border border-primary" >
                 <div class="card-body">
                     <h2 class='card-title'>Catégories</h2>
                     <div class="d-flex justify-content-evenly align-items-start">
