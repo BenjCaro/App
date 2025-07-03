@@ -4,6 +4,7 @@ namespace Carbe\App\Models;
 use Carbe\App\Models\BaseModel;
 use Carbe\App\Models\IngredientModel;
 use Carbe\App\Models\RecipeIngredientModel;
+use Carbe\App\Models\CategoryModel;
 
 use PDO;
 use Exception;
@@ -22,6 +23,7 @@ class RecipeModel extends BaseModel {
     private string $createdAt;
     private int $duration;
     private ?string $description;
+    private CategoryModel $category;
 
     public function __construct(PDO $pdo, array $data = [])
     {
@@ -94,6 +96,14 @@ public function setIdCategory(int $idCategory): void {
       return $this->ingredients;
 }  
 
+public function getCategory(): CategoryModel {
+    return $this->category;
+}
+
+public function setCategory(CategoryModel $category):void {
+  $this->category = $category;
+}
+
 
   public function getRecipe() {
 
@@ -162,18 +172,28 @@ public function setIdCategory(int $idCategory): void {
    public function getMostPopularRecipe() {
          $stmt = $this->pdo->prepare ("SELECT *, COUNT(favoris.id_recipe) FROM recipes
                      JOIN favoris ON recipes.id = favoris.id_recipe
+                     JOIN categories ON recipes.id_category = categories.id
                      GROUP BY recipes.id
                      LIMIT 1;");
          $stmt->execute();
          $data = $stmt->fetch(PDO::FETCH_ASSOC);
          
-         if($data) {
+         if ($data) {
+   
+    $categoryData = [
+        'id' => $data['id_category'],
+        'name' => $data['name'],
+    ];
 
-             $this->hydrate($data);
-             return $this;
-               
-            }
-         return null;
+    $category = new CategoryModel($this->pdo);
+    $category->hydrate($categoryData);
+    
+    $this->hydrate($data);
+    $this->setCategory($category);
+
+    return $this;
+}
+
       } 
 
  
