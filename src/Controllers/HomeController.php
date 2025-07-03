@@ -23,14 +23,16 @@ class HomeController extends BaseController {
       $userModel = new UserModel($pdo);
       $user = $userModel->findById(1);  
       $favoris = $user ? $user->getFavoris() : [];
+
       // affiche derniere recette ajouté
 
-      $recipe = new RecipeModel($pdo);
-      $lastRecipe= $recipe->newRecipe();
+      $lastRecipe = (new RecipeModel($pdo))->newRecipe();
+    ;
       // affiche les recettes avec le plus de favoris
-
-      $popularRecipe = $recipe->getMostPopularRecipe();
+      $popularRecipe = (new RecipeModel($pdo))->getMostPopularRecipe();
+      
       // afficher les catégories findAll
+      
       $category = new CategoryModel($pdo);
       $categories = $category->findAll();
 

@@ -24,6 +24,7 @@ $theme-colors: (
   "gris" : $border-color
 );
 
+@import url(fonts.scss);
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
 
@@ -32,14 +33,47 @@ body {
   flex-direction: column;
   min-height: 100vh;
   justify-content: space-between;
+  font-family: 'Lato';
+}
+
+header, footer {
+  font-family: 'PlayfairDisplay';
 }
 
 main {
   flex-grow: 1;
 }
 
+h1, h2, h3 {
+  color: $dark !important;
+  font-family: 'PlayfairDisplay';
+  font-weight: bold;
+}
+
 h1 {
-  color: $dark;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    text-shadow: 1px 1px 2px $dark;
+}
+
+.banniere-texte {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0 1rem;
+  width: 100%;
+}
+
+
+h2, h3 {
+  text-shadow: 1px 1px 2px $light;
+}
+
+.nav-item {
+  text-shadow: 1px 1px 2px $light;
+}
+
+span {
+   font-family: 'Lato';
 }
 
 .banniere {
@@ -51,4 +85,43 @@ h1 {
     height: 200px;
     
 
+}
+
+.grid { 
+  display: grid; 
+  gap: 2em;
+   padding: 2em;
+    grid-template-columns: repeat(2, 1fr); 
+    grid-template-rows: repeat(3, 1fr); 
+  }
+
+  .favoris {
+
+grid-column: 1; 
+grid-row: 1 / span 2;
+
+}
+.last_recipe { 
+  
+   grid-column: 2 / span 1;
+   grid-row: 1 / span 1; 
+
+  }
+
+.popular_recipe { 
+
+  grid-column: 2 / span 1; 
+  grid-row: 2/span 1; 
+
+}
+.categories { 
+  grid-column: 1/ span 2; 
+  grid-row: 3;
+
+}
+
+
+.icone {
+  width: auto;
+  height: 40px;
 }
