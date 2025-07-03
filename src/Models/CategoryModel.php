@@ -10,6 +10,7 @@ class CategoryModel extends BaseModel {
 
     private string $name;
     private string $slug;
+    private string $image;
 
     public function __construct(PDO $pdo, array $data = []) {
         
@@ -35,6 +36,14 @@ class CategoryModel extends BaseModel {
 
   public function setSlug(string $slug) : void {
      $this->slug = $slug;
+  }
+
+  public function getImage() :string {
+    return $this->image;
+  }
+
+  public function setImage(string $image) :void {
+    $this->image = $image;
   }
 
   public function save() :bool {

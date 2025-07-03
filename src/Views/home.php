@@ -11,38 +11,63 @@ namespace Carbe\App\Views;
         </form>
    </div>
    <h1 class='text-center mt-2'>Inspirez votre prochain repas avec Petit Creux</h1>
+   
+   
+   
+   <!-- Mise en place des cards -->
     <div>
         <section>
-        <h2>Mes favoris</h2>
-             <?php
-                foreach ($favoris as $recipe) {
-                    echo $recipe->getTitle() . "<br>";
-                }
-            ?>
+            <div class="card bg-gris" style="width: 18rem;">
+                <div class="card-body">
+                    <h2 class='card-title'>Mes favoris</h2>
+                        <?php
+                    foreach ($favoris as $recipe) {  ?>
+                        <h3 class="card-subtitle mb-2 text-body-secondary fs-4"> 
+                                <?= $recipe->getTitle()?>
+                            <span class="fs-6">durée: <?= $recipe->getDuration() . 'mns' ?></span>
+                        </h3>
+                        <a class="text-secondary" href="/<?= $recipe->getSlug(); ?>">Voir la recette</a>
+                        <?php } ?>
+                </div>
+            </div>
         </section>
         <section>
-            <h2>Dernière recette</h2>
-                <?php if ($lastRecipe): ?>
-                <?= htmlspecialchars($lastRecipe->getTitle()) ?>
-                <?php else: ?>
-                <p>Aucune recette trouvée.</p>
-                <?php endif; ?>    
+            <div class="card bg-gris" style="width: 18rem;">
+                <div class="card-body">
+                    <h2 class='card-title'>Dernière Recette</h2>
+                        <h3 class="card-subtitle mb-2 text-body-secondary fs-4"> 
+                                <?= $lastRecipe->getTitle()?>
+                            <span class="fs-6">durée: <?= $lastRecipe->getDuration() . 'mns' ?></span>
+                        </h3>
+                        <a class="text-secondary" href="/<?= $lastRecipe->getSlug(); ?>">Voir la recette</a>
+                       
+                </div>
+            </div>
         </section>
         <section>
-            <h2>Recettes Populaires</h2>
-            <?php if ($popularRecipe): ?>
-                <?= htmlspecialchars($popularRecipe->getTitle()) ?>
-                <?php else: ?>
-                <p>Aucune recette trouvée.</p>
-                <?php endif; ?>
+            <div class="card bg-gris" style="width: 18rem;">
+                <div class="card-body">
+                    <h2 class='card-title'>Recettes Populaires</h2>
+                        <h3 class="card-subtitle mb-2 text-body-secondary fs-4"> 
+                                <?= $popularRecipe->getTitle()?>
+                            <span class="fs-6">durée: <?= $popularRecipe->getDuration() . 'mns' ?></span>
+                        </h3>
+                        <a class="text-secondary" href="/<?= $popularRecipe->getSlug(); ?>">Voir la recette</a>        
+                </div>
+            </div>
         </section>
         <section>
-            <h2>Catégories</h2>
-               <ul> 
+            <div class="card bg-gris" style="width: 18rem;">
+                <div class="card-body">
+                    <h2 class='card-title'>Catégories</h2>
                     <?php foreach($categories as $category)  { ?>
-                      <li><?= $category->getName() ?></li>
+                        <a class="text-secondary" href="/<?= $category->getSlug(); ?>"><?= $category->getName();?></a> <br>
+                        <img alt="icone <?=$category->getName(); ?>" src="/assets/images/<?= $category->getImage();?>"/>
                     <?php    } ?>
-                </ul>
+                       
+                       
+                </div>
+            </div>
         </section>
     </div>
    
