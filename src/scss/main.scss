@@ -24,6 +24,7 @@ $theme-colors: (
   "gris" : $border-color
 );
 
+@import url(fonts.scss);
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
 
@@ -32,14 +33,21 @@ body {
   flex-direction: column;
   min-height: 100vh;
   justify-content: space-between;
+  font-family: 'Lato';
+}
+
+header, footer {
+  font-family: 'PlayfairDisplay';
 }
 
 main {
   flex-grow: 1;
 }
 
-h1 {
+h1, h2 {
   color: $dark;
+  font-family: 'PlayfairDisplay';
+  font-weight: bold;
 }
 
 .banniere {

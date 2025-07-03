@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url(fonts.scss);
 /*!
  * Bootstrap  v5.3.7 (https://getbootstrap.com/)
  * Copyright 2011-2025 The Bootstrap Authors
@@ -11859,14 +11860,21 @@ body {
   flex-direction: column;
   min-height: 100vh;
   justify-content: space-between;
+  font-family: "Lato";
+}
+
+header, footer {
+  font-family: "PlayfairDisplay";
 }
 
 main {
   flex-grow: 1;
 }
 
-h1, .h1 {
+h1, .h1, h2, .h2 {
   color: #5E503F;
+  font-family: "PlayfairDisplay";
+  font-weight: bold;
 }
 
 .banniere {
