@@ -11,7 +11,7 @@ namespace Carbe\App\Views;
    </div> -->
    <h1 class='text-center text-cacao'>Inspirez votre prochain repas avec Petit Creux</h1>
    <!-- Mise en place des cards -->
-    <div class="grid mt-4 mb-3">
+    <div class="grid mt-1 mb-3">
         <section class="favoris">
             <div class="card bg-gris h-100" >
                 <div class="card-body ">
@@ -55,10 +55,14 @@ namespace Carbe\App\Views;
             <div class="card bg-gris h-100" >
                 <div class="card-body">
                     <h2 class='card-title'>Catégories</h2>
-                    <?php foreach($categories as $category)  { ?>
-                        <a class="text-secondary text-cacao nav-link" href="/<?= $category->getSlug(); ?>"><?= ucwords($category->getName());?></a> <br>
-                        <img alt="icone <?=$category->getName(); ?>" src="/assets/images/<?= $category->getImage();?>"/>
-                    <?php    } ?>       
+                    <div class="d-flex justify-content-evenly align-items-start">
+                        <?php foreach($categories as $category)  { ?>
+                        <div class="d-flex flex-column justify-content-center mt-2">
+                            <a class="text-secondary text-cacao nav-link" href="/<?= $category->getSlug(); ?>"><?= ucwords($category->getName());?></a>
+                            <img class="icone" alt="icone <?=$category->getName(); ?>" src="/assets/images/<?= $category->getImage();?>"/>
+                        </div>
+                    <?php    } ?>   
+                    </div>    
                 </div>
             </div>
         </section>
