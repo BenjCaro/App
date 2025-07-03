@@ -9,7 +9,7 @@ namespace Carbe\App\Views;
         <button class="btn btn-outline-success" type="submit"><img src="/assets/images/search.svg" alt=""></button>
         </form>
    </div> -->
-   <h1 class='text-center text-light'>Inspirez votre prochain repas avec <strong>Petit Creux</strong></h1>
+  
    <!-- Mise en place des cards -->
     <div class="grid mt-1 mb-3">
         <section class="favoris">

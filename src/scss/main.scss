@@ -51,12 +51,18 @@ h1, h2, h3 {
 }
 
 h1 {
-    position: absolute;
-    top: 175px;
-    left: 525px;
-    font-size: 52px;
+    font-size: clamp(1.5rem, 5vw, 3rem);
     text-shadow: 1px 1px 2px $dark;
 }
+
+.banniere-texte {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0 1rem;
+  width: 100%;
+}
+
 
 h2, h3 {
   text-shadow: 1px 1px 2px $light;
@@ -80,36 +86,38 @@ span {
     
 
 }
-.grid {
-  display: grid;
+.grid { 
+  display: grid; 
   gap: 2em;
-  padding: 2em;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-}
-
+   padding: 2em;
+    grid-template-columns: repeat(2, 1fr); 
+    grid-template-rows: repeat(5, 1fr); 
+  }
 .favoris {
 
-  grid-column: 1;
-  grid-row: 1 / span 4;
+grid-column: 1; 
+grid-row: 1 / span 4;
 
 }
+.last_recipe { 
+  
+   grid-column: 2 / span 1;
+   grid-row: 1 / span 2; 
 
-.last_recipe {
-  grid-column: 2 / span 1;
-  grid-row: 1 / span 2;
+  }
+
+.popular_recipe { 
+
+  grid-column: 2 / span 1; 
+  grid-row: 3/span 2; 
+
 }
-
-.popular_recipe {
-  grid-column: 2 / span 1;
-  grid-row: 3/span 2;
-}
-
-.categories {
-  grid-column: 1/ span 2;
+.categories { 
+  grid-column: 1/ span 2; 
   grid-row: 5;
   
 }
+
 
 .icone {
   width: auto;

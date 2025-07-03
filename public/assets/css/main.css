@@ -11878,11 +11878,16 @@ h1, .h1, h2, .h2, h3, .h3 {
 }
 
 h1, .h1 {
-  position: absolute;
-  top: 175px;
-  left: 525px;
-  font-size: 52px;
+  font-size: clamp(1.5rem, 5vw, 3rem);
   text-shadow: 1px 1px 2px #5E503F;
+}
+
+.banniere-texte {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0 1rem;
+  width: 100%;
 }
 
 h2, .h2, h3, .h3 {
