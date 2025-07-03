@@ -105,7 +105,7 @@ public function setCategory(CategoryModel $category):void {
 }
 
 
-  public function getRecipe() {
+public function getRecipe() {
 
       if (!$this->getId()) {
          throw new Exception("La recette n'existe pas.");
@@ -154,22 +154,35 @@ public function setCategory(CategoryModel $category):void {
 
    }
 
-   public function newRecipe() {
-      $stmt = $this->pdo->prepare("SELECT * FROM recipes ORDER BY createdAt DESC LIMIT 1");
+ public function newRecipe() {
+      $stmt = $this->pdo->prepare("SELECT * FROM recipes
+      JOIN categories ON id_category = categories.id
+      ORDER BY createdAt DESC LIMIT 1");
       $stmt->execute();
       $data = $stmt->fetch(PDO::FETCH_ASSOC);
       
       
       if ($data) {
-         $this->hydrate($data); 
+         
+         $categoryData = [
+        'id' => $data['id_category'],
+        'name' => $data['name'],
+    ];
+
+         $category = new CategoryModel($this->pdo);
+         $category->hydrate($categoryData);
+    
+         $this->hydrate($data);
+         $this->setCategory($category);
+
          return $this;
       }
 
     return null;
 
    }
-      
-   public function getMostPopularRecipe() {
+
+ public function getMostPopularRecipe() {
          $stmt = $this->pdo->prepare ("SELECT *, COUNT(favoris.id_recipe) FROM recipes
                      JOIN favoris ON recipes.id = favoris.id_recipe
                      JOIN categories ON recipes.id_category = categories.id

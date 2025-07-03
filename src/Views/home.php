@@ -18,11 +18,12 @@ namespace Carbe\App\Views;
                     <h2 class='card-title text-center'>Mes favoris</h2>
                         <?php
                     foreach ($favoris as $recipe) {  ?>
-                        <h3 class="card-subtitle mb-2 text-body-secondary fs-4"> 
+                        <h3 class="card-subtitle text-body-secondary fs-4"> 
                                 <?= $recipe->getTitle()?>
                             <span class="fs-6">durée: <?= $recipe->getDuration() . 'mns' ?></span>
                         </h3>
                         <a class="text-secondary nav-link" href="/<?= $recipe->getSlug(); ?>">Voir la recette</a>
+                        <span><?= $recipe->getCategory()->getName(); ?></span>
                         <?php } ?>
                 </div>
             </div>
@@ -35,8 +36,8 @@ namespace Carbe\App\Views;
                                 <?= $lastRecipe->getTitle()?>
                             <span class="fs-6">durée: <?= $lastRecipe->getDuration() . 'mns' ?></span>
                         </h3>
+                        <span><?=  ucwords($lastRecipe->getCategory()->getName());?></span>
                         <a class="text-secondary nav-link" href="/<?= $lastRecipe->getSlug(); ?>">Voir la recette</a>
-                    
               </div>
             </div>
         </section>

@@ -106,10 +106,11 @@ class UserModel extends BaseModel {
   }
 
   public function getFavoris() {
-      $stmt = $this->pdo->prepare("SELECT users.id, name, firstname, email, role, favoris.id_user, recipes.* 
+      $stmt = $this->pdo->prepare("SELECT users.id, users.name, firstname, email, role, favoris.id_user, recipes.*, categories.name
                                   FROM users
                                   JOIN favoris ON favoris.id_user = users.id
                                   JOIN recipes ON favoris.id_recipe = recipes.id
+                                  JOIN categories ON categories.id = recipes.id_category
                                   WHERE users.id = :id");
 
      $stmt->execute([
@@ -139,6 +140,14 @@ class UserModel extends BaseModel {
             'description' => $row['description']
 
         ]);
+
+
+         $category = new CategoryModel($this->pdo);
+         $category->hydrate([
+        'name' => $row['name']
+          ]);
+        
+        $recipe->setCategory($category);
         $recipes[] = $recipe;
 
       }
