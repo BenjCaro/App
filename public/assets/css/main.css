@@ -11916,27 +11916,27 @@ span {
   gap: 2em;
   padding: 2em;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-rows: repeat(3, 1fr);
 }
 
 .favoris {
   grid-column: 1;
-  grid-row: 1/span 4;
+  grid-row: 1/span 2;
 }
 
 .last_recipe {
   grid-column: 2/span 1;
-  grid-row: 1/span 2;
+  grid-row: 1/span 1;
 }
 
 .popular_recipe {
   grid-column: 2/span 1;
-  grid-row: 3/span 2;
+  grid-row: 2/span 1;
 }
 
 .categories {
   grid-column: 1/span 2;
-  grid-row: 5;
+  grid-row: 3;
 }
 
 .icone {
