@@ -205,9 +205,34 @@ public function getRecipe() {
     $this->setCategory($category);
 
     return $this;
-}
+   }  
 
-      } 
+} 
+
+public function getAllRecipesByCategory() {
+      $stmt = $this->pdo->prepare('SELECT * FROM `recipes`
+                              JOIN categories ON recipes.id_category = categories.id
+                              WHERE categories.id = :id');
+     $stmt->execute(['id' => ':id']);
+
+      $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      if($data) {
+         $categoryData = [
+        'id' => $data['id'],
+        'name' => $data['name'],
+      ];
+
+         $category = new CategoryModel($this->pdo);
+         $category->hydrate($categoryData);
+    
+         $this->hydrate($data);
+         $this->setCategory($category);
+
+         return $this;
+      }
+       return null;
+}
 
  
  }

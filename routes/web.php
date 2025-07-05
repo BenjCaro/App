@@ -2,6 +2,7 @@
 
 namespace Carbe\App\Routes;
 use Carbe\App\Controllers\HomeController;
+use Carbe\App\Controllers\CategoryController;
 
 $router->map('GET', '/', function() {
     
@@ -10,9 +11,10 @@ $router->map('GET', '/', function() {
 
 });
 
-// $router->map('GET', '/categories', function() {
-//    
-//     
-//
-//
-//});
+$router->map('GET', '/categories', function() {
+   
+    $categories = new CategoryController();
+    $categories->index();
+
+
+});
