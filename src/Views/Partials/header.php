@@ -18,7 +18,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="menuPrincipal">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item fs-5"><a class="nav-link" href="#">Catégories</a></li>
+                        <li class="nav-item fs-5"><a class="nav-link" href="/categories">Catégories</a></li>
                         <li class="nav-item fs-5"><a class="nav-link" href="#">Recettes</a></li>
                         <li class="nav-item fs-5"><a class="nav-link" href="#">À propos</a></li>
                         <li class="nav-item fs-5"><a class="nav-link" href="#">Mon Compte</a></li>
