@@ -1,9 +1,10 @@
 {
     "name": "carbe/app",
     "autoload": {
+        "classmap": ["src/Core/AltoRouter.php"],
         "psr-4": {
-            "Carbe\\App\\": "src/",
-            "Carbe\\App\\config\\": "config/"
+            "Carbe\\App\\": "src/"
+            
 
         }
     },
@@ -19,4 +20,5 @@
     "scripts": {
     "test": "phpunit"
 }
+ 
 }
