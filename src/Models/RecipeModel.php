@@ -257,7 +257,7 @@ public function getRecipe() {
     return null;
 }
 
-public function getAllRecipesByCategory() {
+public function getAllRecipesWithCategory() {
       $stmt = $this->pdo->prepare('SELECT * FROM `recipes`
                               JOIN categories ON recipes.id_category = categories.id');
      $stmt->execute();
@@ -285,6 +285,49 @@ public function getAllRecipesByCategory() {
 
       return $recipes;
     
+}
+
+public function getAllRecipesByCategory($idCategory) {
+    $stmt = $this->pdo->prepare('
+    SELECT 
+    recipes.id AS recipe_id, 
+    recipes.title, 
+    recipes.id_user, 
+    recipes.createdAt, 
+    recipes.duration, 
+    recipes.description, 
+    categories.name, 
+    categories.id AS category_id,
+    categories.image 
+    FROM `recipes` 
+    JOIN categories ON recipes.id_category = categories.id 
+    WHERE categories.id = :id;
+    ');
+
+    $stmt->execute(['id' => $idCategory]); // probleme ici
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $recipes = [];
+
+    foreach($results as $data) {
+
+      $categoryData = ['id' => $data['category_id'],
+                       'name' => $data['name'],
+                       'image'=> $data['image']
+                     ];
+
+      $category = new CategoryModel($this->pdo);
+      $category->$this->hydrate($categoryData);
+
+      $recipe = new RecipeModel($this->pdo);
+      $recipe->hydrate($data);
+      $recipe->setCategory($category);
+
+      $recipes[] = $recipe;
+
+    }
+
+    return $recipes;
 }
 
  

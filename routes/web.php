@@ -16,17 +16,25 @@ $router->map('GET', '/categories', function() {  // toutes les catégories list�
     $categories = new CategoryController();
     $categories->index();
 
-
 });
 
-
-
- $router->map('GET', '/categories/[*:slug]', function($slug) {    // page catégories ex: categories/dessert 
-      echo "Catégorie : " . htmlspecialchars($slug);
+$router->map('GET', '/categories/[*:slug]', function($slug) {    // page catégories ex: categories/dessert 
+      $category = new CategoryController();
+      $category->displayRecipesByCat();
 }); 
 
-
- $router->map('GET', '/recette/[*:slug]', function($slug) {    // page recette ex: recette/crepes 
+$router->map('GET', '/recette/[*:slug]', function($slug) {    // page recette ex: recette/crepes 
   echo "Recette : " . htmlspecialchars($slug);
  });
 
+ $router->map('GET', '/a-propos', function() {
+   echo("A propos");
+ });
+
+  $router->map('GET', '/mon-compte', function() {
+   echo("Mon Compte");
+ });
+
+  $router->map('GET', '/login', function() {
+   echo("Login");
+ });

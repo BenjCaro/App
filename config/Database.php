@@ -14,7 +14,7 @@ use PDO;
  
 class Database {
 
-  public function connectDB() {
+  public function connectDB() :PDO {
 
     $user = 'root';
     $pass = '';
