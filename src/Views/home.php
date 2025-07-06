@@ -61,7 +61,7 @@ namespace Carbe\App\Views;
                     <div class="d-flex justify-content-evenly align-items-start">
                         <?php foreach($categories as $category)  { ?>
                         <div class="d-flex flex-column justify-content-center mt-2">
-                            <a class="text-secondary text-cacao nav-link" href="/<?= $category->getSlug(); ?>"><?= ucwords($category->getName());?></a>
+                            <a class="text-secondary text-cacao nav-link" href="/categories/<?= $category->getSlug(); ?>"><?= ucwords($category->getName());?></a>
                             <img class="icone" alt="icone <?=$category->getName(); ?>" src="/assets/images/<?= $category->getImage();?>"/>
                         </div>
                     <?php    } ?>   

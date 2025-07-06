@@ -22,7 +22,7 @@ class CategoryModel extends BaseModel {
 
     }
 
-      public function getName() :string {
+  public function getName() :string {
         return $this->name;
   }
   
