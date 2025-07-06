@@ -155,9 +155,14 @@ public function getRecipe() {
    }
 
  public function newRecipe() {
-      $stmt = $this->pdo->prepare("SELECT * FROM recipes
-      JOIN categories ON id_category = categories.id
-      ORDER BY createdAt DESC LIMIT 1");
+      $stmt = $this->pdo->prepare("SELECT recipes.id, recipes.title, 
+      recipes.slug AS recipe_slug, recipes.createdAt, recipes.duration, recipes.description, 
+      categories.id AS category_id, categories.name AS category_name, 
+      categories.slug AS category_slug 
+      FROM recipes JOIN categories 
+      ON id_category = categories.id 
+      ORDER BY createdAt
+      DESC LIMIT 1;");
       $stmt->execute();
       $data = $stmt->fetch(PDO::FETCH_ASSOC);
       
@@ -165,14 +170,22 @@ public function getRecipe() {
       if ($data) {
          
          $categoryData = [
-        'id' => $data['id_category'],
-        'name' => $data['name'],
+        'id' => $data['category_id'],
+        'name' => $data['category_name'],
+        'slug' => $data['category_slug']
     ];
 
          $category = new CategoryModel($this->pdo);
          $category->hydrate($categoryData);
     
-         $this->hydrate($data);
+         $this->hydrate([
+            'id' => $data['id'],
+            'title' => $data['title'],
+            'slug' => $data['recipe_slug'],
+            'createdAt' => $data['createdAt'],
+            'duration' => $data['duration'],
+            'description' => $data['description']
+        ]);
          $this->setCategory($category);
 
          return $this;
@@ -183,31 +196,59 @@ public function getRecipe() {
    }
 
  public function getMostPopularRecipe() {
-         $stmt = $this->pdo->prepare ("SELECT *, COUNT(favoris.id_recipe) FROM recipes
-                     JOIN favoris ON recipes.id = favoris.id_recipe
-                     JOIN categories ON recipes.id_category = categories.id
-                     GROUP BY recipes.id
-                     LIMIT 1;");
-         $stmt->execute();
-         $data = $stmt->fetch(PDO::FETCH_ASSOC);
-         
-         if ($data) {
-   
-    $categoryData = [
-        'id' => $data['id_category'],
-        'name' => $data['name'],
-    ];
-
-    $category = new CategoryModel($this->pdo);
-    $category->hydrate($categoryData);
+    $stmt = $this->pdo->prepare("
+        SELECT 
+            recipes.id AS recipe_id,
+            recipes.title AS recipe_title,
+            recipes.slug AS recipe_slug,
+            recipes.id_user,
+            recipes.id_category,
+            recipes.createdAt,
+            recipes.duration,
+            recipes.description,
+            categories.id AS category_id,
+            categories.name AS category_name,
+            categories.slug AS category_slug,
+            COUNT(favoris.id_recipe) AS popularity
+        FROM recipes
+        JOIN favoris ON recipes.id = favoris.id_recipe
+        JOIN categories ON recipes.id_category = categories.id
+        GROUP BY recipes.id
+        ORDER BY popularity DESC
+        LIMIT 1
+    ");
     
-    $this->hydrate($data);
-    $this->setCategory($category);
+    $stmt->execute();
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    return $this;
-   }  
+    if ($data) {
+        // Hydrater la catégorie
+        $category = new CategoryModel($this->pdo);
+        $category->hydrate([
+            'id' => $data['category_id'],
+            'name' => $data['category_name'],
+            'slug' => $data['category_slug']
+        ]);
 
-} 
+        // Hydrater la recette
+        $this->hydrate([
+            'id' => $data['recipe_id'],
+            'title' => $data['recipe_title'],
+            'slug' => $data['recipe_slug'],
+            'idUser' => $data['id_user'],
+            'idCategory' => $data['id_category'],
+            'createdAt' => $data['createdAt'],
+            'duration' => $data['duration'],
+            'description' => $data['description']
+        ]);
+
+        $this->setCategory($category);
+
+        return $this;
+    }
+
+    return null;
+}
 
 public function getAllRecipesByCategory() {
       $stmt = $this->pdo->prepare('SELECT * FROM `recipes`
