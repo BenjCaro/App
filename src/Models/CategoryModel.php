@@ -69,4 +69,13 @@ class CategoryModel extends BaseModel {
     ]);
   }
 
+ public function getCatBySlug(string $slug) {
+    
+     $stmt = $this->pdo->prepare('SELECT categories.id, categories.name
+      FROM `categories` 
+      WHERE categories.slug = :slug');
+      $stmt->execute(['slug' => $slug]);
+      return $stmt->fetch(PDO::FETCH_ASSOC);
+
+ }
 }

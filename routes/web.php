@@ -20,7 +20,7 @@ $router->map('GET', '/categories', function() {  // toutes les catégories list�
 
 $router->map('GET', '/categories/[*:slug]', function($slug) {    // page catégories ex: categories/dessert 
       $category = new CategoryController();
-      $category->displayRecipesByCat();
+      $category->displayRecipesByCat($slug);
 }); 
 
 $router->map('GET', '/recette/[*:slug]', function($slug) {    // page recette ex: recette/crepes 

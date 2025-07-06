@@ -317,7 +317,7 @@ public function getAllRecipesByCategory($idCategory) {
                      ];
 
       $category = new CategoryModel($this->pdo);
-      $category->$this->hydrate($categoryData);
+      $category->hydrate($categoryData);
 
       $recipe = new RecipeModel($this->pdo);
       $recipe->hydrate($data);
