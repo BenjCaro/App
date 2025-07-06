@@ -96,6 +96,12 @@ public function setIdCategory(int $idCategory): void {
       return $this->ingredients;
 }  
 
+ public function setIngredients(array $ingredients) :void {
+
+    $this->ingredients = $ingredients;
+    
+ }
+
 public function getCategory(): CategoryModel {
     return $this->category;
 }
@@ -105,7 +111,14 @@ public function setCategory(CategoryModel $category):void {
 }
 
 public function getRecipeBySlug(string $slug) {  // réaliser des jointures pour les ingrédients comme dans getRecipe()
-    $stmt = $this->pdo->prepare(' SELECT * 
+    $stmt = $this->pdo->prepare('SELECT
+     recipes.id AS recipe_id, 
+     recipes.title, 
+     recipes.duration, 
+     recipes.description,
+     ingredients.name,
+     recipes_ingredients.quantity,
+     recipes_ingredients.unit
     FROM recipes 
     JOIN recipes_ingredients ON recipes.id = recipes_ingredients.id_recipe
     JOIN ingredients ON ingredients.id = recipes_ingredients.id_ingredient
@@ -113,11 +126,48 @@ public function getRecipeBySlug(string $slug) {  // réaliser des jointures pour
     $stmt->execute([
        'slug' => $slug
     ]);
-   return $stmt->fetch(PDO::FETCH_ASSOC);
-  // hydrater ici
+   $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  
+   if (!$data) {
+        throw new \Exception("Aucune recette trouvée pour le slug : $slug");
+    }
+
+    
+    $recipe = new RecipeModel($this->pdo);
+    $recipe->hydrate([
+        'id' => $data[0]['recipe_id'],
+        'title' => $data[0]['title'],
+        'duration' => $data[0]['duration'],
+        'description' => $data[0]['description'],
+
+    ]);
+
+    
+    $ingredients = [];
+    foreach ($data as $row) {
+        $ingredient = new IngredientModel($this->pdo);
+        $ingredient->hydrate(['name' => $row['name']]);
+
+        $recipeIngredient = new RecipeIngredientModel($this->pdo);
+        $recipeIngredient->hydrate([
+            'quantity' => $row['quantity'],
+            'unit' => $row['unit']
+        ]);
+        $recipeIngredient->setIngredient($ingredient);
+
+        $ingredients[] = $recipeIngredient;
+    }
+
+    $recipe->setIngredients($ingredients);
+
+    return $recipe;
 }
 
-public function getRecipe() {
+
+
+
+
+public function getRecipe() { // pas utilisée pour le moment
 
       if (!$this->getId()) {
          throw new Exception("La recette n'existe pas.");
@@ -161,8 +211,7 @@ public function getRecipe() {
          $ingredients[] = $recipeIngredient;
       }
      
-      $this->ingredients = $ingredients;
-      return $data;
+      
 
    }
 

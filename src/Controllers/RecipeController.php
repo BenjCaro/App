@@ -11,7 +11,7 @@ class RecipeController extends BaseController {
             $recipe = $recipeModel->getRecipeBySlug($slug);
 
             $this->render('Pages/recette',[
-                'title' => 'Petit Creux | ' . ucfirst($recipe['title']),
+                'title' => 'Petit Creux | ' . ucfirst($recipe->getTitle()),
                 'recipe' => $recipe
             ]); 
 
