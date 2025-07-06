@@ -1,5 +1,5 @@
 <?php
-namespace Carbe\App\Views;
+namespace Carbe\App\Views\Pages\Views;
 
 ?>
 

@@ -11,10 +11,22 @@ $router->map('GET', '/', function() {
 
 });
 
-$router->map('GET', '/categories', function() {
+$router->map('GET', '/categories', function() {  // toutes les catégories listées
    
     $categories = new CategoryController();
     $categories->index();
 
 
 });
+
+
+
+ $router->map('GET', '/categories/[*:slug]', function($slug) {    // page catégories ex: categories/dessert 
+      echo "Catégorie : " . htmlspecialchars($slug);
+}); 
+
+
+ $router->map('GET', '/recette/[*:slug]', function($slug) {    // page recette ex: recette/crepes 
+  echo "Recette : " . htmlspecialchars($slug);
+ });
+

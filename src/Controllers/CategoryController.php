@@ -28,7 +28,7 @@ class CategoryController extends BaseController {
             $recipeModel = new RecipeModel($pdo);
             $recipes = $recipeModel->getAllRecipesByCategory();
 
-            $this->render('categories',  [
+            $this->render('Pages/categories',  [
             'title' => 'Petit Creux | Catégories',
             'categories' => $categories,
             'recipes' => $recipes
