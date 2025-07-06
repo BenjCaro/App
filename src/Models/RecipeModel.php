@@ -155,14 +155,21 @@ public function getRecipe() {
    }
 
  public function newRecipe() {
-      $stmt = $this->pdo->prepare("SELECT recipes.id, recipes.title, 
-      recipes.slug AS recipe_slug, recipes.createdAt, recipes.duration, recipes.description, 
-      categories.id AS category_id, categories.name AS category_name, 
-      categories.slug AS category_slug 
-      FROM recipes JOIN categories 
-      ON id_category = categories.id 
+      $stmt = $this->pdo->prepare("
+      SELECT 
+         recipes.id, 
+         recipes.title, 
+         recipes.slug AS recipe_slug, 
+         recipes.createdAt, recipes.duration, 
+         recipes.description, 
+         categories.id AS category_id, 
+         categories.name AS category_name, 
+         categories.slug AS category_slug 
+      FROM recipes 
+      JOIN categories ON id_category = categories.id 
       ORDER BY createdAt
       DESC LIMIT 1;");
+
       $stmt->execute();
       $data = $stmt->fetch(PDO::FETCH_ASSOC);
       
