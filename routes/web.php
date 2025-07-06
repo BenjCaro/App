@@ -4,7 +4,7 @@ namespace Carbe\App\Routes;
 use Carbe\App\Controllers\HomeController;
 use Carbe\App\Controllers\CategoryController;
 use Carbe\App\Controllers\RecipeController;
-use Carbe\App\Models\RecipeModel;
+use Carbe\App\Controllers\AboutController;
 
 $router->map('GET', '/', function() {
     
@@ -31,10 +31,11 @@ $router->map('GET', '/recette/[*:slug]', function($slug) {    // page recette ex
      $recipe->displayRecipe($slug);
 
     // recuperer le slug pour recuperer la recette via l'id
- });
+});
 
  $router->map('GET', '/a-propos', function() {
-   echo("A propos");
+       $about = new AboutController();
+       $about->displayAbout();
  });
 
   $router->map('GET', '/mon-compte', function() {
