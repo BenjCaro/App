@@ -3,6 +3,8 @@
 namespace Carbe\App\Routes;
 use Carbe\App\Controllers\HomeController;
 use Carbe\App\Controllers\CategoryController;
+use Carbe\App\Controllers\RecipeController;
+use Carbe\App\Models\RecipeModel;
 
 $router->map('GET', '/', function() {
     
@@ -25,6 +27,9 @@ $router->map('GET', '/categories/[*:slug]', function($slug) {    // page catégo
 
 $router->map('GET', '/recette/[*:slug]', function($slug) {    // page recette ex: recette/crepes 
     // instancier RecipeModel()
+     $recipe = new RecipeController();
+     $recipe->displayRecipe($slug);
+
     // recuperer le slug pour recuperer la recette via l'id
  });
 

@@ -112,7 +112,7 @@ public function getRecipeBySlug(string $slug) {  // réaliser des jointures pour
        'slug' => $slug
     ]);
    return $stmt->fetch(PDO::FETCH_ASSOC);
-
+  // hydrater ici
 }
 
 public function getRecipe(int $id) {
