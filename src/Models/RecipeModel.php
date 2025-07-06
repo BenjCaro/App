@@ -164,9 +164,6 @@ public function getRecipeBySlug(string $slug) {  // réaliser des jointures pour
 }
 
 
-
-
-
 public function getRecipe() { // pas utilisée pour le moment
 
       if (!$this->getId()) {
