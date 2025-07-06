@@ -1,8 +1,17 @@
 <?php
 
 namespace Carbe\App\Controllers;
+use Carbe\App\config\Database;
 
 class BaseController {
+
+    protected  $pdo;
+    
+     public function __construct()
+     {
+          $bdd = new Database();
+          $this->pdo = $bdd->connectDB();
+     }
 
     protected function render(string $view, array $data = []) {
 

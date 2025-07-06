@@ -24,7 +24,8 @@ $router->map('GET', '/categories/[*:slug]', function($slug) {    // page catégo
 }); 
 
 $router->map('GET', '/recette/[*:slug]', function($slug) {    // page recette ex: recette/crepes 
-  echo "Recette : " . htmlspecialchars($slug);
+    // instancier RecipeModel()
+    // recuperer le slug pour recuperer la recette via l'id
  });
 
  $router->map('GET', '/a-propos', function() {

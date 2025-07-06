@@ -104,8 +104,18 @@ public function setCategory(CategoryModel $category):void {
   $this->category = $category;
 }
 
+public function getRecipeBySlug(string $slug) {  // réaliser des jointures pour les ingrédients comme getRecipe()
+    $stmt = $this->pdo->prepare(' SELECT * 
+    FROM recipes 
+    WHERE recipes.slug = :slug');
+    $stmt->execute([
+       'slug' => $slug
+    ]);
+   return $stmt->fetch(PDO::FETCH_ASSOC);
 
-public function getRecipe() {
+}
+
+public function getRecipe(int $id) {
 
       if (!$this->getId()) {
          throw new Exception("La recette n'existe pas.");

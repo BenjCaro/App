@@ -10,13 +10,6 @@ use Carbe\App\Models\RecipeModel;
 
 class CategoryController extends BaseController {
      
-     private  $pdo;
-    
-     public function __construct()
-     {
-          $bdd = new Database();
-          $this->pdo = $bdd->connectDB();
-     }
 
 
      public function index() {
