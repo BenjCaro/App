@@ -26,12 +26,12 @@ class CategoryController extends BaseController {
             // SELECT * FROM `recipes`JOIN categories ON recipes.id_category = categories.id WHERE categories.id = :id
 
             $recipeModel = new RecipeModel($pdo);
-            $recipe = $recipeModel->getAllRecipesByCategory();
+            $recipes = $recipeModel->getAllRecipesByCategory();
 
             $this->render('categories',  [
             'title' => 'Petit Creux | Catégories',
             'categories' => $categories,
-            'recipe' => $recipe
+            'recipes' => $recipes
 
         ]);
      } 

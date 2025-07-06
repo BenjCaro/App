@@ -211,27 +211,32 @@ public function getRecipe() {
 
 public function getAllRecipesByCategory() {
       $stmt = $this->pdo->prepare('SELECT * FROM `recipes`
-                              JOIN categories ON recipes.id_category = categories.id
-                              WHERE categories.id = :id');
-     $stmt->execute(['id' => ':id']);
+                              JOIN categories ON recipes.id_category = categories.id');
+     $stmt->execute();
 
-      $data = $stmt->fetch(PDO::FETCH_ASSOC);
+      $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-      if($data) {
-         $categoryData = [
-        'id' => $data['id'],
-        'name' => $data['name'],
+      $recipes = [];
+
+      foreach($results as $data) {
+            $categoryData = [
+         'id' => $data['id'],
+         'name' => $data['name']
       ];
 
          $category = new CategoryModel($this->pdo);
          $category->hydrate($categoryData);
-    
-         $this->hydrate($data);
-         $this->setCategory($category);
 
-         return $this;
+         $recipe = new RecipeModel($this->pdo);
+         $recipe->hydrate($data);
+         $recipe->setCategory($category);
+
+         $recipes[] = $recipe;
+
       }
-       return null;
+
+      return $recipes;
+    
 }
 
  
