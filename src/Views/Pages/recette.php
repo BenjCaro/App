@@ -7,6 +7,7 @@ namespace Carbe\App\Views\Pages;
 <main class='container p-3 bg-light'> 
     
     <h2 class='text-center fs-2 mb-3'><?= $recipe->getTitle() ?>  </h2>
+    <span class="badge text-bg-secondary"> <?= $recipe->getCategory()->getName()?></span>
     <span class="badge text-bg-secondary">Temps de préparation: <?= $recipe->getDuration()?> minutes</span>
     <h3 class='mt-3 fs-3 text-center'>Ingrédients</h3>
     <div class="card bg-gris border border-primary w-50 p-3 mx-auto">

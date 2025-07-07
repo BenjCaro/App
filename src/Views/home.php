@@ -28,7 +28,7 @@ namespace Carbe\App\Views;
                             <span class="fs-6">durée: <?= $recipe->getDuration() . 'mns' ?></span>
                         </h3>
                         <a class="text-secondary nav-link" href="/recette/<?= $recipe->getSlug(); ?>">Voir la recette</a>
-                        <span><?= $recipe->getCategory()->getName(); ?></span>
+                        <span class="badge text-bg-secondary"><?= $recipe->getCategory()->getName(); ?></span>
                         <?php } ?>
                 </div>
             </div>
@@ -41,7 +41,7 @@ namespace Carbe\App\Views;
                                 <?= $lastRecipe->getTitle()?>
                             <span class="fs-6">durée: <?= $lastRecipe->getDuration() . 'mns' ?></span>
                         </h3>
-                        <span><?=  ucwords($lastRecipe->getCategory()->getName());?></span>
+                        <span class="badge text-bg-secondary"><?=  ucwords($lastRecipe->getCategory()->getName());?></span>
                         <a class="text-secondary nav-link" href="/recette/<?= $lastRecipe->getSlug(); ?>">Voir la recette</a>
               </div>
             </div>
@@ -54,7 +54,7 @@ namespace Carbe\App\Views;
                                 <?= $popularRecipe->getTitle()?>
                             <span class="fs-6">durée: <?= $popularRecipe->getDuration() . 'mns' ?></span>
                         </h3>
-                        <span><?=  ucwords($popularRecipe->getCategory()->getName());?></span>
+                        <span class="badge text-bg-secondary"><?=  ucwords($popularRecipe->getCategory()->getName());?></span>
                         <a class="text-secondary nav-link" href="/recette/<?= $popularRecipe->getSlug(); ?>">Voir la recette</a>        
                 </div>
             </div>
