@@ -14,7 +14,8 @@ class RecipeModel extends BaseModel {
 
    protected string $table = 'recipes';
 
-  
+  /** @var RecipeIngredientModel[] $ingredients */
+
     private array $ingredients = [];
     private string $title;
     private string $slug;
@@ -25,7 +26,11 @@ class RecipeModel extends BaseModel {
     private ?string $description;
     private CategoryModel $category;
 
-    public function __construct(PDO $pdo, array $data = [])
+/**
+* @param array <string, mixed> $data
+*/
+
+public function __construct(PDO $pdo, array $data = [])
     {
         parent::__construct($pdo);
        
@@ -34,7 +39,7 @@ class RecipeModel extends BaseModel {
       }
     }
 
-    public function getTitle() :string {
+public function getTitle() :string {
         return $this->title;
    }
 
@@ -71,30 +76,33 @@ public function getCreatedAt() :string {
     return $this->createdAt;
   }
 
-  public function setCreatedAt(string $createdAt) : void {
+public function setCreatedAt(string $createdAt) : void {
    $this->createdAt = $createdAt;
   }
 
-  public function getDuration() :int {
+public function getDuration() :int {
      return $this->duration;
 
   }
 
-  public function setDuration(int $duration) :void {
+public function setDuration(int $duration) :void {
      $this->duration = $duration;
   }
 
-  public function getDescription() :string {
+public function getDescription() :string {
      return $this->description;
   }
 
-  public function setDescription(?string $description) :void {
+public function setDescription(?string $description) :void {
     $this->description = $description;
   }
 
-   public function getIngredients(): array {
+/** @return RecipeIngredientModel[] $ingredients */
+
+  public function getIngredients(): array {
       return $this->ingredients;
 }  
+/** @param RecipeIngredientModel[] $ingredients */
 public function setIngredients(array $ingredients) :void {
 
     $this->ingredients = $ingredients;
@@ -108,7 +116,13 @@ public function setCategory(CategoryModel $category):void {
   $this->category = $category;
 }
 
-public function getRecipeBySlug(string $slug) {  // réaliser des jointures pour les ingrédients comme dans getRecipe()
+
+/**
+ * @throws \Exception Si aucune recette n'est trouvée pour le slug donné
+ * @return RecipeModel
+ */
+
+public function getRecipeBySlug(string $slug) :RecipeModel {  
     $stmt = $this->pdo->prepare('SELECT
      recipes.id AS recipe_id, 
      recipes.title, 
@@ -161,7 +175,7 @@ public function getRecipeBySlug(string $slug) {  // réaliser des jointures pour
     return $recipe;
 }
 
-public function newRecipe() {
+public function newRecipe() :RecipeModel {
       $stmt = $this->pdo->prepare("
       SELECT 
          recipes.id, 
@@ -180,9 +194,10 @@ public function newRecipe() {
       $stmt->execute();
       $data = $stmt->fetch(PDO::FETCH_ASSOC);
       
+      if (!$data) {
+        throw new \Exception("Aucune recette trouvée");
+    }
       
-      if ($data) {
-         
          $categoryData = [
         'id' => $data['category_id'],
         'name' => $data['category_name'],
@@ -203,13 +218,10 @@ public function newRecipe() {
          $this->setCategory($category);
 
          return $this;
-      }
-
-    return null;
 
    }
 
-public function getMostPopularRecipe() {
+public function getMostPopularRecipe() :?RecipeModel {
     $stmt = $this->pdo->prepare("
         SELECT 
             recipes.id AS recipe_id,
@@ -264,7 +276,11 @@ public function getMostPopularRecipe() {
     return null;
 }
 
-public function getAllRecipesWithCategory() {
+ /**
+ * @return RecipeModel[]
+ */
+
+public function getAllRecipesWithCategory() :array {
       $stmt = $this->pdo->prepare('SELECT * FROM `recipes`
                               JOIN categories ON recipes.id_category = categories.id');
      $stmt->execute();
@@ -294,7 +310,10 @@ public function getAllRecipesWithCategory() {
     
 }
 
-public function getAllRecipesByCategory($idCategory) {
+ /**
+ * @return RecipeModel[]
+ */
+public function getAllRecipesByCategory($idCategory) :array {
     $stmt = $this->pdo->prepare('
     SELECT 
     recipes.id AS recipe_id, 

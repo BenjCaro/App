@@ -11,6 +11,18 @@ class FavorisModel extends BaseModel {
     private int $idUser; 
     private int $idRecipe;
 
+/**
+ * @param array<string, mixed> $data
+ */
+public function __construct(PDO $pdo, array $data = [])
+    {
+        parent::__construct($pdo);
+       
+      if (!empty($data)) {
+            $this->hydrate($data);
+      }
+    }
+
     public function getIdUser(): int {
     return $this->idUser;
 }
@@ -27,15 +39,6 @@ public function setIdRecipe(int $idRecipe): void {
     $this->idRecipe = $idRecipe;
 }
 
-
-    public function __construct(PDO $pdo, array $data = [])
-    {
-        parent::__construct($pdo);
-       
-      if (!empty($data)) {
-            $this->hydrate($data);
-      }
-    }
 
     public function addToFavoris(int $idUser, int $idRecipe) :bool {
 

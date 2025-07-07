@@ -24,7 +24,8 @@ class BaseModel {
         $this->id = $id;
     }
 
-    public function findById(int $id) {
+    public function findById(int $id) :?static
+ {
         $stmt = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE id = :id");
         $stmt->execute(['id' => $id]);
 
@@ -41,10 +42,15 @@ class BaseModel {
 
     }
 
-    public function findAll() {
+ /**
+ * @return static[]
+ */
+
+
+    public function findAll() :array {
         $stmt = $this->pdo->query("SELECT * FROM {$this->table}");
         $stmt->execute();
-        $result= $stmt->fetchAll(PDO::FETCH_ASSOC) ?: null;
+        $result= $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
 
         $objects = [];
 
@@ -59,7 +65,12 @@ class BaseModel {
 
     }
 
-    public function insert(array $data) {
+/**
+ *  @param array<string, mixed> $data
+ */
+
+
+    public function insert(array $data) :void {
         $array = array_keys($data);
         $columns = implode( ", " , $array);
         $values = ':' . implode(', :', $array);
@@ -68,6 +79,11 @@ class BaseModel {
         $stmt->execute($data);
 
     }   
+
+/**
+ *  @param array<string, mixed> $data
+ */
+
 
     public function hydrate(array $data): void {
 

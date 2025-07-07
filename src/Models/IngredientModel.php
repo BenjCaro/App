@@ -11,6 +11,10 @@ class IngredientModel extends BaseModel {
     private string $name;
     private string $type;
 
+/**
+ * @param array<string, mixed> $data
+ */
+
     public function __construct(PDO $pdo, array $data = []) {
         
       parent::__construct($pdo);
