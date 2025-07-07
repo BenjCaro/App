@@ -3,7 +3,7 @@ namespace Carbe\App\Views\Pages\Views;
 
 ?>
 
-<main class='container p-3 bg-light'>
+<main class='container p-3 bg-light border-end border-start border-secondary'>
     <div>
        <section class="categories text-center">
             <div class="card bg-gris h-100 border border-primary" >

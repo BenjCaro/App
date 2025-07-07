@@ -47,7 +47,8 @@ public function index(): void
 
           $this->render('Pages/category', [
                'title' => 'Petit Creux | '  . ucfirst($category['name']),
-               'recipes' => $recipes
+               'recipes' => $recipes,
+               'category' => $category
 
           ]);
 

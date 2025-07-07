@@ -1,1 +1,1 @@
-<footer class="text-center bg-primary border-top border-secondary border-2">Petit Creux 2025 tous droits réservés</footer>
+<footer class="text-center bg-primary border-top border-cacao border-2">Petit Creux 2025 tous droits réservés</footer>
