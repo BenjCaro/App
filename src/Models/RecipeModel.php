@@ -351,6 +351,7 @@ public function getAllRecipesByCategory($idCategory) {
     recipes.id AS recipe_id, 
     recipes.title, 
     recipes.id_user, 
+    recipes.slug,
     recipes.createdAt, 
     recipes.duration, 
     recipes.description, 
