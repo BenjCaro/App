@@ -4,6 +4,7 @@ namespace Carbe\App\Models;
 
 use PDO;
 
+/** @phpstan-consistent-constructor */
 class BaseModel {
 
     protected PDO $pdo;
