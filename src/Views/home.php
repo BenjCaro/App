@@ -7,7 +7,7 @@ namespace Carbe\App\Views;
 /** @var Carbe\App\Models\CategoryModel $categories */
 
 ?>
-<main class='container p-3 bg-light'>
+<main class='container p-3 bg-light border-end border-start border-secondary'>
     <!-- <div class="container-fluid mt-2">
         <form class="d-flex" role="search">
         <input class="form-control me-2 bg-gris" type="search" placeholder="Recherche" aria-label="Search"/>
