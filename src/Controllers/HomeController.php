@@ -13,7 +13,7 @@ class HomeController extends BaseController {
   // connexion database ;)
 
 
-    public function index() {
+    public function index() :void {
 
      
 

@@ -12,6 +12,11 @@ class CategoryModel extends BaseModel {
     private string $slug;
     private string $image;
 
+  /**
+ * @param array<string, mixed> $data
+ */
+
+
     public function __construct(PDO $pdo, array $data = []) {
         
       parent::__construct($pdo);
@@ -69,13 +74,21 @@ class CategoryModel extends BaseModel {
     ]);
   }
 
- public function getCatBySlug(string $slug) {
+/**
+ * @return array<string, mixed>|false
+ */
+
+
+ public function getCatBySlug(string $slug) :array|false
+ {
     
      $stmt = $this->pdo->prepare('SELECT categories.id, categories.name
       FROM `categories` 
       WHERE categories.slug = :slug');
       $stmt->execute(['slug' => $slug]);
-      return $stmt->fetch(PDO::FETCH_ASSOC);
+      $results= $stmt->fetch(PDO::FETCH_ASSOC);
+
+      return $results ?: null;
 
  }
 }

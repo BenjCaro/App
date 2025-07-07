@@ -1,6 +1,11 @@
 <?php
 namespace Carbe\App\Views;
 
+/** @var Carbe\App\Models\RecipeModel[] $favoris */
+/** @var Carbe\App\Models\RecipeModel $lastRecipe */
+/** @var Carbe\App\Models\RecipeModel $popularRecipe */
+/** @var Carbe\App\Models\CategoryModel $categories */
+
 ?>
 <main class='container p-3 bg-light'>
     <!-- <div class="container-fluid mt-2">

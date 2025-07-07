@@ -16,7 +16,11 @@ class UserModel extends BaseModel {
   private string $role;
   private string $createdAt; 
 
-  public function __construct(PDO $pdo, array $data = []) {
+/**
+* @param array <string, mixed> $data
+*/
+
+public function __construct(PDO $pdo, array $data = []) {
         
       parent::__construct($pdo);
        
@@ -105,7 +109,11 @@ class UserModel extends BaseModel {
       
   }
 
-  public function getFavoris() {
+/**
+ * @return RecipeModel[]
+ */
+
+  public function getFavoris() :array {
       $stmt = $this->pdo->prepare("SELECT users.id, users.name, firstname, email, role, favoris.id_user, recipes.*, categories.name
                                   FROM users
                                   JOIN favoris ON favoris.id_user = users.id

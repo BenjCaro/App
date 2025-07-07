@@ -1,3 +1,9 @@
+<?php
+
+/** @var string $title */
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>

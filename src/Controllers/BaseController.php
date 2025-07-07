@@ -2,10 +2,11 @@
 
 namespace Carbe\App\Controllers;
 use Carbe\App\config\Database;
+use PDO;
 
 class BaseController {
 
-    protected  $pdo;
+    protected PDO $pdo;
     
      public function __construct()
      {
@@ -13,7 +14,12 @@ class BaseController {
           $this->pdo = $bdd->connectDB();
      }
 
-    protected function render(string $view, array $data = []) {
+ /**
+ * @param array<string, mixed> $data
+ */
+
+
+    protected function render(string $view, array $data = []) :void {
 
         extract($data);
         require_once VIEW_PATH . '/Partials/header.php';
