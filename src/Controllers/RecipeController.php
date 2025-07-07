@@ -5,7 +5,7 @@ use Carbe\App\Models\RecipeModel;
 class RecipeController extends BaseController {
      
     
-        public function displayRecipe(string $slug) {
+        public function displayRecipe(string $slug) :void {
 
             $recipeModel = new RecipeModel($this->pdo); 
             $recipe = $recipeModel->getRecipeBySlug($slug);

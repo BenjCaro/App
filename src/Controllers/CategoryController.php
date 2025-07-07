@@ -12,7 +12,7 @@ class CategoryController extends BaseController {
      
 
 
-     public function index() {
+     public function index() :void {
             
            
             // trouver toutes les catégories findALl
@@ -34,7 +34,7 @@ class CategoryController extends BaseController {
         ]);
      } 
 
-     public function displayRecipesByCat(string $slug) {
+     public function displayRecipesByCat(string $slug) :void {
 
           $categoryModel = new CategoryModel($this->pdo);
           $category = $categoryModel->getCatBySlug($slug);
