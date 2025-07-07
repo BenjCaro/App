@@ -130,10 +130,12 @@ public function getRecipeBySlug(string $slug) :RecipeModel {
      recipes.description,
      ingredients.name,
      recipes_ingredients.quantity,
-     recipes_ingredients.unit
+     recipes_ingredients.unit,
+     categories.name AS category_name
     FROM recipes 
     JOIN recipes_ingredients ON recipes.id = recipes_ingredients.id_recipe
     JOIN ingredients ON ingredients.id = recipes_ingredients.id_ingredient
+    JOIN categories ON categories.id = recipes.id_category
     WHERE recipes.slug = :slug');
     $stmt->execute([
        'slug' => $slug
@@ -169,8 +171,12 @@ public function getRecipeBySlug(string $slug) :RecipeModel {
 
         $ingredients[] = $recipeIngredient;
     }
+    $category = new CategoryModel($this->pdo);
+    $category->hydrate(['name' =>$row['category_name']]);
+    $recipe->setCategory($category);
 
     $recipe->setIngredients($ingredients);
+
 
     return $recipe;
 }
