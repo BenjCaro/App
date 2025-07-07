@@ -15,25 +15,24 @@ class HomeController extends BaseController {
 
     public function index() {
 
-      $bdd = new Database();
-      $pdo = $bdd->connectDB();
+     
 
       // affichage des favoris de l'utilisateur connecté
 
-      $userModel = new UserModel($pdo);
+      $userModel = new UserModel($this->pdo);
       $user = $userModel->findById(1);  
       $favoris = $user ? $user->getFavoris() : [];
 
       // affiche derniere recette ajouté
 
-      $lastRecipe = (new RecipeModel($pdo))->newRecipe();
+      $lastRecipe = (new RecipeModel($this->pdo))->newRecipe();
     ;
       // affiche les recettes avec le plus de favoris
-      $popularRecipe = (new RecipeModel($pdo))->getMostPopularRecipe();
+      $popularRecipe = (new RecipeModel($this->pdo))->getMostPopularRecipe();
       
       // afficher les catégories findAll
       
-      $category = new CategoryModel($pdo);
+      $category = new CategoryModel($this->pdo);
       $categories = $category->findAll();
 
       $this->render('home',  [

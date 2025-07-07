@@ -9,30 +9,45 @@ use Carbe\App\Models\RecipeModel;
 
 
 class CategoryController extends BaseController {
-     // trouver toutes les catégories findALl
-     // trouver toutes les recipes de chaque catégories 
+     
+
 
      public function index() {
             
-            $bdd = new Database();
-            $pdo = $bdd->connectDB();
-
+           
             // trouver toutes les catégories findALl
 
-            $category = new CategoryModel($pdo);
+            $category = new CategoryModel($this->pdo);
             $categories = $category->findAll();
 
             // trouver toutes les recipes de chaque catégories 
             // SELECT * FROM `recipes`JOIN categories ON recipes.id_category = categories.id WHERE categories.id = :id
 
-            $recipeModel = new RecipeModel($pdo);
-            $recipes = $recipeModel->getAllRecipesByCategory();
+            $recipeModel = new RecipeModel($this->pdo);
+            $recipes = $recipeModel->getAllRecipesWithCategory();
 
-            $this->render('categories',  [
+            $this->render('Pages/categories',  [
             'title' => 'Petit Creux | Catégories',
             'categories' => $categories,
             'recipes' => $recipes
 
         ]);
      } 
+
+     public function displayRecipesByCat(string $slug) {
+
+          $categoryModel = new CategoryModel($this->pdo);
+          $category = $categoryModel->getCatBySlug($slug);
+          
+          $recipeModel = new RecipeModel($this->pdo);
+          $recipes= $recipeModel->getAllRecipesByCategory($category['id']); // id dynamique des catégories
+
+          $this->render('Pages/category', [
+               'title' => 'Petit Creux | '  . ucfirst($category['name']),
+               'recipes' => $recipes
+
+          ]);
+
+
+     }
 }

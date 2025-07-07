@@ -14,13 +14,13 @@ use PDO;
  
 class Database {
 
-  public function connectDB() {
+  public function connectDB() :PDO {
 
     $user = 'root';
     $pass = '';
 
         try {
-          return  $dbh = new PDO('mysql:host=localhost;dbname=db_test', $user, $pass);
+          return  $dbh = new PDO('mysql:host=localhost;dbname=petit_creux', $user, $pass);
             // error_log('Connexion à la base réussie');
 
         } catch(Exception $e) {
