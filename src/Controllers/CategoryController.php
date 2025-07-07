@@ -12,27 +12,30 @@ class CategoryController extends BaseController {
      
 
 
-     public function index() :void {
-            
-           
-            // trouver toutes les catégories findALl
+public function index(): void
+{
+    $categoryModel = new CategoryModel($this->pdo);
+    $categories = $categoryModel->findAll();
 
-            $category = new CategoryModel($this->pdo);
-            $categories = $category->findAll();
+    $recipeModel = new RecipeModel($this->pdo);
+    $recipesByCategory = [];
 
-            // trouver toutes les recipes de chaque catégories 
-            // SELECT * FROM `recipes`JOIN categories ON recipes.id_category = categories.id WHERE categories.id = :id
+    foreach ($categories as $category) {
+        $categoryId = $category->getId();
+        $recipes = $recipeModel->getAllRecipesByCategory($categoryId);
 
-            $recipeModel = new RecipeModel($this->pdo);
-            $recipes = $recipeModel->getAllRecipesWithCategory();
-
-            $this->render('Pages/categories',  [
-            'title' => 'Petit Creux | Catégories',
-            'categories' => $categories,
+        $recipesByCategory[] = [
+            'category' => $category,
             'recipes' => $recipes
+        ];
+    }
 
-        ]);
-     } 
+    $this->render('Pages/categories', [
+        'title' => 'Petit Creux | Catégories',
+        'categories' => $categories,
+        'recipesByCategory' => $recipesByCategory
+    ]);
+}
 
      public function displayRecipesByCat(string $slug) :void {
 

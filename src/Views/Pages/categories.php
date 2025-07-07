@@ -1,13 +1,6 @@
 <?php
 namespace Carbe\App\Views\Pages\Views;
 
-
-
-/** @var Carbe\App\Models\RecipeModel[] $recipes */
-/** @var Carbe\App\Models\CategoryModel[] $categories */
-
-
-
 ?>
 
 <main class='container p-3 bg-light'>
@@ -15,7 +8,7 @@ namespace Carbe\App\Views\Pages\Views;
        <section class="categories text-center">
             <div class="card bg-gris h-100 border border-primary" >
                 <div class="card-body">
-                    <h2 class='card-title'>Catégories</h2>
+                    <h2 class='card-title text-center'>Catégories</h2>
                     <div class="d-flex justify-content-evenly align-items-start">
                         <?php foreach($categories as $category)  { ?>
                         <div class="d-flex flex-column justify-content-center mt-2">
@@ -27,12 +20,30 @@ namespace Carbe\App\Views\Pages\Views;
                 </div>
             </div>
         </section>
-        <section>
-                        
-                         <?php foreach($recipes as $recipe) { ?>
-
-                                <p><?= $recipe->getTitle() ?></p>
-                        <?php } ?>
-        </section>
+<?php foreach ($recipesByCategory as $entry): 
+                    $category = $entry['category'];
+                    $recipes = $entry['recipes'];
+             ?>
+            <section class="mt-2 mb-2">
+                <div class="card bg-gris h-100 border border-primary p-3">
+                    <h2 class="text-center">
+                        <?= htmlspecialchars($category->getName()) ?>
+                        <img class="icone" alt="icone <?= htmlspecialchars($category->getName()) ?>" src="/assets/images/<?= htmlspecialchars($category->getImage()) ?>"/>
+                    </h2>
+                    <div class="row g-3">
+                        <?php foreach ($recipes as $recipe): ?>
+                            <div class="col-md-4">
+                                <div class="card h-100 bg-primary border border-secondary p-2">
+                                    <h3><?= htmlspecialchars($recipe->getTitle()) ?></h3>
+                                    <span class="badge text-bg-secondary w-25"><?= htmlspecialchars($recipe->getDuration()) . ' minutes' ?></span>
+                                  <button type="button" class="btn btn-orange mt-2"><a class="text-light nav-link" href="/recette/<?= $recipe->getSlug()?>">Voir la recette</a></button>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </section>
+<?php endforeach; ?>
+        
     </div>
 </main>
