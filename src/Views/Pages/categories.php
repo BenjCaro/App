@@ -28,7 +28,6 @@ namespace Carbe\App\Views\Pages\Views;
                 <div class="card bg-gris h-100 border border-primary p-3">
                     <h2 class="text-center">
                         <?= htmlspecialchars($category->getName()) ?>
-                        <img class="icone" alt="icone <?= htmlspecialchars($category->getName()) ?>" src="/assets/images/<?= htmlspecialchars($category->getImage()) ?>"/>
                     </h2>
                     <div class="row g-3">
                         <?php foreach ($recipes as $recipe): ?>
