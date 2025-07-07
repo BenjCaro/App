@@ -67,7 +67,7 @@ public function setIdCategory(int $idCategory): void {
 }
 
 
-  public function getCreatedAt() :string {
+public function getCreatedAt() :string {
     return $this->createdAt;
   }
 
@@ -95,13 +95,11 @@ public function setIdCategory(int $idCategory): void {
    public function getIngredients(): array {
       return $this->ingredients;
 }  
-
- public function setIngredients(array $ingredients) :void {
+public function setIngredients(array $ingredients) :void {
 
     $this->ingredients = $ingredients;
     
  }
-
 public function getCategory(): CategoryModel {
     return $this->category;
 }
@@ -163,56 +161,7 @@ public function getRecipeBySlug(string $slug) {  // réaliser des jointures pour
     return $recipe;
 }
 
-
-public function getRecipe() { // pas utilisée pour le moment
-
-      if (!$this->getId()) {
-         throw new Exception("La recette n'existe pas.");
-      }  
-
-      $stmt = $this->pdo->prepare("SELECT *
-               FROM recipes AS r
-               JOIN recipes_ingredients ON r.id = recipes_ingredients.id_recipe
-               JOIN ingredients ON ingredients.id = recipes_ingredients.id_ingredient
-               WHERE r.id = :id;");
-      
-      $stmt->execute([
-         'id' => $this->getId()
-      ]);
-   
-
-      $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-      $this->hydrate($data[0]);
-      
-
-      $ingredients = [];
-
-      foreach($data as $row) {
-         $ingredient = new IngredientModel($this->pdo);
-         $ingredient->hydrate([
-                'id' => $row['id_ingredient'],
-                'name' => $row['name'],
-                'type' => $row['type']
-            ]);
-
-         $recipeIngredient = new RecipeIngredientModel($this->pdo);
-         $recipeIngredient->hydrate([
-
-                  'quantity' => $row['quantity'],
-                  'unit' => $row['unit']
-
-          ]);
-
-         $recipeIngredient->setIngredient($ingredient);
-    
-         $ingredients[] = $recipeIngredient;
-      }
-     
-      
-
-   }
-
- public function newRecipe() {
+public function newRecipe() {
       $stmt = $this->pdo->prepare("
       SELECT 
          recipes.id, 
@@ -260,7 +209,7 @@ public function getRecipe() { // pas utilisée pour le moment
 
    }
 
- public function getMostPopularRecipe() {
+public function getMostPopularRecipe() {
     $stmt = $this->pdo->prepare("
         SELECT 
             recipes.id AS recipe_id,
