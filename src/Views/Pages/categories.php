@@ -1,6 +1,13 @@
 <?php
 namespace Carbe\App\Views\Pages\Views;
 
+
+
+/** @var Carbe\App\Models\RecipeModel[] $recipes */
+/** @var Carbe\App\Models\CategoryModel[] $categories */
+
+
+
 ?>
 
 <main class='container p-3 bg-light'>

@@ -313,7 +313,7 @@ public function getAllRecipesWithCategory() :array {
  /**
  * @return RecipeModel[]
  */
-public function getAllRecipesByCategory($idCategory) :array {
+public function getAllRecipesByCategory(int $idCategory) :array {
     $stmt = $this->pdo->prepare('
     SELECT 
     recipes.id AS recipe_id, 

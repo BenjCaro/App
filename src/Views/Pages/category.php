@@ -1,7 +1,12 @@
 <?php
 namespace Carbe\App\Views\Pages\Views;
 
-// afficher toutes les recettes de la catégorie
+
+
+/** @var Carbe\App\Models\RecipeModel[] $recipes */
+
+
+
 ?>
 
 <main class='container p-3 bg-light'> 
