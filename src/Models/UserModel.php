@@ -38,63 +38,69 @@ public function __construct(PDO $pdo, array $data = []) {
      $this->name = $name;
   }
 
-  public function getFirstname() :string {
+public function getFirstname() :string {
     return $this->firstname;
   }
 
-  public function setFirstname(string $firstname) :void {
+public function setFirstname(string $firstname) :void {
     $this->firstname = $firstname;
   }
 
-  public function getEmail() :string {
+public function getEmail() :string {
      return $this->email;
   }
 
-  public function setEmail(string $email) :void {
+public function setEmail(string $email) :void {
     $this->email = $email;
   }
 
-  public function getPassword() :string {
+public function getPassword() :string {
    return $this->password;
   }
 
-  public function setPassword(string $password) :void {
+public function setPassword(string $password) :void {
     $this->password = password_hash($password, PASSWORD_DEFAULT); 
   }
 
-  public function getRole() :string {
+public function getRole() :string {
     return $this->role;
   }
 
-  public function setRole(string $role) :void {
+public function setRole(string $role) :void {
 
     $this->role = $role;
 
   }
 
-  public function getCreatedAt() :string {
+public function getCreatedAt() :string {
     return $this->createdAt;
   }
 
-  public function setCreatedAt(string $createdAt) :void {
+public function setCreatedAt(string $createdAt) :void {
+
     $this->createdAt = $createdAt;
   }
 
-  public function save() :bool { // creation d'utilisateur 
 
-      $stmt = $this->pdo->prepare("INSERT INTO users (name, firstname, email, password, role) 
-      VALUES (:name, :firstname, :email, :password, :role)");
-      
-      return $stmt->execute([
-        'name' => $this->getName(),
-        'firstname' => $this->getFirstname(),
-        'email' => $this->getEmail(),
-        'password' => $this->getPassword(),
-        'role' => $this->getRole()
-      ]);
-  }
 
-  public function update() : bool { // modif utilisateur
+public function findUserByEmail(string $email) :?UserModel {
+    $stmt = $this->pdo->prepare('SELECT id, name, firstname, password, role FROM users WHERE email = :email');
+    $stmt->execute([
+      'email' => $email
+    ]);
+
+  $result =$stmt->fetch(PDO::FETCH_ASSOC);
+
+     if (!$result) {
+        return null;
+    }
+
+  return new UserModel($result);
+
+}
+
+
+public function update() : bool { // modif utilisateur
 
       $stmt = $this->pdo->prepare("UPDATE users SET name = :name, firstname = :firstname, email = :email, password = :password WHERE id = :id");
     
@@ -109,11 +115,13 @@ public function __construct(PDO $pdo, array $data = []) {
       
   }
 
+
+
 /**
  * @return RecipeModel[]
  */
 
-  public function getFavoris() :array {
+ public function getFavoris() :array {
       $stmt = $this->pdo->prepare("SELECT users.id, users.name, firstname, email, role, favoris.id_user, recipes.*, categories.name
                                   FROM users
                                   JOIN favoris ON favoris.id_user = users.id
