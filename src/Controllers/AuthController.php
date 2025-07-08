@@ -32,9 +32,6 @@ public function login(string $email, string $password) :void {
             session_start();
             $_SESSION['user'] = [
                 'id' => $user->getId(),
-                'nom' => $user->getName(),
-                'prenom' => $user->getFirstname(),
-                'role' => $user->getRole()
             ];
 
             header("Location: /");

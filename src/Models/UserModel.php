@@ -46,9 +46,6 @@ public function setFirstname(string $firstname) :void {
     $this->firstname = $firstname;
   }
 
-public function getFullname() :string {
-    return $this->getName() . ' ' . $this->getFirstname();
-}
 
 public function getEmail() :string {
      return $this->email;
@@ -126,7 +123,7 @@ public function update() : bool { // modif utilisateur
  */
 
  public function getFavoris() :array {
-      $stmt = $this->pdo->prepare("SELECT users.id, users.name, firstname, email, role, favoris.id_user, recipes.*, categories.name
+      $stmt = $this->pdo->prepare("SELECT users.id, users.name AS user_name, firstname, email, role, favoris.id_user, recipes.*, categories.name AS category_name
                                   FROM users
                                   JOIN favoris ON favoris.id_user = users.id
                                   JOIN recipes ON favoris.id_recipe = recipes.id
@@ -141,7 +138,7 @@ public function update() : bool { // modif utilisateur
       if (!empty($data)) {
         $this->hydrate([
             'id' => $data[0]['id'], 
-            'name' => $data[0]['name'], 
+            'name' => $data[0]['user_name'], 
             'firstname' => $data[0]['firstname'],
             'email' => $data[0]['email'],
             'role' => $data[0]['role'],
@@ -164,7 +161,7 @@ public function update() : bool { // modif utilisateur
 
          $category = new CategoryModel($this->pdo);
          $category->hydrate([
-        'name' => $row['name']
+        'name' => $row['category_name']
           ]);
         
         $recipe->setCategory($category);
