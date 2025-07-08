@@ -2,7 +2,6 @@
 
 namespace Carbe\App\Controllers;
 use Carbe\App\Controllers\BaseController;
-use Carbe\App\config\Database;
 use Carbe\App\Models\CategoryModel;
 use Carbe\App\Models\RecipeModel;
 

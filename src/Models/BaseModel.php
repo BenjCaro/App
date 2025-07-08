@@ -70,7 +70,7 @@ class BaseModel {
  */
 
 
-    public function insert(array $data) :void {
+public function insert(array $data) :void {
         $array = array_keys($data);
         $columns = implode( ", " , $array);
         $values = ':' . implode(', :', $array);

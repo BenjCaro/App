@@ -14,8 +14,9 @@ namespace Carbe\App\Views;
         <button class="btn btn-outline-success" type="submit"><img src="/assets/images/search.svg" alt=""></button>
         </form>
    </div> -->
-  
+   <?= var_dump($_SESSION)?>
    <!-- Mise en place des cards -->
+    <h2 class="text-center">Bienvenue  <?= $user->getFirstname();?></h2>
     <div class="grid mt-1 mb-3">
         <section class="favoris">
             <div class="card bg-gris h-100 border border-primary" >
@@ -23,12 +24,12 @@ namespace Carbe\App\Views;
                     <h2 class='card-title text-center'>Mes favoris</h2>
                         <?php
                     foreach ($favoris as $recipe) {  ?>
-                        <h3 class="card-subtitle text-body-secondary fs-4"> 
+                        <h3 class="card-subtitle text-body-secondary fs-4 mb-2"> 
                                 <?= $recipe->getTitle()?>
                             <span class="fs-6">durée: <?= $recipe->getDuration() . 'mns' ?></span>
                         </h3>
-                        <a class="text-secondary nav-link" href="/recette/<?= $recipe->getSlug(); ?>">Voir la recette</a>
                         <span class="badge text-bg-secondary"><?= $recipe->getCategory()->getName(); ?></span>
+                        <a class="text-secondary nav-link" href="/recette/<?= $recipe->getSlug(); ?>">Voir la recette</a>
                         <?php } ?>
                 </div>
             </div>
