@@ -29,15 +29,18 @@ private UserModel $userModel;
                 }
 
                 if ($user && password_verify($password, $user->getPassword())) {
-                session_start();
-                $_SESSION['user'] = [
+                    session_start();
+                    $_SESSION['user'] = [
                     'id' => $user->getId(),
                 ];
 
                 header("Location: /");
                 exit();
 
-                } 
+                } else {
+                    echo "Mot de passe incorrect.";
+                    exit();
+                }
     }
 
     private function validateLoginInput($email, $password): bool {

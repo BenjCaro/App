@@ -14,7 +14,7 @@ namespace Carbe\App\Views;
         <button class="btn btn-outline-success" type="submit"><img src="/assets/images/search.svg" alt=""></button>
         </form>
    </div> -->
-  
+   <?= var_dump($_SESSION)?>
    <!-- Mise en place des cards -->
     <h2 class="text-center">Bienvenue  <?= $user->getFirstname();?></h2>
     <div class="grid mt-1 mb-3">
