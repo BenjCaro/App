@@ -122,7 +122,7 @@ public function update() : bool { // modif utilisateur
  * @return RecipeModel[]
  */
 
- public function getFavoris() :array {
+public function getFavoris() :array {
       $stmt = $this->pdo->prepare("SELECT users.id, users.name AS user_name, firstname, email, role, favoris.id_user, recipes.*, categories.name AS category_name
                                   FROM users
                                   JOIN favoris ON favoris.id_user = users.id
