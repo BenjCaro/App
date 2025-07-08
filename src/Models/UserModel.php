@@ -46,6 +46,10 @@ public function setFirstname(string $firstname) :void {
     $this->firstname = $firstname;
   }
 
+public function getFullname() :string {
+    return $this->getName() . ' ' . $this->getFirstname();
+}
+
 public function getEmail() :string {
      return $this->email;
   }
@@ -95,7 +99,7 @@ public function findUserByEmail(string $email) :?UserModel {
         return null;
     }
 
-  return new UserModel($result);
+  return new UserModel($this->pdo, $result);
 
 }
 

@@ -16,6 +16,7 @@ namespace Carbe\App\Views;
    </div> -->
   
    <!-- Mise en place des cards -->
+    <p class="text-center">Bienvenue  <?= $user->getFullname() ?></p>
     <div class="grid mt-1 mb-3">
         <section class="favoris">
             <div class="card bg-gris h-100 border border-primary" >
