@@ -5,7 +5,7 @@ session_start();
 
 unset($_SESSION['auth_user']); 
 $_SESSION['flash'] = "Déconnexion réussie.";
-header("Location: /login");
+header("Location: /");
 exit();
 
 
