@@ -26,6 +26,7 @@ namespace Carbe\App\Views;
         <section class="favoris">
             <div class="card bg-gris h-100 border border-primary" >
                 <div class="card-body ">
+                <?php if(($auth_user)): ?>
                     <h2 class='card-title text-center'>Mes favoris</h2>
                         <?php
                     foreach ($favoris as $recipe) {  ?>
@@ -36,6 +37,12 @@ namespace Carbe\App\Views;
                         <span class="badge text-bg-secondary"><?= $recipe->getCategory()->getName(); ?></span>
                         <a class="text-secondary nav-link" href="/recette/<?= $recipe->getSlug(); ?>">Voir la recette</a>
                         <?php } ?>
+                    <?php else: ?>
+                    <h2 class="text-center">
+                        Bienvenue sur Petit Creux!
+                    </h2>
+                    <p>Connectez-vous ou inscrivez-vous : <a href="/login">ici</a></p>
+                    <?php endif; ?>
                 </div>
             </div>
         </section>
