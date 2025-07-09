@@ -39,7 +39,9 @@ if (session_status() === PHP_SESSION_NONE) {
                                 <a class="nav-link" href="/login">Connexion/Inscription</a>
                             <?php endif; ?>
                         </li>
-
+                            <?php if (isset($auth_user)): ?>
+                              <li class="nav-item fs-5"><a class="nav-link" href="/logout">Déconnexion</a></li>
+                            <?php endif; ?>
                     </ul>
                 </div>
             </div>
