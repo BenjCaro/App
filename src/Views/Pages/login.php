@@ -1,9 +1,11 @@
 <?php
 namespace Carbe\App\Views\Pages;
-
-
 ?>
-
+  <?php  if (isset($_SESSION['flash'])) { ?>
+        <div class='alert alert-secondary'>{$_SESSION['flash']}</div>"
+   <?php     unset($_SESSION['flash']); 
+    }
+?>
 <div class="d-flex flex-column w-25 m-auto">
     <form method="post" action="/login" class="form-control pb-2">
         <div class="mb-3 pt-2">

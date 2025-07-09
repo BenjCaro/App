@@ -1,14 +1,14 @@
 <?php
 namespace Carbe\App\Views\Pages;
-
 session_start();
-// message flash ici
-unset($_SESSION['user']);
 
-session_destroy();
+$_SESSION['flash'] = "Deconnexion";
 
-header("Location: /");
+unset($_SESSION['user']); 
+$_SESSION['flash'] = "Déconnexion réussie.";
+header("Location: /login");
 exit();
+
 
 
 ?>

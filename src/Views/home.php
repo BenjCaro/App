@@ -17,11 +17,11 @@ namespace Carbe\App\Views;
    <!-- Mise en place des cards -->
     <?php
 
-    if (isset($_SESSION['flash'])) {
-        echo "<div class='alert alert-info'>{$_SESSION['flash']}</div>";
-        unset($_SESSION['flash']); 
+    if (isset($_SESSION['flash'])) {  ?>
+       <div class='alert alert-secondary'><?=$_SESSION['flash']?></div>
+    <?php    unset($_SESSION['flash']); 
     }
-?>
+    ?>
     <div class="grid mt-1 mb-3">
         <section class="favoris">
             <div class="card bg-gris h-100 border border-primary" >
