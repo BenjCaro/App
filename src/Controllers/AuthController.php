@@ -24,6 +24,7 @@ private UserModel $userModel;
                 $user= $this->userModel->findUserByEmail($email);
         
                 if(!$user) {
+                    // message flash
                     echo("Utilisateur non trouvé");
                     exit();
                 }
@@ -33,11 +34,12 @@ private UserModel $userModel;
                     $_SESSION['user'] = [
                     'id' => $user->getId(),
                 ];
-
+                // message flash ici 
                 header("Location: /");
                 exit();
 
                 } else {
+                    // message flash
                     echo "Mot de passe incorrect.";
                     exit();
                 }
