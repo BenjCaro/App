@@ -24,9 +24,9 @@ private UserModel $userModel;
                     exit();
                 }
                 
-                $user= $this->userModel->findUserByEmail($email);
+                $auth_user= $this->userModel->findUserByEmail($email);
         
-                if(!$user) {
+                if(!$auth_user) {
                    $_SESSION['flash'] = "Email ou mot de passe manquant.";
                     header("Location: /login");
                     exit();
@@ -37,11 +37,11 @@ private UserModel $userModel;
 
                 }
 
-                if (password_verify($password, $user->getPassword())) {
-                $_SESSION['user'] = [
-                    'id' => $user->getId()
+                if (password_verify($password, $auth_user->getPassword())) {
+                $_SESSION['auth_user'] = [
+                    'id' => $auth_user->getId()
                 ];
-                $_SESSION['flash'] = "Connexion réussie. Bienvenue " . $user->getFirstname() . "!";
+                $_SESSION['flash'] = "Connexion réussie. Bienvenue " . $auth_user->getFirstname() . "!";
                 header("Location: /");
                 exit();
             } else {

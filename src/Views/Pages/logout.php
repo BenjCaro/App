@@ -2,9 +2,8 @@
 namespace Carbe\App\Views\Pages;
 session_start();
 
-$_SESSION['flash'] = "Deconnexion";
 
-unset($_SESSION['user']); 
+unset($_SESSION['auth_user']); 
 $_SESSION['flash'] = "Déconnexion réussie.";
 header("Location: /login");
 exit();

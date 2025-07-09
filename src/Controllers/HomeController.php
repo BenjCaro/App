@@ -16,12 +16,18 @@ class HomeController extends BaseController {
     public function index() :void {
 
      
-
+      if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
       // affichage des favoris de l'utilisateur connecté
 
       $userModel = new UserModel($this->pdo);
-      $user = $userModel->findById(1);  
-      $favoris = $user ? $user->getFavoris() : [];
+      $auth_user = null;
+
+      if (isset($_SESSION['auth_user']['id'])) {
+        $auth_user = $userModel->findById($_SESSION['auth_user']['id']);
+      } 
+      $favoris = $auth_user ? $auth_user->getFavoris() : [];
 
       // affiche derniere recette ajouté
 
@@ -37,7 +43,7 @@ class HomeController extends BaseController {
 
       $this->render('home',  [
         'title' => 'Petit Creux',
-        'user' => $user,
+        'auth_user' => $auth_user,
         'favoris' => $favoris,
         'lastRecipe' => $lastRecipe,
         'popularRecipe' => $popularRecipe,
