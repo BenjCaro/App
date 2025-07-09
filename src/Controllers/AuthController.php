@@ -16,33 +16,40 @@ private UserModel $userModel;
         
     public function login(string $email, string $password) :void {
                 
+
+                session_start();
                 if (!$this->validateLoginInput($email, $password)) {
-                    echo 'Email ou mot de passe manquant.';
+                     $_SESSION['flash'] = "Email ou mot de passe manquant.";
+                    header("Location: /login");
                     exit();
                 }
                 
                 $user= $this->userModel->findUserByEmail($email);
         
                 if(!$user) {
-                    // message flash
-                    echo("Utilisateur non trouvé");
+                   $_SESSION['flash'] = "Email ou mot de passe manquant.";
+                    header("Location: /login");
                     exit();
+                    $_SESSION['flash'] = "Utilisateur non trouvé.";
+                    header("Location: /login");
+                    exit();
+
+
                 }
 
-                if ($user && password_verify($password, $user->getPassword())) {
-                    session_start();
-                    $_SESSION['user'] = [
-                    'id' => $user->getId(),
+                if (password_verify($password, $user->getPassword())) {
+                $_SESSION['user'] = [
+                    'id' => $user->getId()
                 ];
-                // message flash ici 
+                $_SESSION['flash'] = "Connexion réussie. Bienvenue " . $user->getFirstname() . "!";
                 header("Location: /");
                 exit();
+            } else {
+                $_SESSION['flash'] = "Mot de passe incorrect.";
+                header("Location: /login");
+                exit();
+            }
 
-                } else {
-                    // message flash
-                    echo "Mot de passe incorrect.";
-                    exit();
-                }
     }
 
     private function validateLoginInput($email, $password): bool {

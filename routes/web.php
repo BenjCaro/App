@@ -55,3 +55,7 @@ $router->map('POST', '/login', function() {
         $auth = new AuthController();
         $auth->login($email, $password);
 });
+
+$router->map('GET', '/logout', function() {
+    require('../src/Views/Pages/logout.php');
+});

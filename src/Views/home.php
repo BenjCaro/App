@@ -15,7 +15,13 @@ namespace Carbe\App\Views;
         </form>
    </div> -->
    <!-- Mise en place des cards -->
-    <h2 class="text-center">Bienvenue  <?= $user->getFirstname();?></h2>
+    <?php
+
+    if (isset($_SESSION['flash'])) {
+        echo "<div class='alert alert-info'>{$_SESSION['flash']}</div>";
+        unset($_SESSION['flash']); 
+    }
+?>
     <div class="grid mt-1 mb-3">
         <section class="favoris">
             <div class="card bg-gris h-100 border border-primary" >

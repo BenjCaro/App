@@ -2,11 +2,11 @@
 namespace Carbe\App\Views\Pages;
 
 session_start();
-
-session_unset();
+// message flash ici
+unset($_SESSION['user']);
 
 session_destroy();
-// message flash ici
+
 header("Location: /");
 exit();
 
