@@ -27,7 +27,7 @@ namespace Carbe\App\Views;
             <div class="card bg-gris h-100 border border-primary" >
                 <div class="card-body ">
                 <?php if(($auth_user)): ?>
-                    <h2 class='card-title text-center'>Mes favoris</h2>
+                    <h2 class='card-title text-center'>Vos favoris</h2>
                         <?php
                     foreach ($favoris as $recipe) {  ?>
                         <h3 class="card-subtitle text-body-secondary fs-4 mb-2"> 
@@ -38,10 +38,10 @@ namespace Carbe\App\Views;
                         <a class="text-secondary nav-link" href="/recette/<?= $recipe->getSlug(); ?>">Voir la recette</a>
                         <?php } ?>
                     <?php else: ?>
-                    <h2 class="text-center">
+                    <h3 class="text-center">
                         Bienvenue sur Petit Creux!
-                    </h2>
-                    <p>Connectez-vous ou inscrivez-vous : <a href="/login">ici</a></p>
+                    </h3>
+                    <p>Pour profiter pleinement de la communauté Petit Creux, rejoignez-nous en cliquant <a href="/login">ici</a>.</p>
                     <?php endif; ?>
                 </div>
             </div>
