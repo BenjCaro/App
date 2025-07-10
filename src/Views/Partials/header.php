@@ -1,8 +1,12 @@
 <?php
-session_start();
-/** @var string $title */
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+/** @var string $title */
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -26,8 +30,18 @@ session_start();
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item fs-5"><a class="nav-link" href="/categories">Catégories</a></li>
                         <li class="nav-item fs-5"><a class="nav-link" href="/a-propos">À propos</a></li>
-                        <li class="nav-item fs-5"><a class="nav-link" href="/mon-compte">Mon Compte</a></li>
-                        <li class="nav-item fs-5"><a class="nav-link" href="/login">Connexion/Inscription</a></li>
+                        <li class="nav-item fs-5">
+                            <?php if (isset($auth_user)): ?>
+                                <a class="nav-link" href="/mon-compte">
+                                    Gérer mon compte
+                                </a>
+                            <?php else: ?>
+                                <a class="nav-link" href="/login">Connexion/Inscription</a>
+                            <?php endif; ?>
+                        </li>
+                            <?php if (isset($auth_user)): ?>
+                              <li class="nav-item fs-5"><a class="nav-link" href="/logout">Déconnexion</a></li>
+                            <?php endif; ?>
                     </ul>
                 </div>
             </div>

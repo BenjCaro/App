@@ -14,14 +14,20 @@ namespace Carbe\App\Views;
         <button class="btn btn-outline-success" type="submit"><img src="/assets/images/search.svg" alt=""></button>
         </form>
    </div> -->
-   <?= var_dump($_SESSION)?>
    <!-- Mise en place des cards -->
-    <h2 class="text-center">Bienvenue  <?= $user->getFirstname();?></h2>
+    <?php
+
+    if (isset($_SESSION['flash'])) {  ?>
+       <div class='alert alert-secondary'><?=$_SESSION['flash']?></div>
+    <?php    unset($_SESSION['flash']); 
+    }
+    ?>
     <div class="grid mt-1 mb-3">
         <section class="favoris">
             <div class="card bg-gris h-100 border border-primary" >
                 <div class="card-body ">
-                    <h2 class='card-title text-center'>Mes favoris</h2>
+                <?php if(($auth_user)): ?>
+                    <h2 class='card-title text-center'>Vos favoris</h2>
                         <?php
                     foreach ($favoris as $recipe) {  ?>
                         <h3 class="card-subtitle text-body-secondary fs-4 mb-2"> 
@@ -31,6 +37,12 @@ namespace Carbe\App\Views;
                         <span class="badge text-bg-secondary"><?= $recipe->getCategory()->getName(); ?></span>
                         <a class="text-secondary nav-link" href="/recette/<?= $recipe->getSlug(); ?>">Voir la recette</a>
                         <?php } ?>
+                    <?php else: ?>
+                    <h3 class="text-center">
+                        Bienvenue sur Petit Creux!
+                    </h3>
+                    <p>Pour profiter pleinement de la communauté Petit Creux, rejoignez-nous en cliquant <a href="/login">ici</a>.</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </section>
