@@ -13,7 +13,9 @@
             <ul class="list-unstyled">
                 <li class="nav-item fs-5"><a class="text-cacao nav-link" href="/mon-compte">Mon Compte</a></li>
                 <li class="nav-item fs-5"><a class="text-cacao nav-link" href="/conditions">Conditions générales d'utilisations</a></li>
-                <li class="nav-item fs-5"><a class="text-cacao nav-link" href="/logout">Se déconnecter</a></li>
+                 <?php if (isset($_SESSION['auth_user'])): ?>
+                              <li class="nav-item fs-5"><a class="text-cacao nav-link" href="/logout">Déconnexion</a></li>
+                            <?php endif; ?>
             </ul>
         </div>
         <div>

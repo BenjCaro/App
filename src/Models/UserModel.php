@@ -14,6 +14,7 @@ class UserModel extends BaseModel {
   private string $email;
   private string $password;
   private string $role;
+  private ?string $description;
   private string $createdAt; 
 
 /**
@@ -73,8 +74,16 @@ public function setRole(string $role) :void {
 
   }
 
+public function getDescription() :string {
+     return $this->description;
+  }
+
+public function setDescription(?string $description) :void {
+    $this->description = $description;
+  }
+
 public function getCreatedAt() :string {
-    return $this->createdAt;
+    return date('Y-m-d', strtotime($this->createdAt));
   }
 
 public function setCreatedAt(string $createdAt) :void {

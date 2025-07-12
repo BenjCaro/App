@@ -31,7 +31,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         <li class="nav-item fs-5"><a class="nav-link" href="/categories">Catégories</a></li>
                         <li class="nav-item fs-5"><a class="nav-link" href="/a-propos">À propos</a></li>
                         <li class="nav-item fs-5">
-                            <?php if (isset($auth_user)): ?>
+                            <?php if (isset($_SESSION['auth_user'])): ?>
                                 <a class="nav-link" href="/mon-compte">
                                     Gérer mon compte
                                 </a>
@@ -39,7 +39,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                 <a class="nav-link" href="/login">Connexion/Inscription</a>
                             <?php endif; ?>
                         </li>
-                            <?php if (isset($auth_user)): ?>
+                            <?php if (isset($_SESSION['auth_user'])): ?>
                               <li class="nav-item fs-5"><a class="nav-link" href="/logout">Déconnexion</a></li>
                             <?php endif; ?>
                     </ul>
