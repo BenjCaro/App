@@ -9,8 +9,7 @@ use Carbe\App\Controllers\AuthController;
 use Carbe\App\Controllers\FavorisController;
 use Carbe\App\Controllers\LoginController;
 use Carbe\App\Controllers\UserController;
-use Carbe\App\Models\FavorisModel;
-use Carbe\App\Models\UserModel;
+
 
 $router->map('GET', '/', function() {
     
