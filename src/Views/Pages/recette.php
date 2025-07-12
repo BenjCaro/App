@@ -52,14 +52,12 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
             <button class="btn btn-primary">Laisser un commentaire</button>
         </div>
         <div>
-           
-            <form action="/recette/<?= htmlspecialchars($recipe->getSlug()) ?>" method="POST">
+           <form action="/recette/<?= htmlspecialchars($recipe->getSlug()) ?>" method="POST">
                 <input type="hidden" name="user" value="<?= $_SESSION['auth_user']['id']; ?>" >
                 <input type="hidden" name="recipe" value="<?= htmlspecialchars($recipe->getId()); ?>">
                 <button class="btn btn-primary">Ajouter aux favoris</button>
             </form>
-        
-         </div>
+        </div>
     </div>
     <?php endif; ?>
     <section>

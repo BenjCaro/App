@@ -16,15 +16,22 @@ class FavorisController extends BaseController {
     }
 
    public function insert(int $idUser, int $idRecipe): void
-{
+    {
     session_start();
-    
-    $this->favorisModel->insert([
-        'id_user' => $idUser,
-        'id_recipe' => $idRecipe
-    ]);
-    $_SESSION['flash'] = "Ajout aux favoris réussis";
 
-}
+    if(!$this->favorisModel->ifFavorisExist($idUser, $idRecipe)) {
+         $this->favorisModel->insert([
+            'id_user' => $idUser,
+            'id_recipe' => $idRecipe
+        ]);
+    
+        $_SESSION['flash'] = "Ajout aux favoris réussis";
+        
+    } else {
+        $_SESSION['flash'] = "Recette deja ajoutée aux favoris";
+    }
+    
+
+    }
 }
 ?>
