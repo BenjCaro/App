@@ -2,6 +2,7 @@
 
 namespace Carbe\App\Views\Pages;
 /** @var Carbe\App\Models\RecipeModel[] $recipes */
+
 ?>
 
 <main class='container p-3 bg-light'> 
@@ -44,9 +45,15 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
             <button class="btn btn-primary">Laisser un commentaire</button>
         </div>
         <div>
-            <button class="btn btn-primary">Ajouter aux favoris</button>
-        </div>
-        
+           <?php
+
+?>
+            <form action="/recette/<?= htmlspecialchars($recipe->getSlug()) ?>" method="POST">
+                <input type="hidden" name="user" value="<?= $_SESSION['auth_user']['id']; ?>" >
+                <input type="hidden" name="recipe" value="<?= htmlspecialchars($recipe->getId()); ?>">
+                <button class="btn btn-primary">Ajouter aux favoris</button>
+            </form>
+         </div>
     </div>
     <section>
             <!-- Section Commentaires, affichera les commentaires -->
