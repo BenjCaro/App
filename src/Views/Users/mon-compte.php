@@ -9,7 +9,7 @@ if (!isset($_SESSION['auth_user'])) {
 ?> 
 
 <main class='container p-3 bg-light border-end border-start border-secondary'>
-    <h2 class="text-center">Mon Compte </h2>
+    <h2 class="text-center">Bienvenue sur votre Espace Membre <?= $user->getFirstname()?> </h2>
     <section class="row d-flex justify-content-center">
         <div class="card col-6">
             <div class="card-body">
