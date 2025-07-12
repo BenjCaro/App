@@ -36,7 +36,7 @@ class UserController extends BaseController {
         $userId = $_SESSION['auth_user']['id'];
         $user = $this->userModel->findById($userId);
 
-        $this->render('Pages\mon-compte', [
+        $this->render('Users\mon-compte', [
             'user' => $user
         ]);
 

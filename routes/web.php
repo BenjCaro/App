@@ -60,5 +60,5 @@ $router->map('POST', '/login', function() {
 });
 
 $router->map('GET', '/logout', function() {
-    require('../src/Views/Pages/logout.php');
+    require('../src/Views/Users/logout.php');
 });

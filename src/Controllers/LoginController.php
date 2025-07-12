@@ -7,7 +7,7 @@ class LoginController extends BaseController {
       
      public function displayLogin() {
           
-        $this->render('Pages\login', [
+        $this->render('Users\login', [
                 'title' => 'Connexion'
         ]);
      }

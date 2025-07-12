@@ -10,9 +10,9 @@ if (!isset($_SESSION['auth_user'])) {
 }
 ?> 
 
-<main>
+<main class='container p-3 bg-light border-end border-start border-secondary'>
 
-    <h1>Mon Compte <?= $user->getName(); ?></h1>
+    <h2>Mon Compte <?= $user->getName(); ?></h2>
 
 </main>
 
