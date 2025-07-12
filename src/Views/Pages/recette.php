@@ -9,29 +9,46 @@ namespace Carbe\App\Views\Pages;
     <h2 class='text-center fs-2 mb-3'><?= $recipe->getTitle() ?>  </h2>
     <span class="badge text-bg-secondary"> <?= $recipe->getCategory()->getName()?></span>
     <span class="badge text-bg-secondary">Temps de préparation: <?= $recipe->getDuration()?> minutes</span>
-    <h3 class='mt-3 fs-3 text-center'>Ingrédients</h3>
-    <div class="card bg-gris border border-primary w-50 p-3 mx-auto">
-        <ul class="card-body list-unstyled">
-        <?php foreach ($recipe->getIngredients() as $recipeIngredient): ?>
-            <?php 
-                $ingredient = $recipeIngredient->getIngredient(); 
-                $name = $ingredient->getName();
-                $quantity = $recipeIngredient->getQuantity();
-                $unit = $recipeIngredient->getUnit();
-            ?>
-            <li class="card-text"><?= htmlspecialchars($quantity) ?> <?= htmlspecialchars($unit) ?> de <?= htmlspecialchars($name) ?></li>
-        <?php endforeach; ?>
-        </ul>
-    </div>
+    <section>
+        <h3 class='mt-3 fs-3 text-center'>Ingrédients</h3>
+        <div class="card bg-gris border border-primary w-50 p-3 mx-auto">
+            <ul class="card-body list-unstyled">
+            <?php foreach ($recipe->getIngredients() as $recipeIngredient): ?>
+                <?php 
+                    $ingredient = $recipeIngredient->getIngredient(); 
+                    $name = $ingredient->getName();
+                    $quantity = $recipeIngredient->getQuantity();
+                    $unit = $recipeIngredient->getUnit();
+                ?>
+                <li class="card-text"><?= htmlspecialchars($quantity) ?> <?= htmlspecialchars($unit) ?> de <?= htmlspecialchars($name) ?></li>
+            <?php endforeach; ?>
+            </ul>
+        </div>
+    </section>
+
 <?php
 $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tableau associatif
 ?>
-    <h3 class="mt-3 fs-3 text-center">Préparation</h3>
-    <div class="card bg-gris border border-primary w-50 p-3 mx-auto">
-        <ol class="card-body">
-        <?php foreach ($steps as $step): ?>
-            <li class="card-text"><?= htmlspecialchars($step) ?></li>
-        <?php endforeach; ?>
-        </ol>
+    <section>
+        <h3 class="mt-3 fs-3 text-center">Préparation</h3>
+        <div class="card bg-gris border border-primary w-50 p-3 mx-auto">
+            <ol class="card-body">
+            <?php foreach ($steps as $step): ?>
+                <li class="card-text"><?= htmlspecialchars($step) ?></li>
+            <?php endforeach; ?>
+            </ol>
+        </div>
+    </section>
+    <div class="d-flex justify-content-between mt-4">
+        <div>
+            <button class="btn btn-primary">Laisser un commentaire</button>
+        </div>
+        <div>
+            <button class="btn btn-primary">Ajouter aux favoris</button>
+        </div>
+        
     </div>
+    <section>
+            <!-- Section Commentaires, affichera les commentaires -->
+    </section>
 </main>

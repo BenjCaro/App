@@ -39,27 +39,26 @@ public function setIdRecipe(int $idRecipe): void {
     $this->idRecipe = $idRecipe;
 }
 
+// public function addToFavoris(int $idUser, int $idRecipe) :bool {
 
-    public function addToFavoris(int $idUser, int $idRecipe) :bool {
+//         $stmt = $this->pdo->prepare("INSERT INTO favoris (id_user, id_recipe) VALUES (:id_user, :id_recipe)");
+//         return $stmt->execute([
 
-        $stmt = $this->pdo->prepare("INSERT INTO favoris (id_user, id_recipe) VALUES (:id_user, :id_recipe)");
-        return $stmt->execute([
+//             'id_user' => $idUser,
+//             'id_recipe' => $idRecipe  
+//         ]);
 
-            'id_user' => $idUser,
-            'id_recipe' => $idRecipe  
-        ]);
+//     }
 
-    }
-
-    public function removeToFavoris(int $idUser, int $idRecipe) :bool {
+// public function removeToFavoris(int $idUser, int $idRecipe) :bool {
         
-        $stmt = $this->pdo->prepare("DELETE FROM favoris WHERE id_user = :id_user AND id_recipe = :id_recipe");
-        return $stmt->execute([
+//         $stmt = $this->pdo->prepare("DELETE FROM favoris WHERE id_user = :id_user AND id_recipe = :id_recipe");
+//         return $stmt->execute([
 
-            'id_user' => $idUser,
-            'id_recipe' => $idRecipe  
-        ]);
-    }
+//             'id_user' => $idUser,
+//             'id_recipe' => $idRecipe  
+//         ]);
+//     }
 
 }
 
