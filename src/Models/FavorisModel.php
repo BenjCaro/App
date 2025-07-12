@@ -47,7 +47,12 @@ public function ifFavorisExist(int $idUser, int $idRecipe) :bool {
     ]);
     return $stmt->fetchColumn() > 0;  // retourne true si > 0 donc favoris deja existant
 
+}
 
+public function removeFavoris(int $idUser, int $idRecipe): void {
+    $stmt = $this->pdo->prepare('DELETE FROM favoris WHERE id_user = :id_user AND id_recipe = :id_recipe');
+    $stmt->execute(['id_user' => $idUser,
+        'id_recipe' => $idRecipe]);
 }
 
 }

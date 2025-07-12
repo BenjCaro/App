@@ -33,5 +33,12 @@ class FavorisController extends BaseController {
     
 
     }
+
+    public function delete(int $idUser, int $idRecipe):void {
+        
+        session_start();
+        $this->favorisModel->removeFavoris($idUser,$idRecipe);
+        $_SESSION['flash'] = "Recette supprimée des favoris";
+    }
 }
 ?>

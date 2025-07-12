@@ -9,6 +9,7 @@ use Carbe\App\Controllers\AuthController;
 use Carbe\App\Controllers\FavorisController;
 use Carbe\App\Controllers\LoginController;
 use Carbe\App\Controllers\UserController;
+use Carbe\App\Models\FavorisModel;
 use Carbe\App\Models\UserModel;
 
 $router->map('GET', '/', function() {
@@ -47,11 +48,7 @@ $router->map('POST', '/recette/[*:slug]', function($slug) {
 
     header("Location: /recette/" . $slug);
     exit();
-
-  
 });
-
-
 
 $router->map('GET', '/a-propos', function() {
        $about = new AboutController();
@@ -62,6 +59,20 @@ $router->map('GET', '/mon-compte', function() {
      $user = new UserController();
      $user->getMyProfil();
  });
+
+$router->map('POST', '/mon-compte', function(){
+    session_start();
+
+    $idUser = $_SESSION['auth_user']['id'];
+    $idRecipe = $_POST['recipe'];
+
+    $favori = new FavorisController();
+    $favori->delete($idUser, $idRecipe);
+    
+
+    header('Location: /mon-compte');
+    exit();
+});
 
 $router->map('GET', '/login', function() {
     $view = new LoginController();
