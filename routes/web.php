@@ -45,6 +45,9 @@ $router->map('POST', '/recette/[*:slug]', function($slug) {
     $favori = new FavorisController();
     $favori->insert($idUser, $idRecipe);
 
+    header("Location: /recette/" . $slug);
+    exit();
+
   
 });
 

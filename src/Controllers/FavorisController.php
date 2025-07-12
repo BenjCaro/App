@@ -17,12 +17,14 @@ class FavorisController extends BaseController {
 
    public function insert(int $idUser, int $idRecipe): void
 {
-
-    $_SESSION['flash'] = "Ajout aux favoris réussis";
+    session_start();
+    
     $this->favorisModel->insert([
         'id_user' => $idUser,
         'id_recipe' => $idRecipe
     ]);
+    $_SESSION['flash'] = "Ajout aux favoris réussis";
+
 }
 }
 ?>

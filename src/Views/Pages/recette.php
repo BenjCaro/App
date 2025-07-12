@@ -6,7 +6,13 @@ namespace Carbe\App\Views\Pages;
 ?>
 
 <main class='container p-3 bg-light'> 
-    
+    <?php
+
+    if (isset($_SESSION['flash'])) {  ?>
+       <div class='alert alert-secondary'><?=$_SESSION['flash']?></div>
+    <?php    unset($_SESSION['flash']); 
+    }
+    ?>
     <h2 class='text-center fs-2 mb-3'><?= $recipe->getTitle() ?>  </h2>
     <span class="badge text-bg-secondary"> <?= $recipe->getCategory()->getName()?></span>
     <span class="badge text-bg-secondary">Temps de préparation: <?= $recipe->getDuration()?> minutes</span>
