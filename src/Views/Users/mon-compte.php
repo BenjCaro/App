@@ -54,11 +54,13 @@ if (!isset($_SESSION['auth_user'])) {
     <section class="row d-flex justify-content-center">
         Mes recettes ajoutées
 <!-- Afficher les recettes ajoutées par l'utilisateur modifier/supprimer -->
+                <!-- utiliser meme structure tableau que favoris -->
 
     </section>
     <section class="row d-flex justify-content-center">
         Mes commentaires
 <!-- Afficher les commentaires ajoutés par l'utilisateur modifier/supprimer -->
+<!-- utiliser meme structure tableau que favoris -->
     </section>
 </main>
 
