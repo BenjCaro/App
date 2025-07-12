@@ -7,6 +7,8 @@ use Carbe\App\Controllers\RecipeController;
 use Carbe\App\Controllers\AboutController;
 use Carbe\App\Controllers\AuthController;
 use Carbe\App\Controllers\LoginController;
+use Carbe\App\Controllers\UserController;
+use Carbe\App\Models\UserModel;
 
 $router->map('GET', '/', function() {
     
@@ -41,7 +43,8 @@ $router->map('GET', '/a-propos', function() {
  });
 
 $router->map('GET', '/mon-compte', function() {
-   echo("Mon Compte");
+     $user = new UserController();
+     $user->getMyProfil();
  });
 
 $router->map('GET', '/login', function() {
