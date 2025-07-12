@@ -36,9 +36,12 @@ class UserController extends BaseController {
         $userId = $_SESSION['auth_user']['id'];
         $user = $this->userModel->findById($userId);
 
+        $favoris =  $user->getFavoris();
+
         $this->render('Users\mon-compte', [
             'title' => 'Petit Creux | Mon Compte ',
-            'user' => $user
+            'user' => $user,
+            'favoris' => $favoris
         ]);
 
              

@@ -22,10 +22,35 @@ if (!isset($_SESSION['auth_user'])) {
         </div>
     </section>
     <section class="row d-flex justify-content-center">
-        Gérer mes favoris
-<!-- Enlever une recette des favoris -->
-
-    </section>
+        <h2 class="text-center mt-4 mb-4">Mes favoris</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Catégorie</th>
+                    <th>Titre</th>
+                    <th>Lien</th>
+                    <th>Supprimer des favoris</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($favoris as $recipe) { ?>
+                <tr>
+                    <td><?= htmlspecialchars($recipe->getCategory()->getName()) ?></td>
+                    <td><?= htmlspecialchars($recipe->getTitle()) ?></td>
+                    <td><a href="/recette/<?= urlencode($recipe->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Consulter</a></td>
+                    <td>
+                        <form method="POST" action="">
+                            <input type="hidden" name="recipe_id" value="<?= $recipe->getId() ?>">
+                            <button type="submit" class="btn btn-sm btn-secondary">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                <?php } ?>
+            </tbody>
+            </table>
+        </div>
+</section>
     <section class="row d-flex justify-content-center">
         Mes recettes ajoutées
 <!-- Afficher les recettes ajoutées par l'utilisateur modifier/supprimer -->
