@@ -30,10 +30,6 @@ private UserModel $userModel;
                    $_SESSION['flash'] = "Email ou mot de passe manquant.";
                     header("Location: /login");
                     exit();
-                    $_SESSION['flash'] = "Utilisateur non trouvé.";
-                    header("Location: /login");
-                    exit();
-
 
                 }
 
@@ -52,7 +48,7 @@ private UserModel $userModel;
 
     }
 
-    private function validateLoginInput($email, $password): bool {
+    private function validateLoginInput(string $email, string $password): bool {
             return isset($email, $password) && !empty($email) && !empty($password);
     }
 

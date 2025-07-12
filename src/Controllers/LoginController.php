@@ -5,7 +5,7 @@ namespace Carbe\App\Controllers;
 
 class LoginController extends BaseController {
       
-     public function displayLogin() {
+     public function displayLogin() :void {
           
         $this->render('Users\login', [
                 'title' => 'Connexion'
@@ -13,4 +13,3 @@ class LoginController extends BaseController {
      }
 }
 
-?> 
