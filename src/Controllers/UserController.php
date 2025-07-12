@@ -37,6 +37,7 @@ class UserController extends BaseController {
         $user = $this->userModel->findById($userId);
 
         $this->render('Users\mon-compte', [
+            'title' => 'Petit Creux | Mon Compte ',
             'user' => $user
         ]);
 
