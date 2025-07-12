@@ -13,8 +13,8 @@ if (!isset($_SESSION['auth_user'])) {
     <section class="row d-flex justify-content-center">
         <div class="card col-6">
             <div class="card-body">
-                <h5 class="card-title">Mes informations</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary"><?= $user->getFirstname(); ?> <?= $user->getName(); ?></h6>
+                <h3 class="card-title">Mes informations</h3>
+                <h4 class="card-subtitle fs-5 mb-2 text-body-secondary"><?= $user->getFirstname(); ?> <?= $user->getName(); ?></h4>
                 <p class="card-text"><?= $user->getDescription()?></p>
                 <span class="card-text"> <?= $user->getEmail(); ?>  </span><br>
                 <span class="card-text">Membre depuis: <?= $user->getCreatedAt() ?></span>
@@ -22,7 +22,7 @@ if (!isset($_SESSION['auth_user'])) {
         </div>
     </section>
     <section class="row d-flex justify-content-center">
-        <h2 class="text-center mt-4 mb-4">Mes favoris</h2>
+        <h3 class="text-center mt-4 mb-4">Mes favoris</h3>
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
             <thead class="table-light">
