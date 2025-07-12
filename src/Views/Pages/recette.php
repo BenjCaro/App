@@ -46,21 +46,22 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
             </ol>
         </div>
     </section>
+    <?php if (isset($_SESSION['auth_user'])): ?>
     <div class="d-flex justify-content-between mt-4">
         <div>
             <button class="btn btn-primary">Laisser un commentaire</button>
         </div>
         <div>
-           <?php
-
-?>
+           
             <form action="/recette/<?= htmlspecialchars($recipe->getSlug()) ?>" method="POST">
                 <input type="hidden" name="user" value="<?= $_SESSION['auth_user']['id']; ?>" >
                 <input type="hidden" name="recipe" value="<?= htmlspecialchars($recipe->getId()); ?>">
                 <button class="btn btn-primary">Ajouter aux favoris</button>
             </form>
+        
          </div>
     </div>
+    <?php endif; ?>
     <section>
             <!-- Section Commentaires, affichera les commentaires -->
     </section>
