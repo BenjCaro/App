@@ -26,7 +26,15 @@ public function __construct(PDO $pdo, array $data = []) {
       parent::__construct($pdo);
        
       if (!empty($data)) {
-            $this->hydrate($data);
+            
+            $this->name = $data['name'] ?? '';
+            $this->firstname = $data['firstname'] ?? '';
+            $this->email = $data['email'] ?? '';
+            $this->password = $data['password'] ?? ''; 
+            $this->role = $data['role'] ?? 'user';
+            $this->description = $data['description'] ?? null;
+            $this->createdAt = $data['created_at'] ?? date('Y-m-d');
+
       }
 
     }

@@ -19,7 +19,7 @@ private UserModel $userModel;
 
                 session_start();
                 if (!$this->validateLoginInput($email, $password)) {
-                     $_SESSION['flash'] = "Email ou mot de passe manquant.";
+                     $_SESSION['flash'] = "Identifiants invalides";
                     header("Location: /login");
                     exit();
                 }
