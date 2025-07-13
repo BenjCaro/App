@@ -2,6 +2,7 @@
 
 namespace Carbe\App\Controllers;
 use Carbe\App\Models\UserModel;
+use \PDOException;
 
 class UserController extends BaseController {
 
@@ -47,7 +48,7 @@ class UserController extends BaseController {
 
     public function createUser(array $data) :void {
         session_start();
-        // verifier les données 
+         
         $name = trim($data['name']);
         $firstname = trim($data['firstname']);
         $email = filter_var(trim($data['email']), FILTER_VALIDATE_EMAIL);
@@ -73,11 +74,8 @@ class UserController extends BaseController {
             header('Location: /inscription');
             exit;
         }
-
-        // Hachage du mot de passe
+        
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-        // Préparation des données à insérer
         $userData = [
             'name' => $name,
             'firstname' => $firstname,
@@ -86,8 +84,32 @@ class UserController extends BaseController {
             'description' => $description
         ];
 
-        $this->userModel->insert($userData);
-        $_SESSION['flash'] = "Bienvenue, inscription Réussie!";
-        header('Location: /');
+
+        try {
+
+            $this->userModel->insert($userData);
+            $_SESSION['flash'] = "Bienvenue, inscription réussie !";
+            header('Location: /');
+            exit;
+
+
+                } catch (PDOException $e) {
+            if ($e->getCode() === '23000') {
+                
+                $_SESSION['errors']['email'] = "Cet email est déjà enregistré.";
+                header('Location: /inscription');
+                exit;
+
+            } else {
+                
+                $_SESSION['flash'] = "Une erreur technique est survenue. Veuillez réessayer plus tard.";
+                
+                error_log($e->getMessage());
+                header('Location: /inscription');
+                exit;
+            }
+        }  
     }
 }
+
+
