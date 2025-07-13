@@ -91,7 +91,7 @@ $router->map('GET', '/inscription', function(){
 });
 
 
-$router->map('POST', '/inscription', function(){
+$router->map('POST', '/inscription', function() {
    
     $data = ['name' => $_POST['name'],
             'firstname' => $_POST['firstname'],

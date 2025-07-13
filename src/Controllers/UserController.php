@@ -46,6 +46,9 @@ class UserController extends BaseController {
     }
 
     public function createUser(array $data) :void {
+        session_start();
         $this->userModel->insert($data);
+        $_SESSION['flash'] = "Bienvenue, inscription Réussie!";
+        header('Location: /');
     }
 }
