@@ -13,7 +13,7 @@ namespace Carbe\App\Views\Users;
                 <label for="name" class="form-label">Nom</label>
                 <input type="text" name="name" class="form-control" required>
                  <?php if (!empty($_SESSION['errors']['name'])): ?>
-                    <div class="alert alert-secondary"><?= $_SESSION['errors']['name'] ?></div>
+                    <div class="alert alert-secondary mt-2"><?= $_SESSION['errors']['name'] ?></div>
                     <?php unset($_SESSION['errors']['name']); ?>
                 <?php endif; ?>
         </div>
@@ -21,7 +21,7 @@ namespace Carbe\App\Views\Users;
                 <label for="firstname" class="form-label">Prénom</label>
                 <input type="text" name="firstname" class="form-control" required>
                  <?php if (!empty($_SESSION['errors']['name'])): ?>
-                    <div class="alert alert-secondary"><?= $_SESSION['errors']['name'] ?></div>
+                    <div class="alert alert-secondary mt-2"><?= $_SESSION['errors']['name'] ?></div>
                     <?php unset($_SESSION['errors']['name']); ?>
                  <?php endif; ?>
         </div>
@@ -29,7 +29,7 @@ namespace Carbe\App\Views\Users;
                 <label for="email" class="form-label">Email</label>
                 <input type="email" name="email" class="form-control" required>
                  <?php if (!empty($_SESSION['errors']['email'])): ?>
-                    <div class="alert alert-secondary"><?= $_SESSION['errors']['email'] ?></div>
+                    <div class="alert alert-secondary mt-2"><?= $_SESSION['errors']['email'] ?></div>
                     <?php unset($_SESSION['errors']['email']); ?>
                 <?php endif; ?>
         </div>
