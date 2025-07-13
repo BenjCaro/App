@@ -126,6 +126,7 @@ public function getRecipeBySlug(string $slug) :RecipeModel {
     $stmt = $this->pdo->prepare('SELECT
      recipes.id AS recipe_id, 
      recipes.title, 
+     recipes.slug,
      recipes.duration, 
      recipes.description,
      ingredients.name,
@@ -150,6 +151,7 @@ public function getRecipeBySlug(string $slug) :RecipeModel {
     $recipe = new RecipeModel($this->pdo);
     $recipe->hydrate([
         'id' => $data[0]['recipe_id'],
+        'slug' => $data[0]['slug'],
         'title' => $data[0]['title'],
         'duration' => $data[0]['duration'],
         'description' => $data[0]['description'],

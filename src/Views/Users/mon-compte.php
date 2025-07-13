@@ -6,10 +6,18 @@ if (!isset($_SESSION['auth_user'])) {
     header('Location: /login');
     exit();
 }
-?> 
+
+?>
 
 <main class='container p-3 bg-light border-end border-start border-secondary'>
-    <h2 class="text-center">Mon Compte </h2>
+    <?php
+     if (isset($_SESSION['flash'])) {  ?>
+       <div class='alert alert-secondary'><?=$_SESSION['flash']?></div>
+    <?php    unset($_SESSION['flash']); 
+    }
+
+    ?>
+    <h2 class="text-center">Bienvenue sur votre Espace Membre <?= $user->getFirstname()?> </h2>
     <section class="row d-flex justify-content-center">
         <div class="card col-6">
             <div class="card-body">
@@ -36,12 +44,12 @@ if (!isset($_SESSION['auth_user'])) {
             <tbody>
                 <?php foreach ($favoris as $recipe) { ?>
                 <tr>
-                    <td><?= htmlspecialchars($recipe->getCategory()->getName()) ?></td>
+                    <td><?= htmlspecialchars($recipe->getCategory()->getName())?></td>
                     <td><?= htmlspecialchars($recipe->getTitle()) ?></td>
                     <td><a href="/recette/<?= urlencode($recipe->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Consulter</a></td>
                     <td>
-                        <form method="POST" action="">
-                            <input type="hidden" name="recipe_id" value="<?= $recipe->getId() ?>">
+                        <form method="POST" action="/mon-compte">
+                            <input type="hidden" name="recipe" value="<?= $recipe->getId()?>">
                             <button type="submit" class="btn btn-sm btn-secondary">Supprimer</button>
                         </form>
                     </td>
