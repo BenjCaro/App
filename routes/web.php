@@ -86,6 +86,7 @@ $router->map('POST', '/login', function() {
 });
 
 $router->map('GET', '/inscription', function(){
+   require('../src/Views/Partials/header.php');
    require('../src/Views/Users/inscription.php');
 });
 
