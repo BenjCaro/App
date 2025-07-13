@@ -85,6 +85,10 @@ $router->map('POST', '/login', function() {
         $auth->login($email, $password);
 });
 
+$router->map('GET', '/inscription', function(){
+   require('../src/Views/Users/inscription.php');
+});
+
 $router->map('GET', '/logout', function() {
     require('../src/Views/Users/logout.php');
 });
