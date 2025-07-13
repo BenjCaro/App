@@ -42,8 +42,10 @@ class UserController extends BaseController {
             'title' => 'Petit Creux | Mon Compte ',
             'user' => $user,
             'favoris' => $favoris
-        ]);
+        ]);        
+    }
 
-             
+    public function createUser(array $data) :void {
+        $this->userModel->insert($data);
     }
 }

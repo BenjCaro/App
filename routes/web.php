@@ -90,6 +90,22 @@ $router->map('GET', '/inscription', function(){
    require('../src/Views/Users/inscription.php');
 });
 
+
+$router->map('POST', '/inscription', function(){
+   
+    $data = ['name' => $_POST['name'],
+            'firstname' => $_POST['firstname'],
+            'email' => $_POST['email'],
+            'password' => $_POST['password'],
+            'description' => $_POST['description']
+    ];
+
+    $user = new UserController();
+    $user->createUser($data);
+         
+});
+
+
 $router->map('GET', '/logout', function() {
     require('../src/Views/Users/logout.php');
 });

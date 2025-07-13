@@ -23,10 +23,10 @@ namespace Carbe\App\Views\Users;
                 <label for="password" class="form-label">Mot de passe</label>
                 <input type="password" name="password" class="form-control" required>
         </div>
-         <div class="mb-3 pt-2">
-                <label for="password" class="form-label">Confirmez votre mot de passe</label>
-                <input type="password" name="password" class="form-control" required>
-        </div>
+         <!-- <div class="mb-3 pt-2">
+                <label for="confirm-password" class="form-label">Confirmez votre mot de passe</label>
+                <input type="password" name="confirm-password" class="form-control" required>
+        </div> -->
         <div class="mb-3 pt-2">
             <label for="description" class="form-label">Décris toi!</label>
             <textarea name="description" id="description" class="form-control"></textarea>
@@ -34,7 +34,7 @@ namespace Carbe\App\Views\Users;
         </div>
         <div class="text-center">
             <button class="btn btn-secondary" type="submit">Valider</button>
-            <button class="btn btn-secondary" type="submit">Effacer</button>
+            <button class="btn btn-secondary" type="reset">Effacer</button>
         </div>
 
 
