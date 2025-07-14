@@ -26,7 +26,8 @@ public function __construct(PDO $pdo, array $data = []) {
       parent::__construct($pdo);
        
       if (!empty($data)) {
-            
+        
+            $this->id = $data['id'] ?? null;
             $this->name = $data['name'] ?? '';
             $this->firstname = $data['firstname'] ?? '';
             $this->email = $data['email'] ?? '';
