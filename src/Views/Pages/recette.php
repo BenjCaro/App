@@ -3,17 +3,7 @@
 namespace Carbe\App\Views\Pages;
 /** @var Carbe\App\Models\RecipeModel[] $recipes */
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-echo "<pre>";
-var_dump($_SESSION);
-echo "</pre>";
 ?>
-
-
-
-
 
 <main class='container p-3 bg-light'> 
     <?php
