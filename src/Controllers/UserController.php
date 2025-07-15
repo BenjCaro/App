@@ -59,7 +59,12 @@ class UserController extends BaseController {
 
         if (!$email) {
             $errors['email'] = "Adresse e-mail invalide.";
+        } elseif (!$this->availableEmail($email, $errors)) {
+            $errors['email'] = "Adresse e-mail déja utilisée.";
         }
+
+       
+        
 
         if (strlen($password) < 8) {
             $errors['password'] = "Le mot de passe doit contenir au moins 8 caractères.";
@@ -109,6 +114,16 @@ class UserController extends BaseController {
                 exit;
             }
         }  
+    }
+
+    private function availableEmail(string $email) :bool {
+         $user =  $this->userModel->findUserByEmail($email);
+
+         if($user) {
+            return false;     
+         }
+
+         return true;
     }
 }
 
