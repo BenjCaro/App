@@ -41,10 +41,14 @@ namespace Carbe\App\Views\Users;
                     <?php unset($_SESSION['errors']['password']); ?>
                 <?php endif; ?>
         </div>
-         <!-- <div class="mb-3 pt-2">
+         <div class="mb-3 pt-2">
                 <label for="confirm-password" class="form-label">Confirmez votre mot de passe</label>
                 <input type="password" name="confirm-password" class="form-control" required>
-        </div> -->
+                <?php if (!empty($_SESSION['errors']['confirm'])): ?>
+                    <div class="alert alert-secondary mt-2"><?= htmlspecialchars($_SESSION['errors']['confirm']) ?></div>
+                    <?php unset($_SESSION['errors']['password']); ?>
+                <?php endif; ?>
+        </div>
         <div class="mb-3 pt-2">
             <label for="description" class="form-label">Décris toi!</label>
             <textarea name="description" id="description" class="form-control"></textarea>

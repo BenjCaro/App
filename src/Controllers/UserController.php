@@ -53,6 +53,7 @@ class UserController extends BaseController {
         $firstname = trim($data['firstname']);
         $email = filter_var(trim($data['email']), FILTER_VALIDATE_EMAIL);
         $password = trim($data['password']);
+        $confirm = trim($data['confirm-password']);
         $description = trim($data['description']);
 
        $errors = [];
@@ -63,11 +64,12 @@ class UserController extends BaseController {
             $errors['email'] = "Adresse e-mail déja utilisée.";
         }
 
-       
-        
-
         if (strlen($password) < 8) {
             $errors['password'] = "Le mot de passe doit contenir au moins 8 caractères.";
+        }
+ 
+        if( $password !== $confirm) {
+            $errors['confirm'] = "Les mots de passe ne correspondent pas.";
         }
 
         if (empty($name) || empty($firstname)) {
