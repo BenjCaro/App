@@ -8,6 +8,7 @@ use Carbe\App\Controllers\AboutController;
 use Carbe\App\Controllers\AuthController;
 use Carbe\App\Controllers\FavorisController;
 use Carbe\App\Controllers\LoginController;
+use Carbe\App\Controllers\SigninController;
 use Carbe\App\Controllers\UserController;
 
 
@@ -86,8 +87,8 @@ $router->map('POST', '/login', function() {
 });
 
 $router->map('GET', '/inscription', function(){
-   require('../src/Views/Partials/header.php');
-   require('../src/Views/Users/inscription.php');
+     $view = new SigninController();
+     $view->index();
 });
 
 

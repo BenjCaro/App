@@ -2,15 +2,12 @@
 
 namespace Carbe\App\Controllers;
 use Carbe\App\Controllers\BaseController;
-use Carbe\App\config\Database;
 use Carbe\App\Models\UserModel;
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\CategoryModel;
 
 
 class HomeController extends BaseController {
-
-  // connexion database ;)
 
 
     public function index() :void {
