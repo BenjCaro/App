@@ -49,6 +49,7 @@ class UserController extends BaseController {
     public function createUser(array $data) :void {
         session_start();
         
+        $token = $data['_token'];
         $name = trim($data['name']);
         $firstname = trim($data['firstname']);
         $email = filter_var(trim($data['email']), FILTER_VALIDATE_EMAIL);
@@ -57,6 +58,10 @@ class UserController extends BaseController {
         $description = trim($data['description']);
         
         $errors = [];
+
+        if (empty($token) || $_SESSION['csrf_token'] !== $_POST['_token']) {
+            $errors['_token'] = "Impossibilité de valider l'inscription.";
+        }
 
         if (!$email) {
             $errors['email'] = "Adresse e-mail invalide.";
@@ -79,7 +84,7 @@ class UserController extends BaseController {
         if (!empty($errors)) {
             $_SESSION['errors'] = $errors;
             $_SESSION['old'] = $_POST;
-           // header('Location: /inscription');
+            header('Location: /inscription');
             exit;
         }
         
