@@ -93,16 +93,10 @@ $router->map('GET', '/inscription', function(){
 
 
 $router->map('POST', '/inscription', function() {
-   
-    $data = ['name' => $_POST['name'],
-            'firstname' => $_POST['firstname'],
-            'email' => $_POST['email'],
-            'password' => $_POST['password'],
-            'description' => $_POST['description']
-    ];
+
 
     $user = new UserController();
-    $user->createUser($data);
+    $user->createUser($_POST);
          
 });
 

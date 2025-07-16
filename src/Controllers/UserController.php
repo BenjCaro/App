@@ -48,15 +48,15 @@ class UserController extends BaseController {
 
     public function createUser(array $data) :void {
         session_start();
-         
+        
         $name = trim($data['name']);
         $firstname = trim($data['firstname']);
         $email = filter_var(trim($data['email']), FILTER_VALIDATE_EMAIL);
         $password = trim($data['password']);
         $confirm = trim($data['confirm-password']);
         $description = trim($data['description']);
-
-       $errors = [];
+        
+        $errors = [];
 
         if (!$email) {
             $errors['email'] = "Adresse e-mail invalide.";
@@ -67,10 +67,10 @@ class UserController extends BaseController {
         if (strlen($password) < 8) {
             $errors['password'] = "Le mot de passe doit contenir au moins 8 caractères.";
         }
- 
-        if( $password !== $confirm) {
-            $errors['confirm'] = "Les mots de passe ne correspondent pas.";
-        }
+        
+         if( $password !== $confirm) {
+             $errors['confirm'] = "Les mots de passe ne correspondent pas.";
+         }
 
         if (empty($name) || empty($firstname)) {
             $errors['name'] = "Nom et prénom sont obligatoires.";
@@ -79,7 +79,7 @@ class UserController extends BaseController {
         if (!empty($errors)) {
             $_SESSION['errors'] = $errors;
             $_SESSION['old'] = $_POST;
-            header('Location: /inscription');
+           // header('Location: /inscription');
             exit;
         }
         
