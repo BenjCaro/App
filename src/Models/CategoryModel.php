@@ -10,7 +10,7 @@ class CategoryModel extends BaseModel {
 
     private string $name;
     private string $slug;
-    private string $image;
+    private ?string $image;
 
   /**
  * @param array<string, mixed> $data
@@ -47,7 +47,7 @@ class CategoryModel extends BaseModel {
     return $this->image;
   }
 
-  public function setImage(string $image) :void {
+  public function setImage(?string $image) :void {
     $this->image = $image;
   }
 

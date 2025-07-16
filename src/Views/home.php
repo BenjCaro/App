@@ -26,10 +26,13 @@ namespace Carbe\App\Views;
         <section class="favoris">
             <div class="card bg-gris h-100 border border-primary" >
                 <div class="card-body ">
-                <?php if(($auth_user)): ?>
+                <?php if (isset($_SESSION['auth_user'])):  ?>
                     <h2 class='card-title text-center'>Vos favoris</h2>
-                        <?php
-                    foreach ($favoris as $recipe) {  ?>
+                    <?php    
+                        if(!$favoris): ?>
+                            <div class="text-center">Pas encore de Favoris</div>
+                        <?php else: 
+                            foreach ($favoris as $recipe) {  ?>
                         <h3 class="card-subtitle text-body-secondary fs-4 mb-2"> 
                                 <?= $recipe->getTitle()?>
                             <span class="fs-6">durée: <?= $recipe->getDuration() . 'mns' ?></span>
@@ -37,12 +40,13 @@ namespace Carbe\App\Views;
                         <span class="badge text-bg-secondary"><?= $recipe->getCategory()->getName(); ?></span>
                         <a class="text-secondary nav-link" href="/recette/<?= $recipe->getSlug(); ?>">Voir la recette</a>
                         <?php } ?>
+                    <?php endif; ?>
                     <?php else: ?>
                     <h3 class="text-center">
                         Bienvenue sur Petit Creux!
                     </h3>
                     <p>Pour profiter pleinement de la communauté Petit Creux, rejoignez-nous en cliquant <a href="/login">ici</a>.</p>
-                    <?php endif; ?>
+                <?php endif; ?>
                 </div>
             </div>
         </section>

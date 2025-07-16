@@ -16,7 +16,13 @@ namespace Carbe\App\Views\Pages;
            <label for="password"  class="form-label">Mot de passe</label> 
             <input type="password" name="password" id="password" class="form-control"  required> 
         </div>
+        <div class="d-flex flex-column">
+            <button class="btn btn-secondary" type="submit">Se Connecter</button>
+            <span class="text-center">ou</span>
+            <button class="btn btn-secondary"><a class="nav-link" href="/inscription">Rejoindre Petit Creux!</a></button>
+            
+        </div>
         
-        <input class="btn btn-secondary" type="submit" value="Connexion">
     </form>
 </div>
+

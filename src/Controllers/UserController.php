@@ -2,12 +2,13 @@
 
 namespace Carbe\App\Controllers;
 use Carbe\App\Models\UserModel;
+use \PDOException;
 
 class UserController extends BaseController {
 
     private UserModel $userModel;
       
-         public function __construct()
+    public function __construct()
     {   
         parent::__construct();
         $this->userModel = new UserModel($this->pdo);
@@ -42,8 +43,97 @@ class UserController extends BaseController {
             'title' => 'Petit Creux | Mon Compte ',
             'user' => $user,
             'favoris' => $favoris
-        ]);
+        ]);        
+    }
 
-             
+    public function createUser(array $data) :void {
+        session_start();
+        
+        $token = $data['_token'];
+        $name = trim($data['name']);
+        $firstname = trim($data['firstname']);
+        $email = filter_var(trim($data['email']), FILTER_VALIDATE_EMAIL);
+        $password = trim($data['password']);
+        $confirm = trim($data['confirm-password']);
+        $description = trim($data['description']);
+        
+        $errors = [];
+
+        if (empty($token) || $_SESSION['csrf_token'] !== $_POST['_token']) {
+            $errors['_token'] = "Impossibilité de valider l'inscription.";
+        }
+
+        if (!$email) {
+            $errors['email'] = "Adresse e-mail invalide.";
+        } elseif (!$this->availableEmail($email, $errors)) {
+            $errors['email'] = "Adresse e-mail déja utilisée.";
+        }
+
+        if (strlen($password) < 8) {
+            $errors['password'] = "Le mot de passe doit contenir au moins 8 caractères.";
+        }
+        
+         if( $password !== $confirm) {
+             $errors['confirm'] = "Les mots de passe ne correspondent pas.";
+         }
+
+        if (empty($name) || empty($firstname)) {
+            $errors['name'] = "Nom et prénom sont obligatoires.";
+        }
+
+        if (!empty($errors)) {
+            $_SESSION['errors'] = $errors;
+            $_SESSION['old'] = $_POST;
+            header('Location: /inscription');
+            exit;
+        }
+        
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $userData = [
+            'name' => $name,
+            'firstname' => $firstname,
+            'email' => $email,
+            'password' => $hashedPassword,
+            'description' => $description
+        ];
+
+        
+
+        try {
+
+            $this->userModel->insert($userData);
+            $_SESSION['flash'] = "Bienvenue, inscription réussie !";
+            header('Location: /');
+            exit;
+
+
+                } catch (PDOException $e) {
+            if ($e->getCode() === '23000') {
+                
+                $_SESSION['errors']['email'] = "Cet email est déjà enregistré.";
+                header('Location: /inscription');
+                exit;
+
+            } else {
+                
+                $_SESSION['flash'] = "Une erreur technique est survenue. Veuillez réessayer plus tard.";
+                
+                error_log($e->getMessage());
+                header('Location: /inscription');
+                exit;
+            }
+        }  
+    }
+
+    private function availableEmail(string $email) :bool {
+         $user =  $this->userModel->findUserByEmail($email);
+
+         if($user) {
+            return false;     
+         }
+
+         return true;
     }
 }
+
+
