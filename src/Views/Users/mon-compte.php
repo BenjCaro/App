@@ -50,7 +50,7 @@ if (!isset($_SESSION['auth_user'])) {
                     <td>
                         <form method="POST" action="/mon-compte">
                             <input type="hidden" name="recipe" value="<?= $recipe->getId()?>">
-                            <button type="submit" class="btn btn-sm btn-secondary">Supprimer</button>
+                            <button type="submit" class="btn btn-sm btn-secondary btn-outline-primary">Supprimer</button>
                         </form>
                     </td>
                 </tr>

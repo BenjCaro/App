@@ -65,7 +65,7 @@ namespace Carbe\App\Views;
             </div>
         </section>
         <section class="popular_recipe">
-            <div class="card bg-primary h-100 border border-primary" >
+            <div class="card bg-gris h-100 border border-primary" >
                 <div class="card-body">
                     <h2 class='card-title'>Recettes Populaires</h2>
                         <h3 class="card-subtitle mb-2 text-body-secondary fs-4"> 
