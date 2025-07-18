@@ -100,7 +100,13 @@ $router->map('POST', '/inscription', function() {
          
 });
 
-
 $router->map('GET', '/logout', function() {
     require('../src/Views/Users/logout.php');
+});
+
+$router->map('GET', '/ajout-recette', function() {
+
+    require('../src/Views/Partials/header.php');
+    require('../src/Views/Users/ajout-recette.php');
+
 });
