@@ -113,6 +113,9 @@ $router->map('GET', '/ajout-recette', function() {
 });
 
 $router->map('POST', '/ajout-recette', function(){
-    var_dump($_POST['ingredients']);
+
+    $recipe = new AddRecipe();
+    $recipe->createRecipe($_POST);
+    header('Location: /');
     
 });

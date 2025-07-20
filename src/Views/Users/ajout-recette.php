@@ -7,6 +7,17 @@ namespace Carbe\App\Views\Users;
 
 <main class='container p-3 bg-light'>
     <div class="d-flex flex-column w-50 m-auto">
+        <?php if (!empty($_SESSION['errors'])): ?>
+        <div class="alert alert-danger">
+            <ul>
+                <?php foreach ($_SESSION['errors'] as $error): ?>
+                    <li><?= htmlspecialchars($error) ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <?php unset($_SESSION['errors']); ?>
+    <?php endif; ?>
+
         <form action="/ajout-recette" method="post" class="form-control pb-2">
             <input type="hidden" name="id_user" id="id_user" value="<?=$_SESSION['auth_user']['id'] ?>">
             <div class="mb-2">

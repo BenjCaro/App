@@ -3,6 +3,7 @@ namespace Carbe\App\Controllers;
 
 use Carbe\App\Models\CategoryModel;
 use Carbe\App\Models\IngredientModel;
+use Carbe\App\Models\RecipeIngredientModel;
 use Carbe\App\Models\RecipeModel;
 use Exception;
 class AddRecipe extends BaseController {
@@ -43,7 +44,7 @@ class AddRecipe extends BaseController {
      $description = trim($data['description']);
 
      $ingredients = $data['ingredients'];
-     $quantity= $data['quantity'];
+     $quantity= $data['quantites'];
      $unit = $data['unit'];
 
      $errors = [];
@@ -98,10 +99,10 @@ class AddRecipe extends BaseController {
 
       
      // recuperer l'id de la recette $pdo->lastInsertId()
-     $ingredientModel = new IngredientModel($this->pdo);
+     $recipeIngredientModel = new RecipeIngredientModel($this->pdo);
 
      foreach ($ingredients as $i => $ingredient) {
-          $ingredientModel->insert(
+          $recipeIngredientModel->insert(
                 [
                'id_recipe' => $recipeId ,
                'id_ingredient' => $ingredient ,
@@ -115,7 +116,7 @@ class AddRecipe extends BaseController {
 } catch(Exception $e) {
 
      $this->pdo->rollBack();
-     $_SESSION['errors']['database'] = "Une erreur est survenue lors de l'enregistrement de la recette.";
+     $_SESSION['errors']['database'] = "Erreur dans la soumission du formulaire.";
      header('Location: /ajout-recette');
      exit;
 }
