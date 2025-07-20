@@ -17,11 +17,9 @@ namespace Carbe\App\Views\Users;
                 <label for="" class="form-label">Catégorie</label>
                 <select name="" id="" class="form-control">
                     <option value="">Choisir la catégorie</option>
-                    <option value=""></option>
-                    <option value=""></option>
-                    <option value=""></option>
-                    <option value=""></option>
-                    <option value=""></option>
+                <?php foreach($categories as $category): ?>
+                    <option value="<?= htmlspecialchars($category->getId()); ?>"><?= htmlspecialchars($category->getName()); ?></option>
+                <?php endforeach; ?>
                 </select>
             </div>
             <div>
