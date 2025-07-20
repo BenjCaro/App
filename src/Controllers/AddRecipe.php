@@ -13,8 +13,8 @@ class AddRecipe extends BaseController {
 
         $this->render('Users/ajout-recette', [
             'title' => 'Petit Creux | Ajout de Recette',
-             'categories' => $categories,
-             'ingredients' => $ingredients
+            'categories' => $categories,
+            'ingredients' => $ingredients
          ]);
     }
 
