@@ -10,15 +10,15 @@ $slug = str_replace(' ', '-', $title);
 
 <main class='container p-3 bg-light'>
     <div class="d-flex flex-column w-50 m-auto">
-        <form action="" method="post" class="form-control pb-2">
+        <form action="/ajout-recette" method="post" class="form-control pb-2">
             <input type="hidden" value="<?=$_SESSION['auth_user']['id'] ?>">
             <div class="mb-2">
-                <label for="" class="form-label">Titre de la recette</label>
-                <input type="text" class="form-control">
+                <label for="title" class="form-label">Titre de la recette</label>
+                <input type="text" id="title" name="title" value="title" class="form-control">
             </div>
             <div class="mb-2">
-                <label for="" class="form-label">Catégorie</label>
-                <select name="" id="" class="form-select">
+                <label for="category" class="form-label">Catégorie</label>
+                <select name="category" id="category" class="form-select">
                     <option value="">Choisir la catégorie</option>
                 <?php foreach($categories as $category): ?>
                     <option value="<?= htmlspecialchars($category->getId()); ?>"><?= htmlspecialchars($category->getName()); ?></option>
@@ -26,8 +26,8 @@ $slug = str_replace(' ', '-', $title);
                 </select>
             </div>
              <div class="mb-2">
-                <label for="" class="form-label">Durée</label>
-                <input type="text" class="form-control">
+                <label for="duration" class="form-label">Durée</label>
+                <input type="text" id="duration" name="duration" value="duration" class="form-control">
             </div>
             <div class="mb-2">
                 <label class="form-label">Sélectionner les ingrédients</label>
@@ -35,8 +35,8 @@ $slug = str_replace(' ', '-', $title);
                 <button type="button" onclick="ajouterIngredient()" class="btn btn-sm btn-outline-secondary mt-2">+ Ajouter un ingrédient</button>
             </div>
             <div class="mb-2">
-                <label for="" class="form-label">Description</label>
-                <textarea class="form-control" name="" id="" placeholder="Décrivez les étapes de la recette"></textarea>
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" name="description" id="description" placeholder="Décrivez les étapes de la recette"></textarea>
             </div>
             <div class="text-center mt-2 mb-2">
                 <button class="btn btn-secondary w-25" type="submit">Valider</button>

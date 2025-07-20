@@ -111,3 +111,8 @@ $router->map('GET', '/ajout-recette', function() {
     $view->index();
 
 });
+
+$router->map('POST', '/ajout-recette', function(){
+    var_dump($_POST);
+    exit;
+});
