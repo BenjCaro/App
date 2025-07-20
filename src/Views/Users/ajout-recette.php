@@ -1,6 +1,9 @@
 <?php 
 namespace Carbe\App\Views\Users;
 
+$title = "Pancakes aux yahourts grecs";
+$title = lcfirst($title);
+$slug = str_replace(' ', '-', $title);
 
 ?>
 
@@ -80,6 +83,14 @@ function ajouterIngredient() {
     input.placeholder = 'Quantité';
     input.classList.add('form-control', 'w-25');
 
+    // Input Unité
+
+    const unit = document.createElement('input');
+    unit.name = 'unit[]';
+    unit.type = 'text';
+    unit.placeholder = 'Unité';
+    unit.classList.add('form-control', 'w-25');
+
     // Bouton suppression
     const btn = document.createElement('button');
     btn.type = 'button';
@@ -89,6 +100,7 @@ function ajouterIngredient() {
 
     div.appendChild(select);
     div.appendChild(input);
+    div.appendChild(unit);
     div.appendChild(btn);
 
     container.appendChild(div);
