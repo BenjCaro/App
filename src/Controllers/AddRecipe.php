@@ -3,7 +3,8 @@ namespace Carbe\App\Controllers;
 
 use Carbe\App\Models\CategoryModel;
 use Carbe\App\Models\IngredientModel;
-
+use Carbe\App\Models\RecipeModel;
+use Exception;
 class AddRecipe extends BaseController {
     
     public function index() {
@@ -41,9 +42,9 @@ class AddRecipe extends BaseController {
      $duration = trim($data['duration']);
      $description = trim($data['description']);
 
-     $ingredients[] = $data['ingredients'];
-     $quantity[] = $data['quantity'];
-     $unit[] = $data['unit'];
+     $ingredients = $data['ingredients'];
+     $quantity= $data['quantity'];
+     $unit = $data['unit'];
 
      $errors = [];
 
@@ -67,7 +68,7 @@ class AddRecipe extends BaseController {
           $errors['description'] = "Veuillez rédiger les étapes de préparation de votre recette.";
      }
 
-     if(empty($ingredients || $quantity || $unit)) {
+     if(empty($ingredients) || empty($quantity) || empty($unit)) {
           $errors['ingredients'] = "Veuillez selectionner un ingrédient, sa quantité et l'unité.";
      }
 
@@ -89,18 +90,35 @@ class AddRecipe extends BaseController {
           'description' => $description
      ];
 
+     try {
+     $this->pdo->beginTransaction();
+     $recipe = new RecipeModel($this->pdo);
+     $recipe->insert($recipeData);
+     $recipeId = $this->pdo->lastInsertId();
+
+      
      // recuperer l'id de la recette $pdo->lastInsertId()
+     $ingredientModel = new IngredientModel($this->pdo);
 
      foreach ($ingredients as $i => $ingredient) {
-          $ingredient = [
-             //  'id_recipe' => ,
+          $ingredientModel->insert(
+                [
+               'id_recipe' => $recipeId ,
                'id_ingredient' => $ingredient ,
                'quantity' => $quantity[$i],
                'unit' => $unit[$i]
-          ];
+          ]
+          );
      }
      
+     $this->pdo->commit();
+} catch(Exception $e) {
 
+     $this->pdo->rollBack();
+     $_SESSION['errors']['database'] = "Une erreur est survenue lors de l'enregistrement de la recette.";
+     header('Location: /ajout-recette');
+     exit;
+}
  } 
 
    private function generateSlug(string $string) :string {
