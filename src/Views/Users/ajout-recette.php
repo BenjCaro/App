@@ -46,14 +46,30 @@ namespace Carbe\App\Views\Users;
     const select = document.createElement('select');
 
     select.name = 'ingredient';
-    select.id = 'ingredient'
+    select.id = 'ingredient';
     select.classList.add('form-control');
 
     const option = document.createElement('option');
     const valueOption = 'choisir un ou plusieurs ingrédients';
-    
-    
-    option.textContent = valueOption
+    let ingredientOption = document.createElement('option');
+    // Pass PHP ingredients array to JavaScript
+    const ingredientsData = <?= json_encode(array_map(function($ingredient) {
+        return [
+            'id' => $ingredient->getId(),
+            'name' => $ingredient->getName()
+        ];
+    }, $ingredients)); ?>;
+
+    option.textContent = valueOption;
     select.appendChild(option);
+
+    // Dynamically add ingredient options
+    ingredientsData.forEach(function(ingredient) {
+        let ingredientOption = document.createElement('option');
+        ingredientOption.value = ingredient.id;
+        ingredientOption.textContent = ingredient.name;
+        select.appendChild(ingredientOption);
+    });
+
     ingredients.appendChild(select);
 </script>
