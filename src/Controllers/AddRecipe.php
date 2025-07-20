@@ -78,6 +78,20 @@ class AddRecipe extends BaseController {
      }
 
      $slug = $this->generateSlug($title);
+     $description = $this->descriptionInJson($description);
+
+     $recipeData = [
+          'title' => $title,
+          'slug' => $slug, 
+          'id_user' => $idUser,
+          'id_category' => $idCategory,
+          'duration' => $duration,
+          'description' => $description
+     ];
+
+     $ingredientsData = [
+
+     ];
 
  } 
 
@@ -90,4 +104,13 @@ class AddRecipe extends BaseController {
           return $slug;
    }
 
+   private function descriptionInJson(string $steps) :string {
+
+     $step = preg_split('/\r\n|\r|\n/', $steps);
+     $step = array_map('trim', $step); 
+     $step = array_filter($step);   
+
+     return json_encode($step, JSON_UNESCAPED_UNICODE);
+
+     }
 }

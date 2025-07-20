@@ -113,6 +113,5 @@ $router->map('GET', '/ajout-recette', function() {
 });
 
 $router->map('POST', '/ajout-recette', function(){
-    var_dump($_POST);
-    exit;
+    
 });
