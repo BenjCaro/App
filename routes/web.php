@@ -5,6 +5,7 @@ use Carbe\App\Controllers\HomeController;
 use Carbe\App\Controllers\CategoryController;
 use Carbe\App\Controllers\RecipeController;
 use Carbe\App\Controllers\AboutController;
+use Carbe\App\Controllers\AddRecipe;
 use Carbe\App\Controllers\AuthController;
 use Carbe\App\Controllers\FavorisController;
 use Carbe\App\Controllers\LoginController;
@@ -106,7 +107,7 @@ $router->map('GET', '/logout', function() {
 
 $router->map('GET', '/ajout-recette', function() {
 
-    require('../src/Views/Partials/header.php');
-    require('../src/Views/Users/ajout-recette.php');
+    $view = new AddRecipe();
+    $view->index();
 
 });
