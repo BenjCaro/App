@@ -22,13 +22,13 @@ namespace Carbe\App\Views\Users;
                 </select>
             </div>
             <div class="mb-2">
-                <label for="duration" class="form-label">Durée</label>
-                <input type="text" id="duration" name="duration" value="duration" class="form-control" required>
+                <label for="duration" class="form-label">Temps de préparation</label>
+                <input type="text" id="duration" name="duration" placeholder="Préciser le temps de préparation" class="form-control" required>
             </div>
             <div class="mb-2">
                 <label class="form-label">Sélectionner les ingrédients</label>
                 <div id="ingredients-container"></div>
-                <button type="button" onclick="ajouterIngredient()" class="btn btn-sm btn-outline-secondary mt-2">+ Ajouter un ingrédient</button>
+                <button type="button" onclick="ajouterIngredient()" class="btn btn-sm btn-outline-secondary">+ Ajouter un ingrédient</button>
             </div>
             <div class="mb-2">
                 <label for="description" class="form-label">Description</label>
