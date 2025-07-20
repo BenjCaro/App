@@ -9,22 +9,22 @@ if (!isset($_SESSION['auth_user'])) {
 ?>
 <main class='container p-3 bg-light'>
     <h2 class="text-center mb-2 mt-2">Confiez-nous vos succés culinaires! </h2>
+    <div class="d-flex flex-column w-50 m-auto">
     <?php if (!empty($_SESSION['errors'])): ?>
-        <div class="alert alert-danger">
-            <ul>
+        <div class="alert alert-secondary">
+            <ul class="list-unstyled">
                 <?php foreach ($_SESSION['errors'] as $error): ?>
                     <li><?= htmlspecialchars($error) ?></li>
                 <?php endforeach; ?>
             </ul>
         </div>
-        <?php unset($_SESSION['errors']); ?>
+    <?php unset($_SESSION['errors']); ?>
     <?php endif; ?>
-    <div class="d-flex flex-column w-50 m-auto">
-   <form action="/ajout-recette" method="post" class="form-control pb-2 mt-2 mb-2">
+   <form action="/ajout-recette" method="post" class="form-control pt-4 pb-4 mt-2 mb-2">
             <input type="hidden" name="id_user" id="id_user" value="<?=$_SESSION['auth_user']['id'] ?>">
             <div class="mb-2">
-                <label for="title" class="form-label">Titre de la recette</label>
-                <input type="text" id="title" name="title" class="form-control" required>
+                <label for="title" class="form-label fw-bold">Titre de la recette</label>
+                <input type="text" id="title" name="title" placeholder="Donner un titre à votre recette" class="form-control" required>
             </div>
             <div class="mb-2">
                 <label for="id_category" class="form-label">Catégorie</label>
