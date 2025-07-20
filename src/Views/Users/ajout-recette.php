@@ -6,6 +6,7 @@ namespace Carbe\App\Views\Users;
 
 
 <main class='container p-3 bg-light'>
+    <h2 class="text-center mb-2 mt-2">Confiez-nous vos succés culinaires! </h2>
     <div class="d-flex flex-column w-50 m-auto">
         <?php if (!empty($_SESSION['errors'])): ?>
         <div class="alert alert-danger">
@@ -17,8 +18,7 @@ namespace Carbe\App\Views\Users;
         </div>
         <?php unset($_SESSION['errors']); ?>
     <?php endif; ?>
-
-        <form action="/ajout-recette" method="post" class="form-control pb-2">
+   <form action="/ajout-recette" method="post" class="form-control pb-2 mt-2 mb-2">
             <input type="hidden" name="id_user" id="id_user" value="<?=$_SESSION['auth_user']['id'] ?>">
             <div class="mb-2">
                 <label for="title" class="form-label">Titre de la recette</label>

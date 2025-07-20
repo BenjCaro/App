@@ -111,7 +111,7 @@ class AddRecipe extends BaseController {
      }
      
           $this->pdo->commit();
-          $_SESSION['flash'] = "Création de la recette" . $title . " réussie!";
+          $_SESSION['flash'] = "Création de la recette " . $title . " réussie!";
           header('Location: /');
 
      } catch(Exception $e) {
