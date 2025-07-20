@@ -97,8 +97,6 @@ class AddRecipe extends BaseController {
      $recipe->insert($recipeData);
      $recipeId = $this->pdo->lastInsertId();
 
-      
-     // recuperer l'id de la recette $pdo->lastInsertId()
      $recipeIngredientModel = new RecipeIngredientModel($this->pdo);
 
      foreach ($ingredients as $i => $ingredient) {
@@ -112,14 +110,17 @@ class AddRecipe extends BaseController {
           );
      }
      
-     $this->pdo->commit();
-} catch(Exception $e) {
+          $this->pdo->commit();
+          $_SESSION['flash'] = "Création de la recette" . $title . " réussie!";
+          header('Location: /');
 
-     $this->pdo->rollBack();
-     $_SESSION['errors']['database'] = "Erreur dans la soumission du formulaire.";
-     header('Location: /ajout-recette');
-     exit;
-}
+     } catch(Exception $e) {
+
+          $this->pdo->rollBack();
+          $_SESSION['errors']['database'] = "Erreur dans la soumission du formulaire.";
+          header('Location: /ajout-recette');
+          exit;
+     }
  } 
 
    private function generateSlug(string $string) :string {
