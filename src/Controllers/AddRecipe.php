@@ -68,7 +68,7 @@ class AddRecipe extends BaseController {
      }
 
      if(empty($ingredients || $quantity || $unit)) {
-          $errors['ingredients[]'] = "Veuillez selectionner un ingrédient, sa quantité et l'unité.";
+          $errors['ingredients'] = "Veuillez selectionner un ingrédient, sa quantité et l'unité.";
      }
 
      if (!empty($errors)) {
@@ -89,9 +89,17 @@ class AddRecipe extends BaseController {
           'description' => $description
      ];
 
-     $ingredientsData = [
+     // recuperer l'id de la recette $pdo->lastInsertId()
 
-     ];
+     foreach ($ingredients as $i => $ingredient) {
+          $ingredient = [
+             //  'id_recipe' => ,
+               'id_ingredient' => $ingredient ,
+               'quantity' => $quantity[$i],
+               'unit' => $unit[$i]
+          ];
+     }
+     
 
  } 
 
