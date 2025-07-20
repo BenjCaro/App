@@ -9,8 +9,7 @@ if (!isset($_SESSION['auth_user'])) {
 ?>
 <main class='container p-3 bg-light'>
     <h2 class="text-center mb-2 mt-2">Confiez-nous vos succés culinaires! </h2>
-    <div class="d-flex flex-column w-50 m-auto">
-        <?php if (!empty($_SESSION['errors'])): ?>
+    <?php if (!empty($_SESSION['errors'])): ?>
         <div class="alert alert-danger">
             <ul>
                 <?php foreach ($_SESSION['errors'] as $error): ?>
@@ -20,6 +19,7 @@ if (!isset($_SESSION['auth_user'])) {
         </div>
         <?php unset($_SESSION['errors']); ?>
     <?php endif; ?>
+    <div class="d-flex flex-column w-50 m-auto">
    <form action="/ajout-recette" method="post" class="form-control pb-2 mt-2 mb-2">
             <input type="hidden" name="id_user" id="id_user" value="<?=$_SESSION['auth_user']['id'] ?>">
             <div class="mb-2">

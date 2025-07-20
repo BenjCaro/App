@@ -1,15 +1,15 @@
 <?php
 namespace Carbe\App\Views\Pages;
 ?>
-  <?php  if (isset($_SESSION['flash'])) { ?>
-        <div class='alert alert-secondary'><?= $_SESSION['flash'] ?></div>
-   <?php     unset($_SESSION['flash']); 
-    }
-?>
 
 
 <main class='container p-3 bg-light'>
-    <h2 class="text-center mb-2">Connexion</h2>
+    <?php  if (isset($_SESSION['flash'])) { ?>
+            <div class='alert alert-secondary'><?= $_SESSION['flash'] ?></div>
+    <?php     unset($_SESSION['flash']); 
+            }
+    ?>
+    <h2 class="text-center mb-2">Connexion</h2>  
     <div class="d-flex flex-column w-25 m-auto">
         <form method="post" action="/login" class="form-control p-3 border-gris bg-gris shadow-sm p-3 mb-5 bg-body-gris rounded" style="--bs-bg-opacity: .5;">
             <div class="mb-3 pt-2">
