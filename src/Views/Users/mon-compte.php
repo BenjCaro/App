@@ -60,10 +60,29 @@ if (!isset($_SESSION['auth_user'])) {
         </div>
 </section>
     <section class="row d-flex justify-content-center">
-        Mes recettes ajoutées
-<!-- Afficher les recettes ajoutées par l'utilisateur modifier/supprimer -->
-                <!-- utiliser meme structure tableau que favoris -->
+        <h3 class="text-center mt-4 mb-4">Mes recettes ajoutées</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Catégorie</th>
+                    <th>Titre</th>
+                    <th>Lien</th>
+                    <th>Modifier</th>
+                    <th>Supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($userRecipes as $userRecipe) { ?>
+                    <td><?= htmlspecialchars($userRecipe->getId()) ?></td>
+                    <td><?= htmlspecialchars($userRecipe->getTitle()) ?></td>
+                    <td><a href="/recette/<?= urlencode($useRecipe->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Consulter</a></td>
 
+                <?php  } ?>
+                <!-- Afficher les recettes ajoutées par l'utilisateur modifier/supprimer -->
+            </tbody>
+            </table>
+        </div>
     </section>
     <section class="row d-flex justify-content-center">
         Mes commentaires

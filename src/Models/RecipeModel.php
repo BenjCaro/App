@@ -339,7 +339,7 @@ public function getAllRecipesByCategory(int $idCategory) :array {
     WHERE categories.id = :id;
     ');
 
-    $stmt->execute(['id' => $idCategory]); // probleme ici
+    $stmt->execute(['id' => $idCategory]);
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $recipes = [];
@@ -364,6 +364,27 @@ public function getAllRecipesByCategory(int $idCategory) :array {
 
     return $recipes;
 }
+
+public function getRecipesByUser(int $idUser) :array {
+    $stmt = $this->pdo->prepare('SELECT recipes.id, recipes.title, recipes.slug FROM `recipes` WHERE recipes.id_user = :id_user');
+    $stmt->execute([
+        'id_user' => $idUser
+    ]);
+
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $recipes = [];
+
+    foreach($results as $data) {
+        $recipe = new RecipeModel($this->pdo);
+        $recipe->hydrate($data);
+
+        $recipes[] = $recipe;
+    }
+
+    return $recipes;
+    
+    }
 
  
  }
