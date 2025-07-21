@@ -75,6 +75,8 @@ $router->map('POST', '/mon-compte/suppr-favoris', function(){
 });
 
 $router->map('POST', '/mon-compte/suppr-recette', function() {
+    session_start();
+    
     $idRecipe = $_POST['recipe'];
 
     $recipe = new RecipeController();
