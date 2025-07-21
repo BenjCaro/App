@@ -92,6 +92,7 @@ namespace Carbe\App\Views;
                 </div>
             </div>
         </section>
+        <a href="/ajout-recette">Ajouter une recette</a>
     </div>
    
      
