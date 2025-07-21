@@ -48,7 +48,7 @@ if (!isset($_SESSION['auth_user'])) {
                     <td><?= htmlspecialchars($recipe->getTitle()) ?></td>
                     <td><a href="/recette/<?= urlencode($recipe->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Consulter</a></td>
                     <td>
-                        <form method="POST" action="/mon-compte/suppr-favoris">
+                        <form method="POST" action="/mon-compte/suppr-favoris" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer des favoris ?');">
                             <input type="hidden" name="favoris" value="<?= $recipe->getId()?>">
                             <button type="submit" class="btn btn-sm btn-secondary">Supprimer</button>
                         </form>
@@ -82,7 +82,7 @@ if (!isset($_SESSION['auth_user'])) {
                            <button type="submit" class="btn btn-sm btn-primary">Modifier</button>
                         </td>
                         <td>
-                            <form method="POST" action="/mon-compte/suppr-recette">
+                            <form method="POST" action="/mon-compte/suppr-recette" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette recette ?');">
                                 <input type="hidden" name="recipe" value="<?= $userRecipe->getId()?>">
                                 <button type="submit" class="btn btn-sm btn-secondary">Supprimer</button>
                             </form>
