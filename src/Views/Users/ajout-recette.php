@@ -42,7 +42,7 @@ if (!isset($_SESSION['auth_user'])) {
             <div class="mb-2">
                 <label for="ingredients" class="form-label">Sélectionner les ingrédients</label>
                 <div id="ingredients-container"></div>
-                <button type="button" onclick="ajouterIngredient()" class="btn btn-sm btn-outline-secondary">+ Ajouter un ingrédient</button>
+                <button type="button" onclick="addIngredient()" class="btn btn-sm btn-outline-secondary">+ Ajouter un ingrédient</button>
             </div>
             <div class="mb-2">
                 <label for="description" class="form-label">Description</label>
@@ -62,7 +62,7 @@ if (!isset($_SESSION['auth_user'])) {
     ];
 }, $ingredients)); ?>;
 
-function ajouterIngredient() {
+function addIngredient() {
     const container = document.getElementById('ingredients-container');
 
     const div = document.createElement('div');
@@ -104,8 +104,8 @@ function ajouterIngredient() {
     // Bouton suppression
     const btn = document.createElement('button');
     btn.type = 'button';
-    btn.textContent = '❌';
-    btn.classList.add('btn', 'btn-danger');
+    btn.textContent = 'x';
+    btn.classList.add('btn', 'btn-secondary');
     btn.onclick = () => div.remove();
 
     div.appendChild(select);
