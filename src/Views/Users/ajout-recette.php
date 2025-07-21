@@ -8,7 +8,7 @@ if (!isset($_SESSION['auth_user'])) {
 }
 ?>
 <main class='container p-3 bg-light'>
-    <h2 class="text-center mb-2 mt-2">Confiez-nous vos succés culinaires! </h2>
+    <h2 class="text-center mb-2 mt-2">Confiez-nous vos repas préférés! </h2>
     <div class="d-flex flex-column w-50 m-auto">
     <?php if (!empty($_SESSION['errors'])): ?>
         <div class="alert alert-secondary">
@@ -20,7 +20,7 @@ if (!isset($_SESSION['auth_user'])) {
         </div>
     <?php unset($_SESSION['errors']); ?>
     <?php endif; ?>
-   <form action="/ajout-recette" method="post" class="form-control pt-4 pb-4 mt-2 mb-2">
+   <form action="/ajout-recette" method="post" class="form-control pb-2 border-gris bg-gris shadow-sm p-3 mb-5 bg-body-gris rounded" style="--bs-bg-opacity: .5;">
             <input type="hidden" name="id_user" id="id_user" value="<?=$_SESSION['auth_user']['id'] ?>">
             <div class="mb-2">
                 <label for="title" class="form-label fw-bold">Titre de la recette</label>
