@@ -48,7 +48,7 @@ if (!isset($_SESSION['auth_user'])) {
                     <td><?= htmlspecialchars($recipe->getTitle()) ?></td>
                     <td><a href="/recette/<?= urlencode($recipe->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Consulter</a></td>
                     <td>
-                        <form method="POST" action="/mon-compte">
+                        <form method="POST" action="/mon-compte/suppr-favoris">
                             <input type="hidden" name="recipe" value="<?= $recipe->getId()?>">
                             <button type="submit" class="btn btn-sm btn-secondary btn-outline-primary">Supprimer</button>
                         </form>

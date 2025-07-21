@@ -61,7 +61,7 @@ $router->map('GET', '/mon-compte', function() {
      $user->getMyProfil();
  });
 
-$router->map('POST', '/mon-compte', function(){
+$router->map('POST', '/mon-compte/suppr-favoris', function(){
     session_start();
 
     $idUser = $_SESSION['auth_user']['id'];
@@ -70,7 +70,6 @@ $router->map('POST', '/mon-compte', function(){
     $favori = new FavorisController();
     $favori->delete($idUser, $idRecipe);
     
-
     header('Location: /mon-compte');
     exit();
 });
