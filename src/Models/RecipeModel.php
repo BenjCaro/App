@@ -366,7 +366,11 @@ public function getAllRecipesByCategory(int $idCategory) :array {
 }
 
 public function getRecipesByUser(int $idUser) :array {
-    $stmt = $this->pdo->prepare('SELECT recipes.id, recipes.title, recipes.slug FROM `recipes` WHERE recipes.id_user = :id_user');
+    $stmt = $this->pdo->prepare('SELECT recipes.id, recipes.title, recipes.slug, categories.name 
+        FROM `recipes` 
+        JOIN categories ON categories.id = recipes.id_category
+        WHERE recipes.id_user = :id_user');
+
     $stmt->execute([
         'id_user' => $idUser
     ]);
@@ -376,8 +380,12 @@ public function getRecipesByUser(int $idUser) :array {
     $recipes = [];
 
     foreach($results as $data) {
+        $categoryName = ['name' => $data['name']];
+        $category = new CategoryModel($this->pdo);
+        $category->hydrate($categoryName);
         $recipe = new RecipeModel($this->pdo);
         $recipe->hydrate($data);
+        $recipe->setCategory($category);
 
         $recipes[] = $recipe;
     }

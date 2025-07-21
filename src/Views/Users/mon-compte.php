@@ -75,17 +75,17 @@ if (!isset($_SESSION['auth_user'])) {
             <tbody>
                 <?php foreach($userRecipes as $userRecipe) { ?>
                     <tr>
-                        <td></td>
+                        <td><?= htmlspecialchars($userRecipe->getCategory()->getName()) ?></td>
                         <td><?= htmlspecialchars($userRecipe->getTitle()) ?></td>
                         <td><a href="/recette/<?= urlencode($userRecipe->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Consulter</a></td>
                         <td>
-                            <form method="POST" action="/mon-compte/suppr-favoris">
+                            <form method="POST" action="">
                                 <input type="hidden" name="recipe" value="<?= $userRecipe->getId()?>">
                                 <button type="submit" class="btn btn-sm btn-primary">Modifier</button>
                             </form>
                         </td>
                         <td>
-                            <form method="POST" action="/mon-compte/suppr-favoris">
+                            <form method="POST" action="/mon-compte/suppr-recette">
                                 <input type="hidden" name="recipe" value="<?= $userRecipe->getId()?>">
                                 <button type="submit" class="btn btn-sm btn-secondary">Supprimer</button>
                             </form>
