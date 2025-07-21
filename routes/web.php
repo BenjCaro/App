@@ -11,7 +11,7 @@ use Carbe\App\Controllers\FavorisController;
 use Carbe\App\Controllers\LoginController;
 use Carbe\App\Controllers\SigninController;
 use Carbe\App\Controllers\UserController;
-
+use Carbe\App\Models\RecipeModel;
 
 $router->map('GET', '/', function() {
     
@@ -65,11 +65,21 @@ $router->map('POST', '/mon-compte/suppr-favoris', function(){
     session_start();
 
     $idUser = $_SESSION['auth_user']['id'];
-    $idRecipe = $_POST['recipe'];
+    $idRecipe = $_POST['favoris'];
 
     $favori = new FavorisController();
     $favori->delete($idUser, $idRecipe);
     
+    header('Location: /mon-compte');
+    exit();
+});
+
+$router->map('POST', '/mon-compte/suppr-recette', function() {
+    $idRecipe = $_POST['recipe'];
+
+    $recipe = new RecipeController();
+    $recipe->deleteRecipe($idRecipe);
+
     header('Location: /mon-compte');
     exit();
 });

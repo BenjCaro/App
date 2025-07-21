@@ -15,7 +15,15 @@ class RecipeController extends BaseController {
                 'recipe' => $recipe
             ]); 
 
+      }
 
+      public function deleteRecipe(int $idRecipe) :void {
+
+         $recipeModel = new RecipeModel($this->pdo);
+         $recipeModel->setId($idRecipe);
+         $recipeModel->delete();
+
+         $_SESSION['flash'] = "Recette supprimée.";
 
       }
 }

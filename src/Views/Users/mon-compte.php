@@ -12,7 +12,7 @@ if (!isset($_SESSION['auth_user'])) {
 <main class='container p-3 bg-light border-end border-start border-secondary'>
     <?php
      if (isset($_SESSION['flash'])) {  ?>
-       <div class='alert alert-secondary'><?=$_SESSION['flash']?></div>
+       <div class='alert alert-primary'><?=$_SESSION['flash']?></div>
     <?php    unset($_SESSION['flash']); 
     }
 
@@ -49,7 +49,7 @@ if (!isset($_SESSION['auth_user'])) {
                     <td><a href="/recette/<?= urlencode($recipe->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Consulter</a></td>
                     <td>
                         <form method="POST" action="/mon-compte/suppr-favoris">
-                            <input type="hidden" name="recipe" value="<?= $recipe->getId()?>">
+                            <input type="hidden" name="favoris" value="<?= $recipe->getId()?>">
                             <button type="submit" class="btn btn-sm btn-secondary">Supprimer</button>
                         </form>
                     </td>
@@ -79,10 +79,7 @@ if (!isset($_SESSION['auth_user'])) {
                         <td><?= htmlspecialchars($userRecipe->getTitle()) ?></td>
                         <td><a href="/recette/<?= urlencode($userRecipe->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Consulter</a></td>
                         <td>
-                            <form method="POST" action="">
-                                <input type="hidden" name="recipe" value="<?= $userRecipe->getId()?>">
-                                <button type="submit" class="btn btn-sm btn-primary">Modifier</button>
-                            </form>
+                           <button type="submit" class="btn btn-sm btn-primary">Modifier</button>
                         </td>
                         <td>
                             <form method="POST" action="/mon-compte/suppr-recette">
@@ -91,7 +88,6 @@ if (!isset($_SESSION['auth_user'])) {
                             </form>
                         </td>
                     </tr>
-                    
                 <?php  } ?>
                 <!-- Afficher les recettes ajoutées par l'utilisateur modifier/supprimer -->
             </tbody>
