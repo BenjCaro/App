@@ -33,29 +33,29 @@ if (!isset($_SESSION['auth_user'])) {
         <h3 class="text-center mt-4 mb-4">Mes favoris</h3>
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
-            <thead class="table-light">
-                <tr>
-                    <th>Catégorie</th>
-                    <th>Titre</th>
-                    <th>Lien</th>
-                    <th>Supprimer des favoris</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($favoris as $recipe) { ?>
-                <tr>
-                    <td><?= htmlspecialchars($recipe->getCategory()->getName())?></td>
-                    <td><?= htmlspecialchars($recipe->getTitle()) ?></td>
-                    <td><a href="/recette/<?= urlencode($recipe->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Consulter</a></td>
-                    <td>
-                        <form method="POST" action="/mon-compte/suppr-favoris" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer des favoris ?');">
-                            <input type="hidden" name="favoris" value="<?= $recipe->getId()?>">
-                            <button type="submit" class="btn btn-sm btn-secondary">Supprimer</button>
-                        </form>
-                    </td>
-                </tr>
-                <?php } ?>
-            </tbody>
+                <thead class="table-light">
+                    <tr>
+                        <th>Catégorie</th>
+                        <th>Titre</th>
+                        <th>Lien</th>
+                        <th>Supprimer des favoris</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($favoris as $recipe) { ?>
+                    <tr>
+                        <td><?= htmlspecialchars($recipe->getCategory()->getName())?></td>
+                        <td><?= htmlspecialchars($recipe->getTitle()) ?></td>
+                        <td><a href="/recette/<?= urlencode($recipe->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Consulter</a></td>
+                        <td>
+                            <form method="POST" action="/mon-compte/suppr-favoris" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer des favoris ?');">
+                                <input type="hidden" name="favoris" value="<?= $recipe->getId()?>">
+                                <button type="submit" class="btn btn-sm btn-secondary">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
             </table>
         </div>
 </section>
