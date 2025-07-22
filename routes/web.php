@@ -10,6 +10,7 @@ use Carbe\App\Controllers\AuthController;
 use Carbe\App\Controllers\FavorisController;
 use Carbe\App\Controllers\LoginController;
 use Carbe\App\Controllers\SigninController;
+use Carbe\App\Controllers\UpdateRecipeController;
 use Carbe\App\Controllers\UserController;
 
 
@@ -85,6 +86,12 @@ $router->map('POST', '/mon-compte/suppr-recette', function() {
     header('Location: /mon-compte');
     exit();
     });
+
+$router->map('GET', '/update/recette/[*:slug]', function($slug) {
+    
+    $view = new UpdateRecipeController();
+    $view->index($slug);
+});
 
 $router->map('GET', '/login', function() {
     $view = new LoginController();

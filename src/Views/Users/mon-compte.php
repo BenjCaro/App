@@ -79,7 +79,7 @@ if (!isset($_SESSION['auth_user'])) {
                         <td><?= htmlspecialchars($userRecipe->getTitle()) ?></td>
                         <td><a href="/recette/<?= urlencode($userRecipe->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Consulter</a></td>
                         <td>
-                           <button type="submit" class="btn btn-sm btn-primary">Modifier</button>
+                           <button type="submit" class="btn btn-sm btn-primary"><a href="/update/recette/<?= urlencode($userRecipe->getSlug()) ?>" class="nav-link">Modifier</a></button>
                         </td>
                         <td>
                             <form method="POST" action="/mon-compte/suppr-recette" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette recette ?');">
