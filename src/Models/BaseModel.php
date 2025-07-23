@@ -80,6 +80,23 @@ public function insert(array $data) :void {
 
     }   
 
+
+    public function update(int $id, array $data): void {
+        
+    // Génère une chaîne de la forme "col1 = :col1, col2 = :col2"
+    $fields = [];
+    foreach ($data as $column => $value) {
+        $fields[] = "$column = :$column";
+    }
+
+    $setClause = implode(', ', $fields);
+    $stmt = $this->pdo->prepare("UPDATE {$this->table} SET $setClause WHERE id = :id");
+    $data['id'] = $id;
+    $stmt->execute($data);
+}
+
+
+
 /**
  *  @param array<string, mixed> $data
  */

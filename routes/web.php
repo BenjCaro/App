@@ -87,12 +87,6 @@ $router->map('POST', '/mon-compte/suppr-recette', function() {
     exit();
     });
 
-$router->map('GET', '/update/recette/[*:slug]', function($slug) {
-    
-    $view = new UpdateRecipeController();
-    $view->index($slug);
-});
-
 $router->map('GET', '/login', function() {
     $view = new LoginController();
     $view->displayLogin();
@@ -135,4 +129,17 @@ $router->map('POST', '/ajout-recette', function(){
     $recipe->createRecipe($_POST);
     header('Location: /');
     
+});
+
+$router->map('GET', '/update/recette/[*:slug]', function($slug) {
+    
+    $view = new UpdateRecipeController();
+    $view->index($slug);
+});
+
+$router->map('POST', '/update/recette', function() {
+
+    var_dump($_POST);
+    exit;
+
 });

@@ -18,7 +18,7 @@ namespace Carbe\App\Views;
     <?php
 
     if (isset($_SESSION['flash'])) {  ?>
-       <div class='alert alert-secondary'><?=$_SESSION['flash']?></div>
+       <div class='alert alert-primary'><?=$_SESSION['flash']?></div>
     <?php    unset($_SESSION['flash']); 
     }
     ?>
