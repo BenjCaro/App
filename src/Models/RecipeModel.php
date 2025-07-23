@@ -183,7 +183,7 @@ public function getRecipeBySlug(string $slug) :RecipeModel {
     return $recipe;
 }
 
-public function newRecipe() :RecipeModel {
+public function newRecipe() :?RecipeModel {
       $stmt = $this->pdo->prepare("
       SELECT 
          recipes.id, 
@@ -203,7 +203,7 @@ public function newRecipe() :RecipeModel {
       $data = $stmt->fetch(PDO::FETCH_ASSOC);
       
       if (!$data) {
-        throw new \Exception("Aucune recette trouvée");
+        return null;
     }
       
          $categoryData = [

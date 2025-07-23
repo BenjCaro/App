@@ -54,13 +54,16 @@ namespace Carbe\App\Views;
             <div class="card bg-gris h-100 border border-primary">
                 <div class="card-body">
                     <h2 class='card-title'>Dernière Recette</h2>
+                    <?php if(!$lastRecipe)  { ?>
+                            <div class="text-center">Pas encore de recette</div>
+                     <?php  } else {?>
                         <h3 class="card-subtitle mb-2 text-body-secondary fs-4"> 
                                 <?= $lastRecipe->getTitle()?>
                         </h3>
                         <span class="badge text-bg-secondary"><?= htmlspecialchars($lastRecipe->getDuration()) . ' minutes' ?></span>
                         <span class="badge text-bg-secondary"><?=  ucwords($lastRecipe->getCategory()->getName());?></span> <br>
                        <button type="button" class="btn btn-secondary mt-2"><a class="text-black nav-link" href="/recette/<?= $lastRecipe->getSlug()?>">Voir la recette</a></button>
-                    
+                    <?php } ?>
                 </div>
             </div>
         </section>
@@ -68,12 +71,16 @@ namespace Carbe\App\Views;
             <div class="card bg-gris h-100 border border-primary" >
                 <div class="card-body">
                     <h2 class='card-title'>Recettes Populaires</h2>
+                         <?php if(!$lastRecipe)  { ?>
+                            <div class="text-center">Pas encore de recette</div>
+                        <?php  } else {?>
                         <h3 class="card-subtitle mb-2 text-body-secondary fs-4"> 
                                 <?= $popularRecipe->getTitle()?>
                         </h3>
                         <span class="badge text-bg-secondary"><?= htmlspecialchars($popularRecipe->getDuration()) . ' minutes' ?></span>
                         <span class="badge text-bg-secondary"><?=  ucwords($popularRecipe->getCategory()->getName());?></span> <br>
                         <button type="button" class="btn btn-secondary mt-2"><a class="text-black nav-link" href="/recette/<?= $popularRecipe->getSlug()?>">Voir la recette</a></button>      
+                        <?php } ?>
                 </div>
             </div>
         </section>
