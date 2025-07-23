@@ -138,8 +138,10 @@ $router->map('GET', '/update/recette/[*:slug]', function($slug) {
 });
 
 $router->map('POST', '/update/recette', function() {
+  
+    $id = $_POST['id'];
 
-    var_dump($_POST);
-    exit;
+    $recipe = new UpdateRecipeController();
+    $recipe->updateRecipe($id, $_POST);
 
 });

@@ -130,6 +130,7 @@ public function getRecipeBySlug(string $slug) :RecipeModel {
      recipes.duration, 
      recipes.description,
      ingredients.name,
+     ingredients.id,
      recipes_ingredients.quantity,
      recipes_ingredients.unit,
      categories.name AS category_name
@@ -162,7 +163,8 @@ public function getRecipeBySlug(string $slug) :RecipeModel {
     $ingredients = [];
     foreach ($data as $row) {
         $ingredient = new IngredientModel($this->pdo);
-        $ingredient->hydrate(['name' => $row['name']]);
+        $ingredient->hydrate([ 'id' => $row['id'],
+            'name' => $row['name']]);
 
         $recipeIngredient = new RecipeIngredientModel($this->pdo);
         $recipeIngredient->hydrate([
@@ -178,8 +180,6 @@ public function getRecipeBySlug(string $slug) :RecipeModel {
     $recipe->setCategory($category);
 
     $recipe->setIngredients($ingredients);
-
-
     return $recipe;
 }
 

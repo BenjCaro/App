@@ -62,17 +62,17 @@ class CategoryModel extends BaseModel {
      ]);
   }
 
-  public function update() :bool {
-    $stmt = $this->pdo->prepare("UPDATE categories SET name = :name, slug = :slug WHERE id= :id");
+  // public function update() :bool {
+  //   $stmt = $this->pdo->prepare("UPDATE categories SET name = :name, slug = :slug WHERE id= :id");
 
-    return $stmt->execute([
+  //   return $stmt->execute([
 
-        'id' => $this->getId(),
-        'name' => $this->getName(),
-        'slug' => $this->getSlug()
+  //       'id' => $this->getId(),
+  //       'name' => $this->getName(),
+  //       'slug' => $this->getSlug()
 
-    ]);
-  }
+  //   ]);
+  // }
 
 /**
  * @return array<string, mixed>|false

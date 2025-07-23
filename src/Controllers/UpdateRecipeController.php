@@ -25,12 +25,13 @@ class UpdateRecipeController extends BaseController {
 
         $id = $data['id'];
         // $duration = trim($data['duration']);
-        $description = trim($data['description']);
-
+        $description = $data['description'];
+        
         $ingredients = $data['ingredients'];
         $quantity= $data['quantites'];
         $unit = $data['unit'];
-                
+        
+        $description = $this->descriptionInJson($description);
 
         try {
             $this->pdo->beginTransaction();
@@ -40,32 +41,40 @@ class UpdateRecipeController extends BaseController {
         ]);
 
         $recipeIngredientModel = new RecipeIngredientModel($this->pdo);
+        $recipeIngredientModel->deleteByRecipeId($id);
 
+    
         foreach ($ingredients as $i => $ingredient) {
           $recipeIngredientModel->insert(
                 [
-               
+               'id_recipe' => $id,
                'id_ingredient' => $ingredient ,
                'quantity' => $quantity[$i],
                'unit' => $unit[$i]
             ]
           );
-
-          $this->pdo->commit();
-          $_SESSION['flash'] = "Mise à jour de la recette réussie!";
-          header('Location: /mon-compte');
         }
+
+         $this->pdo->commit();
+         $_SESSION['flash'] = "Mise à jour de la recette réussie!";
+         header('Location: /mon-compte');
 
         } catch(Exception $e) {
             $this->pdo->rollBack();
-            $_SESSION['errors']['database'] = "Erreur dans la soumission du formulaire.";
-            header('Location: /ajout-recette');
+            $_SESSION['errors']['database'] = "Erreur dans la soumission du formulaire." . $e->getMessage();
+            header('Location: /mon-compte');
             exit;
         }
         
-
-
-
-
     }
+
+    private function descriptionInJson(string|array $steps) :?string {
+
+     
+     $steps = array_map('trim', $steps); 
+     $steps = array_filter($steps);   
+
+     return json_encode($steps, JSON_UNESCAPED_UNICODE);
+
+     }
 }

@@ -20,19 +20,22 @@ namespace Carbe\App\Views\Users;
         <?php foreach ($recipe->getIngredients() as $recipeIngredient): ?>
                 <?php 
                     $ingredient = $recipeIngredient->getIngredient(); 
+                    $id = $ingredient->getId();
                     $name = $ingredient->getName();
                     $quantity = $recipeIngredient->getQuantity();
                     $unit = $recipeIngredient->getUnit();
+                    var_dump($id);
                 ?>
         <div class="row mb-2">
+            <input type="hidden" name="ingredients[]" value="<?= htmlspecialchars($id) ?>" class="form-control">
             <div class="col-md-4">
-                <input type="text" name="<?= htmlspecialchars($name) ?>" value="<?= htmlspecialchars($name) ?>" class="form-control" readonly>
+                <input type="text" value="<?= htmlspecialchars($name) ?>" class="form-control" readonly>
             </div>
             <div class="col-md-4">
-                <input type="number" step="any" name="<?= htmlspecialchars($quantity) ?>" value="<?= htmlspecialchars($quantity) ?>" class="form-control">
+                <input type="number" step="any" name="quantites[]" value="<?= htmlspecialchars($quantity) ?>" class="form-control">
             </div>
             <div class="col-md-4">
-                <input type="text" name="<?= htmlspecialchars($unit) ?>" value="<?= htmlspecialchars($unit) ?>" class="form-control">
+                <input type="text" name="unit[]" value="<?= htmlspecialchars($unit) ?>" class="form-control">
             </div>
           
         </div>

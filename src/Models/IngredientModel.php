@@ -52,16 +52,16 @@ class IngredientModel extends BaseModel {
      ]);
   }
 
-  public function update() :bool {
-    $stmt = $this->pdo->prepare("UPDATE ingredients SET name = :name, type = :type WHERE id= :id");
+  // public function update() :bool {
+  //   $stmt = $this->pdo->prepare("UPDATE ingredients SET name = :name, type = :type WHERE id= :id");
 
-    return $stmt->execute([
+  //   return $stmt->execute([
 
-        'id' => $this->getId(),
-        'name' => $this->getName(),
-        'type' => $this->getType()
+  //       'id' => $this->getId(),
+  //       'name' => $this->getName(),
+  //       'type' => $this->getType()
 
-    ]);
-  }
+  //   ]);
+  // }
 
 }

@@ -7,6 +7,11 @@ if (!isset($_SESSION['auth_user'])) {
     exit();
 }
 
+if (isset($_SESSION['errors']['database'])) {
+    echo $_SESSION['errors']['database'];
+    unset($_SESSION['errors']['database']); // Pour éviter qu’elle s’affiche à nouveau
+}
+
 ?>
 
 <main class='container p-3 bg-light border-end border-start border-secondary'>

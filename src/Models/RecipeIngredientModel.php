@@ -51,6 +51,11 @@ class RecipeIngredientModel extends BaseModel {
         $this->unit = $unit ?? '';
     }
 
+    public function deleteByRecipeId(int $idRecipe): bool {
+    $stmt = $this->pdo->prepare("DELETE FROM {$this->table} WHERE id_recipe = :id_recipe");
+    return $stmt->execute(['id_recipe' => $idRecipe]);
+    
+    }
 
 
 }
