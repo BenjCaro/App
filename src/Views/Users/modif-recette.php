@@ -52,7 +52,10 @@ namespace Carbe\App\Views\Users;
             <div class="mb-2">
                 <label for="step_<?= $i ?>" class="form-label">Étape <?= $i + 1 ?></label>
                 <textarea class="form-control" id="step_<?= $i ?>" name="description[]"><?= htmlspecialchars($step) ?></textarea>
+            </div>
             <?php endforeach; ?>
+            <div>
+                <textarea class="form-control" id="step_<?= $i ?>" name="description[]" placeholder="Ajouter une nouvelle étape"></textarea>
             </div>
             <div class="text-center mt-4">
                 <button type="submit" class="btn btn-secondary">Enregistrer les modifications</button>
