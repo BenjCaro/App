@@ -25,26 +25,20 @@ namespace Carbe\App\Views\Users;
                     $quantity = $recipeIngredient->getQuantity();
                     $unit = $recipeIngredient->getUnit();
                 ?>
-                <div class="d-flex mb-2 gap-2 align-items-center">
+            <div class="d-flex mb-2 gap-2 align-items-center">
                     
-                        <select name="ingredients[]" class="form-select">
-                            <?php foreach ($ingredients as $ing): ?>
-                                <option value="<?= $ing->getId() ?>" <?= $ing->getId() === $id ? 'selected' : '' ?>>
-                                    <?= htmlspecialchars($ing->getName()) ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    
-                    
-                        <input type="number" step="any" name="quantites[]" value="<?= htmlspecialchars($quantity) ?>" placeholder="Quantités" class="form-control">
-                    
-                        <input type="text" name="unit[]" value="<?= htmlspecialchars($unit) ?>" placeholder="unités" class="form-control">
-                        <button class="btn btn-secondary" onclick="return confirm('Souhaitez-vous retirer cet ingrédient?')"><a class="nav-link" href="/suppr-ingredient/<?= $id?>">Supprimer</a></button>
-                            
-                    
-                </div>
+                 <select name="ingredients[]" class="form-select">
+                    <?php foreach ($ingredients as $ing): ?>
+                    <option value="<?= $ing->getId() ?>" <?= $ing->getId() === $id ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($ing->getName()) ?>
+                    </option>
+                         <?php endforeach; ?>
+                </select>
+                    <input type="number" step="any" name="quantites[]" value="<?= htmlspecialchars($quantity) ?>" placeholder="Quantités" class="form-control">
+                    <input type="text" name="unit[]" value="<?= htmlspecialchars($unit) ?>" placeholder="unités" class="form-control">
+                    <button class="btn btn-secondary" onclick="return confirm('Souhaitez-vous retirer cet ingrédient?')"><a class="nav-link" href="/suppr-ingredient/<?= $id ?>-<?= $recipe->getSlug() ?>">Supprimer</a></button>  
+            </div>
             <?php endforeach; ?>
-
             <h3 class="text-center">Ajouter des ingrédients</h3>
             <div id="ingredients-container"></div>
             <button type="button" onclick="addIngredient()" class="btn btn-sm btn-outline-secondary">+ Ajouter un ingrédient</button>
