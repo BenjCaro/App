@@ -39,7 +39,7 @@ namespace Carbe\App\Views\Users;
                         <input type="number" step="any" name="quantites[]" value="<?= htmlspecialchars($quantity) ?>" placeholder="Quantités" class="form-control">
                     
                         <input type="text" name="unit[]" value="<?= htmlspecialchars($unit) ?>" placeholder="unités" class="form-control">
-                        <button class="btn btn-secondary" onclick="return confirm('Souhaitez-vous retirer cet ingrédient?')"><a class="nav-link" href="/suppr-ingredient/">Supprimer</a></button>
+                        <button class="btn btn-secondary" onclick="return confirm('Souhaitez-vous retirer cet ingrédient?')"><a class="nav-link" href="/suppr-ingredient/<?= $id?>">Supprimer</a></button>
                             
                     
                 </div>

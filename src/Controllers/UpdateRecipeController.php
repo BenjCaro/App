@@ -75,6 +75,15 @@ class UpdateRecipeController extends BaseController {
         
     }
 
+    public function deleteIngredient(int $id) {
+
+         $ingredient = new RecipeIngredientModel($this->pdo);
+         $ingredient->removeIngredient($id);
+         $_SESSION['flash']= "Ingrédient retiré avec succes!";
+         header('Location: /mon-compte');
+
+    }
+
     private function descriptionInJson(string|array $steps) :?string {
 
      

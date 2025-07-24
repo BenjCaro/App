@@ -145,3 +145,10 @@ $router->map('POST', '/update/recette', function() {
     $recipe->updateRecipe($id, $_POST);
 
 });
+
+$router->map('GET', '/suppr-ingredient/[*:id]', function($id) {
+
+   $ingredient = new UpdateRecipeController();
+   $ingredient->deleteIngredient($id);
+
+});
