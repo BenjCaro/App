@@ -26,7 +26,7 @@ class UpdateRecipeController extends BaseController {
         $id = $data['id'];
         // $duration = trim($data['duration']);
         $description = $data['description'];
-        
+        $duration = $data['duration'];
         $ingredients = $data['ingredients'];
         $quantity= $data['quantites'];
         $unit = $data['unit'];
@@ -37,6 +37,7 @@ class UpdateRecipeController extends BaseController {
             $this->pdo->beginTransaction();
             $recipe = new RecipeModel($this->pdo);
             $recipe->update($id, [
+                'duration' => $duration,
                 'description' => $description
         ]);
 
