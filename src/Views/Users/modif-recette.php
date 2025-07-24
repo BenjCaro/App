@@ -17,7 +17,9 @@ namespace Carbe\App\Views\Users;
     <form action="/update/recette" method="POST" class="mt-4" onsubmit="return confirm('Etes vous sur de vouloir modifier votre recette?');">
             <input type="hidden" name="id" value="<?= $recipe->getId() ?>">
             <h3 class="text-center">Modifier les ingrédients</h3>
-
+            <?php if(!$recipe->getIngredients()) { ?>
+                <p class="text-center">La recette n'a pas d'ingrédients, ajouter un ingrédient.</p>
+            <?php  } else { ?>
             <?php foreach ($recipe->getIngredients() as $i => $recipeIngredient): ?>
                 <?php 
                     $ingredient = $recipeIngredient->getIngredient(); 
@@ -38,7 +40,7 @@ namespace Carbe\App\Views\Users;
                     <input type="text" name="unit[]" value="<?= htmlspecialchars($unit) ?>" placeholder="unités" class="form-control">
                     <button class="btn btn-secondary" onclick="return confirm('Souhaitez-vous retirer cet ingrédient?')"><a class="nav-link" href="/suppr-ingredient/<?= $id ?>-<?= $recipe->getSlug() ?>">Supprimer</a></button>  
             </div>
-            <?php endforeach; ?>
+            <?php endforeach; } ?>
             <h3 class="text-center">Ajouter des ingrédients</h3>
             <div id="ingredients-container"></div>
             <button type="button" onclick="addIngredient()" class="btn btn-sm btn-outline-secondary">+ Ajouter un ingrédient</button>

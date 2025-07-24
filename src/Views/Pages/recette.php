@@ -20,6 +20,9 @@ namespace Carbe\App\Views\Pages;
         <h3 class='mt-3 fs-3 text-center'>Ingrédients</h3>
         <div class="card bg-gris border border-primary w-50 p-3 mx-auto">
             <ul class="card-body list-unstyled">
+            <?php if(!$recipe->getIngredients()) { ?>
+                <p>La recette n'a pas d'ingrédients.</p>
+            <?php  }  else { ?>
             <?php foreach ($recipe->getIngredients() as $recipeIngredient): ?>
                 <?php 
                     $ingredient = $recipeIngredient->getIngredient(); 
@@ -28,7 +31,7 @@ namespace Carbe\App\Views\Pages;
                     $unit = $recipeIngredient->getUnit();
                 ?>
                 <li class="card-text"><?= htmlspecialchars($quantity) ?> <?= htmlspecialchars($unit) ?> de <?= htmlspecialchars($name) ?></li>
-            <?php endforeach; ?>
+            <?php endforeach; }?>
             </ul>
         </div>
     </section>
