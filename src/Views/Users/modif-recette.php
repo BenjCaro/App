@@ -39,8 +39,8 @@ namespace Carbe\App\Views\Users;
                         <input type="number" step="any" name="quantites[]" value="<?= htmlspecialchars($quantity) ?>" placeholder="Quantités" class="form-control">
                     
                         <input type="text" name="unit[]" value="<?= htmlspecialchars($unit) ?>" placeholder="unités" class="form-control">
-                        <button class="btn btn-secondary">Supprimer</button>
-
+                        <button class="btn btn-secondary" onclick="return confirm('Souhaitez-vous retirer cet ingrédient?')"><a class="nav-link" href="/suppr-ingredient/">Supprimer</a></button>
+                            
                     
                 </div>
             <?php endforeach; ?>
@@ -83,86 +83,86 @@ namespace Carbe\App\Views\Users;
     ];
 }, $ingredients)); ?>;
 
-function addIngredient() {
-    const container = document.getElementById('ingredients-container');
+    function addIngredient() {
+        const container = document.getElementById('ingredients-container');
+
+        const div = document.createElement('div');
+        div.classList.add('d-flex', 'mb-2', 'gap-2', 'align-items-center');
+
+        // Select d'ingrédients
+        const select = document.createElement('select');
+        select.name = 'ingredients[]';
+        select.classList.add('form-select');
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        defaultOption.textContent = 'Choisir un ingrédient';
+        select.appendChild(defaultOption);
+
+        ingredientsData.forEach(ing => {
+            const option = document.createElement('option');
+            option.value = ing.id;
+            option.textContent = ing.name;
+            select.appendChild(option);
+        });
+
+        // Input quantité
+        const input = document.createElement('input');
+        input.name = 'quantites[]';
+        input.type = 'text';
+        input.placeholder = 'Quantité';
+        input.classList.add('form-control');
+
+        // Input Unité
+
+        const unit = document.createElement('input');
+        unit.name = 'unit[]';
+        unit.type = 'text';
+        unit.placeholder = 'Unité';
+        unit.classList.add('form-control');
+
+        // Bouton suppression
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = 'Supprimer';
+        btn.classList.add('btn', 'btn-secondary');
+        btn.onclick = () => div.remove();
+
+        div.appendChild(select);
+        div.appendChild(input);
+        div.appendChild(unit);
+        div.appendChild(btn);
+
+        container.appendChild(div);
+    }
+
+    function addStep() {
+    const container = document.getElementById('description-container');
 
     const div = document.createElement('div');
-    div.classList.add('d-flex', 'mb-2', 'gap-2', 'align-items-center');
+    div.classList.add('d-flex', 'flex-column', 'mb-2', 'gap-2', 'justify-content-center');
+    
+    const text = document.createElement('textarea');
+    text.classList.add('form-control');
+    text.name = 'description[]';
+    text.placeholder = "Ajouter une nouvelle étape";
 
-    // Select d'ingrédients
-    const select = document.createElement('select');
-    select.name = 'ingredients[]';
-    select.classList.add('form-select');
-    const defaultOption = document.createElement('option');
-    defaultOption.value = '';
-    defaultOption.disabled = true;
-    defaultOption.selected = true;
-    defaultOption.textContent = 'Choisir un ingrédient';
-    select.appendChild(defaultOption);
-
-    ingredientsData.forEach(ing => {
-        const option = document.createElement('option');
-        option.value = ing.id;
-        option.textContent = ing.name;
-        select.appendChild(option);
-    });
-
-    // Input quantité
-    const input = document.createElement('input');
-    input.name = 'quantites[]';
-    input.type = 'text';
-    input.placeholder = 'Quantité';
-    input.classList.add('form-control');
-
-    // Input Unité
-
-    const unit = document.createElement('input');
-    unit.name = 'unit[]';
-    unit.type = 'text';
-    unit.placeholder = 'Unité';
-    unit.classList.add('form-control');
-
-    // Bouton suppression
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.textContent = 'Supprimer';
-    btn.classList.add('btn', 'btn-secondary');
+    btn.classList.add('btn', 'btn-secondary', 'w-25');
     btn.onclick = () => div.remove();
 
-    div.appendChild(select);
-    div.appendChild(input);
-    div.appendChild(unit);
+    div.appendChild(text);
     div.appendChild(btn);
 
     container.appendChild(div);
-}
-
-function addStep() {
- const container = document.getElementById('description-container');
-
- const div = document.createElement('div');
- div.classList.add('d-flex', 'flex-column', 'mb-2', 'gap-2', 'justify-content-center');
- 
- const text = document.createElement('textarea');
- text.classList.add('form-control');
- text.name = 'description[]';
- text.placeholder = "Ajouter une nouvelle étape";
-
- const btn = document.createElement('button');
- btn.type = 'button';
- btn.textContent = 'Supprimer';
- btn.classList.add('btn', 'btn-secondary', 'w-25');
- btn.onclick = () => div.remove();
-
- div.appendChild(text);
- div.appendChild(btn);
-
- container.appendChild(div);
 
 
 
- 
+    
 
-}
+    }
 
 </script>
