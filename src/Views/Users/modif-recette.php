@@ -40,6 +40,8 @@ namespace Carbe\App\Views\Users;
             
             </div>
             <?php endforeach; ?>
+            <div id="ingredients-container"></div>
+            <button type="button" onclick="addIngredient()" class="btn btn-sm btn-outline-secondary">+ Ajouter un ingrédient</button>
             <?php
             $steps = json_decode($recipe->getDescription(), true);
             ?>
@@ -55,11 +57,77 @@ namespace Carbe\App\Views\Users;
             </div>
             <?php endforeach; ?>
             <div>
-                <textarea class="form-control" id="step_<?= $i ?>" name="description[]" placeholder="Ajouter une nouvelle étape"></textarea>
+                <button type="button" onclick="" class="btn btn-sm btn-outline-secondary">+ Ajouter une étape</button>
             </div>
+            <!-- <div>
+                <textarea class="form-control" id="step_<?= $i ?>" name="description[]" placeholder="Ajouter une nouvelle étape"></textarea>
+            </div> -->
             <div class="text-center mt-4">
                 <button type="submit" class="btn btn-secondary">Enregistrer les modifications</button>
             </div>
     </form>
 
 </main>
+<script>
+    const ingredientsData = <?= json_encode(array_map(function($ingredient) {
+    return [
+        'id' => $ingredient->getId(),
+        'name' => $ingredient->getName()
+    ];
+}, $ingredients)); ?>;
+
+function addIngredient() {
+    const container = document.getElementById('ingredients-container');
+
+    const div = document.createElement('div');
+    div.classList.add('d-flex', 'mb-2', 'gap-2');
+
+    // Select d'ingrédients
+    const select = document.createElement('select');
+    select.name = 'ingredients[]';
+    select.classList.add('form-select', 'w-50');
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    defaultOption.textContent = 'Choisir un ingrédient';
+    select.appendChild(defaultOption);
+
+    ingredientsData.forEach(ing => {
+        const option = document.createElement('option');
+        option.value = ing.id;
+        option.textContent = ing.name;
+        select.appendChild(option);
+    });
+
+    // Input quantité
+    const input = document.createElement('input');
+    input.name = 'quantites[]';
+    input.type = 'text';
+    input.placeholder = 'Quantité';
+    input.classList.add('form-control', 'w-25');
+
+    // Input Unité
+
+    const unit = document.createElement('input');
+    unit.name = 'unit[]';
+    unit.type = 'text';
+    unit.placeholder = 'Unité';
+    unit.classList.add('form-control', 'w-25');
+
+    // Bouton suppression
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = 'x';
+    btn.classList.add('btn', 'btn-secondary');
+    btn.onclick = () => div.remove();
+
+    div.appendChild(select);
+    div.appendChild(input);
+    div.appendChild(unit);
+    div.appendChild(btn);
+
+    container.appendChild(div);
+}
+
+</script>

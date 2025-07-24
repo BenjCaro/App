@@ -2,6 +2,8 @@
 namespace Carbe\App\Controllers;
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\RecipeIngredientModel;
+use Carbe\App\Models\CategoryModel;
+use Carbe\App\Models\IngredientModel;
 use Exception;
 
 
@@ -11,11 +13,15 @@ class UpdateRecipeController extends BaseController {
 
         $recipeModel = new RecipeModel($this->pdo); 
         $recipe = $recipeModel->getRecipeBySlug($slug);
+        $categories = $this->getCategories();
+        $ingredients = $this->getIngredients(); 
        
         $this->render('Users/modif-recette',
         [
             'title' => 'Petit Creux | Modification de votre recette.',
-            'recipe' => $recipe
+            'recipe' => $recipe,
+            'categories' => $categories,
+            'ingredients' => $ingredients
         ]);
     }
 
@@ -78,4 +84,18 @@ class UpdateRecipeController extends BaseController {
      return json_encode($steps, JSON_UNESCAPED_UNICODE);
 
      }
+
+       private function getCategories() {
+        
+       $categoryModel = new CategoryModel($this->pdo);
+       $categories = $categoryModel->findAll();
+       return $categories;
+
+  }
+
+ private function getIngredients() {
+      $ingredientModel = new IngredientModel($this->pdo);
+      $ingredients = $ingredientModel->findAll();
+      return $ingredients;
+ }
 }
