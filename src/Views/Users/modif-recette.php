@@ -25,8 +25,8 @@ namespace Carbe\App\Views\Users;
                     $quantity = $recipeIngredient->getQuantity();
                     $unit = $recipeIngredient->getUnit();
                 ?>
-                <div class="row mb-2">
-                    <div class="col-md-4">
+                <div class="d-flex mb-2 gap-2 align-items-center">
+                    
                         <select name="ingredients[]" class="form-select">
                             <?php foreach ($ingredients as $ing): ?>
                                 <option value="<?= $ing->getId() ?>" <?= $ing->getId() === $id ? 'selected' : '' ?>>
@@ -34,13 +34,14 @@ namespace Carbe\App\Views\Users;
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                    </div>
-                    <div class="col-md-4">
+                    
+                    
                         <input type="number" step="any" name="quantites[]" value="<?= htmlspecialchars($quantity) ?>" placeholder="Quantités" class="form-control">
-                    </div>
-                    <div class="col-md-4">
+                    
                         <input type="text" name="unit[]" value="<?= htmlspecialchars($unit) ?>" placeholder="unités" class="form-control">
-                    </div>
+                        <button class="btn btn-secondary">Supprimer</button>
+
+                    
                 </div>
             <?php endforeach; ?>
 
@@ -86,12 +87,12 @@ function addIngredient() {
     const container = document.getElementById('ingredients-container');
 
     const div = document.createElement('div');
-    div.classList.add('d-flex', 'mb-2', 'gap-2');
+    div.classList.add('d-flex', 'mb-2', 'gap-2', 'align-items-center');
 
     // Select d'ingrédients
     const select = document.createElement('select');
     select.name = 'ingredients[]';
-    select.classList.add('form-select', 'w-50');
+    select.classList.add('form-select');
     const defaultOption = document.createElement('option');
     defaultOption.value = '';
     defaultOption.disabled = true;
@@ -111,7 +112,7 @@ function addIngredient() {
     input.name = 'quantites[]';
     input.type = 'text';
     input.placeholder = 'Quantité';
-    input.classList.add('form-control', 'w-25');
+    input.classList.add('form-control');
 
     // Input Unité
 
@@ -119,12 +120,12 @@ function addIngredient() {
     unit.name = 'unit[]';
     unit.type = 'text';
     unit.placeholder = 'Unité';
-    unit.classList.add('form-control', 'w-25');
+    unit.classList.add('form-control');
 
     // Bouton suppression
     const btn = document.createElement('button');
     btn.type = 'button';
-    btn.textContent = 'x';
+    btn.textContent = 'Supprimer';
     btn.classList.add('btn', 'btn-secondary');
     btn.onclick = () => div.remove();
 
