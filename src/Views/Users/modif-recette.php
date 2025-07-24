@@ -17,29 +17,34 @@ namespace Carbe\App\Views\Users;
     <form action="/update/recette" method="POST" class="mt-4" onsubmit="return confirm('Etes vous sur de vouloir modifier votre recette?');">
             <input type="hidden" name="id" value="<?= $recipe->getId() ?>">
             <h3 class="text-center">Modifier les ingrédients</h3>
-            <?php foreach ($recipe->getIngredients() as $recipeIngredient): ?>
+
+            <?php foreach ($recipe->getIngredients() as $i => $recipeIngredient): ?>
                 <?php 
                     $ingredient = $recipeIngredient->getIngredient(); 
                     $id = $ingredient->getId();
-                    $name = $ingredient->getName();
                     $quantity = $recipeIngredient->getQuantity();
                     $unit = $recipeIngredient->getUnit();
-                    
                 ?>
-            <div class="row mb-2">
-                <input type="hidden" name="ingredients[]" value="<?= htmlspecialchars($id) ?>" class="form-control">
-                <div class="col-md-4">
-                    <input type="text" value="<?= htmlspecialchars($name) ?>" class="form-control" readonly>
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <select name="ingredients[]" class="form-select">
+                            <?php foreach ($ingredients as $ing): ?>
+                                <option value="<?= $ing->getId() ?>" <?= $ing->getId() === $id ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($ing->getName()) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="number" step="any" name="quantites[]" value="<?= htmlspecialchars($quantity) ?>" placeholder="Quantités" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="unit[]" value="<?= htmlspecialchars($unit) ?>" placeholder="unités" class="form-control">
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <input type="number" step="any" name="quantites[]" value="<?= htmlspecialchars($quantity) ?>" class="form-control">
-                </div>
-                <div class="col-md-4">
-                    <input type="text" name="unit[]" value="<?= htmlspecialchars($unit) ?>" class="form-control">
-                </div>
-            
-            </div>
             <?php endforeach; ?>
+
+            <h3 class="text-center">Ajouter des ingrédients</h3>
             <div id="ingredients-container"></div>
             <button type="button" onclick="addIngredient()" class="btn btn-sm btn-outline-secondary">+ Ajouter un ingrédient</button>
             <?php
