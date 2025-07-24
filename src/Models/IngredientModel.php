@@ -41,16 +41,16 @@ class IngredientModel extends BaseModel {
        $this->type = $type;
   }
 
-  public function save() :bool {
-     $stmt = $this->pdo->prepare("INSERT INTO ingredients (name, type)
-     VALUES (:name, :type)");
+//   public function save() :bool {
+//      $stmt = $this->pdo->prepare("INSERT INTO ingredients (name, type)
+//      VALUES (:name, :type)");
      
-     return $stmt->execute([
+//      return $stmt->execute([
 
-        'name' => $this->getName(),
-        'type' => $this->getType()
-     ]);
-  }
+//         'name' => $this->getName(),
+//         'type' => $this->getType()
+//      ]);
+//   }
 
   // public function update() :bool {
   //   $stmt = $this->pdo->prepare("UPDATE ingredients SET name = :name, type = :type WHERE id= :id");
