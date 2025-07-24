@@ -61,12 +61,13 @@ namespace Carbe\App\Views\Users;
                 <textarea class="form-control" id="step_<?= $i ?>" name="description[]"><?= htmlspecialchars($step) ?></textarea>
             </div>
             <?php endforeach; ?>
+            <div id="description-container"></div>
             <div>
-                <button type="button" onclick="" class="btn btn-sm btn-outline-secondary">+ Ajouter une étape</button>
+                <button type="button" onclick="addStep()" class="btn btn-sm btn-outline-secondary">+ Ajouter une nouvelle étape</button>
             </div>
             <!-- <div>
-                <textarea class="form-control" id="step_<?= $i ?>" name="description[]" placeholder="Ajouter une nouvelle étape"></textarea>
-            </div> -->
+                    <textarea class="form-control" id="step_<?= $i ?>" name="description[]" placeholder="Ajouter une nouvelle étape"></textarea>
+                </div> -->
             <div class="text-center mt-4">
                 <button type="submit" class="btn btn-secondary">Enregistrer les modifications</button>
             </div>
@@ -133,6 +134,34 @@ function addIngredient() {
     div.appendChild(btn);
 
     container.appendChild(div);
+}
+
+function addStep() {
+ const container = document.getElementById('description-container');
+
+ const div = document.createElement('div');
+ div.classList.add('d-flex', 'flex-column', 'mb-2', 'gap-2', 'justify-content-center');
+ 
+ const text = document.createElement('textarea');
+ text.classList.add('form-control');
+ text.name = 'description[]';
+ text.placeholder = "Ajouter une nouvelle étape";
+
+ const btn = document.createElement('button');
+ btn.type = 'button';
+ btn.textContent = 'Supprimer';
+ btn.classList.add('btn', 'btn-secondary', 'w-25');
+ btn.onclick = () => div.remove();
+
+ div.appendChild(text);
+ div.appendChild(btn);
+
+ container.appendChild(div);
+
+
+
+ 
+
 }
 
 </script>
