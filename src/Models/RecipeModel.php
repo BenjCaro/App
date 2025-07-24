@@ -123,7 +123,7 @@ public function setCategory(CategoryModel $category):void {
  */
 
 public function getRecipeBySlug(string $slug) :RecipeModel {  
-    $stmt = $this->pdo->prepare('SELECT
+    $stmt = $this->pdo->prepare("SELECT
      recipes.id AS recipe_id, 
      recipes.title, 
      recipes.slug,
@@ -135,10 +135,10 @@ public function getRecipeBySlug(string $slug) :RecipeModel {
      recipes_ingredients.unit,
      categories.name AS category_name
     FROM recipes 
-    JOIN recipes_ingredients ON recipes.id = recipes_ingredients.id_recipe
-    JOIN ingredients ON ingredients.id = recipes_ingredients.id_ingredient
+    LEFT JOIN recipes_ingredients ON recipes.id = recipes_ingredients.id_recipe
+    LEFT JOIN ingredients ON ingredients.id = recipes_ingredients.id_ingredient
     JOIN categories ON categories.id = recipes.id_category
-    WHERE recipes.slug = :slug');
+    WHERE recipes.slug = :slug");
     $stmt->execute([
        'slug' => $slug
     ]);
@@ -162,6 +162,8 @@ public function getRecipeBySlug(string $slug) :RecipeModel {
     
     $ingredients = [];
     foreach ($data as $row) {
+
+        if($row['id'] !== null) {
         $ingredient = new IngredientModel($this->pdo);
         $ingredient->hydrate([ 'id' => $row['id'],
             'name' => $row['name']]);
@@ -175,6 +177,7 @@ public function getRecipeBySlug(string $slug) :RecipeModel {
 
         $ingredients[] = $recipeIngredient;
     }
+}
     $category = new CategoryModel($this->pdo);
     $category->hydrate(['name' =>$row['category_name']]);
     $recipe->setCategory($category);
