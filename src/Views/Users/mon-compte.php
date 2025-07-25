@@ -24,21 +24,35 @@ if (isset($_SESSION['errors']['database'])) {
     ?>
     <h2 class="text-center">Bienvenue sur votre Espace Membre <?= $user->getFirstname()?> </h2>
     <section class="row d-flex justify-content-center">
-        <div class="card col-6">
+        <form class="card col-6">
             <div class="card-body">
                 <h3 class="card-title text-center">Mes informations</h3>
-                <label for="name" class="form-label">Nom</label>
-                <input type="text" id="identity" name="name" class="form-control mb-2" value="<?= $user->getName(); ?>" readonly>
-                <label for="firstname" class="form-label">Prénom</label>
-                <input type="text" class="form-control mb-2" name="firstname" id="firstname" value="<?= $user->getFirstname(); ?>" readonly>
-                <label for="email" class="form-label">Email</label>
-                <input type="email" name="email" id="email" class="form-control mb-2" value="<?= $user->getEmail(); ?>"  readonly>
-                <label for="membership" class="form-label">Membre depuis</label>
-                <input type="text" class="form-control mb-2" name="membership" id="membership" value="<?= $user->getCreatedAt() ?>" readonly>
+                <div class="mb-2">
+                    <label for="name" class="form-label">Nom</label>
+                    <input type="text" id="name" name="name" class="form-control" value="<?= $user->getName(); ?>" readonly>
+                </div>
+                <div class="mb-2">
+                    <label for="firstname" class="form-label">Prénom</label>
+                    <input type="text" class="form-control" name="firstname" id="firstname" value="<?= $user->getFirstname(); ?>" readonly>
+                </div>
+                <div class="mb-2">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" name="email" id="email" class="form-control" value="<?= $user->getEmail(); ?>" readonly>
+                </div>
+                <div class="mb-2">
+                    <label for="membership" class="form-label">Membre depuis</label>
+                    <input type="text" class="form-control" name="membership" id="membership" value="<?= $user->getCreatedAt() ?>" readonly>
+                </div>
+                <div class="mb-2">
+                    <label for="description" class="form-label">Ma description</label>
+                    <textarea id="description" class="form-control" name="description" rows="4" readonly><?= $user->getDescription()?></textarea>
+                </div>
+                <div class="d-flex justify-content-center mb-2">
+                    <button type="button" class="btn btn-sm btn-primary">Modifier mes informations</button>
+                </div>
             </div>
-            <h3 class="card-title text-center">Ma description</h3>
-            <p class="card-body"><?= $user->getDescription()?></p>
-        </div>
+        </form>
+
     </section>
     <section class="row d-flex justify-content-center">
         <h3 class="text-center mt-4 mb-4">Mes favoris</h3>
@@ -112,3 +126,14 @@ if (isset($_SESSION['errors']['database'])) {
     </section>
 </main>
 
+<script>
+//     Le champ est en readonly au départ.
+
+// Le bouton "Modifier" est cliqué :
+
+// Il enlève l’attribut readonly
+
+// Il change son texte en "Enregistrer"
+
+// Il change son type en "submit" (pour envoyer le formulaire)
+</script>
