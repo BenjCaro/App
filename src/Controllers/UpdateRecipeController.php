@@ -31,13 +31,17 @@ class UpdateRecipeController extends BaseController {
 
         $id = $data['id'];
         // $duration = trim($data['duration']);
-        $description = $data['description'];
+        $description = $data['description'] ?? null;
         $duration = $data['duration'];
         $ingredients = $data['ingredients'];
         $quantity= $data['quantites'];
         $unit = $data['unit'];
         
+          if (!empty($description)) {
         $description = $this->descriptionInJson($description);
+        } else {
+        $description = null; 
+    }
 
         try {
             $this->pdo->beginTransaction();
