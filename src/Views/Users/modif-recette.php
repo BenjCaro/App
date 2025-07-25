@@ -52,12 +52,15 @@ namespace Carbe\App\Views\Users;
                 <label for="duration" class="form-label">Temps de Preparation</label>
                 <input type="text" name="duration" id="duration" value="<?= $recipe->getDuration()?>" class="form-control">
             </div>
+            <?php if(!$steps) {?>
+                <p>La recette n'a actuellement pas d'étape de préparation.</p>
+            <?php  }  else { ?>
             <?php foreach ($steps as $i => $step): ?>
             <div class="mb-2">
                 <label for="step_<?= $i ?>" class="form-label">Étape <?= $i + 1 ?></label>
                 <textarea class="form-control" id="step_<?= $i ?>" name="description[]"><?= htmlspecialchars($step) ?></textarea>
             </div>
-            <?php endforeach; ?>
+            <?php endforeach; } ?>
             <div id="description-container"></div>
             <div>
                 <button type="button" onclick="addStep()" class="btn btn-sm btn-outline-secondary">+ Ajouter une nouvelle étape</button>

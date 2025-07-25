@@ -43,9 +43,12 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
         <h3 class="mt-3 fs-3 text-center">Préparation</h3>
         <div class="card bg-gris border border-primary w-50 p-3 mx-auto">
             <ol class="card-body">
+            <?php if(!$steps) {?>
+                <p>La recette n'a actuellement pas d'étape de préparation.</p>
+          <?php  }  else { ?>
             <?php foreach ($steps as $step): ?>
                 <li class="card-text"><?= htmlspecialchars($step) ?></li>
-            <?php endforeach; ?>
+            <?php endforeach; } ?>
             </ol>
         </div>
     </section>
