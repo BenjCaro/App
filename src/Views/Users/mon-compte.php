@@ -26,12 +26,18 @@ if (isset($_SESSION['errors']['database'])) {
     <section class="row d-flex justify-content-center">
         <div class="card col-6">
             <div class="card-body">
-                <h3 class="card-title">Mes informations</h3>
-                <h4 class="card-subtitle fs-5 mb-2 text-body-secondary"><?= $user->getFirstname(); ?> <?= $user->getName(); ?></h4>
-                <p class="card-text"><?= $user->getDescription()?></p>
-                <span class="card-text"> <?= $user->getEmail(); ?>  </span><br>
-                <span class="card-text">Membre depuis: <?= $user->getCreatedAt() ?></span>
+                <h3 class="card-title text-center">Mes informations</h3>
+                <label for="name" class="form-label">Nom</label>
+                <input type="text" id="identity" name="name" class="form-control mb-2" value="<?= $user->getName(); ?>" readonly>
+                <label for="firstname" class="form-label">Prénom</label>
+                <input type="text" class="form-control mb-2" name="firstname" id="firstname" value="<?= $user->getFirstname(); ?>" readonly>
+                <label for="email" class="form-label">Email</label>
+                <input type="email" name="email" id="email" class="form-control mb-2" value="<?= $user->getEmail(); ?>"  readonly>
+                <label for="membership" class="form-label">Membre depuis</label>
+                <input type="text" class="form-control mb-2" name="membership" id="membership" value="<?= $user->getCreatedAt() ?>" readonly>
             </div>
+            <h3 class="card-title text-center">Ma description</h3>
+            <p class="card-body"><?= $user->getDescription()?></p>
         </div>
     </section>
     <section class="row d-flex justify-content-center">
