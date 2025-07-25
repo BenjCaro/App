@@ -18,7 +18,10 @@ namespace Carbe\App\Views\Users;
             <input type="hidden" name="id" value="<?= $recipe->getId() ?>">
             <h3 class="text-center">Modifier les ingrédients</h3>
             <?php if(!$recipe->getIngredients()) { ?>
-                <p class="text-center">La recette n'a pas d'ingrédients, ajouter un ingrédient.</p>
+                <div class="alert alert-secondary text-center" role="alert">
+                     La recette n'a actuellement pas d'étape d'ingrédients.
+                     Ajoutez des ingrédients.
+                </div>
             <?php  } else { ?>
             <?php foreach ($recipe->getIngredients() as $i => $recipeIngredient): ?>
                 <?php 
@@ -53,7 +56,10 @@ namespace Carbe\App\Views\Users;
                 <input type="text" name="duration" id="duration" value="<?= $recipe->getDuration()?>" class="form-control">
             </div>
             <?php if(!$steps) {?>
-                <p>La recette n'a actuellement pas d'étape de préparation.</p>
+                <div class="alert alert-secondary text-center" role="alert">
+                    La recette n'a actuellement pas d'étape de préparation. 
+                    Ajoutez des étapes de préparation à la recette.
+                </div>
             <?php  }  else { ?>
             <?php foreach ($steps as $i => $step): ?>
             <div class="mb-2">
