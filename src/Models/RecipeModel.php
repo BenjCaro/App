@@ -89,7 +89,7 @@ public function setDuration(int $duration) :void {
      $this->duration = $duration;
   }
 
-public function getDescription() :string {
+public function getDescription() :?string {
      return $this->description;
   }
 
@@ -123,21 +123,22 @@ public function setCategory(CategoryModel $category):void {
  */
 
 public function getRecipeBySlug(string $slug) :RecipeModel {  
-    $stmt = $this->pdo->prepare('SELECT
+    $stmt = $this->pdo->prepare("SELECT
      recipes.id AS recipe_id, 
      recipes.title, 
      recipes.slug,
      recipes.duration, 
      recipes.description,
      ingredients.name,
+     ingredients.id,
      recipes_ingredients.quantity,
      recipes_ingredients.unit,
      categories.name AS category_name
     FROM recipes 
-    JOIN recipes_ingredients ON recipes.id = recipes_ingredients.id_recipe
-    JOIN ingredients ON ingredients.id = recipes_ingredients.id_ingredient
+    LEFT JOIN recipes_ingredients ON recipes.id = recipes_ingredients.id_recipe
+    LEFT JOIN ingredients ON ingredients.id = recipes_ingredients.id_ingredient
     JOIN categories ON categories.id = recipes.id_category
-    WHERE recipes.slug = :slug');
+    WHERE recipes.slug = :slug");
     $stmt->execute([
        'slug' => $slug
     ]);
@@ -161,8 +162,11 @@ public function getRecipeBySlug(string $slug) :RecipeModel {
     
     $ingredients = [];
     foreach ($data as $row) {
+
+        if($row['id'] !== null) {
         $ingredient = new IngredientModel($this->pdo);
-        $ingredient->hydrate(['name' => $row['name']]);
+        $ingredient->hydrate([ 'id' => $row['id'],
+            'name' => $row['name']]);
 
         $recipeIngredient = new RecipeIngredientModel($this->pdo);
         $recipeIngredient->hydrate([
@@ -173,17 +177,16 @@ public function getRecipeBySlug(string $slug) :RecipeModel {
 
         $ingredients[] = $recipeIngredient;
     }
+}
     $category = new CategoryModel($this->pdo);
     $category->hydrate(['name' =>$row['category_name']]);
     $recipe->setCategory($category);
 
     $recipe->setIngredients($ingredients);
-
-
     return $recipe;
 }
 
-public function newRecipe() :RecipeModel {
+public function newRecipe() :?RecipeModel {
       $stmt = $this->pdo->prepare("
       SELECT 
          recipes.id, 
@@ -203,7 +206,7 @@ public function newRecipe() :RecipeModel {
       $data = $stmt->fetch(PDO::FETCH_ASSOC);
       
       if (!$data) {
-        throw new \Exception("Aucune recette trouvée");
+        return null;
     }
       
          $categoryData = [
@@ -339,7 +342,7 @@ public function getAllRecipesByCategory(int $idCategory) :array {
     WHERE categories.id = :id;
     ');
 
-    $stmt->execute(['id' => $idCategory]); // probleme ici
+    $stmt->execute(['id' => $idCategory]);
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $recipes = [];
@@ -364,6 +367,35 @@ public function getAllRecipesByCategory(int $idCategory) :array {
 
     return $recipes;
 }
+
+public function getRecipesByUser(int $idUser) :array {
+    $stmt = $this->pdo->prepare('SELECT recipes.id, recipes.title, recipes.slug, categories.name 
+        FROM `recipes` 
+        JOIN categories ON categories.id = recipes.id_category
+        WHERE recipes.id_user = :id_user');
+
+    $stmt->execute([
+        'id_user' => $idUser
+    ]);
+
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $recipes = [];
+
+    foreach($results as $data) {
+        $categoryName = ['name' => $data['name']];
+        $category = new CategoryModel($this->pdo);
+        $category->hydrate($categoryName);
+        $recipe = new RecipeModel($this->pdo);
+        $recipe->hydrate($data);
+        $recipe->setCategory($category);
+
+        $recipes[] = $recipe;
+    }
+
+    return $recipes;
+    
+    }
 
  
  }

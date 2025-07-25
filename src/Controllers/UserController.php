@@ -1,18 +1,21 @@
 <?php
 
 namespace Carbe\App\Controllers;
+
+use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\UserModel;
 use \PDOException;
 
 class UserController extends BaseController {
 
     private UserModel $userModel;
+    private RecipeModel $recipeModel;
       
     public function __construct()
     {   
         parent::__construct();
         $this->userModel = new UserModel($this->pdo);
-        
+        $this->recipeModel = new RecipeModel($this->pdo);
     }
 
 
@@ -38,11 +41,13 @@ class UserController extends BaseController {
         $user = $this->userModel->findById($userId);
 
         $favoris =  $user->getFavoris();
+        $userRecipes = $this->recipeModel->getRecipesByUser($userId);
 
         $this->render('Users\mon-compte', [
             'title' => 'Petit Creux | Mon Compte ',
             'user' => $user,
-            'favoris' => $favoris
+            'favoris' => $favoris,
+            'userRecipes' => $userRecipes
         ]);        
     }
 

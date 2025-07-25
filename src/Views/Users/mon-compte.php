@@ -7,12 +7,17 @@ if (!isset($_SESSION['auth_user'])) {
     exit();
 }
 
+if (isset($_SESSION['errors']['database'])) {
+    echo $_SESSION['errors']['database'];
+    unset($_SESSION['errors']['database']); // Pour éviter qu’elle s’affiche à nouveau
+}
+
 ?>
 
 <main class='container p-3 bg-light border-end border-start border-secondary'>
     <?php
      if (isset($_SESSION['flash'])) {  ?>
-       <div class='alert alert-secondary'><?=$_SESSION['flash']?></div>
+       <div class='alert alert-primary'><?=$_SESSION['flash']?></div>
     <?php    unset($_SESSION['flash']); 
     }
 
@@ -33,37 +38,66 @@ if (!isset($_SESSION['auth_user'])) {
         <h3 class="text-center mt-4 mb-4">Mes favoris</h3>
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Catégorie</th>
+                        <th>Titre</th>
+                        <th>Lien</th>
+                        <th>Supprimer des favoris</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($favoris as $recipe) { ?>
+                    <tr>
+                        <td><?= htmlspecialchars($recipe->getCategory()->getName())?></td>
+                        <td><?= htmlspecialchars($recipe->getTitle()) ?></td>
+                        <td><a href="/recette/<?= urlencode($recipe->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Consulter</a></td>
+                        <td>
+                            <form method="POST" action="/mon-compte/suppr-favoris" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer des favoris ?');">
+                                <input type="hidden" name="favoris" value="<?= $recipe->getId()?>">
+                                <button type="submit" class="btn btn-sm btn-secondary">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+</section>
+    <section class="row d-flex justify-content-center">
+        <h3 class="text-center mt-4 mb-4">Mes recettes ajoutées</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
             <thead class="table-light">
                 <tr>
                     <th>Catégorie</th>
                     <th>Titre</th>
                     <th>Lien</th>
-                    <th>Supprimer des favoris</th>
+                    <th>Modifier</th>
+                    <th>Supprimer</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($favoris as $recipe) { ?>
-                <tr>
-                    <td><?= htmlspecialchars($recipe->getCategory()->getName())?></td>
-                    <td><?= htmlspecialchars($recipe->getTitle()) ?></td>
-                    <td><a href="/recette/<?= urlencode($recipe->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Consulter</a></td>
-                    <td>
-                        <form method="POST" action="/mon-compte">
-                            <input type="hidden" name="recipe" value="<?= $recipe->getId()?>">
-                            <button type="submit" class="btn btn-sm btn-secondary btn-outline-primary">Supprimer</button>
-                        </form>
-                    </td>
-                </tr>
-                <?php } ?>
+                <?php foreach($userRecipes as $userRecipe) { ?>
+                    <tr>
+                        <td><?= htmlspecialchars($userRecipe->getCategory()->getName()) ?></td>
+                        <td><?= htmlspecialchars($userRecipe->getTitle()) ?></td>
+                        <td><a href="/recette/<?= urlencode($userRecipe->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Consulter</a></td>
+                        <td>
+                           <button type="submit" class="btn btn-sm btn-primary"><a href="/update/recette/<?= urlencode($userRecipe->getSlug()) ?>" class="nav-link">Modifier</a></button>
+                        </td>
+                        <td>
+                            <form method="POST" action="/mon-compte/suppr-recette" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette recette ?');">
+                                <input type="hidden" name="recipe" value="<?= $userRecipe->getId()?>">
+                                <button type="submit" class="btn btn-sm btn-secondary">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php  } ?>
+                <!-- Afficher les recettes ajoutées par l'utilisateur modifier/supprimer -->
             </tbody>
             </table>
         </div>
-</section>
-    <section class="row d-flex justify-content-center">
-        Mes recettes ajoutées
-<!-- Afficher les recettes ajoutées par l'utilisateur modifier/supprimer -->
-                <!-- utiliser meme structure tableau que favoris -->
-
     </section>
     <section class="row d-flex justify-content-center">
         Mes commentaires

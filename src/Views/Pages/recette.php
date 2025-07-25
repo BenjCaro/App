@@ -9,7 +9,7 @@ namespace Carbe\App\Views\Pages;
     <?php
 
     if (isset($_SESSION['flash'])) {  ?>
-       <div class='alert alert-secondary'><?=$_SESSION['flash']?></div>
+       <div class='alert alert-primary'><?=$_SESSION['flash']?></div>
     <?php    unset($_SESSION['flash']); 
     }
     ?>
@@ -20,6 +20,9 @@ namespace Carbe\App\Views\Pages;
         <h3 class='mt-3 fs-3 text-center'>Ingrédients</h3>
         <div class="card bg-gris border border-primary w-50 p-3 mx-auto">
             <ul class="card-body list-unstyled">
+            <?php if(!$recipe->getIngredients()) { ?>
+                <p>La recette n'a pas d'ingrédients.</p>
+            <?php  }  else { ?>
             <?php foreach ($recipe->getIngredients() as $recipeIngredient): ?>
                 <?php 
                     $ingredient = $recipeIngredient->getIngredient(); 
@@ -28,7 +31,7 @@ namespace Carbe\App\Views\Pages;
                     $unit = $recipeIngredient->getUnit();
                 ?>
                 <li class="card-text"><?= htmlspecialchars($quantity) ?> <?= htmlspecialchars($unit) ?> de <?= htmlspecialchars($name) ?></li>
-            <?php endforeach; ?>
+            <?php endforeach; }?>
             </ul>
         </div>
     </section>
@@ -40,9 +43,12 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
         <h3 class="mt-3 fs-3 text-center">Préparation</h3>
         <div class="card bg-gris border border-primary w-50 p-3 mx-auto">
             <ol class="card-body">
+            <?php if(!$steps) {?>
+                <p>La recette n'a actuellement pas d'étape de préparation.</p>
+          <?php  }  else { ?>
             <?php foreach ($steps as $step): ?>
                 <li class="card-text"><?= htmlspecialchars($step) ?></li>
-            <?php endforeach; ?>
+            <?php endforeach; } ?>
             </ol>
         </div>
     </section>

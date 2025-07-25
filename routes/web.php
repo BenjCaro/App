@@ -10,6 +10,7 @@ use Carbe\App\Controllers\AuthController;
 use Carbe\App\Controllers\FavorisController;
 use Carbe\App\Controllers\LoginController;
 use Carbe\App\Controllers\SigninController;
+use Carbe\App\Controllers\UpdateRecipeController;
 use Carbe\App\Controllers\UserController;
 
 
@@ -61,19 +62,30 @@ $router->map('GET', '/mon-compte', function() {
      $user->getMyProfil();
  });
 
-$router->map('POST', '/mon-compte', function(){
+$router->map('POST', '/mon-compte/suppr-favoris', function(){
     session_start();
 
     $idUser = $_SESSION['auth_user']['id'];
-    $idRecipe = $_POST['recipe'];
+    $idRecipe = $_POST['favoris'];
 
     $favori = new FavorisController();
     $favori->delete($idUser, $idRecipe);
     
-
     header('Location: /mon-compte');
     exit();
 });
+
+$router->map('POST', '/mon-compte/suppr-recette', function() {
+    session_start();
+    
+    $idRecipe = $_POST['recipe'];
+
+    $recipe = new RecipeController();
+    $recipe->deleteRecipe($idRecipe);
+
+    header('Location: /mon-compte');
+    exit();
+    });
 
 $router->map('GET', '/login', function() {
     $view = new LoginController();
@@ -94,7 +106,6 @@ $router->map('GET', '/inscription', function(){
 
 
 $router->map('POST', '/inscription', function() {
-
 
     $user = new UserController();
     $user->createUser($_POST);
@@ -118,4 +129,26 @@ $router->map('POST', '/ajout-recette', function(){
     $recipe->createRecipe($_POST);
     header('Location: /');
     
+});
+
+$router->map('GET', '/update/recette/[*:slug]', function($slug) {
+    
+    $view = new UpdateRecipeController();
+    $view->index($slug);
+});
+
+$router->map('POST', '/update/recette', function() {
+  
+    $id = $_POST['id'];
+
+    $recipe = new UpdateRecipeController();
+    $recipe->updateRecipe($id, $_POST);
+
+});
+
+$router->map('GET', '/suppr-ingredient/[*:id]-[*:slug]', function($id, $slug) {
+
+   $ingredient = new UpdateRecipeController();
+   $ingredient->deleteIngredient($id,$slug);
+
 });

@@ -119,23 +119,6 @@ public function findUserByEmail(string $email) :?UserModel {
 }
 
 
-public function update() : bool { // modif utilisateur
-
-      $stmt = $this->pdo->prepare("UPDATE users SET name = :name, firstname = :firstname, email = :email, password = :password WHERE id = :id");
-    
-      return $stmt->execute([
-          'name' => $this->getName(),
-          'firstname' => $this->getFirstname(),
-          'email' => $this->getEmail(),
-          'password' => $this->getPassword(),
-          'role' => $this->getRole(),
-          'id' => $this->getId()
-      ]);
-      
-  }
-
-
-
 /**
  * @return RecipeModel[]
  */

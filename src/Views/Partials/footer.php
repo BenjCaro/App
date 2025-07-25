@@ -6,7 +6,7 @@
                 <li class="nav-item fs-5"><a class="text-cacao nav-link" href="/categories">Catégories</a></li>
                 <li class="nav-item fs-5"><a class="text-cacao nav-link" href="/a-propos">A propos</a></li>
                 <li class="nav-item fs-5"><a class="text-cacao nav-link" href="/contact">Contact</a></li>
-                <li class="nav-item fs-5"><a class="text-cacao nav-link" href="mentions-legales">Mentions Légales</a></li>
+                <li class="nav-item fs-5"><a class="text-cacao nav-link" href="/mentions-legales">Mentions Légales</a></li>
             </ul>
         </div>
         <div>
