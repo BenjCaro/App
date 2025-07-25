@@ -89,7 +89,7 @@ public function setDuration(int $duration) :void {
      $this->duration = $duration;
   }
 
-public function getDescription() :string {
+public function getDescription() :?string {
      return $this->description;
   }
 
