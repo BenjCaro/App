@@ -12,7 +12,7 @@ use Carbe\App\Controllers\LoginController;
 use Carbe\App\Controllers\SigninController;
 use Carbe\App\Controllers\UpdateRecipeController;
 use Carbe\App\Controllers\UserController;
-
+use Carbe\App\Models\UserModel;
 
 $router->map('GET', '/', function() {
     
@@ -61,6 +61,18 @@ $router->map('GET', '/mon-compte', function() {
      $user = new UserController();
      $user->getMyProfil();
  });
+
+$router->map('POST', '/mon-compte/update-profil', function() {
+    
+    session_start();
+    $id = $_SESSION['auth_user']['id'];
+    
+    $description = $_POST['description'];
+    var_dump($description);
+    $user = new UserController();
+    $user->updateDescription($id, 
+            ['description' => $description]);
+});
 
 $router->map('POST', '/mon-compte/suppr-favoris', function(){
     session_start();

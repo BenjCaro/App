@@ -9,7 +9,7 @@ if (!isset($_SESSION['auth_user'])) {
 
 if (isset($_SESSION['errors']['database'])) {
     echo $_SESSION['errors']['database'];
-    unset($_SESSION['errors']['database']); // Pour éviter qu’elle s’affiche à nouveau
+    unset($_SESSION['errors']['database']); 
 }
 
 ?>
@@ -24,35 +24,41 @@ if (isset($_SESSION['errors']['database'])) {
     ?>
     <h2 class="text-center">Bienvenue sur votre Espace Membre <?= $user->getFirstname()?> </h2>
     <section class="row d-flex justify-content-center">
+        <h3 class="text-center">Mes informations</h3>
         <form class="card col-6">
             <div class="card-body">
-                <h3 class="card-title text-center">Mes informations</h3>
                 <div class="mb-2">
                     <label for="name" class="form-label">Nom</label>
-                    <input type="text" id="name" name="name" class="form-control" value="<?= $user->getName(); ?>" readonly>
+                    <input type="text" id="name" name="name" class="form-control bg-gris" value="<?= $user->getName(); ?>" readonly>
                 </div>
                 <div class="mb-2">
                     <label for="firstname" class="form-label">Prénom</label>
-                    <input type="text" class="form-control" name="firstname" id="firstname" value="<?= $user->getFirstname(); ?>" readonly>
+                    <input type="text" class="form-control bg-gris" name="firstname" id="firstname" value="<?= $user->getFirstname(); ?>" readonly>
                 </div>
                 <div class="mb-2">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" value="<?= $user->getEmail(); ?>" readonly>
+                    <input type="email" name="email" id="email" class="form-control bg-gris" value="<?= $user->getEmail(); ?>" readonly>
                 </div>
+                 <div class="d-flex justify-content-center mb-2">
+                    <button type="button" id="" class="btn btn-sm btn-primary">Modifier mes informations</button>
+                </div>
+            </div>    
+        </form>
+        <form class="card col-6" id="formDescription" action="/mon-compte/update-profil" method="POST">
+            <div class="card-body">
                 <div class="mb-2">
                     <label for="membership" class="form-label">Membre depuis</label>
-                    <input type="text" class="form-control" name="membership" id="membership" value="<?= $user->getCreatedAt() ?>" readonly>
+                    <input type="text" class="form-control bg-gris" name="membership" id="membership" value="<?= $user->getCreatedAt() ?>" readonly>
                 </div>
                 <div class="mb-2">
                     <label for="description" class="form-label">Ma description</label>
-                    <textarea id="description" class="form-control" name="description" rows="4" readonly><?= $user->getDescription()?></textarea>
+                    <textarea id="description" class="form-control bg-gris" name="description" rows="4" readonly><?= $user->getDescription()?></textarea>
                 </div>
                 <div class="d-flex justify-content-center mb-2">
-                    <button type="button" class="btn btn-sm btn-primary">Modifier mes informations</button>
+                    <button type="button" id="editDescription" class="btn btn-sm btn-primary">Modifier ma description</button>
                 </div>
             </div>
         </form>
-
     </section>
     <section class="row d-flex justify-content-center">
         <h3 class="text-center mt-4 mb-4">Mes favoris</h3>
@@ -83,7 +89,7 @@ if (isset($_SESSION['errors']['database'])) {
                 </tbody>
             </table>
         </div>
-</section>
+    </section>
     <section class="row d-flex justify-content-center">
         <h3 class="text-center mt-4 mb-4">Mes recettes ajoutées</h3>
         <div class="table-responsive">
@@ -127,13 +133,39 @@ if (isset($_SESSION['errors']['database'])) {
 </main>
 
 <script>
-//     Le champ est en readonly au départ.
+    
+    const btn = document.getElementById('editDescription');
+    const textarea = document.getElementById('description');
+    const formDescription = document.getElementById('formDescription');
 
-// Le bouton "Modifier" est cliqué :
+    let editing = false;
 
-// Il enlève l’attribut readonly
+    btn.addEventListener('click', (event) => {
+        event.preventDefault();
 
-// Il change son texte en "Enregistrer"
+        if (!editing) {
+            
+            editing = true;
+            btn.textContent = "Confirmez les modifications";
+            btn.classList.remove("btn-primary");
+            btn.classList.add("btn-secondary");
+            textarea.removeAttribute('readonly');
+            textarea.classList.remove('bg-gris');
+        } else {
 
-// Il change son type en "submit" (pour envoyer le formulaire)
+            formDescription.requestSubmit(); 
+        }
+    });
+
+    formDescription.addEventListener('submit', (event) => {
+        event.preventDefault(); 
+        formDescription.submit();
+        console.log('Description soumise');
+    });
+
+
 </script>
+
+
+
+

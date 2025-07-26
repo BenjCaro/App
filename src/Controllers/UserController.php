@@ -130,6 +130,16 @@ class UserController extends BaseController {
         }  
     }
 
+    public function updateDescription(int $id, array $data) {
+
+        $description = $data['description'] ?? null;
+
+        $user = new UserModel($this->pdo);
+        $user->update($id, [
+            'description' => $description
+        ]);
+    }
+
     private function availableEmail(string $email) :bool {
          $user =  $this->userModel->findUserByEmail($email);
 
