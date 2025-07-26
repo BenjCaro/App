@@ -88,5 +88,5 @@ namespace Carbe\App\Views\Users;
     ];
 }, $ingredients)); ?>;
 </script>
-<script src="/assets/scripts/addIngredient.js"></script>
-<script src="/assets/scripts/addStep.js"></script>
+<script type="text/javascript" src="/assets/scripts/addIngredient.js"></script>
+<script type="text/javascript" src="/assets/scripts/addStep.js"></script>

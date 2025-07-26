@@ -62,4 +62,4 @@ if (!isset($_SESSION['auth_user'])) {
     ];
 }, $ingredients)); ?>;
 </script>
-<script src="/assets/scripts/addIngredient.js"></script>
+<script type="text/javascript" src="/assets/scripts/addIngredient.js"></script>
