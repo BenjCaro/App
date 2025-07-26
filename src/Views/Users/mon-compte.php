@@ -22,7 +22,7 @@ if (isset($_SESSION['errors']['database'])) {
     }
 
     ?>
-    <h2 class="text-center">Bienvenue sur votre Espace Membre <?= $user->getFirstname()?> </h2>
+    <h2 class="text-center">Bienvenue sur votre espace <?= $user->getFirstname()?> </h2>
     <section class="row d-flex justify-content-center">
         <h3 class="text-center">Mes informations</h3>
         <form class="card col-6">
@@ -52,7 +52,7 @@ if (isset($_SESSION['errors']['database'])) {
                 </div>
                 <div class="mb-2">
                     <label for="description" class="form-label">Ma description</label>
-                    <textarea id="description" class="form-control bg-gris" name="description" rows="4" readonly><?= $user->getDescription()?></textarea>
+                    <textarea id="description" class="form-control bg-gris" name="description" rows="4" readonly><?= $user->getDescription() ? $user->getDescription() : "Rédigez votre description."?></textarea>
                 </div>
                 <div class="d-flex justify-content-center mb-2">
                     <button type="button" id="editDescription" class="btn btn-sm btn-primary">Modifier ma description</button>

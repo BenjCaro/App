@@ -4,6 +4,7 @@ namespace Carbe\App\Controllers;
 
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\UserModel;
+use Exception;
 use \PDOException;
 
 class UserController extends BaseController {
@@ -135,9 +136,25 @@ class UserController extends BaseController {
         $description = $data['description'] ?? null;
 
         $user = new UserModel($this->pdo);
-        $user->update($id, [
+
+        
+        try{
+             $user->update($id, [
             'description' => $description
         ]);
+
+            $_SESSION['flash'] = "Votre description a été modifiée.";
+            header("Location: /mon-compte");
+
+        } catch(Exception $e) {
+
+           $_SESSION['errors'] = "La modification a échouée.";
+           header("Location: /mon-compte");
+        }
+        
+
+        
+
     }
 
     private function availableEmail(string $email) :bool {

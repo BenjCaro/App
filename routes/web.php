@@ -72,6 +72,7 @@ $router->map('POST', '/mon-compte/update-profil', function() {
     $user = new UserController();
     $user->updateDescription($id, 
             ['description' => $description]);
+            
 });
 
 $router->map('POST', '/mon-compte/suppr-favoris', function(){
