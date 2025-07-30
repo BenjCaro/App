@@ -1,10 +1,9 @@
 const btn = document.getElementById('editDescription');
-    const textarea = document.getElementById('description');
-    const formDescription = document.getElementById('formDescription');
+const textarea = document.getElementById('description');
+const formDescription = document.getElementById('formDescription');
+let editing = false;
 
-    let editing = false;
-
-    btn.addEventListener('click', (event) => {
+btn.addEventListener('click', (event) => {
         event.preventDefault();
 
         if (!editing) {

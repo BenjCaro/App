@@ -25,7 +25,7 @@ if (isset($_SESSION['errors']['database'])) {
     <h2 class="text-center">Bienvenue sur votre espace <?= $user->getFirstname()?> </h2>
     <section class="row d-flex justify-content-center">
         <h3 class="text-center">Mes informations</h3>
-        <form class="card col-6">
+        <form class="card col-6" id="formInformation">
             <div class="card-body">
                 <div class="mb-2">
                     <label for="name" class="form-label">Nom</label>
@@ -40,7 +40,7 @@ if (isset($_SESSION['errors']['database'])) {
                     <input type="email" name="email" id="email" class="form-control bg-gris" value="<?= $user->getEmail(); ?>" readonly>
                 </div>
                  <div class="d-flex justify-content-center mb-2">
-                    <button type="button" id="" class="btn btn-sm btn-primary">Modifier mes informations</button>
+                    <button type="button" id="editInformation" class="btn btn-sm btn-primary">Modifier mes informations</button>
                 </div>
             </div>    
         </form>
@@ -131,7 +131,31 @@ if (isset($_SESSION['errors']['database'])) {
 <!-- utiliser meme structure tableau que favoris -->
     </section>
 </main>
+<script>
+    const updateBtn = document.getElementById("editInformation");
+    const inputs = document.querySelectorAll('input');
 
+
+    updateBtn.addEventListener('click', (event) => {
+      // event.preventDefault();
+      updateBtn.classList.remove("btn-primary");
+      updateBtn.classList.add("btn-secondary");
+       inputs.forEach(input => {
+          input.removeAttribute('readonly');
+          input.classList.remove('bg-gris');
+    });
+
+      console.log('Ok!');
+
+
+      formInformation.addEventListener('submit', (event) => {
+        event.preventDefault(); 
+        confirm('Etes vous sur de valider vos modifications?');
+        formInformation.submit();
+        console.log('Informations soumises');
+      });
+    })
+</script>
 <script type="text/javascript" src="/assets/scripts/updateUserDescription.js"></script>
 
 
