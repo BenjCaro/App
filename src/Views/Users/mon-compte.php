@@ -142,41 +142,8 @@ if (isset($_SESSION['errors']['database'])) {
 <!-- utiliser meme structure tableau que favoris -->
     </section>
 </main>
-<script>
-    const updateBtn = document.getElementById("editInformation");
-    const inputs = document.querySelectorAll('input');
-    
 
-    updateBtn.addEventListener('click', (event) => {
-    event.preventDefault();
-
-      if(!editing) {
-
-        editing= true;
-        updateBtn.classList.remove("btn-primary");
-        updateBtn.classList.add("btn-secondary");
-        inputs.forEach(input => {
-        input.removeAttribute('readonly');
-        input.classList.remove('bg-gris');
-          
-    })
-
-    } else {
-        
-        formInformation.requestSubmit();
-        
-        }
-    });
-
-    formInformation.addEventListener('submit', (event) => {
-            event.preventDefault(); 
-            confirm('Etes vous sur de valider vos modifications?');
-            formInformation.submit();
-            console.log('Informations soumises');
-     });
- 
-</script>
-<script type="text/javascript" src="/assets/scripts/updateUserDescription.js"></script>
+<script type="text/javascript" src="/assets/scripts/updateUser.js"></script>
 
 
 
