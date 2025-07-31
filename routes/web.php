@@ -63,6 +63,11 @@ $router->map('GET', '/mon-compte', function() {
  });
 
 $router->map('POST', '/mon-compte/update-profil', function() {
+    var_dump($_POST);
+});
+
+
+$router->map('POST', '/mon-compte/update-description', function() {
     
     session_start();
     $id = $_SESSION['auth_user']['id'];

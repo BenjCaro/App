@@ -25,7 +25,7 @@ if (isset($_SESSION['errors']['database'])) {
     <h2 class="text-center">Bienvenue sur votre espace <?= $user->getFirstname()?> </h2>
     <section class="row d-flex justify-content-center">
         <h3 class="text-center">Mes informations</h3>
-        <form class="card col-6" id="formInformation">
+        <form class="card col-6" id="formInformation" action="/mon-compte/update-profil" method="POST">
             <div class="card-body">
                 <div class="mb-2">
                     <label for="name" class="form-label">Nom</label>
@@ -44,7 +44,7 @@ if (isset($_SESSION['errors']['database'])) {
                 </div>
             </div>    
         </form>
-        <form class="card col-6" id="formDescription" action="/mon-compte/update-profil" method="POST">
+        <form class="card col-6" id="formDescription" action="/mon-compte/update-description" method="POST">
             <div class="card-body">
                 <div class="mb-2">
                     <label for="membership" class="form-label">Membre depuis</label>
@@ -134,27 +134,36 @@ if (isset($_SESSION['errors']['database'])) {
 <script>
     const updateBtn = document.getElementById("editInformation");
     const inputs = document.querySelectorAll('input');
-
+    
 
     updateBtn.addEventListener('click', (event) => {
-      // event.preventDefault();
-      updateBtn.classList.remove("btn-primary");
-      updateBtn.classList.add("btn-secondary");
-       inputs.forEach(input => {
-          input.removeAttribute('readonly');
-          input.classList.remove('bg-gris');
+    event.preventDefault();
+
+      if(!editing) {
+
+        editing= true;
+        updateBtn.classList.remove("btn-primary");
+        updateBtn.classList.add("btn-secondary");
+        inputs.forEach(input => {
+        input.removeAttribute('readonly');
+        input.classList.remove('bg-gris');
+          
+    })
+
+    } else {
+        
+        formInformation.requestSubmit();
+        
+        }
     });
 
-      console.log('Ok!');
-
-
-      formInformation.addEventListener('submit', (event) => {
-        event.preventDefault(); 
-        confirm('Etes vous sur de valider vos modifications?');
-        formInformation.submit();
-        console.log('Informations soumises');
-      });
-    })
+    formInformation.addEventListener('submit', (event) => {
+            event.preventDefault(); 
+            confirm('Etes vous sur de valider vos modifications?');
+            formInformation.submit();
+            console.log('Informations soumises');
+     });
+ 
 </script>
 <script type="text/javascript" src="/assets/scripts/updateUserDescription.js"></script>
 
