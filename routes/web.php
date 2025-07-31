@@ -176,3 +176,10 @@ $router->map('GET', '/suppr-ingredient/[*:id]-[*:slug]', function($id, $slug) {
    $ingredient->deleteIngredient($id,$slug);
 
 });
+
+
+$router->map('GET', '/search', function(){
+
+    var_dump($_GET);
+
+});

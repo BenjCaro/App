@@ -8,20 +8,18 @@ namespace Carbe\App\Views;
 
 ?>
 <main class='container p-3 bg-light'>
-    <!-- <div class="container-fluid mt-2">
-        <form class="d-flex" role="search">
-        <input class="form-control me-2 bg-gris" type="search" placeholder="Recherche" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit"><img src="/assets/images/search.svg" alt=""></button>
-        </form>
-   </div> -->
-   <!-- Mise en place des cards -->
     <?php
-
     if (isset($_SESSION['flash'])) {  ?>
        <div class='alert alert-primary'><?=$_SESSION['flash']?></div>
     <?php    unset($_SESSION['flash']); 
     }
     ?>
+    <div class="search-bar">
+        <form class="d-flex gap-2" method="get" action="/search">
+            <input class="form-control" type="text" name="q" placeholder="Rechercher..." required>
+            <button class="btn btn-secondary" type="submit">🔍</button>
+        </form>
+    </div>
     <div class="grid mt-1 mb-3">
         <section class="favoris">
             <div class="card bg-gris h-100 border border-primary" >
