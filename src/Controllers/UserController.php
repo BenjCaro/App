@@ -131,6 +131,39 @@ class UserController extends BaseController {
         }  
     }
 
+    public function updateInformations(int $id, array $data) {
+
+        $user = new UserModel($this->pdo);
+        $name = trim($data['name']);
+        $firstname = trim($data['firstname']);
+        $email = filter_var(trim($data['email']), FILTER_VALIDATE_EMAIL);
+
+        if (!$name || !$firstname || !$email) {
+                $_SESSION['errors'] = "Tous les champs sont obligatoires.";
+                header("Location: /mon-compte");
+                exit;
+        }
+
+        try {
+
+            $user->update($id, [
+                'name' => $name,
+                'firstname' => $firstname,
+                'email' => $email
+            ]);
+
+            $_SESSION['flash'] = "Votre description a été modifiée.";
+            header("Location: /mon-compte");
+            exit;
+
+        } catch(Exception $e) {
+           $_SESSION['errors'] = "La modification a échouée.";
+           header("Location: /mon-compte");
+           exit;
+        }
+
+    }
+
     public function updateDescription(int $id, array $data) {
 
         $description = $data['description'] ?? null;

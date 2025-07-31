@@ -63,7 +63,13 @@ $router->map('GET', '/mon-compte', function() {
  });
 
 $router->map('POST', '/mon-compte/update-profil', function() {
-    var_dump($_POST);
+    session_start();
+    $id = $_SESSION['auth_user']['id'];
+
+    $data = $_POST;
+    $user = new UserController();
+    $user->updateInformations($id, $data);
+
 });
 
 
@@ -111,10 +117,10 @@ $router->map('GET', '/login', function() {
  });
 
 $router->map('POST', '/login', function() {
-        $email= $_POST['email']; 
-        $password= $_POST['password'];
-        $auth = new AuthController();
-        $auth->login($email, $password);
+    $email= $_POST['email']; 
+    $password= $_POST['password'];
+    $auth = new AuthController();
+    $auth->login($email, $password);
 });
 
 $router->map('GET', '/inscription', function(){
