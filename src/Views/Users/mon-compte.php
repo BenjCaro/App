@@ -21,6 +21,17 @@ if (isset($_SESSION['errors']['database'])) {
     <?php    unset($_SESSION['flash']); 
     }
 
+
+    if (isset($_SESSION['errors']) && !empty($_SESSION['errors'])) { ?>
+    <div class="alert alert-secondary">
+    <?php foreach ($_SESSION['errors'] as $error) { ?>
+            <?= htmlspecialchars($error) ?>
+    <?php } ?>
+            
+    </div>
+        <?php unset($_SESSION['errors']); 
+    }
+
     ?>
     <h2 class="text-center">Bienvenue sur votre espace <?= $user->getFirstname()?> </h2>
     <section class="row d-flex justify-content-center">
