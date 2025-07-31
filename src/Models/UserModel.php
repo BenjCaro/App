@@ -174,5 +174,16 @@ public function getFavoris() :array {
   }
 
 
+
+public function updateDescription() :void {
+
+      
+
+
+
+  }
+
+
 }
+
 

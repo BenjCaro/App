@@ -12,7 +12,7 @@ use Carbe\App\Controllers\LoginController;
 use Carbe\App\Controllers\SigninController;
 use Carbe\App\Controllers\UpdateRecipeController;
 use Carbe\App\Controllers\UserController;
-
+use Carbe\App\Models\UserModel;
 
 $router->map('GET', '/', function() {
     
@@ -62,6 +62,30 @@ $router->map('GET', '/mon-compte', function() {
      $user->getMyProfil();
  });
 
+$router->map('POST', '/mon-compte/update-profil', function() {
+    session_start();
+    $id = $_SESSION['auth_user']['id'];
+
+    $data = $_POST;
+    $user = new UserController();
+    $user->updateInformations($id, $data);
+
+});
+
+
+$router->map('POST', '/mon-compte/update-description', function() {
+    
+    session_start();
+    $id = $_SESSION['auth_user']['id'];
+    
+    $description = $_POST['description'];
+    var_dump($description);
+    $user = new UserController();
+    $user->updateDescription($id, 
+            ['description' => $description]);
+            
+});
+
 $router->map('POST', '/mon-compte/suppr-favoris', function(){
     session_start();
 
@@ -93,10 +117,10 @@ $router->map('GET', '/login', function() {
  });
 
 $router->map('POST', '/login', function() {
-        $email= $_POST['email']; 
-        $password= $_POST['password'];
-        $auth = new AuthController();
-        $auth->login($email, $password);
+    $email= $_POST['email']; 
+    $password= $_POST['password'];
+    $auth = new AuthController();
+    $auth->login($email, $password);
 });
 
 $router->map('GET', '/inscription', function(){

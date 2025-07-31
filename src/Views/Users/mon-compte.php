@@ -9,7 +9,7 @@ if (!isset($_SESSION['auth_user'])) {
 
 if (isset($_SESSION['errors']['database'])) {
     echo $_SESSION['errors']['database'];
-    unset($_SESSION['errors']['database']); // Pour éviter qu’elle s’affiche à nouveau
+    unset($_SESSION['errors']['database']); 
 }
 
 ?>
@@ -21,18 +21,55 @@ if (isset($_SESSION['errors']['database'])) {
     <?php    unset($_SESSION['flash']); 
     }
 
+
+    if (isset($_SESSION['errors']) && !empty($_SESSION['errors'])) { ?>
+    <div class="alert alert-secondary">
+    <?php foreach ($_SESSION['errors'] as $error) { ?>
+            <?= htmlspecialchars($error) ?>
+    <?php } ?>
+            
+    </div>
+        <?php unset($_SESSION['errors']); 
+    }
+
     ?>
-    <h2 class="text-center">Bienvenue sur votre Espace Membre <?= $user->getFirstname()?> </h2>
+    <h2 class="text-center">Bienvenue sur votre espace <?= $user->getFirstname()?> </h2>
     <section class="row d-flex justify-content-center">
-        <div class="card col-6">
+        <h3 class="text-center">Mes informations</h3>
+        <form class="card col-6" id="formInformation" action="/mon-compte/update-profil" method="POST">
             <div class="card-body">
-                <h3 class="card-title">Mes informations</h3>
-                <h4 class="card-subtitle fs-5 mb-2 text-body-secondary"><?= $user->getFirstname(); ?> <?= $user->getName(); ?></h4>
-                <p class="card-text"><?= $user->getDescription()?></p>
-                <span class="card-text"> <?= $user->getEmail(); ?>  </span><br>
-                <span class="card-text">Membre depuis: <?= $user->getCreatedAt() ?></span>
+                <div class="mb-2">
+                    <label for="name" class="form-label">Nom</label>
+                    <input type="text" id="name" name="name" class="form-control bg-gris" value="<?= $user->getName(); ?>" readonly>
+                </div>
+                <div class="mb-2">
+                    <label for="firstname" class="form-label">Prénom</label>
+                    <input type="text" class="form-control bg-gris" name="firstname" id="firstname" value="<?= $user->getFirstname(); ?>" readonly>
+                </div>
+                <div class="mb-2">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" name="email" id="email" class="form-control bg-gris" value="<?= $user->getEmail(); ?>" readonly>
+                </div>
+                 <div class="d-flex justify-content-center mb-2">
+                    <button type="button" id="editInformation" class="btn btn-sm btn-primary">Modifier mes informations</button>
+                </div>
+            </div>    
+        </form>
+        <form class="card col-6" id="formDescription" action="/mon-compte/update-description" method="POST">
+            <div class="card-body">
+                <div class="mb-2">
+                    <label for="membership" class="form-label">Membre depuis</label>
+                    <input type="text" class="form-control bg-gris" name="membership" id="membership" value="<?= $user->getCreatedAt() ?>" readonly>
+                </div>
+                <div class="mb-2">
+                    <label for="description" class="form-label">Ma description</label>
+                    <textarea id="description" class="form-control bg-gris" name="description" rows="4" readonly><?= $user->getDescription() ? $user->getDescription() : "Rédigez votre description."?></textarea>
+                </div>
+                <div class="d-flex justify-content-center mb-2">
+                    <button type="button" id="editDescription" class="btn btn-sm btn-primary">Modifier ma description</button>
+                </div>
             </div>
-        </div>
+        </form>
     </section>
     <section class="row d-flex justify-content-center">
         <h3 class="text-center mt-4 mb-4">Mes favoris</h3>
@@ -63,7 +100,7 @@ if (isset($_SESSION['errors']['database'])) {
                 </tbody>
             </table>
         </div>
-</section>
+    </section>
     <section class="row d-flex justify-content-center">
         <h3 class="text-center mt-4 mb-4">Mes recettes ajoutées</h3>
         <div class="table-responsive">
@@ -105,4 +142,9 @@ if (isset($_SESSION['errors']['database'])) {
 <!-- utiliser meme structure tableau que favoris -->
     </section>
 </main>
+
+<script type="text/javascript" src="/assets/scripts/updateUser.js"></script>
+
+
+
 

@@ -4,6 +4,7 @@ namespace Carbe\App\Controllers;
 
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\UserModel;
+use Exception;
 use \PDOException;
 
 class UserController extends BaseController {
@@ -70,7 +71,7 @@ class UserController extends BaseController {
 
         if (!$email) {
             $errors['email'] = "Adresse e-mail invalide.";
-        } elseif (!$this->availableEmail($email, $errors)) {
+        } elseif (!$this->availableEmail($email)) {
             $errors['email'] = "Adresse e-mail déja utilisée.";
         }
 
@@ -130,15 +131,99 @@ class UserController extends BaseController {
         }  
     }
 
-    private function availableEmail(string $email) :bool {
-         $user =  $this->userModel->findUserByEmail($email);
+  public function updateInformations(int $id, array $data) 
+{
+    $errors = [];
+    $user = new UserModel($this->pdo);
 
-         if($user) {
-            return false;     
-         }
+    $name = trim($data['name'] ?? '');
+    $firstname = trim($data['firstname'] ?? '');
+    $emailInput = trim($data['email'] ?? ''); // valeur brute
+    $email = filter_var($emailInput, FILTER_VALIDATE_EMAIL); // email validé ou false
 
-         return true;
+    // Vérif champs obligatoires
+    if (!$name || !$firstname || !$emailInput) {
+        $errors[] = "Tous les champs sont obligatoires.";
     }
+
+    // Vérif email
+    if ($emailInput && !$email) {
+        $errors[] = "Adresse e-mail invalide.";
+    } elseif ($email && !$this->availableEmail($email, $id)) {
+        $errors[] = "Adresse e-mail déjà utilisée.";
+    }
+
+    // Si erreurs → on bloque la mise à jour
+    if (!empty($errors)) {
+        $_SESSION['errors'] = $errors;
+        header("Location: /mon-compte");
+        exit;
+    }
+
+    // Mise à jour
+    try {
+        $user->update($id, [
+            'name' => $name,
+            'firstname' => $firstname,
+            'email' => $email
+        ]);
+
+        $_SESSION['flash'] = "Vos informations ont été mises à jour.";
+        header("Location: /mon-compte");
+        exit;
+
+    } catch(Exception $e) {
+        error_log("Erreur update user : " . $e->getMessage());
+        $_SESSION['errors'] = ["La modification a échoué."];
+        header("Location: /mon-compte");
+        exit;
+    }
+}
+
+    public function updateDescription(int $id, array $data) {
+
+        $description = $data['description'] ?? null;
+
+        $user = new UserModel($this->pdo);
+
+        
+        try{
+             $user->update($id, [
+            'description' => $description
+        ]);
+
+            $_SESSION['flash'] = "Votre description a été modifiée.";
+            header("Location: /mon-compte");
+
+        } catch(Exception $e) {
+
+           $_SESSION['errors'] = "La modification a échouée.";
+           header("Location: /mon-compte");
+        }
+        
+
+        
+
+    }
+
+   private function availableEmail(string $email, int $currentUserId = null): bool 
+{
+    $user = $this->userModel->findUserByEmail($email);
+
+    // Si aucun utilisateur trouvé → email dispo
+    if (!$user) {
+        return true;
+    }
+
+    // Si c'est l'utilisateur actuel → email considéré comme dispo
+    if ($currentUserId !== null && $user->getId() === $currentUserId) {
+        return true;
+    }
+
+    // Sinon email déjà pris par un autre utilisateur
+    return false;
+}
+
 }
 
 
