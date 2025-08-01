@@ -69,7 +69,7 @@ namespace Carbe\App\Views;
             <div class="card bg-gris h-100 border border-primary" >
                 <div class="card-body">
                     <h2 class='card-title'>Recettes Populaires</h2>
-                         <?php if(!$lastRecipe)  { ?>
+                         <?php if(!$popularRecipe)  { ?>
                             <div class="text-center">Pas encore de recette</div>
                         <?php  } else {?>
                         <h3 class="card-subtitle mb-2 text-body-secondary fs-4"> 
