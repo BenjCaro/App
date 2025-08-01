@@ -4,6 +4,10 @@ namespace Carbe\App\Views\Pages;
 ?>
 
 <main class='container p-3 bg-light'>
+     <h2 class="text-center">
+        <?= $totalResults ?> résultat<?= $totalResults > 1 ? 's' : '' ?> trouvé<?= $totalResults > 1 ? 's' : '' ?>
+        pour « <?= htmlspecialchars($search) ?> »
+    </h2>
     <?php if($results) { ?>
         <?php foreach($results as $result) {  ?>
                 <div>

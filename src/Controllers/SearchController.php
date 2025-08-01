@@ -8,15 +8,23 @@ class SearchController extends BaseController {
         $search = $_GET['q'] ?? '';
 
         $model = new SearchModel($this->pdo);
-        $results = [];
+
+        
+        $recipes = [];
+        $totalResults = 0;
 
         if ($search) {
-            $results = $model->getRecipeWithTitle($search);
+            $data = $model->getRecipeWithTitle($search);
+            $recipes = $data['recipes'];
+            $totalResults = $data['totalResults'];
         }
 
         $this->render('Pages/search', [
             'title' => 'Petit Creux | Résultats de recherches',
-             'results' => $results
+            'results' => $recipes,
+            'totalResults' => $totalResults,
+            'search' => $search
         ]);
     }
 }
+

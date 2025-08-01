@@ -8,11 +8,20 @@ class SearchModel extends BaseModel {
      
     public function getRecipeWithTitle(string $search) {
 
-        $stmt = $this->pdo->prepare("SELECT recipes.title, recipes.slug, recipes.duration, categories.name AS category_name FROM recipes
+        $stmt = $this->pdo->prepare("SELECT 
+            recipes.title, 
+            recipes.slug, 
+            recipes.duration, 
+            categories.name AS category_name,
+            COUNT(*) OVER() AS total_results
+            FROM recipes
             JOIN categories ON categories.id = recipes.id_category
-            WHERE title LIKE :search ");
+            WHERE recipes.title LIKE :search;
+        ");
         $stmt->execute(['search' => "%$search%"]);
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $totalResults = $results ? (int)$results[0]['total_results'] : 0;
 
         $recipes = [];
         foreach($results as $data) {
@@ -24,5 +33,8 @@ class SearchModel extends BaseModel {
             $recipes[] = $recipe;
         }
 
-        return $recipes;
+        return [
+        'recipes' => $recipes,
+        'totalResults' => $totalResults
+    ];
 }}
