@@ -55,7 +55,7 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
     <?php if (isset($_SESSION['auth_user'])): ?>
     <div class="d-flex justify-content-between mt-4">
         <div>
-            <button class="btn btn-primary">Laisser un commentaire</button>
+            <button id="btnPost" class="btn btn-primary">Laisser un commentaire</button>
         </div>
         <div>
            <form action="/recette/<?= htmlspecialchars($recipe->getSlug()) ?>" method="POST">
@@ -65,8 +65,47 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
             </form>
         </div>
     </div>
-    <?php endif; ?>
     <section>
             <!-- Section Commentaires, affichera les commentaires -->
     </section>
+    <section id="container" class="d-flex justify-content-center mt-2"></section>
+    <?php endif; ?>
+    
 </main>
+
+<script>
+    const btnPost = document.getElementById('btnPost');
+    const container = document.getElementById('container');
+    
+
+    btnPost.addEventListener('click', (event) => {
+
+        if (container.querySelector('form')) return; // n'affiche qu'un seul formulaire 
+       
+        const form = document.createElement('form');
+        form.classList.add('form-control', 'w-50', 'd-flex', 'flex-column', 'align-items-center', 'pb-2', 'border-gris', 'bg-gris','shadow-sm', 'p-3', 'mb-5', 'bg-body-gris');
+        form.method = "post";
+        // form.action = "";
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.classList.add('form-control', 'mb-2');
+        input.placeholder = 'Titre de votre commentaire';
+
+        const textarea = document.createElement('textarea');
+        textarea.classList.add('form-control', 'mb-2');
+
+        const submitBtn = document.createElement('button');
+        submitBtn.classList.add('btn', 'btn-secondary');
+        submitBtn.type = 'submit';
+        submitBtn.textContent = 'Poster votre commentaire';
+
+        form.appendChild(input);
+        form.appendChild(textarea);
+        form.appendChild(submitBtn);
+        
+        container.appendChild(form);
+       
+
+    });
+</script>
