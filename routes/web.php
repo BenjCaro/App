@@ -9,6 +9,7 @@ use Carbe\App\Controllers\AddRecipe;
 use Carbe\App\Controllers\AuthController;
 use Carbe\App\Controllers\FavorisController;
 use Carbe\App\Controllers\LoginController;
+use Carbe\App\Controllers\SearchController;
 use Carbe\App\Controllers\SigninController;
 use Carbe\App\Controllers\UpdateRecipeController;
 use Carbe\App\Controllers\UserController;
@@ -174,5 +175,13 @@ $router->map('GET', '/suppr-ingredient/[*:id]-[*:slug]', function($id, $slug) {
 
    $ingredient = new UpdateRecipeController();
    $ingredient->deleteIngredient($id,$slug);
+
+});
+
+
+$router->map('GET', '/search', function(){
+
+    $search = new SearchController();
+    $search->query();
 
 });
