@@ -58,12 +58,20 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
         </div>
     </section>
     <section>
-        <?php foreach ($posts as $post) {
-            echo($post->getTitle());
-        } ?>
-        
-        
-    </section>
+    <h3 class="mt-3 fs-3 text-center">Commentaires</h3>
+    <?php if (empty($posts)) : ?>
+        <p>Aucun commentaire pour l’instant.</p>
+    <?php else : ?>
+        <?php foreach ($posts as $post) : ?>
+            <div class="card my-2 p-2">
+                <h4><?= htmlspecialchars($post->getTitle()) ?></h4>
+                <p><?= htmlspecialchars($post->getContent()) ?></p>
+                <span>Posté le : <?= htmlspecialchars($post->getCreatedAt()) ?> par <?= $post->getAuthor()->getName() . ' ' . $post->getAuthor()->getFirstname() ?></span>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</section>
+
     <?php if (isset($_SESSION['auth_user'])): ?>
     <div class="d-flex justify-content-between mt-4">
         <div>

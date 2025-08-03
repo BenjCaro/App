@@ -13,7 +13,7 @@ class PostModel extends BaseModel {
    private int $id_recipe;
    private string $createdAt;
    private bool $isApproved = false;
-
+   private ?UserModel $author = null;
 
 /**
  * @param array<string, mixed> $data
@@ -43,7 +43,7 @@ public function getContent() :string {
    }
 
 public function setContent(string $content) :void {
-    $this->title = $content;
+    $this->content = $content;
    }
 
 public function getIdUser() :int {
@@ -83,9 +83,26 @@ public function approve(): void {
     $this->isApproved = true;
 }
 
+
+public function setAuthor(UserModel $user): void {
+        $this->author = $user;
+}
+
+public function getAuthor(): ?UserModel {
+        return $this->author;
+ }
+
 public function showComments() :array {
 
-   $stmt = $this->pdo->prepare("SELECT *  FROM posts");
+   $stmt = $this->pdo->prepare(
+      "SELECT 
+       posts.id,
+       posts.title,
+       posts.content,
+       posts.createdAt,
+       users.name,
+       users.firstname
+      FROM posts JOIN users ON users.id = posts.id_user");
    $stmt->execute();
    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
    
@@ -98,7 +115,16 @@ public function showComments() :array {
    foreach($data as $row) {
       $post = new PostModel($this->pdo);
       $post->hydrate($row);
-      $posts[] = $post;
+
+      $user = new UserModel($this->pdo);
+        $user->hydrate([
+            'id'        => $row['id'],
+            'firstname' => $row['firstname'],
+            'name'      => $row['name'],
+        ]);
+
+        $post->setAuthor($user);
+        $posts[] = $post;
    }
 
    return $posts;
