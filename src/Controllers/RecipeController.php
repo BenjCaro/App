@@ -11,8 +11,9 @@ class RecipeController extends BaseController {
 
             $recipeModel = new RecipeModel($this->pdo); 
             $recipe = $recipeModel->getRecipeBySlug($slug);
+            $id = $recipe->getId();
             $postModel = new PostModel($this->pdo);
-            $posts = $postModel->showComments();
+            $posts = $postModel->showComments($id);
 
             $this->render('Pages/recette',[
                 'title' => 'Petit Creux | ' . ucfirst($recipe->getTitle()),

@@ -92,7 +92,7 @@ public function getAuthor(): ?UserModel {
         return $this->author;
  }
 
-public function showComments() :array {
+public function showComments(int $idRecipe) :array {
 
    $stmt = $this->pdo->prepare(
       "SELECT 
@@ -103,8 +103,12 @@ public function showComments() :array {
        users.name,
        users.firstname
       FROM posts JOIN users ON users.id = posts.id_user
-      WHERE isApproved = 1; ");
-   $stmt->execute();
+      WHERE isApproved = 1
+      AND posts.id_recipe = :id_recipe
+      ORDER BY posts.createdAt DESC; ");
+   $stmt->execute([
+       'id_recipe' => $idRecipe
+   ]);
    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
    
    if(!$data) {

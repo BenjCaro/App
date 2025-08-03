@@ -60,7 +60,7 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
     <section>
     <h3 class="mt-3 fs-3 text-center">Commentaires</h3>
     <?php if (empty($posts)) : ?>
-        <p>Aucun commentaire pour l’instant.</p>
+        <p>Soyez le premier à laisser un commentaire! </p>
     <?php else : ?>
         <?php foreach ($posts as $post) : ?>
             <div class="card my-2 p-2">
