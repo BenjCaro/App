@@ -102,7 +102,8 @@ public function showComments() :array {
        posts.createdAt,
        users.name,
        users.firstname
-      FROM posts JOIN users ON users.id = posts.id_user");
+      FROM posts JOIN users ON users.id = posts.id_user
+      WHERE isApproved = 1; ");
    $stmt->execute();
    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
    
@@ -117,14 +118,14 @@ public function showComments() :array {
       $post->hydrate($row);
 
       $user = new UserModel($this->pdo);
-        $user->hydrate([
+      $user->hydrate([
             'id'        => $row['id'],
             'firstname' => $row['firstname'],
             'name'      => $row['name'],
         ]);
 
-        $post->setAuthor($user);
-        $posts[] = $post;
+      $post->setAuthor($user);
+      $posts[] = $post;
    }
 
    return $posts;
