@@ -10,20 +10,6 @@ const btnPost = document.getElementById('btnPost');
         form.action = `/recette/${slug}/commentaires`;
 
 
-        const inputUser = document.createElement('input');
-        inputUser.type = 'hidden';
-        inputUser.name = 'id_user';
-        inputUser.value = id;
-
-        const inputRecipe = document.createElement('input');
-        inputRecipe.type = 'hidden';
-        inputRecipe.name = 'id_recipe';
-        inputRecipe.value = idRecipe;
-
-        form.appendChild(inputUser);
-        form.appendChild(inputRecipe);
-
-
         const input = document.createElement('input');
         input.type = 'text';
         input.name = 'title';

@@ -2,17 +2,18 @@
 
 namespace Carbe\App\Controllers;
 use Carbe\App\Models\PostModel;
+use Carbe\App\Models\RecipeModel;
 use Exception;
 
 class PostController extends BaseController {
 
-   public function addComments(array $data) {
+   public function addComments($slug) {
     session_start();
 
-    $userId = $data['id_user'];
-    $recipeId = $data['id_recipe'];
-    $title = trim($data['title']);
-    $content = trim($data['content']);
+    $userId = $_SESSION['auth_user']['id'];
+    
+    $title = trim($_POST['title']);
+    $content = trim($_POST['content']);
 
     
     if (empty($title) || empty($content)) {
@@ -20,9 +21,18 @@ class PostController extends BaseController {
         return;
     }
 
+    $recipeModel = new RecipeModel($this->pdo);
+    $recipe = $recipeModel->getRecipeBySlug($slug);
+
+    if (!$recipe) {
+        $_SESSION['errors'] = "Recette introuvable.";
+        header("Location: /");
+        exit;
+    }
+
     $commentData = [
         'id_user' => $userId,
-        'id_recipe' => $recipeId,
+        'id_recipe' => $recipe->getId(),
         'title' => $title,
         'content' => $content
     ];

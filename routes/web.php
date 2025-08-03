@@ -57,7 +57,7 @@ $router->map('POST', '/recette/[*:slug]/favoris', function($slug) {
 $router->map('POST', '/recette/[*:slug]/commentaires', function($slug) {    
      
     $post = new PostController();
-    $post->addComments($_POST);
+    $post->addComments($slug, $_POST);
 
     header("Location: /recette/" . $slug);
     exit();

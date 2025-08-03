@@ -86,14 +86,10 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
         </div>
     </div>
     <?php endif; ?>
-    <section id="container" class="d-flex justify-content-center mt-2"></section>
-    
-    
+    <section id="container" class="d-flex justify-content-center mt-2"></section>  
 </main>
 
 <script>
-    const id = <?= json_encode($_SESSION['auth_user']['id']); ?>;
-    const idRecipe = <?= json_encode($recipe->getId()); ?>;
     const slug = <?= json_encode($recipe->getSlug())?>
  </script>
  <script type="text/javascript" src="/assets/scripts/addComment.js"></script>
