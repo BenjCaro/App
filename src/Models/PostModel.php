@@ -19,7 +19,7 @@ class PostModel extends BaseModel {
  * @param array<string, mixed> $data
  */
 
- public function __construct(PDO $pdo, array $data = [])
+public function __construct(PDO $pdo, array $data = [])
    {
 
      parent::__construct($pdo);
@@ -79,7 +79,31 @@ public function setIsApproved(bool $isApproved) :void {
     
   }
 
- public function approve(): void {
+public function approve(): void {
     $this->isApproved = true;
 }
+
+public function showComments() :array {
+
+   $stmt = $this->pdo->prepare("SELECT *  FROM posts");
+   $stmt->execute();
+   $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+   
+   if(!$data) {
+     
+     return [];
+   }
+
+   $posts = [];
+   foreach($data as $row) {
+      $post = new PostModel($this->pdo);
+      $post->hydrate($row);
+      $posts[] = $post;
+   }
+
+   return $posts;
+
+  
+}
+
 }

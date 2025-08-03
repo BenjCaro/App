@@ -9,6 +9,7 @@ use Carbe\App\Controllers\AddRecipe;
 use Carbe\App\Controllers\AuthController;
 use Carbe\App\Controllers\FavorisController;
 use Carbe\App\Controllers\LoginController;
+use Carbe\App\Controllers\PostController;
 use Carbe\App\Controllers\SearchController;
 use Carbe\App\Controllers\SigninController;
 use Carbe\App\Controllers\UpdateRecipeController;
@@ -42,7 +43,7 @@ $router->map('GET', '/recette/[*:slug]', function($slug) {    // page recette ex
     // recuperer le slug pour recuperer la recette via l'id
 });
 
-$router->map('POST', '/recette/[*:slug]', function($slug) {    
+$router->map('POST', '/recette/[*:slug]/favoris', function($slug) {    
     $idUser = $_POST['user'];
     $idRecipe = $_POST['recipe'];
   
@@ -52,6 +53,16 @@ $router->map('POST', '/recette/[*:slug]', function($slug) {
     header("Location: /recette/" . $slug);
     exit();
 });
+
+$router->map('POST', '/recette/[*:slug]/commentaires', function($slug) {    
+     
+    $post = new PostController();
+    $post->addComments($_POST);
+
+    header("Location: /recette/" . $slug);
+    exit();
+});
+
 
 $router->map('GET', '/a-propos', function() {
        $about = new AboutController();

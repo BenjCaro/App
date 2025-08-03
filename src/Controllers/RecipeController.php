@@ -1,5 +1,7 @@
 <?php
 namespace Carbe\App\Controllers;
+
+use Carbe\App\Models\PostModel;
 use Carbe\App\Models\RecipeModel;
 
 class RecipeController extends BaseController {
@@ -9,10 +11,13 @@ class RecipeController extends BaseController {
 
             $recipeModel = new RecipeModel($this->pdo); 
             $recipe = $recipeModel->getRecipeBySlug($slug);
+            $postModel = new PostModel($this->pdo);
+            $posts = $postModel->showComments();
 
             $this->render('Pages/recette',[
                 'title' => 'Petit Creux | ' . ucfirst($recipe->getTitle()),
-                'recipe' => $recipe
+                'recipe' => $recipe,
+                'posts' => $posts
             ]); 
 
       }
