@@ -36,11 +36,10 @@ $router->map('GET', '/categories/[*:slug]', function($slug) {    // page catégo
 }); 
 
 $router->map('GET', '/recette/[*:slug]', function($slug) {    // page recette ex: recette/crepes 
-    // instancier RecipeModel()
+   
      $recipe = new RecipeController();
      $recipe->displayRecipe($slug);
 
-    // recuperer le slug pour recuperer la recette via l'id
 });
 
 $router->map('POST', '/recette/[*:slug]/favoris', function($slug) {    
