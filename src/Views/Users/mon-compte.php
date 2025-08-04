@@ -131,7 +131,7 @@ if (isset($_SESSION['errors']['database'])) {
                         </td>
                     </tr>
                 <?php  } ?>
-                <!-- Afficher les recettes ajoutées par l'utilisateur modifier/supprimer -->
+               
             </tbody>
             </table>
         </div>
