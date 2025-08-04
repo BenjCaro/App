@@ -1,6 +1,6 @@
 const btnPost = document.getElementById('btnPost');
-    const container = document.getElementById('container');
-    btnPost.addEventListener('click', (event) => {
+const container = document.getElementById('container');
+btnPost.addEventListener('click', (event) => {
 
         if (container.querySelector('form')) return; // n'affiche qu'un seul formulaire 
        
@@ -23,13 +23,26 @@ const btnPost = document.getElementById('btnPost');
         textarea.required = true;
 
         const submitBtn = document.createElement('button');
-        submitBtn.classList.add('btn', 'btn-secondary');
+        submitBtn.classList.add('btn', 'btn-primary');
         submitBtn.type = 'submit';
         submitBtn.textContent = 'Poster votre commentaire';
 
+        const cancelBtn = document.createElement('button');
+        cancelBtn.classList.add('btn', 'btn-secondary');
+        cancelBtn.type = 'button'; // important pour ne pas envoyer le formulaire
+        cancelBtn.textContent = 'Annuler';
+        cancelBtn.addEventListener('click', () => {
+            form.remove(); // Supprime le formulaire du DOM
+        });
+
+        const btnContainer = document.createElement('div');
+        btnContainer.classList.add('d-flex', 'justify-content-center', 'gap-2');
+        btnContainer.appendChild(submitBtn);
+        btnContainer.appendChild(cancelBtn);
+
         form.appendChild(input);
         form.appendChild(textarea);
-        form.appendChild(submitBtn);
-        
+        form.appendChild(btnContainer);
         container.appendChild(form);
+    
  });
