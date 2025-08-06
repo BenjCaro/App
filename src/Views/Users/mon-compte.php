@@ -138,9 +138,38 @@ if (isset($_SESSION['errors']['database'])) {
     </section>
     <section class="row d-flex justify-content-center">
         <h3 class="text-center mt-4 mb-4">Mes Commentaires</h3>
-        <?php foreach ($posts as $post) {
-                echo($post->getTitle());
-        } ?>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Titre</th>
+                    <th>Recette</th>
+                    <th>Lien</th>
+                    <th>Modifier</th>
+                    <th>Supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($posts as $post) { ?>
+                    <tr>
+                        <td><?= htmlspecialchars($post->getTitle()) ?></td>
+                        <td><?= htmlspecialchars($post->getRecipe()->getTitle()) ?></td>
+                        <td><a href="/recette/<?= urlencode($post->getRecipe()->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Voir la recette</a></td>
+                        <td>
+                           <button type="submit" class="btn btn-sm btn-primary"><a href="/update/recette/" class="nav-link">Modifier</a></button>
+                        </td>
+                        <td>
+                            <form method="POST" action="" >
+                                <input type="hidden" name="recipe" value="<?= $post->getId()?>">
+                                <button type="submit" class="btn btn-sm btn-secondary">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php  } ?>
+               
+            </tbody>
+            </table>
+        </div>
     </section>
 </main>
 

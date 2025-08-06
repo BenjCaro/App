@@ -14,6 +14,7 @@ class PostModel extends BaseModel {
    private string $createdAt;
    private bool $isApproved = false;
    private ?UserModel $author = null;
+   private ?RecipeModel $recipe= null;
 
 /**
  * @param array<string, mixed> $data
@@ -92,6 +93,14 @@ public function getAuthor(): ?UserModel {
         return $this->author;
  }
 
+public function getRecipe(): ?RecipeModel {
+   return $this->recipe;
+}
+
+public function setRecipe(?RecipeModel $recipe) :void {
+    $this->recipe = $recipe;
+}
+
 public function showComments(int $idRecipe) :array {
 
    $stmt = $this->pdo->prepare(
@@ -140,7 +149,9 @@ public function showComments(int $idRecipe) :array {
 
 public function getCommentsByUser(int $id) :array {
 
-   $stmt = $this->pdo->prepare("SELECT * FROM posts WHERE posts.id_user = :id_user");
+   $stmt = $this->pdo->prepare("SELECT posts.title, posts.id, recipes.title as recipe_title, recipes.id as recipe_id, recipes.slug FROM posts 
+   JOIN recipes ON posts.id_recipe = recipes.id
+   WHERE posts.id_user = :id_user");
    $stmt->execute(['id_user' => $id]);
    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -153,7 +164,14 @@ public function getCommentsByUser(int $id) :array {
    foreach($data as $row) {
       $post = new PostModel($this->pdo);
       $post->hydrate($row);
+      $recipe = new RecipeModel($this->pdo);
+      $recipe->hydrate([
+         'id' => $row['recipe_id'],
+         'title' => $row['recipe_title'],
+         'slug' => $row['slug']
+      ]);
 
+      $post->setRecipe($recipe);
       $posts[] = $post;
    }
 
