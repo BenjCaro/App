@@ -63,7 +63,7 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
         <p>Soyez le premier à laisser un commentaire! </p>
     <?php else : ?>
         <?php foreach ($posts as $post) : ?>
-            <div class="card w-50 my-2 p-2 mx-auto">
+            <div class="card w-50 my-2 p-2 mx-auto" id="post-<?=htmlspecialchars(($post->getId())) ?>">
                 <h4><?= htmlspecialchars($post->getTitle()) ?></h4>
                 <p><?= htmlspecialchars($post->getContent()) ?></p>
                 <span>Posté le : <?= htmlspecialchars($post->getCreatedAt()) ?> par <?= $post->getAuthor()->getName() . ' ' . $post->getAuthor()->getFirstname() ?></span>

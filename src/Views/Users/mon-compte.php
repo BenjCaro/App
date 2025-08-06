@@ -152,10 +152,10 @@ if (isset($_SESSION['errors']['database'])) {
             </thead>
             <tbody>
                 <?php foreach ($posts as $post) { ?>
-                    <tr>
+                    <tr id="<?= htmlspecialchars($post->getId())?>">
                         <td><?= htmlspecialchars($post->getTitle()) ?></td>
                         <td><?= htmlspecialchars($post->getRecipe()->getTitle()) ?></td>
-                        <td><a href="/recette/<?= urlencode($post->getRecipe()->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Voir la recette</a></td>
+                        <td><a href="/recette/<?= urlencode($post->getRecipe()->getSlug())?>#post-<?=htmlspecialchars(($post->getId())) ?>" class="btn btn-sm btn-outline-primary">Voir la recette</a></td>
                         <?php if(($post->getIsApproved()) === true) { ?>
                             <td>Publié</td>
                        <?php } else {  ?>
