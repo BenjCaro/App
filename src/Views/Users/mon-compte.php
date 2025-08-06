@@ -145,6 +145,7 @@ if (isset($_SESSION['errors']['database'])) {
                     <th>Titre</th>
                     <th>Recette</th>
                     <th>Lien</th>
+                    <th>Etat</th>
                     <th>Modifier</th>
                     <th>Supprimer</th>
                 </tr>
@@ -155,6 +156,11 @@ if (isset($_SESSION['errors']['database'])) {
                         <td><?= htmlspecialchars($post->getTitle()) ?></td>
                         <td><?= htmlspecialchars($post->getRecipe()->getTitle()) ?></td>
                         <td><a href="/recette/<?= urlencode($post->getRecipe()->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Voir la recette</a></td>
+                        <?php if(($post->getIsApproved()) === true) { ?>
+                            <td>Publié</td>
+                       <?php } else {  ?>
+                            <td>En attente de validation</td>
+                        <?php  } ?>
                         <td>
                            <button type="submit" class="btn btn-sm btn-primary"><a href="/update/recette/" class="nav-link">Modifier</a></button>
                         </td>
