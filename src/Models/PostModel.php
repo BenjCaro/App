@@ -137,4 +137,27 @@ public function showComments(int $idRecipe) :array {
   
 }
 
+
+public function getCommentsByUser(int $id) :array {
+
+   $stmt = $this->pdo->prepare("SELECT * FROM posts WHERE posts.id_user = :id_user");
+   $stmt->execute(['id_user' => $id]);
+   $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+   if(!$data) {
+      return [];
+   }
+
+   $posts = [];
+
+   foreach($data as $row) {
+      $post = new PostModel($this->pdo);
+      $post->hydrate($row);
+
+      $posts[] = $post;
+   }
+
+   return $posts;
+}
+
 }

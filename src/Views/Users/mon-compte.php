@@ -137,9 +137,10 @@ if (isset($_SESSION['errors']['database'])) {
         </div>
     </section>
     <section class="row d-flex justify-content-center">
-        Mes commentaires
-<!-- Afficher les commentaires ajoutés par l'utilisateur modifier/supprimer -->
-<!-- utiliser meme structure tableau que favoris -->
+        <h3 class="text-center mt-4 mb-4">Mes Commentaires</h3>
+        <?php foreach ($posts as $post) {
+                echo($post->getTitle());
+        } ?>
     </section>
 </main>
 
