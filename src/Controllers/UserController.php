@@ -212,7 +212,7 @@ class UserController extends BaseController {
 
     }
 
-   private function availableEmail(string $email, int $currentUserId = null): bool 
+   private function availableEmail(string $email, ?int $currentUserId = null): bool 
 {
     $user = $this->userModel->findUserByEmail($email);
 

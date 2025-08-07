@@ -2,7 +2,10 @@
 
 namespace Carbe\App\Views\Users;
 
-var_dump($post);
-
 ?>
 
+<main>
+    <div>
+        <?= htmlspecialchars($post->getTitle()) ?>
+    </div>
+</main>

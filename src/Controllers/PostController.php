@@ -69,14 +69,18 @@ public function updateComment(int $id) :void {
     $title = trim($_POST['title']);
     $content = trim($_POST['content']);
 
+    // vérifier que id_user et id_recipe correspondent avec le commentaire à modifier
+    // avant de soumettre la req SQL de modification
+
     try {
+
         $post = new PostModel($this->pdo);
         $post->update($id, [
         'title' => $title,
         'content' => $content
     ]);  
 
-    $_SESSION['flash'] = "Commentaire modifié avec succés !";
+        $_SESSION['flash'] = "Commentaire modifié avec succés !";
 
     } catch(Exception $e) {
 
@@ -85,6 +89,14 @@ public function updateComment(int $id) :void {
     }
 
     
+}
+
+public function deleteComment(int $id) {
+      
+    $post = new PostModel($this->pdo);
+    $post->setId($id);
+    $post->delete();
+
 }
 
 
