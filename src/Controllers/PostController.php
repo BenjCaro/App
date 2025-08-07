@@ -13,6 +13,7 @@ class PostController extends BaseController {
         $post = $postModel->getCommentById($id);
 
         $this->render('Users/post', [
+            'title' => "Petit Creux | Mon Compte",
             'post'=> $post
         ]);
 
