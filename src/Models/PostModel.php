@@ -101,7 +101,7 @@ public function setRecipe(?RecipeModel $recipe) :void {
     $this->recipe = $recipe;
 }
 
-public function showComments(int $idRecipe) :array {
+public function showApprovedComments(int $idRecipe) :array {
 
    $stmt = $this->pdo->prepare(
       "SELECT 
@@ -142,6 +142,32 @@ public function showComments(int $idRecipe) :array {
    }
 
    return $posts;
+
+  
+}
+
+
+public function getCommentById(int $id)  {
+
+   $stmt = $this->pdo->prepare(
+      "SELECT 
+       posts.id,
+       posts.title,
+       posts.content,
+       posts.createdAt
+       FROM posts 
+       WHERE id = :id" );
+
+   $stmt->execute([
+       'id' => $id
+   ]);
+
+   $data = $stmt->fetch(PDO::FETCH_ASSOC);
+   $post = new PostModel($this->pdo);
+   $post->hydrate($data);
+
+   return $post;
+
 
   
 }

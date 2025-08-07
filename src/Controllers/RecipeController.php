@@ -13,7 +13,7 @@ class RecipeController extends BaseController {
             $recipe = $recipeModel->getRecipeBySlug($slug);
             $id = $recipe->getId();
             $postModel = new PostModel($this->pdo);
-            $posts = $postModel->showComments($id);
+            $posts = $postModel->showApprovedComments($id);
 
             $this->render('Pages/recette',[
                 'title' => 'Petit Creux | ' . ucfirst($recipe->getTitle()),

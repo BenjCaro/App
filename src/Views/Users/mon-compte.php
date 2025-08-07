@@ -162,7 +162,7 @@ if (isset($_SESSION['errors']['database'])) {
                             <td>En attente de validation</td>
                         <?php  } ?>
                         <td>
-                           <button type="submit" class="btn btn-sm btn-primary"><a href="/update/recette/" class="nav-link">Modifier</a></button>
+                           <button type="submit" class="btn btn-sm btn-primary"><a href="/mes-commentaires/commentaire-<?=htmlspecialchars($post->getId())?>" class="nav-link">Modifier</a></button>
                         </td>
                         <td>
                             <form method="POST" action="" >

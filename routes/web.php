@@ -195,3 +195,9 @@ $router->map('GET', '/search', function(){
     $search->query();
 
 });
+
+
+$router->map('GET', '/mes-commentaires/commentaire-[*:id]', function($id) {
+        $post = new PostController();
+        $post->showComment($id);
+});

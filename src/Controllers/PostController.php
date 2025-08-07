@@ -7,6 +7,18 @@ use Exception;
 
 class PostController extends BaseController {
 
+    public function showComment(int $id) {
+
+        $postModel = new PostModel($this->pdo);
+        $post = $postModel->getCommentById($id);
+
+        $this->render('Users/post', [
+            'post'=> $post
+        ]);
+
+
+    }
+
    public function addComments($slug) {
     session_start();
 
