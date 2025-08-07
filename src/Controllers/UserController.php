@@ -137,7 +137,7 @@ class UserController extends BaseController {
         }  
     }
 
-  public function updateInformations(int $id, array $data) 
+  public function updateInformations(int $id, array $data) :void
 {
     $errors = [];
     $user = new UserModel($this->pdo);
@@ -186,7 +186,7 @@ class UserController extends BaseController {
     }
 }
 
-    public function updateDescription(int $id, array $data) {
+    public function updateDescription(int $id, array $data) :void {
 
         $description = $data['description'] ?? null;
 

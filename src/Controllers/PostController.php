@@ -7,7 +7,7 @@ use Exception;
 
 class PostController extends BaseController {
 
-    public function showComment(int $id) {
+    public function showComment(int $id) :void {
 
         $postModel = new PostModel($this->pdo);
         $post = $postModel->getCommentById($id);
@@ -20,7 +20,7 @@ class PostController extends BaseController {
 
     }
 
-   public function addComments($slug) {
+   public function addComments($slug) :void {
     session_start();
 
     $userId = $_SESSION['auth_user']['id'];
@@ -61,4 +61,31 @@ class PostController extends BaseController {
         $_SESSION['errors'] ="Commentaire non soumis.";
     }
    
-}}
+}
+
+public function updateComment(int $id) :void {
+    
+    session_start();
+    $title = trim($_POST['title']);
+    $content = trim($_POST['content']);
+
+    try {
+        $post = new PostModel($this->pdo);
+        $post->update($id, [
+        'title' => $title,
+        'content' => $content
+    ]);  
+
+    $_SESSION['flash'] = "Commentaire modifié avec succés !";
+
+    } catch(Exception $e) {
+
+        $_SESSION['errors'] ="Commentaire non modifié.";
+
+    }
+
+    
+}
+
+
+}

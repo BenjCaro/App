@@ -14,7 +14,7 @@ use Carbe\App\Controllers\SearchController;
 use Carbe\App\Controllers\SigninController;
 use Carbe\App\Controllers\UpdateRecipeController;
 use Carbe\App\Controllers\UserController;
-use Carbe\App\Models\UserModel;
+
 
 $router->map('GET', '/', function() {
     
@@ -201,3 +201,4 @@ $router->map('GET', '/mes-commentaires/commentaire-[*:id]', function($id) {
         $post = new PostController();
         $post->showComment($id);
 });
+
