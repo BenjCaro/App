@@ -109,6 +109,7 @@ public function showApprovedComments(int $idRecipe) :array {
        posts.title,
        posts.content,
        posts.createdAt,
+       posts.id_user,
        users.name,
        users.firstname
       FROM posts JOIN users ON users.id = posts.id_user
