@@ -81,6 +81,9 @@ public function updateComment(int $id) :void {
     ]);  
 
         $_SESSION['flash'] = "Commentaire modifié avec succés !";
+        header("Location: /mes-commentaires/commentaire-$id");
+
+        exit();
 
     } catch(Exception $e) {
 
