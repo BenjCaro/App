@@ -33,8 +33,9 @@ namespace Carbe\App\Views\Users;
                 <label for="content" class="form-label">Contenu</label>
                 <textarea class="form-control bg-gris" name="content" id="content" rows="8" readonly><?= htmlspecialchars($post->getContent()) ?></textarea>
             </div>
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center gap-2">
                 <button type="button" id="editPost" class="btn btn-sm btn-primary">Modifier votre commentaire</button>
+                <button type="button" id="showForm" class="btn btn-sm btn-secondary">Supprimer votre commentaire</button>
             </div>
         </form>
     </div>
@@ -85,21 +86,30 @@ namespace Carbe\App\Views\Users;
         }
     });
 
-const id = <?=json_encode($post->getId()) ?>;
-const div = document.getElementById('deletePost');
+    const id = <?=json_encode($post->getId()) ?>;
+    const div = document.getElementById('deletePost');
+    const showForm = document.getElementById("showBtn")
 
-const formDelete = document.createElement('form');
-formDelete.action = `/mes-commentaires/suppr/commentaire-${id}`;
-formDelete.method = "post";
-formDelete.classList.add("card", "col-12", "col-md-8", "col-lg-6" ,"p-4" ,"shadow");
+    const formDelete = document.createElement('form');
+    formDelete.action = `/mes-commentaires/suppr/commentaire-${id}`;
+    formDelete.method = "post";
+    formDelete.classList.add("card", "col-12", "col-md-8", "col-lg-6" ,"p-4" ,"shadow");
 
-const btnDelete = document.createElement('button');
-btnDelete.classList.add("btn", "btn-secondary");
-btnDelete.textContent = "Supprimer le commentaire";
-btnDelete.type = "submit";
+    const btnDelete = document.createElement('button');
+    btnDelete.classList.add("btn", "btn-secondary");
+    btnDelete.textContent = "Supprimer le commentaire";
+    btnDelete.type = "submit";
 
-formDelete.appendChild(btnDelete);
-div.appendChild(formDelete);
+    formDelete.appendChild(btnDelete);
+    div.appendChild(formDelete);
+
+    formDelete.addEventListener("submit", (event) => {
+        
+        if(confirm('Êtes vous sur de supprimer votre commentaire?')) {
+            
+            formDelete.requestSubmit();
+        } 
+    })
 
 
 

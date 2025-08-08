@@ -95,7 +95,7 @@ public function updateComment(int $id) :void {
 }
 
 public function deleteComment(int $id) {
-      
+      session_start();
    // ajoute rdes verifications et msg de succes ou echec 
 
     try {
@@ -104,8 +104,15 @@ public function deleteComment(int $id) {
         $post->setId($id);
         $post->delete();
 
+        $_SESSION['flash'] = "Commentaire supprimé avec succés !";
+        header("Location: /mon-compte");
+        exit;
+
 
     } catch(Exception $e) {
+
+        $_SESSION['errors'] = "Le commentaire n'a pas ete supprimé!";
+        header("Location: /mon-compte");
 
 
 
