@@ -142,33 +142,26 @@ if (isset($_SESSION['errors']['database'])) {
             <table class="table table-bordered table-hover">
             <thead class="table-light">
                 <tr>
-                    <th>Titre</th>
+                    <th>Date</th>
                     <th>Recette</th>
-                    <th>Lien</th>
+                    <th>Consulter la recette</th>
                     <th>Etat</th>
-                    <th>Modifier</th>
-                    <th>Supprimer</th>
+                    <th>Voir le commentaire</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($posts as $post) { ?>
                     <tr id="<?= htmlspecialchars($post->getId())?>">
-                        <td><?= htmlspecialchars($post->getTitle()) ?></td>
+                        <td><?= htmlspecialchars($post->getCreatedAt()) ?></td>
                         <td><?= htmlspecialchars($post->getRecipe()->getTitle()) ?></td>
-                        <td><a href="/recette/<?= urlencode($post->getRecipe()->getSlug())?>#post-<?=htmlspecialchars(($post->getId())) ?>" class="btn btn-sm btn-outline-primary">Voir le commentaire</a></td>
+                        <td><a href="/recette/<?= urlencode($post->getRecipe()->getSlug())?>#post-<?=htmlspecialchars(($post->getId())) ?>" class="btn btn-sm btn-outline-primary">Voir la recette</a></td>
                         <?php if(($post->getIsApproved()) === true) { ?>
                             <td>Publié</td>
                        <?php } else {  ?>
                             <td>En attente de validation</td>
                         <?php  } ?>
                         <td>
-                           <button type="submit" class="btn btn-sm btn-primary"><a href="/mes-commentaires/commentaire-<?=htmlspecialchars($post->getId())?>" class="nav-link">Modifier</a></button>
-                        </td>
-                        <td>
-                            <form method="POST" action="" >
-                                <input type="hidden" name="recipe" value="<?= $post->getId()?>">
-                                <button type="submit" class="btn btn-sm btn-secondary">Supprimer</button>
-                            </form>
+                           <button type="submit" class="btn btn-sm btn-primary"><a href="/mes-commentaires/commentaire-<?=htmlspecialchars($post->getId())?>" class="nav-link">Modifier le commentaire</a></button>
                         </td>
                     </tr>
                 <?php  } ?>
