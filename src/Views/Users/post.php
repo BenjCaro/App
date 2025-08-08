@@ -38,10 +38,11 @@ namespace Carbe\App\Views\Users;
             </div>
         </form>
     </div>
+    <div id="deletePost" class="d-flex justify-content-center"></div>
 </main>
 <script>
     const btn = document.getElementById('editPost');
-    const form = document.getElementById('formPostEdit');
+    const formEdit = document.getElementById('formPostEdit');
     const title = document.getElementById('title');
     const content = document.getElementById('content');
     let editing = false;
@@ -60,17 +61,17 @@ namespace Carbe\App\Views\Users;
           content.classList.remove("bg-gris");
 
        } else { 
-         form.requestSubmit();
+         formEdit.requestSubmit();
 
        }
 
     });
 
-    form.addEventListener('submit', (event) => {
+    formEdit.addEventListener('submit', (event) => {
         event.preventDefault();
         if(confirm('Etes vous sur de valider vos modifications?')) {
 
-                form.submit();
+                formEdit.submit();
 
         } else {
 
@@ -83,6 +84,24 @@ namespace Carbe\App\Views\Users;
             content.classList.add("bg-gris");
         }
     });
+
+const id = <?=json_encode($post->getId()) ?>;
+const div = document.getElementById('deletePost');
+
+const formDelete = document.createElement('form');
+formDelete.action = `/mes-commentaires/suppr/commentaire-${id}`;
+formDelete.method = "post";
+formDelete.classList.add("card", "col-12", "col-md-8", "col-lg-6" ,"p-4" ,"shadow");
+
+const btnDelete = document.createElement('button');
+btnDelete.classList.add("btn", "btn-secondary");
+btnDelete.textContent = "Supprimer le commentaire";
+btnDelete.type = "submit";
+
+formDelete.appendChild(btnDelete);
+div.appendChild(formDelete);
+
+
 
 
 </script>

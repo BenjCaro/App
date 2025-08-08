@@ -96,9 +96,20 @@ public function updateComment(int $id) :void {
 
 public function deleteComment(int $id) {
       
-    $post = new PostModel($this->pdo);
-    $post->setId($id);
-    $post->delete();
+   // ajoute rdes verifications et msg de succes ou echec 
+
+    try {
+
+        $post = new PostModel($this->pdo);
+        $post->setId($id);
+        $post->delete();
+
+
+    } catch(Exception $e) {
+
+
+
+    }
 
 }
 

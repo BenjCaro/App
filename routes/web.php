@@ -197,7 +197,7 @@ $router->map('GET', '/search', function(){
 });
 
 
-$router->map('GET', '/mes-commentaires/commentaire-[*:id]', function($id) {
+$router->map('GET', '/mes-commentaires/commentaire-[i:id]', function($id) {
         $post = new PostController();
         $post->showComment($id);
 });
@@ -215,10 +215,8 @@ $router->map('POST', '/mes-commentaires/commentaire-[*:id]', function($id) {
 // route pour suppr le commentaire
 
 
-$router->map('POST', '/mes-commentaires/commentaire-[*:id]/suppr', function($id) {
+$router->map('POST', '/mes-commentaires/suppr/commentaire-[*:id]', function($id) {
   
-    $id = $_POST['id'];
-
     $post = new PostController();
     $post->deleteComment($id, $_POST);
 
