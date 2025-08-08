@@ -202,3 +202,24 @@ $router->map('GET', '/mes-commentaires/commentaire-[*:id]', function($id) {
         $post->showComment($id);
 });
 
+// route pour modifier le commentaire
+
+$router->map('POST', '/mes-commentaires/commentaire-[*:id]', function($id) {
+  
+
+    $post = new PostController();
+    $post->updateComment($id, $_POST);
+
+});
+
+// route pour suppr le commentaire
+
+
+$router->map('POST', '/mes-commentaires/commentaire-[*:id]/suppr', function($id) {
+  
+    $id = $_POST['id'];
+
+    $post = new PostController();
+    $post->deleteComment($id, $_POST);
+
+});
