@@ -175,7 +175,7 @@ public function getCommentById(int $id)  {
 
 public function getCommentsByUser(int $id) :array {
 
-   $stmt = $this->pdo->prepare("SELECT posts.title, posts.id, posts.isApproved, recipes.title as recipe_title, recipes.id as recipe_id, recipes.slug FROM posts 
+   $stmt = $this->pdo->prepare("SELECT posts.title, posts.id, posts.isApproved, posts.createdAt, recipes.title as recipe_title, recipes.id as recipe_id, recipes.slug FROM posts 
    JOIN recipes ON posts.id_recipe = recipes.id
    WHERE posts.id_user = :id_user");
    $stmt->execute(['id_user' => $id]);
