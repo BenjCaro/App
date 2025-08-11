@@ -1,4 +1,4 @@
-import {edit} from "./editing.js";
+import {edit} from "./editingForm.js";
 
 const btn = document.getElementById('editPost');
 const formEdit = document.getElementById('formPostEdit');

@@ -1,4 +1,4 @@
-import {edit} from "./editing.js";
+import {edit} from "./editingForm.js";
 
 const updateBtn = document.getElementById("editInformation");
 const formInformation = document.getElementById('formInformation');
