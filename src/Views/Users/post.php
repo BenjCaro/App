@@ -35,11 +35,14 @@ namespace Carbe\App\Views\Users;
             </div>
             <div class="d-flex justify-content-center gap-2">
                 <button type="button" id="editPost" class="btn btn-sm btn-primary">Modifier votre commentaire</button>
-                <button type="button" id="showForm" class="btn btn-sm btn-secondary">Supprimer votre commentaire</button>
             </div>
         </form>
     </div>
-    <div id="deletePost" class="d-flex justify-content-center"></div>
+    <div class="d-flex justify-content-center">
+        <form id="formDelete" action="/mes-commentaires/suppr/commentaire-<?=htmlspecialchars($post->getId())?>" method="POST" class="card col-12 col-md-8 col-lg-6 p-4 shadow">
+             <button type="submit" class="btn btn-sm btn-secondary">Supprimer votre commentaire</button>
+        </form>
+    </div>
 </main>
 <script>
     const btn = document.getElementById('editPost');
@@ -86,32 +89,16 @@ namespace Carbe\App\Views\Users;
         }
     });
 
-    const id = <?=json_encode($post->getId()) ?>;
-    const div = document.getElementById('deletePost');
-    const showForm = document.getElementById("showBtn")
+    
 
-    const formDelete = document.createElement('form');
-    formDelete.action = `/mes-commentaires/suppr/commentaire-${id}`;
-    formDelete.method = "post";
-    formDelete.classList.add("card", "col-12", "col-md-8", "col-lg-6" ,"p-4" ,"shadow");
-
-    const btnDelete = document.createElement('button');
-    btnDelete.classList.add("btn", "btn-secondary");
-    btnDelete.textContent = "Supprimer le commentaire";
-    btnDelete.type = "submit";
-
-    formDelete.appendChild(btnDelete);
-    div.appendChild(formDelete);
-
+    const formDelete = document.getElementById('formDelete');
     formDelete.addEventListener("submit", (event) => {
+        event.preventDefault();
         
         if(confirm('Êtes vous sur de supprimer votre commentaire?')) {
             
-            formDelete.requestSubmit();
+            formDelete.submit();
         } 
-    })
-
-
-
+    });
 
 </script>
