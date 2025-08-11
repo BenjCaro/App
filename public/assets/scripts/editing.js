@@ -42,7 +42,7 @@ export function edit(form, fields, button) {
              field.classList.remove("bg-gris");
           });
           
-         // form.appendChild(cancelBtn); // gerer le positionnement 
+         
          button.insertAdjacentElement('afterend', cancelBtn);
 
 
