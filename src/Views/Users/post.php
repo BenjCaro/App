@@ -44,6 +44,7 @@ namespace Carbe\App\Views\Users;
         </form>
     </div>
 </main>
+<script src="/assets/scripts/editing.js" type="text/javascript"></script>
 <script>
     const btn = document.getElementById('editPost');
     const formEdit = document.getElementById('formPostEdit');
@@ -52,60 +53,9 @@ namespace Carbe\App\Views\Users;
     const content = document.getElementById('content');
     const OriginalContent = content.value;
     const div = document.getElementById('formDiv');
-    let editing = false;
+   
 
-    const cancelBtn = document.createElement('button');
-       cancelBtn.classList.add('btn', 'btn-secondary');
-       cancelBtn.type = "button";
-       cancelBtn.textContent = "Annuler";
-       cancelBtn.addEventListener('click', (event) => {
-            editing = false;
-            btn.textContent = "Modifier mon commentaire";
-            btn.classList.replace("btn-secondary", "btn-primary");
-            title.setAttribute("readonly", true);
-            title.classList.add("bg-gris");
-            content.setAttribute("readonly", true);
-            content.classList.add("bg-gris");
-            title.value = OriginalTitle;
-            content.value = OriginalContent;
-            cancelBtn.remove();
-         
-       });
-
-    btn.addEventListener('click', (event) => {
-       event.preventDefault();
-       div.appendChild(cancelBtn);
-        
-       if(!editing) {
-
-          editing = true;
-          btn.textContent = "Confirmez les modifications";
-          btn.classList.replace("btn-primary", "btn-secondary");
-          title.removeAttribute("readonly");
-          title.classList.remove("bg-gris");
-          content.removeAttribute("readonly");
-          content.classList.remove("bg-gris");
-
-       } else { 
-         formEdit.requestSubmit();
-
-       }
-
-    });
-
-    formEdit.addEventListener('submit', (event) => {
-        event.preventDefault();
-        if(confirm('Etes vous sur de valider vos modifications?')) {
-
-                formEdit.submit();
-
-        } else {
-
-           cancelBtn.click();
-        }
-    });
-
-    
+    edit(formEdit, [title, content], btn);
 
     const formDelete = document.getElementById('formDelete');
     formDelete.addEventListener("submit", (event) => {

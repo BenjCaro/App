@@ -1,4 +1,11 @@
-function edit(form, fields, button) {
+/**
+ * 
+ * @param {*} form 
+ * @param {array} fields 
+ * @param {*} button 
+ */
+
+export function edit(form, fields, button) {
     let editing = false;
     let originalValues = fields.map(field => field.value);
 
@@ -28,7 +35,7 @@ function edit(form, fields, button) {
           editing = true;
           button.textContent = "Confirmez les modifications";
           button.classList.replace("btn-primary", "btn-secondary");
-          form.fields.forEach(field => {
+          fields.forEach(field => {
              field.removeAttribute("readonly");
              field.classList.remove("bg-gris");
           });

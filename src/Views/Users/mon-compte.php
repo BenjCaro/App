@@ -172,7 +172,7 @@ if (isset($_SESSION['errors']['database'])) {
     </section>
 </main>
 
-<script type="text/javascript" src="/assets/scripts/updateUser.js"></script>
+<script type="module" src="/assets/scripts/updateUser.js"></script>
 
 
 
