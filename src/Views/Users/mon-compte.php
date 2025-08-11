@@ -50,7 +50,7 @@ if (isset($_SESSION['errors']['database'])) {
                     <label for="email" class="form-label">Email</label>
                     <input type="email" name="email" id="email" class="form-control bg-gris" value="<?= $user->getEmail(); ?>" readonly>
                 </div>
-                 <div class="d-flex justify-content-center mb-2">
+                 <div class="d-flex justify-content-center mb-2 gap-2">
                     <button type="button" id="editInformation" class="btn btn-sm btn-primary">Modifier mes informations</button>
                 </div>
             </div>    
@@ -65,7 +65,7 @@ if (isset($_SESSION['errors']['database'])) {
                     <label for="description" class="form-label">Ma description</label>
                     <textarea id="description" class="form-control bg-gris" name="description" rows="4" readonly><?= $user->getDescription() ? $user->getDescription() : "Rédigez votre description."?></textarea>
                 </div>
-                <div class="d-flex justify-content-center mb-2">
+                <div class="d-flex justify-content-center mb-2 gap-2">
                     <button type="button" id="editDescription" class="btn btn-sm btn-primary">Modifier ma description</button>
                 </div>
             </div>

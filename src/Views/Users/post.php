@@ -44,27 +44,5 @@ namespace Carbe\App\Views\Users;
         </form>
     </div>
 </main>
-<script src="/assets/scripts/editing.js" type="text/javascript"></script>
-<script>
-    const btn = document.getElementById('editPost');
-    const formEdit = document.getElementById('formPostEdit');
-    const title = document.getElementById('title');
-    const OriginalTitle = title.value;
-    const content = document.getElementById('content');
-    const OriginalContent = content.value;
-    const div = document.getElementById('formDiv');
-   
 
-    edit(formEdit, [title, content], btn);
-
-    const formDelete = document.getElementById('formDelete');
-    formDelete.addEventListener("submit", (event) => {
-        event.preventDefault();
-        
-        if(confirm('Êtes vous sur de supprimer votre commentaire?')) {
-            
-            formDelete.submit();
-        } 
-    });
-
-</script>
+<script type="module" src="/assets/scripts/updateComment.js"></script>

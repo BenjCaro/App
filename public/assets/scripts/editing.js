@@ -1,9 +1,11 @@
 /**
+ * Active l’édition inline d’un formulaire avec boutons de modification et annulation.
  * 
- * @param {*} form 
- * @param {array} fields 
- * @param {*} button 
+ * @param {HTMLFormElement} form - Le formulaire HTML contenant les champs à éditer.
+ * @param {HTMLElement[]} fields - Un tableau d’éléments HTML (inputs, textarea) à rendre éditables.
+ * @param {HTMLButtonElement} button - Le bouton qui déclenche l’activation / validation des modifications.
  */
+
 
 export function edit(form, fields, button) {
     let editing = false;
@@ -40,7 +42,9 @@ export function edit(form, fields, button) {
              field.classList.remove("bg-gris");
           });
           
-          form.appendChild(cancelBtn); // gerer le positionnement 
+         // form.appendChild(cancelBtn); // gerer le positionnement 
+         button.insertAdjacentElement('afterend', cancelBtn);
+
 
         } else {
             form.requestSubmit();
