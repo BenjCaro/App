@@ -22,6 +22,7 @@ namespace Carbe\App\Views\Users;
     }
 
     ?>
+    <h2 class="text-center">Recette : <?= htmlspecialchars($post->getRecipe()->getTitle()) ?></h2>
     <div class="d-flex justify-content-center">
         <form action="/mes-commentaires/commentaire-<?=htmlspecialchars($post->getId())?>" method="post" id="formPostEdit" class="card col-12 col-md-8 col-lg-6 p-4 shadow">
 
@@ -33,8 +34,11 @@ namespace Carbe\App\Views\Users;
                 <label for="content" class="form-label">Contenu</label>
                 <textarea class="form-control bg-gris" name="content" id="content" rows="8" readonly><?= htmlspecialchars($post->getContent()) ?></textarea>
             </div>
-            <div id="formDiv" class="d-flex justify-content-center gap-2">
+            <div id="formDiv" class="d-flex justify-content-center mb-2 gap-2">
                 <button type="button" id="editPost" class="btn btn-sm btn-primary">Modifier votre commentaire</button>
+            </div>
+            <div class="mt-1">
+                Posté le : <?= htmlspecialchars($post->getCreatedAt()) ?>
             </div>
         </form>
     </div>

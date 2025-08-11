@@ -148,29 +148,50 @@ public function showApprovedComments(int $idRecipe) :array {
 }
 
 
-public function getCommentById(int $id)  {
+public function getCommentById(int $id)
+{
+    $stmt = $this->pdo->prepare(
+        "SELECT 
+            posts.id,
+            posts.title AS post_title,
+            posts.content,
+            posts.createdAt,
+            recipes.title AS recipe_title,
+            recipes.createdAt AS recipe_createdAt
+        FROM posts 
+        JOIN recipes ON recipes.id = posts.id_recipe
+        WHERE posts.id = :id"
+    );
 
-   $stmt = $this->pdo->prepare(
-      "SELECT 
-       posts.id,
-       posts.title,
-       posts.content,
-       posts.createdAt
-       FROM posts 
-       WHERE id = :id" );
+    $stmt->execute([
+        'id' => $id
+    ]);
 
-   $stmt->execute([
-       'id' => $id
-   ]);
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-   $data = $stmt->fetch(PDO::FETCH_ASSOC);
-   $post = new PostModel($this->pdo);
-   $post->hydrate($data);
+    if (!$data) {
+        return null;
+    }
 
-   return $post;
+   
+    $post = new PostModel($this->pdo);
+    $post->hydrate([
+        'id'        => $data['id'],
+        'title'     => $data['post_title'],
+        'content'   => $data['content'],
+        'createdAt' => $data['createdAt']
+    ]);
 
+   
+    $recipe = new RecipeModel($this->pdo);
+    $recipe->hydrate([
+        'title' => $data['recipe_title'],
+        'createdAt' => $data['recipe_createdAt']
+    ]);
 
-  
+   
+    $post->setRecipe($recipe);
+    return $post;
 }
 
 
