@@ -33,7 +33,7 @@ namespace Carbe\App\Views\Users;
                 <label for="content" class="form-label">Contenu</label>
                 <textarea class="form-control bg-gris" name="content" id="content" rows="8" readonly><?= htmlspecialchars($post->getContent()) ?></textarea>
             </div>
-            <div class="d-flex justify-content-center gap-2">
+            <div id="formDiv" class="d-flex justify-content-center gap-2">
                 <button type="button" id="editPost" class="btn btn-sm btn-primary">Modifier votre commentaire</button>
             </div>
         </form>
@@ -48,11 +48,33 @@ namespace Carbe\App\Views\Users;
     const btn = document.getElementById('editPost');
     const formEdit = document.getElementById('formPostEdit');
     const title = document.getElementById('title');
+    const OriginalTitle = title.value;
     const content = document.getElementById('content');
+    const OriginalContent = content.value;
+    const div = document.getElementById('formDiv');
     let editing = false;
+
+    const cancelBtn = document.createElement('button');
+       cancelBtn.classList.add('btn', 'btn-secondary');
+       cancelBtn.type = "button";
+       cancelBtn.textContent = "Annuler";
+       cancelBtn.addEventListener('click', (event) => {
+            editing = false;
+            btn.textContent = "Modifier mon commentaire";
+            btn.classList.replace("btn-secondary", "btn-primary");
+            title.setAttribute("readonly", true);
+            title.classList.add("bg-gris");
+            content.setAttribute("readonly", true);
+            content.classList.add("bg-gris");
+            title.value = OriginalTitle;
+            content.value = OriginalContent;
+            cancelBtn.remove();
+         
+       });
 
     btn.addEventListener('click', (event) => {
        event.preventDefault();
+       div.appendChild(cancelBtn);
         
        if(!editing) {
 
@@ -79,13 +101,7 @@ namespace Carbe\App\Views\Users;
 
         } else {
 
-            editing = false;
-            btn.textContent = "Modifier mon commentaire";
-            btn.classList.replace("btn-secondary", "btn-primary");
-            title.setAttribute("readonly", true);
-            title.classList.add("bg-gris");
-            content.setAttribute("readonly", true);
-            content.classList.add("bg-gris");
+           cancelBtn.click();
         }
     });
 

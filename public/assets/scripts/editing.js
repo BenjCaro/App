@@ -1,0 +1,58 @@
+function edit(form, fields, button) {
+    let editing = false;
+    let originalValues = fields.map(field => field.value);
+
+    const cancelBtn = document.createElement('button');
+       cancelBtn.classList.add('btn', 'btn-secondary');
+       cancelBtn.type = "button";
+       cancelBtn.textContent = "Annuler";
+       cancelBtn.addEventListener('click', () => {
+            editing = false;
+            button.textContent = "Modifier mon commentaire";
+            button.classList.replace("btn-secondary", "btn-primary");
+
+            fields.forEach((field, index) => {
+                field.value = originalValues[index];
+                field.setAttribute("readonly", true);
+                field.classList.add("bg-gris")
+       });
+            cancelBtn.remove();
+         
+       });
+
+       button.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        if(!editing){
+
+          editing = true;
+          button.textContent = "Confirmez les modifications";
+          button.classList.replace("btn-primary", "btn-secondary");
+          form.fields.forEach(field => {
+             field.removeAttribute("readonly");
+             field.classList.remove("bg-gris");
+          });
+          
+          form.appendChild(cancelBtn); // gerer le positionnement 
+
+        } else {
+            form.requestSubmit();
+        }
+
+       }); 
+
+       form.addEventListener('submit', (event)=> {
+           event.preventDefault();
+           if(confirm('Etes vous sur de valider vos modifications?')) {
+
+                form.submit();
+
+        } else {
+
+           cancelBtn.click();
+        }
+       });
+
+
+
+}
