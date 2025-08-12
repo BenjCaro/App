@@ -5,6 +5,8 @@ namespace Carbe\App\Controllers;
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\UserModel;
 use Carbe\App\Models\PostModel;
+use function Carbe\App\Services\isAuth;
+
 use Exception;
 use \PDOException;
 
@@ -21,25 +23,10 @@ class UserController extends BaseController {
         $this->recipeModel = new RecipeModel($this->pdo);
         $this->postModel = new PostModel($this->pdo);
     }
-
-
-    private function isAuth(): void {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        if (!isset($_SESSION['auth_user'])) {
-            $_SESSION['flash'] = "Connectez-vous pour accèder à cette page!";
-            header('Location: /login');
-            exit();
-        }
-    }
-
-    
          
     public function getMyProfil(): void {
 
-        $this->isAuth();
+        isAuth();
 
         $userId = $_SESSION['auth_user']['id'];
         $user = $this->userModel->findById($userId);

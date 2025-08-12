@@ -4,12 +4,15 @@ use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\RecipeIngredientModel;
 use Carbe\App\Models\CategoryModel;
 use Carbe\App\Models\IngredientModel;
+use function Carbe\App\Services\isAuth;
 use Exception;
 
 
 class UpdateRecipeController extends BaseController {
 
     public function index(string $slug) :void {
+
+        isAuth();
 
         $recipeModel = new RecipeModel($this->pdo); 
         $recipe = $recipeModel->getRecipeBySlug($slug);

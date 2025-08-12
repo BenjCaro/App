@@ -1,11 +1,6 @@
 <?php
 namespace Carbe\App\Views\Pages;
 
-if (!isset($_SESSION['auth_user'])) {
-    $_SESSION['flash'] = "Connectez-vous pour accèder à cette page!";
-    header('Location: /login');
-    exit();
-}
 
 if (isset($_SESSION['errors']['database'])) {
     echo $_SESSION['errors']['database'];

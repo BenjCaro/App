@@ -1,11 +1,5 @@
 <?php 
 namespace Carbe\App\Views\Users;
-
-if (!isset($_SESSION['auth_user'])) {
-    $_SESSION['flash'] = "Connectez-vous pour accèder à cette page!";
-    header('Location: /login');
-    exit();
-}
 ?>
 <main class='container p-3 bg-light'>
     <h2 class="text-center mb-2 mt-2">Confiez-nous vos repas préférés! </h2>

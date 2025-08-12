@@ -5,10 +5,14 @@ use Carbe\App\Models\CategoryModel;
 use Carbe\App\Models\IngredientModel;
 use Carbe\App\Models\RecipeIngredientModel;
 use Carbe\App\Models\RecipeModel;
+use function Carbe\App\Services\isAuth;
+
 use Exception;
 class AddRecipe extends BaseController {
     
     public function index() {
+
+     isAuth();
 
        $categories = $this->getCategories();
        $ingredients = $this->getIngredients();
