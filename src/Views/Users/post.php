@@ -51,3 +51,4 @@ namespace Carbe\App\Views\Users;
 </main>
 
 <script type="module" src="/assets/scripts/updateComment.js"></script>
+<script type="text/javascript" src="/assets/scripts/deleteComment.js"></script>
