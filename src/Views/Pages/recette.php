@@ -67,14 +67,12 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
                     <h4><?= htmlspecialchars($post->getTitle()) ?></h4>
                     <p><?= htmlspecialchars($post->getContent()) ?></p>
                     <span>Posté le : <?= htmlspecialchars($post->getCreatedAt()) ?> par <?= $post->getAuthor()->getName() . ' ' . $post->getAuthor()->getFirstname() ?></span>
-                    <?php if ((int)$post->getIdUser() === (int)$_SESSION['auth_user']['id']) : ?>
+                    <?php if (isset($_SESSION['auth_user']) && (int)$post->getIdUser() === (int)$_SESSION['auth_user']['id']) : ?>
                         <div class="d-flex">
                             <button type="submit" class="btn btn-sm btn-primary"><a href="/mes-commentaires/commentaire-<?=htmlspecialchars($post->getId())?>" class="nav-link">Modifier le commentaire</a></button>
                         </div>
-                        
                     <?php endif; ?>
-
-                </div>
+               </div>
             <?php endforeach; ?>
         <?php endif; ?>
     </section>
