@@ -4,6 +4,7 @@ namespace Carbe\App\Controllers;
 
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\UserModel;
+use Carbe\App\Models\PostModel;
 use Exception;
 use \PDOException;
 
@@ -11,12 +12,14 @@ class UserController extends BaseController {
 
     private UserModel $userModel;
     private RecipeModel $recipeModel;
+    private PostModel $postModel;
       
     public function __construct()
     {   
         parent::__construct();
         $this->userModel = new UserModel($this->pdo);
         $this->recipeModel = new RecipeModel($this->pdo);
+        $this->postModel = new PostModel($this->pdo);
     }
 
 
@@ -44,11 +47,14 @@ class UserController extends BaseController {
         $favoris =  $user->getFavoris();
         $userRecipes = $this->recipeModel->getRecipesByUser($userId);
 
+        $posts = $this->postModel->getCommentsByUser($userId);
+
         $this->render('Users\mon-compte', [
             'title' => 'Petit Creux | Mon Compte ',
             'user' => $user,
             'favoris' => $favoris,
-            'userRecipes' => $userRecipes
+            'userRecipes' => $userRecipes,
+            'posts' => $posts
         ]);        
     }
 
@@ -131,7 +137,7 @@ class UserController extends BaseController {
         }  
     }
 
-  public function updateInformations(int $id, array $data) 
+  public function updateInformations(int $id, array $data) :void
 {
     $errors = [];
     $user = new UserModel($this->pdo);
@@ -153,14 +159,14 @@ class UserController extends BaseController {
         $errors[] = "Adresse e-mail déjà utilisée.";
     }
 
-    // Si erreurs → on bloque la mise à jour
+    
     if (!empty($errors)) {
         $_SESSION['errors'] = $errors;
         header("Location: /mon-compte");
         exit;
     }
 
-    // Mise à jour
+    
     try {
         $user->update($id, [
             'name' => $name,
@@ -180,7 +186,7 @@ class UserController extends BaseController {
     }
 }
 
-    public function updateDescription(int $id, array $data) {
+    public function updateDescription(int $id, array $data) :void {
 
         $description = $data['description'] ?? null;
 
@@ -206,7 +212,7 @@ class UserController extends BaseController {
 
     }
 
-   private function availableEmail(string $email, int $currentUserId = null): bool 
+   private function availableEmail(string $email, ?int $currentUserId = null): bool 
 {
     $user = $this->userModel->findUserByEmail($email);
 

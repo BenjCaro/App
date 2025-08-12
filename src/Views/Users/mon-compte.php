@@ -50,7 +50,7 @@ if (isset($_SESSION['errors']['database'])) {
                     <label for="email" class="form-label">Email</label>
                     <input type="email" name="email" id="email" class="form-control bg-gris" value="<?= $user->getEmail(); ?>" readonly>
                 </div>
-                 <div class="d-flex justify-content-center mb-2">
+                 <div class="d-flex justify-content-center mb-2 gap-2">
                     <button type="button" id="editInformation" class="btn btn-sm btn-primary">Modifier mes informations</button>
                 </div>
             </div>    
@@ -65,7 +65,7 @@ if (isset($_SESSION['errors']['database'])) {
                     <label for="description" class="form-label">Ma description</label>
                     <textarea id="description" class="form-control bg-gris" name="description" rows="4" readonly><?= $user->getDescription() ? $user->getDescription() : "Rédigez votre description."?></textarea>
                 </div>
-                <div class="d-flex justify-content-center mb-2">
+                <div class="d-flex justify-content-center mb-2 gap-2">
                     <button type="button" id="editDescription" class="btn btn-sm btn-primary">Modifier ma description</button>
                 </div>
             </div>
@@ -137,13 +137,42 @@ if (isset($_SESSION['errors']['database'])) {
         </div>
     </section>
     <section class="row d-flex justify-content-center">
-        Mes commentaires
-<!-- Afficher les commentaires ajoutés par l'utilisateur modifier/supprimer -->
-<!-- utiliser meme structure tableau que favoris -->
+        <h3 class="text-center mt-4 mb-4">Mes Commentaires</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Date</th>
+                    <th>Recette</th>
+                    <th>Consulter la recette</th>
+                    <th>Etat</th>
+                    <th>Voir le commentaire</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($posts as $post) { ?>
+                    <tr id="<?= htmlspecialchars($post->getId())?>">
+                        <td><?= htmlspecialchars($post->getCreatedAt()) ?></td>
+                        <td><?= htmlspecialchars($post->getRecipe()->getTitle()) ?></td>
+                        <td><a href="/recette/<?= urlencode($post->getRecipe()->getSlug())?>#post-<?=htmlspecialchars(($post->getId())) ?>" class="btn btn-sm btn-outline-primary">Voir la recette</a></td>
+                        <?php if(($post->getIsApproved()) === true) { ?>
+                            <td>Publié</td>
+                       <?php } else {  ?>
+                            <td>En attente de validation</td>
+                        <?php  } ?>
+                        <td>
+                           <button type="submit" class="btn btn-sm btn-primary"><a href="/mes-commentaires/commentaire-<?=htmlspecialchars($post->getId())?>" class="nav-link">Modifier le commentaire</a></button>
+                        </td>
+                    </tr>
+                <?php  } ?>
+               
+            </tbody>
+            </table>
+        </div>
     </section>
 </main>
 
-<script type="text/javascript" src="/assets/scripts/updateUser.js"></script>
+<script type="module" src="/assets/scripts/updateUser.js"></script>
 
 
 

@@ -7,7 +7,28 @@ use Exception;
 
 class PostController extends BaseController {
 
-   public function addComments($slug) {
+    public function showComment(int $id) :void {
+
+        session_start();
+
+        if (!isset($_SESSION['auth_user'])) {
+            $_SESSION['flash'] = "Connectez-vous pour accèder à cette page!";
+            header('Location: /login');
+            exit();
+    }
+
+        $postModel = new PostModel($this->pdo);
+        $post = $postModel->getCommentById($id);
+
+        $this->render('Users/post', [
+            'title' => "Petit Creux | Mon Compte",
+            'post'=> $post
+        ]);
+
+
+    }
+
+   public function addComments($slug) :void {
     session_start();
 
     $userId = $_SESSION['auth_user']['id'];
@@ -48,4 +69,65 @@ class PostController extends BaseController {
         $_SESSION['errors'] ="Commentaire non soumis.";
     }
    
-}}
+}
+
+public function updateComment(int $id) :void {
+    
+    session_start();
+
+    $title = trim($_POST['title']);
+    $content = trim($_POST['content']);
+
+    // vérifier que id_user et id_recipe correspondent avec le commentaire à modifier
+    // avant de soumettre la req SQL de modification
+
+    try {
+
+        $post = new PostModel($this->pdo);
+        $post->update($id, [
+        'title' => $title,
+        'content' => $content
+    ]);  
+
+        $_SESSION['flash'] = "Commentaire modifié avec succés !";
+        header("Location: /mes-commentaires/commentaire-$id");
+
+        exit();
+
+    } catch(Exception $e) {
+
+        $_SESSION['errors'] ="Commentaire non modifié.";
+
+    }
+
+    
+}
+
+public function deleteComment(int $id) {
+      session_start();
+   // ajoute rdes verifications et msg de succes ou echec 
+
+    try {
+
+        $post = new PostModel($this->pdo);
+        $post->setId($id);
+        $post->delete();
+
+        $_SESSION['flash'] = "Commentaire supprimé avec succés !";
+        header("Location: /mon-compte");
+        exit;
+
+
+    } catch(Exception $e) {
+
+        $_SESSION['errors'] = "Le commentaire n'a pas ete supprimé!";
+        header("Location: /mon-compte");
+
+
+
+    }
+
+}
+
+
+}
