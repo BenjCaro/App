@@ -9,6 +9,14 @@ class PostController extends BaseController {
 
     public function showComment(int $id) :void {
 
+        session_start();
+
+        if (!isset($_SESSION['auth_user'])) {
+            $_SESSION['flash'] = "Connectez-vous pour accèder à cette page!";
+            header('Location: /login');
+            exit();
+    }
+
         $postModel = new PostModel($this->pdo);
         $post = $postModel->getCommentById($id);
 
@@ -66,6 +74,7 @@ class PostController extends BaseController {
 public function updateComment(int $id) :void {
     
     session_start();
+
     $title = trim($_POST['title']);
     $content = trim($_POST['content']);
 
