@@ -2,6 +2,7 @@
 namespace Carbe\App\Controllers;
 
 use Carbe\App\Models\FavorisModel;
+use function Carbe\App\Services\isAuth;
 
 
 class FavorisController extends BaseController {
@@ -18,6 +19,8 @@ class FavorisController extends BaseController {
    public function insert(int $idUser, int $idRecipe): void
     {
     session_start();
+
+    isAuth();
 
     if(!$this->favorisModel->ifFavorisExist($idUser, $idRecipe)) {
          $this->favorisModel->insert([
@@ -37,6 +40,10 @@ class FavorisController extends BaseController {
    public function delete(int $idUser, int $idRecipe):void {
         
         session_start();
+        isAuth();
+        $idUser = $_SESSION['auth_user']['id'];
+        $this->checkUser($idUser);
+        
         $this->favorisModel->removeFavoris($idUser,$idRecipe);
         $_SESSION['flash'] = "Recette supprimée des favoris";
     }
