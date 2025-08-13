@@ -41,6 +41,8 @@ class AddRecipe extends BaseController {
  public function createRecipe(array $data) {
      session_start();
 
+     isAuth();
+
      $title = trim($data['title']);
      $idUser = $data['id_user'];
      $idCategory = $data['id_category'];

@@ -31,7 +31,24 @@ class UpdateRecipeController extends BaseController {
     public function updateRecipe(int $id, array $data) {
         
         session_start();
+        isAuth();
 
+        $recipeModel = new RecipeModel($this->pdo);
+        $recipe = $recipeModel->findById($id);
+
+        if (!$recipe) {
+            $_SESSION['flash'] = "Recette introuvable.";
+            header('Location: /mes-recettes');
+            exit;
+        }
+
+    // Vérifie que l'utilisateur connecté est bien le propriétaire
+        if ($recipe->getIdUser() !== $_SESSION['auth_user']['id']) {
+            $_SESSION['errors'][] = "Action non autorisée.";
+
+            header('Location: /mon-compte');
+            exit;
+    }
         $id = $data['id'];
         // $duration = trim($data['duration']);
         $description = $data['description'] ?? null;
@@ -57,7 +74,6 @@ class UpdateRecipeController extends BaseController {
         $recipeIngredientModel = new RecipeIngredientModel($this->pdo);
         $recipeIngredientModel->deleteByRecipeId($id);
 
-    
         foreach ($ingredients as $i => $ingredient) {
           $recipeIngredientModel->insert(
                 [
@@ -85,6 +101,23 @@ class UpdateRecipeController extends BaseController {
     public function deleteIngredient(int $id, string $slug) {
         
         session_start();
+        isAuth();
+        $recipeModel = new RecipeModel($this->pdo);
+        $recipe = $recipeModel->findById($id);
+
+        if (!$recipe) {
+            $_SESSION['flash'] = "Recette introuvable.";
+            header('Location: /mes-recettes');
+            exit;
+        }
+
+    // Vérifie que l'utilisateur connecté est bien le propriétaire
+        if ($recipe->getIdUser() !== $_SESSION['auth_user']['id']) {
+            $_SESSION['errors'][] = "Action non autorisée.";
+
+            header('Location: /mon-compte');
+            exit;
+    }
 
          $ingredient = new RecipeIngredientModel($this->pdo);
          $ingredient->removeIngredient($id);
@@ -96,7 +129,7 @@ class UpdateRecipeController extends BaseController {
 
     }
 
-    private function descriptionInJson(string|array $steps) :?string {
+private function descriptionInJson(string|array $steps) :?string {
 
      
      $steps = array_map('trim', $steps); 
@@ -106,7 +139,7 @@ class UpdateRecipeController extends BaseController {
 
      }
 
-       private function getCategories() {
+private function getCategories() {
         
        $categoryModel = new CategoryModel($this->pdo);
        $categories = $categoryModel->findAll();
