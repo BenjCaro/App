@@ -29,4 +29,15 @@ class BaseController {
         require_once VIEW_PATH . '/Partials/footer.php';
 
     }
+
+    protected function checkUser(int $resourceOwnerId): void {
+    session_start();
+
+    if ($resourceOwnerId !== $_SESSION['auth_user']['id']) {
+        $_SESSION['errors'][] = "Action non autorisée.";
+        header('Location: /mon-compte');
+        exit;
+    }
+}
+
 }

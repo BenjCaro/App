@@ -43,12 +43,9 @@ class UpdateRecipeController extends BaseController {
         }
 
     // Vérifie que l'utilisateur connecté est bien le propriétaire
-        if ($recipe->getIdUser() !== $_SESSION['auth_user']['id']) {
-            $_SESSION['errors'][] = "Action non autorisée.";
-
-            header('Location: /mon-compte');
-            exit;
-    }
+        $this->checkUser($recipe->getIdUser());
+      
+ 
         $id = $data['id'];
         // $duration = trim($data['duration']);
         $description = $data['description'] ?? null;
@@ -111,13 +108,8 @@ class UpdateRecipeController extends BaseController {
             exit;
         }
 
-    // Vérifie que l'utilisateur connecté est bien le propriétaire
-        if ($recipe->getIdUser() !== $_SESSION['auth_user']['id']) {
-            $_SESSION['errors'][] = "Action non autorisée.";
-
-            header('Location: /mon-compte');
-            exit;
-    }
+        $this->checkUser($recipe->getIdUser());
+     
 
          $ingredient = new RecipeIngredientModel($this->pdo);
          $ingredient->removeIngredient($id);
