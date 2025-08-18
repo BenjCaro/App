@@ -45,6 +45,10 @@ class UserController extends BaseController {
         ]);        
     }
 
+
+ /**
+ * @param array<string, string> $data
+ */
     public function createUser(array $data) :void {
         session_start();
         
@@ -124,6 +128,11 @@ class UserController extends BaseController {
         }  
     }
 
+
+/**
+ * @param array<string, string> $data
+ */
+
   public function updateInformations(int $id, array $data) :void {
     $errors = [];
     $user = new UserModel($this->pdo);
@@ -171,6 +180,11 @@ class UserController extends BaseController {
         exit;
     }
 }
+
+
+/**
+ * @param array<string, string> $data
+ */
 
     public function updateDescription(int $id, array $data) :void {
 

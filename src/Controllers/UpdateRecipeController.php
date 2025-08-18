@@ -28,7 +28,12 @@ class UpdateRecipeController extends BaseController {
         ]);
     }
 
-    public function updateRecipe(int $id, array $data) {
+/**
+ * @param array<string, mixed> $data
+ */
+
+
+public function updateRecipe(int $id, array $data) :void {
         
         session_start();
         isAuth();
@@ -95,7 +100,7 @@ class UpdateRecipeController extends BaseController {
         
     }
 
-    public function deleteIngredient(int $id, string $slug) {
+    public function deleteIngredient(int $id, string $slug) :void {
         
         session_start();
         isAuth();
@@ -121,7 +126,14 @@ class UpdateRecipeController extends BaseController {
 
     }
 
-private function descriptionInJson(string|array $steps) :?string {
+
+/**
+ * Convertit les étapes des recettes en JSON.
+ *
+ * @param string|string[] $steps
+ */
+
+private function descriptionInJson(string|array $steps) :string {
 
      
      $steps = array_map('trim', $steps); 
@@ -131,7 +143,13 @@ private function descriptionInJson(string|array $steps) :?string {
 
      }
 
-private function getCategories() {
+
+/**
+ * 
+ * @return CategoryModel[]
+ * 
+ */
+private function getCategories() :array {
         
        $categoryModel = new CategoryModel($this->pdo);
        $categories = $categoryModel->findAll();
@@ -139,7 +157,13 @@ private function getCategories() {
 
   }
 
- private function getIngredients() {
+  /**
+ * 
+ * @return IngredientModel[]
+ * 
+ */
+
+ private function getIngredients() :array {
       $ingredientModel = new IngredientModel($this->pdo);
       $ingredients = $ingredientModel->findAll();
       return $ingredients;

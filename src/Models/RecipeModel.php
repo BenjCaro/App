@@ -122,7 +122,7 @@ public function setCategory(CategoryModel $category):void {
  * @return RecipeModel
  */
 
-public function getRecipeBySlug(string $slug) :RecipeModel {  
+public function getRecipeBySlug(string $slug) :?RecipeModel {  
     $stmt = $this->pdo->prepare("SELECT
      recipes.id AS recipe_id, 
      recipes.title, 
@@ -145,7 +145,7 @@ public function getRecipeBySlug(string $slug) :RecipeModel {
    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
   
    if (!$data) {
-        throw new \Exception("Aucune recette trouvée pour le slug : $slug");
+       return null;
     }
 
     

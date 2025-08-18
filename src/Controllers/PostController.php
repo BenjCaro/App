@@ -30,6 +30,13 @@ class PostController extends BaseController {
 
     }
 
+/**
+ * @param string $slug
+ * 
+ * 
+ */
+
+
    public function addComments($slug) :void {
     session_start();
     isAuth();
@@ -48,7 +55,7 @@ class PostController extends BaseController {
     $recipeModel = new RecipeModel($this->pdo);
     $recipe = $recipeModel->getRecipeBySlug($slug);
 
-    if (!$recipe) {
+    if ($recipe === null) {
         $_SESSION['errors'] = "Recette introuvable.";
         header("Location: /");
         exit;
@@ -111,7 +118,7 @@ public function updateComment(int $id) :void {
     
 }
 
-public function deleteComment(int $id) {
+public function deleteComment(int $id) :void {
     
     session_start();
     isAuth();
