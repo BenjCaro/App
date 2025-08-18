@@ -80,10 +80,13 @@ public function insert(array $data) :void {
 
     }   
 
+/**
+ *  @param array<string, mixed> $data
+ */
 
     public function update(int $id, array $data): void {
         
-    // Génère une chaîne de la forme "col1 = :col1, col2 = :col2"
+   
     $fields = [];
     foreach ($data as $column => $value) {
         $fields[] = "$column = :$column";

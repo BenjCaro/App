@@ -6,7 +6,7 @@ use Carbe\App\Models\RecipeModel;
 
 class SearchModel extends BaseModel {
      
-    public function getRecipeWithTitle(string $search) {
+    public function getRecipeWithTitle(string $search) :array {
 
         $stmt = $this->pdo->prepare("SELECT 
             recipes.title, 

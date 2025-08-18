@@ -368,6 +368,10 @@ public function getAllRecipesByCategory(int $idCategory) :array {
     return $recipes;
 }
 
+/**
+ * @return RecipeModel[]
+ */
+
 public function getRecipesByUser(int $idUser) :array {
     $stmt = $this->pdo->prepare('SELECT recipes.id, recipes.title, recipes.slug, categories.name 
         FROM `recipes` 
