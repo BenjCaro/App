@@ -49,9 +49,10 @@ private UserModel $userModel;
 
     }
 
-    private function validateLoginInput(string $email, string $password): bool {
-            return isset($email, $password) && !empty($email) && !empty($password);
-    }
+    private function validateLoginInput(?string $email, ?string $password): bool {
+    return !empty($email) && !empty($password);
+}
+
 
 
 }

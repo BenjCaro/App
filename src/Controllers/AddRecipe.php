@@ -10,7 +10,7 @@ use function Carbe\App\Services\isAuth;
 use Exception;
 class AddRecipe extends BaseController {
     
-    public function index() {
+    public function index() :void {
 
      isAuth();
 
@@ -24,6 +24,11 @@ class AddRecipe extends BaseController {
          ]);
     }
 
+ /**
+  * @return CategoryModel[]
+  *
+  */
+
   private function getCategories() {
         
        $categoryModel = new CategoryModel($this->pdo);
@@ -32,13 +37,23 @@ class AddRecipe extends BaseController {
 
   }
 
+ /**
+  * @return IngredientModel[]
+  *
+  */
  private function getIngredients() {
       $ingredientModel = new IngredientModel($this->pdo);
       $ingredients = $ingredientModel->findAll();
       return $ingredients;
  }
 
- public function createRecipe(array $data) {
+
+/**
+ * 
+ * @param array<string, mixed> $data
+ */
+
+ public function createRecipe(array $data) :void {
      session_start();
 
      isAuth();
