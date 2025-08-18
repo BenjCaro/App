@@ -4,6 +4,8 @@ namespace Carbe\App\Controllers;
 use Carbe\App\Models\PostModel;
 use Carbe\App\Models\RecipeModel;
 
+use function Carbe\App\Services\isAuth;
+
 class RecipeController extends BaseController {
      
     
@@ -24,6 +26,13 @@ class RecipeController extends BaseController {
       }
 
       public function deleteRecipe(int $idRecipe) :void {
+
+        session_start();
+        isAuth();
+        $recipe = new RecipeModel($this->pdo);
+        $recipe->findById($idRecipe);
+
+        $this->checkUser($recipe->getIdUser());
 
          $recipeModel = new RecipeModel($this->pdo);
          $recipeModel->setId($idRecipe);

@@ -5,6 +5,8 @@ use Carbe\App\Models\PostModel;
 use Carbe\App\Models\RecipeModel;
 use Exception;
 
+use function Carbe\App\Services\isAuth;
+
 class PostController extends BaseController {
 
     public function showComment(int $id) :void {
@@ -30,6 +32,7 @@ class PostController extends BaseController {
 
    public function addComments($slug) :void {
     session_start();
+    isAuth();
 
     $userId = $_SESSION['auth_user']['id'];
     
@@ -74,6 +77,11 @@ class PostController extends BaseController {
 public function updateComment(int $id) :void {
     
     session_start();
+    isAuth();
+    $post = new PostModel($this->pdo);
+    $post->findById($id);
+
+    $this->checkUser($post->getIdUser());
 
     $title = trim($_POST['title']);
     $content = trim($_POST['content']);
@@ -104,8 +112,13 @@ public function updateComment(int $id) :void {
 }
 
 public function deleteComment(int $id) {
-      session_start();
-   // ajoute rdes verifications et msg de succes ou echec 
+    
+    session_start();
+    isAuth();
+    $post = new PostModel($this->pdo);
+    $post->findById($id);
+
+    $this->checkUser($post->getIdUser());
 
     try {
 
