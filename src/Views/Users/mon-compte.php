@@ -1,6 +1,14 @@
 <?php
 namespace Carbe\App\Views\Pages;
 
+use Carbe\App\Models\UserModel;
+use Carbe\App\Models\RecipeModel;
+use Carbe\App\Models\PostModel;
+
+/** @var \Carbe\App\Models\PostModel[] $posts */
+/** @var \Carbe\App\Models\UserModel $user */
+/** @var \Carbe\App\Models\RecipeModel[] $favoris */
+/** @var \Carbe\App\Models\RecipeModel[] $userRecipes */
 
 if (isset($_SESSION['errors']['database'])) {
     echo $_SESSION['errors']['database'];
@@ -146,17 +154,17 @@ if (isset($_SESSION['errors']['database'])) {
             </thead>
             <tbody>
                 <?php foreach ($posts as $post) { ?>
-                    <tr id="<?= htmlspecialchars($post->getId())?>">
+                    <tr id="<?= $post->getId()?>">
                         <td><?= htmlspecialchars($post->getCreatedAt()) ?></td>
                         <td><?= htmlspecialchars($post->getRecipe()->getTitle()) ?></td>
-                        <td><a href="/recette/<?= urlencode($post->getRecipe()->getSlug())?>#post-<?=htmlspecialchars(($post->getId())) ?>" class="btn btn-sm btn-outline-primary">Voir la recette</a></td>
+                        <td><a href="/recette/<?= urlencode($post->getRecipe()->getSlug())?>#post-<?=$post->getId() ?>" class="btn btn-sm btn-outline-primary">Voir la recette</a></td>
                         <?php if(($post->getIsApproved()) === true) { ?>
                             <td>Publié</td>
                        <?php } else {  ?>
                             <td>En attente de validation</td>
                         <?php  } ?>
                         <td>
-                           <button type="submit" class="btn btn-sm btn-primary"><a href="/mes-commentaires/commentaire-<?=htmlspecialchars($post->getId())?>" class="nav-link">Modifier le commentaire</a></button>
+                           <button type="submit" class="btn btn-sm btn-primary"><a href="/mes-commentaires/commentaire-<?=$post->getId()?>" class="nav-link">Modifier le commentaire</a></button>
                         </td>
                     </tr>
                 <?php  } ?>

@@ -56,6 +56,7 @@ use Carbe\App\Models\RecipeModel;
             <div class="card bg-gris h-100 border border-primary">
                 <div class="card-body">
                     <h2 class='card-title'>Dernière Recette</h2>
+                    <!-- warning phpStan car la comparaison retourne tjs false c est à dire ne pas donner null lastRecipe est tjs un objet-->
                     <?php if($lastRecipe === null)  { ?>
                             <div class="text-center">Pas encore de recette</div>
                      <?php  } else {?>

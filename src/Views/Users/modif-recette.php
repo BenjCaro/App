@@ -1,7 +1,12 @@
 <?php
 namespace Carbe\App\Views\Users;
 
+use Carbe\App\Models\RecipeModel;
+use Carbe\App\Models\IngredientModel;
 
+/** @var mixed $i */
+/** @var \Carbe\App\Models\RecipeModel $recipe */
+/** @var \Carbe\App\Models\IngredientModel[] $ingredients */
 ?>
 
 <main class='container p-3 bg-light'> 
@@ -27,7 +32,7 @@ namespace Carbe\App\Views\Users;
                 <?php 
                     $ingredient = $recipeIngredient->getIngredient(); 
                     $id = $ingredient->getId();
-                    $quantity = $recipeIngredient->getQuantity();
+                    $quantity = strval($recipeIngredient->getQuantity());
                     $unit = $recipeIngredient->getUnit();
                 ?>
             <div class="d-flex mb-2 gap-2 align-items-center">

@@ -1,6 +1,12 @@
 <?php
 namespace Carbe\App\Views\Pages;
 
+use Carbe\App\Models\SearchModel;
+use Carbe\App\Models\RecipeModel;
+
+/** @var \Carbe\App\Models\RecipeModel[] $results  */
+/** @var int $totalResults nombre de résultats */
+/** @var string $search recherche de l'utilisateur */
 ?>
 
 <main class='container p-3 bg-light'>
@@ -14,7 +20,7 @@ namespace Carbe\App\Views\Pages;
                     <h3 class="card-subtitle text-body-secondary fs-4 mt-2 mb-2"> 
                                 <?= $result->getTitle()?>
                         </h3>
-                        <span class="badge text-bg-secondary"><?= htmlspecialchars($result->getDuration()) . ' minutes' ?></span>
+                        <span class="badge text-bg-secondary"><?= htmlspecialchars(strval($result->getDuration())) . ' minutes' ?></span>
                         <span class="badge text-bg-secondary"><?= $result->getCategory()->getName(); ?></span> <br>
                         <button type="button" class="btn btn-secondary mt-2"><a class="text-black nav-link" href="/recette/<?= $result->getSlug()?>">Voir la recette</a></button>
                 </div>

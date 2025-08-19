@@ -1,7 +1,12 @@
 <?php
 
 namespace Carbe\App\Views\Pages;
-/** @var Carbe\App\Models\RecipeModel[] $recipes */
+
+use Carbe\App\Models\RecipeModel;
+use Carbe\App\Models\PostModel;
+
+/** @var \Carbe\App\Models\PostModel[] $posts */
+/** @var \Carbe\App\Models\RecipeModel $recipe */
 
 ?>
 
@@ -32,7 +37,7 @@ namespace Carbe\App\Views\Pages;
                 <?php 
                     $ingredient = $recipeIngredient->getIngredient(); 
                     $name = $ingredient->getName();
-                    $quantity = $recipeIngredient->getQuantity();
+                    $quantity = strval($recipeIngredient->getQuantity());
                     $unit = $recipeIngredient->getUnit();
                 ?>
                 <li class="card-text"><?= htmlspecialchars($quantity) ?> <?= htmlspecialchars($unit) ?> de <?= htmlspecialchars($name) ?></li>
@@ -63,13 +68,13 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
             <p>Soyez le premier à laisser un commentaire! </p>
         <?php else : ?>
             <?php foreach ($posts as $post) : ?>
-                <div class="card w-50 my-2 p-2 mx-auto" id="post-<?=htmlspecialchars(($post->getId())) ?>">
+                <div class="card w-50 my-2 p-2 mx-auto" id="post-<?=$post->getId(); ?>">
                     <h4><?= htmlspecialchars($post->getTitle()) ?></h4>
                     <p><?= htmlspecialchars($post->getContent()) ?></p>
                     <span>Posté le : <?= htmlspecialchars($post->getCreatedAt()) ?> par <?= $post->getAuthor()->getName() . ' ' . $post->getAuthor()->getFirstname() ?></span>
                     <?php if (isset($_SESSION['auth_user']) && (int)$post->getIdUser() === (int)$_SESSION['auth_user']['id']) : ?>
                         <div class="d-flex">
-                            <button type="submit" class="btn btn-sm btn-primary"><a href="/mes-commentaires/commentaire-<?=htmlspecialchars($post->getId())?>" class="nav-link">Modifier le commentaire</a></button>
+                            <button type="submit" class="btn btn-sm btn-primary"><a href="/mes-commentaires/commentaire-<?=$post->getId();?>" class="nav-link">Modifier le commentaire</a></button>
                         </div>
                     <?php endif; ?>
                </div>
@@ -85,7 +90,7 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
         <div>
            <form action="/recette/<?= htmlspecialchars($recipe->getSlug()) ?>/favoris" method="POST">
                 <input type="hidden" name="user" value="<?= $_SESSION['auth_user']['id']; ?>" >
-                <input type="hidden" name="recipe" value="<?= htmlspecialchars($recipe->getId()); ?>">
+                <input type="hidden" name="recipe" value="<?= $recipe->getId(); ?>">
                 <button class="btn btn-primary">Ajouter aux favoris</button>
             </form>
         </div>

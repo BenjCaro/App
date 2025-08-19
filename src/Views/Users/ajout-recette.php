@@ -1,5 +1,11 @@
 <?php 
 namespace Carbe\App\Views\Users;
+use Carbe\App\Models\CategoryModel;
+use Carbe\App\Models\IngredientModel;
+
+/** @var \Carbe\App\Models\CategoryModel[] $categories */ 
+/** @var \Carbe\App\Models\IngredientModel[] $ingredients */
+
 ?>
 <main class='container p-3 bg-light'>
     <h2 class="text-center mb-2 mt-2">Confiez-nous vos repas préférés! </h2>
@@ -25,7 +31,7 @@ namespace Carbe\App\Views\Users;
                 <select name="id_category" id="id_category" class="form-select" required>
                     <option value="">Choisir la catégorie</option>
                 <?php foreach($categories as $category): ?>
-                    <option value="<?= htmlspecialchars($category->getId()); ?>"><?= htmlspecialchars($category->getName()); ?></option>
+                    <option value="<?= $category->getId(); ?>"><?= htmlspecialchars($category->getName()); ?></option>
                 <?php endforeach; ?>
                 </select>
             </div>
