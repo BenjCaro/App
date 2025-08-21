@@ -130,8 +130,7 @@ public function deleteComment(int $id) :void {
     try {
 
         $post = new PostModel($this->pdo);
-        $post->setId($id);
-        $post->delete();
+        $post->delete($id);
 
         $_SESSION['flash'] = "Commentaire supprimé avec succés !";
         header("Location: /mon-compte");

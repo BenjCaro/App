@@ -116,11 +116,11 @@ public function insert(array $data) :void {
         }
     }
 
-    public function delete() : bool { // supprimer une donnée (ex: un utilisateur, une recette, un commentaire, etc...)
+    public function delete(int $id) : bool { // supprimer une donnée (ex: un utilisateur, une recette, un commentaire, etc...)
 
         $stmt = $this->pdo->prepare("DELETE FROM {$this->table} where id = :id");
        
-        return $stmt->execute(['id' => $this->getId()]);
+        return $stmt->execute(['id' => $id]);
     }
 
     

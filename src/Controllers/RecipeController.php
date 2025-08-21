@@ -13,15 +13,26 @@ class RecipeController extends BaseController {
 
             $recipeModel = new RecipeModel($this->pdo); 
             $recipe = $recipeModel->getRecipeBySlug($slug);
-            $id = $recipe->getId();
-            $postModel = new PostModel($this->pdo);
-            $posts = $postModel->showApprovedComments($id);
 
-            $this->render('Pages/recette',[
-                'title' => 'Petit Creux | ' . ucfirst($recipe->getTitle()),
-                'recipe' => $recipe,
-                'posts' => $posts
-            ]); 
+            if ($recipe === null) {
+
+                $_SESSION['flash'] = "La recette n'existe pas";
+                header('Location: /home');
+                exit;
+
+            } 
+                
+                $id = $recipe->getId();
+                $postModel = new PostModel($this->pdo);
+                $posts = $postModel->showApprovedComments($id);
+
+                $this->render('Pages/recette',[
+                    'title' => 'Petit Creux | ' . ucfirst($recipe->getTitle()),
+                    'recipe' => $recipe,
+                    'posts' => $posts
+                ]); 
+
+            
 
       }
 
@@ -35,8 +46,7 @@ class RecipeController extends BaseController {
         $this->checkUser($recipe->getIdUser());
 
          $recipeModel = new RecipeModel($this->pdo);
-         $recipeModel->setId($idRecipe);
-         $recipeModel->delete();
+         $recipeModel->delete($idRecipe);
 
          $_SESSION['flash'] = "Recette supprimée.";
 
