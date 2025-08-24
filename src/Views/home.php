@@ -6,8 +6,8 @@ use Carbe\App\Models\RecipeModel;
 
 
 /** @var \Carbe\App\Models\RecipeModel[] $favoris */
-/** @var \Carbe\App\Models\RecipeModel $lastRecipe */
-/** @var \Carbe\App\Models\RecipeModel $popularRecipe */
+/** @var \Carbe\App\Models\RecipeModel|null $lastRecipe */
+/** @var \Carbe\App\Models\RecipeModel|null $popularRecipe */
 /** @var \Carbe\App\Models\CategoryModel[] $categories */
 
 ?>
@@ -63,7 +63,7 @@ use Carbe\App\Models\RecipeModel;
                         <h3 class="card-subtitle mb-2 text-body-secondary fs-4"> 
                                 <?= $lastRecipe->getTitle()?>
                         </h3>
-                        <span class="badge text-bg-secondary"><?= htmlspecialchars($lastRecipe->getDuration()) . ' minutes' ?></span>
+                        <span class="badge text-bg-secondary"><?= $lastRecipe->getDuration() . ' minutes' ?></span>
                         <span class="badge text-bg-secondary"><?=  ucwords($lastRecipe->getCategory()->getName());?></span> <br>
                        <button type="button" class="btn btn-secondary mt-2"><a class="text-black nav-link" href="/recette/<?= $lastRecipe->getSlug()?>">Voir la recette</a></button>
                     <?php } ?>
@@ -74,6 +74,7 @@ use Carbe\App\Models\RecipeModel;
             <div class="card bg-gris h-100 border border-primary" >
                 <div class="card-body">
                     <h2 class='card-title'>Recettes Populaires</h2>
+                    <!-- warning phpStan car la comparaison retourne tjs false c est à dire ne pas donner null popularRecipe est tjs un objet-->
                          <?php if($popularRecipe === null) { ?>
                             <div class="text-center">Pas encore de recette</div>
                         <?php  } else {?>
