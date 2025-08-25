@@ -45,10 +45,11 @@ class RecipeController extends BaseController {
 
         $this->checkUser($recipe->getIdUser());
 
-         $recipeModel = new RecipeModel($this->pdo);
-         $recipeModel->delete($idRecipe);
+        $recipeModel = new RecipeModel($this->pdo);
+        $recipeModel->delete($idRecipe);
 
-         $_SESSION['flash'] = "Recette supprimée.";
-
+        $_SESSION['flash'] = "Recette supprimée.";
+        header('Location: /mon-compte');
+        exit();
       }
 }

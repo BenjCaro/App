@@ -106,8 +106,7 @@ $router->map('POST', '/mon-compte/suppr-favoris', function(){
     $favori = new FavorisController();
     $favori->delete($idUser, $idRecipe);
     
-    header('Location: /mon-compte');
-    exit();
+    
 });
 
 $router->map('POST', '/mon-compte/suppr-recette', function() {
@@ -118,8 +117,6 @@ $router->map('POST', '/mon-compte/suppr-recette', function() {
     $recipe = new RecipeController();
     $recipe->deleteRecipe($idRecipe);
 
-    header('Location: /mon-compte');
-    exit();
     });
 
 $router->map('GET', '/login', function() {
@@ -162,7 +159,7 @@ $router->map('POST', '/ajout-recette', function(){
 
     $recipe = new AddRecipe();
     $recipe->createRecipe($_POST);
-    header('Location: /');
+    
     
 });
 

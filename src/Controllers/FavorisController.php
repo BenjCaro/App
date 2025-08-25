@@ -29,6 +29,7 @@ class FavorisController extends BaseController {
         ]);
     
         $_SESSION['flash'] = "Ajout aux favoris réussis";
+
         
     } else {
         $_SESSION['flash'] = "Recette deja ajoutée aux favoris";
@@ -46,6 +47,8 @@ class FavorisController extends BaseController {
         
         $this->favorisModel->removeFavoris($idUser,$idRecipe);
         $_SESSION['flash'] = "Recette supprimée des favoris";
+        header('Location: /mon-compte');
+        exit();
     }
 }
 ?>
