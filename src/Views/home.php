@@ -3,7 +3,7 @@ namespace Carbe\App\Views;
 
 use Carbe\App\Models\CategoryModel;
 use Carbe\App\Models\RecipeModel;
-
+use Carbe\App\Services\Flash;
 
 /** @var \Carbe\App\Models\RecipeModel[] $favoris */
 /** @var \Carbe\App\Models\RecipeModel|null $lastRecipe */
@@ -13,10 +13,10 @@ use Carbe\App\Models\RecipeModel;
 ?>
 <main class='container p-3 bg-light'>
     <?php
-    if (isset($_SESSION['flash'])) {  ?>
-       <div class='alert alert-primary'><?=$_SESSION['flash']?></div>
-    <?php    unset($_SESSION['flash']); 
-    }
+     $flash = Flash::get();
+     if($flash) { ?>
+        <div class="alert alert-<?= $flash['type'] ?>"><?= $flash['message']?></div>
+    <?php }
     ?>
     <div class="search-bar">
         <form class="d-flex gap-2" method="get" action="/search">
