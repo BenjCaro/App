@@ -3,6 +3,10 @@ namespace Carbe\App\Controllers;
 
 use Carbe\App\Models\UserModel;
 
+/**
+ * Controller qui gère la connexion d'un utilisateur à l'application
+ */
+
 class AuthController extends BaseController {
 
 private UserModel $userModel;
@@ -49,7 +53,12 @@ private UserModel $userModel;
 
     }
 
-    private function validateLoginInput(?string $email, ?string $password): bool {
+/**
+ * Methode privée au Controller pour vérifier si email et mot de passe ne sont pas vide
+ * 
+ */
+
+private function validateLoginInput(?string $email, ?string $password): bool {
     return !empty($email) && !empty($password);
 }
 

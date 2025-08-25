@@ -49,6 +49,10 @@ class AddRecipe extends BaseController {
 
 
 /**
+ * createRecipe() permet de créer une recette 
+ * et de l'inscrire en base dans deux tables :
+ *  - recipes
+ *  - recipes_ingredients
  * 
  * @param array<string, mixed> $data
  */
@@ -144,6 +148,11 @@ class AddRecipe extends BaseController {
      }
  } 
 
+ /**
+  * A partir du titre de la recette donné par l'utilisateur 
+  * cette methode permet de créer le slug 
+  */
+
    private function generateSlug(string $string) :string {
 
           $string = mb_strtolower($string);
@@ -152,6 +161,12 @@ class AddRecipe extends BaseController {
           $slug = trim($string, '-');
           return $slug;
    }
+
+
+   /**
+    * Cette methode permet de convertir en json la description de la recette 
+    * avant l'inscription en base de données
+    */
 
    private function descriptionInJson(string $steps) :string {
 
