@@ -3,6 +3,7 @@ namespace Carbe\App\Controllers;
 
 use Carbe\App\Models\FavorisModel;
 use function Carbe\App\Services\isAuth;
+use Carbe\App\Services\Flash;
 
 
 class FavorisController extends BaseController {
@@ -28,11 +29,12 @@ class FavorisController extends BaseController {
             'id_recipe' => $idRecipe
         ]);
     
-        $_SESSION['flash'] = "Ajout aux favoris réussis";
-
+       
+        Flash::set("Ajout aux favoris réussis", "primary");
         
     } else {
-        $_SESSION['flash'] = "Recette deja ajoutée aux favoris";
+       
+        Flash::set("Recette deja ajoutée aux favoris", "primary");
     }
     
 

@@ -4,7 +4,7 @@ namespace Carbe\App\Controllers;
 use Carbe\App\Models\PostModel;
 use Carbe\App\Models\RecipeModel;
 use Exception;
-
+use Carbe\App\Services\Flash;
 use function Carbe\App\Services\isAuth;
 
 class PostController extends BaseController {
@@ -13,8 +13,9 @@ class PostController extends BaseController {
 
         session_start();
 
-        if (!isset($_SESSION['auth_user'])) {
-            $_SESSION['flash'] = "Connectez-vous pour accèder à cette page!";
+        if (isAuth()) {
+            
+            Flash::set("Connectez-vous pour accèder à cette page!", "secondary");
             header('Location: /login');
             exit();
     }
@@ -73,6 +74,7 @@ class PostController extends BaseController {
         $post->insert($commentData);
 
         $_SESSION['flash'] = "Commentaire ajouté avec succès !";
+        Flash::set("Commentaire ajouté avec succès !", "primary");
     } catch(Exception $e) {
         
         // error_log
@@ -104,7 +106,7 @@ public function updateComment(int $id) :void {
         'content' => $content
     ]);  
 
-        $_SESSION['flash'] = "Commentaire modifié avec succés !";
+        Flash::set("Commentaire modifié avec succés !", "primary");
         header("Location: /mes-commentaires/commentaire-$id");
 
         exit();
@@ -132,7 +134,8 @@ public function deleteComment(int $id) :void {
         $post = new PostModel($this->pdo);
         $post->delete($id);
 
-        $_SESSION['flash'] = "Commentaire supprimé avec succés !";
+        
+        Flash::set("Commentaire supprimé avec succés !", "primary");
         header("Location: /mon-compte");
         exit;
 

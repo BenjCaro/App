@@ -6,6 +6,7 @@ use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\UserModel;
 use Carbe\App\Models\PostModel;
 use function Carbe\App\Services\isAuth;
+use Carbe\App\Services\Flash;
 
 use Exception;
 use \PDOException;
@@ -105,7 +106,8 @@ class UserController extends BaseController {
         try {
 
             $this->userModel->insert($userData);
-            $_SESSION['flash'] = "Bienvenue, inscription réussie !";
+           
+            Flash::set("Bienvenue, inscription réussie !", "primary");
             header('Location: /');
             exit;
 
@@ -119,8 +121,8 @@ class UserController extends BaseController {
 
             } else {
                 
-                $_SESSION['flash'] = "Une erreur technique est survenue. Veuillez réessayer plus tard.";
                 
+                Flash::set("Une erreur technique est survenue. Veuillez réessayer plus tard.", "secondary");
                 error_log($e->getMessage());
                 header('Location: /inscription');
                 exit;
@@ -169,7 +171,8 @@ class UserController extends BaseController {
             'email' => $email
         ]);
 
-        $_SESSION['flash'] = "Vos informations ont été mises à jour.";
+        
+        Flash::set("Vos informations ont été mises à jour.", "primary");       
         header("Location: /mon-compte");
         exit;
 
@@ -198,8 +201,10 @@ class UserController extends BaseController {
             'description' => $description
         ]);
 
-            $_SESSION['flash'] = "Votre description a été modifiée.";
+            
+            Flash::set("Votre description a été modifiée.", "primary");
             header("Location: /mon-compte");
+            exit;
 
         } catch(Exception $e) {
 

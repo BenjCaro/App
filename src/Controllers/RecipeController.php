@@ -5,6 +5,7 @@ use Carbe\App\Models\PostModel;
 use Carbe\App\Models\RecipeModel;
 
 use function Carbe\App\Services\isAuth;
+use Carbe\App\Services\Flash;
 
 class RecipeController extends BaseController {
      
@@ -16,7 +17,8 @@ class RecipeController extends BaseController {
 
             if ($recipe === null) {
 
-                $_SESSION['flash'] = "La recette n'existe pas";
+                
+                Flash::set("La recette n'existe pas", "secondary");
                 header('Location: /home');
                 exit;
 
@@ -48,7 +50,8 @@ class RecipeController extends BaseController {
         $recipeModel = new RecipeModel($this->pdo);
         $recipeModel->delete($idRecipe);
 
-        $_SESSION['flash'] = "Recette supprimée.";
+        
+        Flash::set("Recette Supprimée", "primary");
         header('Location: /mon-compte');
         exit();
       }

@@ -6,7 +6,7 @@ use Carbe\App\Models\CategoryModel;
 use Carbe\App\Models\IngredientModel;
 use function Carbe\App\Services\isAuth;
 use Exception;
-
+use Carbe\App\Services\Flash;
 
 class UpdateRecipeController extends BaseController {
 
@@ -42,7 +42,8 @@ public function updateRecipe(int $id, array $data) :void {
         $recipe = $recipeModel->findById($id);
 
         if (!$recipe) {
-            $_SESSION['flash'] = "Recette introuvable.";
+            
+            Flash::set("Recette introuvable", "secondary");
             header('Location: /mes-recettes');
             exit;
         }
@@ -88,8 +89,9 @@ public function updateRecipe(int $id, array $data) :void {
         }
 
          $this->pdo->commit();
-         $_SESSION['flash'] = "Mise à jour de la recette réussie!";
+         Flash::set("Mise à jour de la recette réussie", "primary");
          header('Location: /mon-compte');
+         exit;
 
         } catch(Exception $e) {
             $this->pdo->rollBack();
@@ -108,7 +110,8 @@ public function updateRecipe(int $id, array $data) :void {
         $recipe = $recipeModel->findById($id);
 
         if (!$recipe) {
-            $_SESSION['flash'] = "Recette introuvable.";
+           
+            Flash::set("Recette introuvable", "secondary");
             header('Location: /mes-recettes');
             exit;
         }
@@ -121,9 +124,10 @@ public function updateRecipe(int $id, array $data) :void {
 
          $recipe = new RecipeModel($this->pdo);
          $recipe->getRecipeBySlug($slug);
-         $_SESSION['flash']= "Ingrédient retiré avec succes!";
+         
+         Flash::set("Ingrédient retiré avec succes!", "primary");
          header("Location: /update/recette/$slug");
-
+        exit;
     }
 
 

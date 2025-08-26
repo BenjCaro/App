@@ -2,6 +2,7 @@
 
 namespace Carbe\App\Controllers;
 use Carbe\App\Models\IngredientModel;
+use Carbe\App\Services\Flash;
 
 class IngredientController extends BaseController {
      
@@ -9,8 +10,8 @@ class IngredientController extends BaseController {
             session_start();
 
             $ingredient = new IngredientModel($this->pdo);
-            $ingredient->delete($id); // warning PhpStan car delete() n'a pas d'argument dans BaseModel
-            $_SESSION['flash'] = "Ingrédient retiré.";
-
+            $ingredient->delete($id); 
+            
+            Flash::set("Ingrédient retiré.", "primary");
      }
 }

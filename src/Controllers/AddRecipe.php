@@ -6,6 +6,7 @@ use Carbe\App\Models\IngredientModel;
 use Carbe\App\Models\RecipeIngredientModel;
 use Carbe\App\Models\RecipeModel;
 use function Carbe\App\Services\isAuth;
+use Carbe\App\Services\Flash;
 
 use Exception;
 class AddRecipe extends BaseController {
@@ -136,8 +137,9 @@ class AddRecipe extends BaseController {
      }
      
           $this->pdo->commit();
-          $_SESSION['flash'] = "Création de la recette " . $title . " réussie!";
+          Flash::set("Création de la recette " . $title . " réussie!", "primary");
           header('Location: /');
+          exit;
 
      } catch(Exception $e) {
 
