@@ -87,8 +87,8 @@ public function updateComment(int $id) :void {
     
     session_start();
     isAuth();
-    $post = new PostModel($this->pdo);
-    $post->findById($id);
+    $post = (new PostModel($this->pdo))->findById($id);
+
 
     $this->checkUser($post->getIdUser());
 
