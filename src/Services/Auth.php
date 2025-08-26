@@ -2,7 +2,9 @@
 
 namespace Carbe\App\Services;
 
-function isAuth(): void {
+ class Auth {
+
+       public static function isAuth(): void {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
@@ -12,4 +14,11 @@ function isAuth(): void {
             header('Location: /login');
             exit();
         }
+    }
+
+    public static function offAuth() :void {
+
+        unset($_SESSION['auth_user']);
+    }
+
     }
