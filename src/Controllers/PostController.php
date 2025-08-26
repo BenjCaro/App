@@ -5,7 +5,7 @@ use Carbe\App\Models\PostModel;
 use Carbe\App\Models\RecipeModel;
 use Exception;
 use Carbe\App\Services\Flash;
-use function Carbe\App\Services\isAuth;
+use  Carbe\App\Services\Auth;
 
 class PostController extends BaseController {
 
@@ -13,7 +13,7 @@ class PostController extends BaseController {
 
         session_start();
 
-        if (isAuth()) {
+        if (Auth::isAuth()) {
             
             Flash::set("Connectez-vous pour accèder à cette page!", "secondary");
             header('Location: /login');
@@ -40,7 +40,7 @@ class PostController extends BaseController {
 
    public function addComments($slug) :void {
     session_start();
-    isAuth();
+    Auth::isAuth();
 
     $userId = $_SESSION['auth_user']['id'];
     
@@ -86,7 +86,7 @@ class PostController extends BaseController {
 public function updateComment(int $id) :void {
     
     session_start();
-    isAuth();
+    Auth::isAuth();
     $post = (new PostModel($this->pdo))->findById($id);
 
 
@@ -123,7 +123,7 @@ public function updateComment(int $id) :void {
 public function deleteComment(int $id) :void {
     
     session_start();
-    isAuth();
+    Auth::isAuth();
     $post = (new PostModel($this->pdo))->findById($id);
 
     $this->checkUser($post->getIdUser());

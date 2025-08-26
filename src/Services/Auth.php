@@ -1,8 +1,9 @@
 <?php
 
 namespace Carbe\App\Services;
+use Carbe\App\Services\Flash;
 
- class Auth {
+class Auth {
 
        public static function isAuth(): void {
         if (session_status() === PHP_SESSION_NONE) {
@@ -10,7 +11,8 @@ namespace Carbe\App\Services;
         }
 
         if (!isset($_SESSION['auth_user'])) {
-            $_SESSION['flash'] = "Connectez-vous pour accèder à cette page!";
+            
+            Flash::set("Connectez-vous pour accèder à cette page!", "secondary");
             header('Location: /login');
             exit();
         }

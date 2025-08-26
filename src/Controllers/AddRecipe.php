@@ -5,7 +5,7 @@ use Carbe\App\Models\CategoryModel;
 use Carbe\App\Models\IngredientModel;
 use Carbe\App\Models\RecipeIngredientModel;
 use Carbe\App\Models\RecipeModel;
-use function Carbe\App\Services\isAuth;
+use Carbe\App\Services\Auth;
 use Carbe\App\Services\Flash;
 
 use Exception;
@@ -13,7 +13,7 @@ class AddRecipe extends BaseController {
     
     public function index() :void {
 
-     isAuth();
+     Auth::isAuth();
 
        $categories = $this->getCategories();
        $ingredients = $this->getIngredients();
@@ -61,7 +61,7 @@ class AddRecipe extends BaseController {
  public function createRecipe(array $data) :void {
      session_start();
 
-     isAuth();
+     Auth::isAuth();
 
      $title = trim($data['title']);
      $idUser = $data['id_user'];

@@ -5,7 +5,7 @@ namespace Carbe\App\Controllers;
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\UserModel;
 use Carbe\App\Models\PostModel;
-use function Carbe\App\Services\isAuth;
+use Carbe\App\Services\Auth;
 use Carbe\App\Services\Flash;
 
 use Exception;
@@ -27,7 +27,7 @@ class UserController extends BaseController {
          
     public function getMyProfil(): void {
 
-        isAuth();
+        Auth::isAuth();
 
         $userId = $_SESSION['auth_user']['id'];
         $user = $this->userModel->findById($userId);

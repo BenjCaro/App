@@ -4,7 +4,7 @@ use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\RecipeIngredientModel;
 use Carbe\App\Models\CategoryModel;
 use Carbe\App\Models\IngredientModel;
-use function Carbe\App\Services\isAuth;
+use Carbe\App\Services\Auth;
 use Exception;
 use Carbe\App\Services\Flash;
 
@@ -12,7 +12,7 @@ class UpdateRecipeController extends BaseController {
 
     public function index(string $slug) :void {
 
-        isAuth();
+        Auth::isAuth();
 
         $recipeModel = new RecipeModel($this->pdo); 
         $recipe = $recipeModel->getRecipeBySlug($slug);
@@ -36,7 +36,7 @@ class UpdateRecipeController extends BaseController {
 public function updateRecipe(int $id, array $data) :void {
         
         session_start();
-        isAuth();
+        Auth::isAuth();
 
         $recipeModel = new RecipeModel($this->pdo);
         $recipe = $recipeModel->findById($id);
@@ -105,7 +105,7 @@ public function updateRecipe(int $id, array $data) :void {
     public function deleteIngredient(int $id, string $slug) :void {
         
         session_start();
-        isAuth();
+        Auth::isAuth();
         $recipeModel = new RecipeModel($this->pdo);
         $recipe = $recipeModel->findById($id);
 
