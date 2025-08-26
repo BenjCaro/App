@@ -48,7 +48,8 @@ class FavorisController extends BaseController {
         $this->checkUser($idUser);
         
         $this->favorisModel->removeFavoris($idUser,$idRecipe);
-        $_SESSION['flash'] = "Recette supprimée des favoris";
+      
+        Flash::set("Recette supprimée des favoris", "primary");
         header('Location: /mon-compte');
         exit();
     }
