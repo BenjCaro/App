@@ -34,7 +34,7 @@ class FavorisController extends BaseController {
         
     } else {
        
-        Flash::set("Recette deja ajoutée aux favoris", "primary");
+        Flash::set("Recette deja ajoutée aux favoris", "secondary");
     }
     
 
