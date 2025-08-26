@@ -1,13 +1,15 @@
 <?php
 namespace Carbe\App\Views\Pages;
+use Carbe\App\Services\Flash;
 ?>
 
 
 <main class='container p-3 bg-light'>
-    <?php  if (isset($_SESSION['flash'])) { ?>
-            <div class='alert alert-secondary'><?= $_SESSION['flash'] ?></div>
-    <?php     unset($_SESSION['flash']); 
-            }
+    <?php
+     $flash = Flash::get();
+     if($flash) { ?>
+        <div class="alert alert-<?= $flash['type'] ?>"><?= $flash['message']?></div>
+    <?php }
     ?>
     <h2 class="text-center mb-2">Connexion</h2>  
     <div class="d-flex flex-column w-25 m-auto">

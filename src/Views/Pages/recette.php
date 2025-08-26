@@ -4,6 +4,7 @@ namespace Carbe\App\Views\Pages;
 
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\PostModel;
+use Carbe\App\Services\Flash;
 
 /** @var \Carbe\App\Models\PostModel[] $posts */
 /** @var \Carbe\App\Models\RecipeModel $recipe */
@@ -12,11 +13,10 @@ use Carbe\App\Models\PostModel;
 
 <main class='container p-3 bg-light'> 
     <?php
-
-    if (isset($_SESSION['flash'])) {  ?>
-       <div class='alert alert-primary'><?=$_SESSION['flash']?></div>
-    <?php    unset($_SESSION['flash']); 
-    }
+     $flash = Flash::get();
+     if($flash) { ?>
+        <div class="alert alert-<?= $flash['type'] ?>"><?= $flash['message']?></div>
+    <?php }
     ?>
     <?php if (isset($_SESSION['errors'])) {  ?>
        <div class='alert alert-secondary'><?=$_SESSION['errors']?></div>

@@ -4,6 +4,7 @@ namespace Carbe\App\Views\Pages;
 use Carbe\App\Models\UserModel;
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\PostModel;
+use Carbe\App\Services\Flash;
 
 /** @var \Carbe\App\Models\PostModel[] $posts */
 /** @var \Carbe\App\Models\UserModel $user */
@@ -19,13 +20,13 @@ if (isset($_SESSION['errors']['database'])) {
 
 <main class='container p-3 bg-light border-end border-start border-secondary'>
     <?php
-     if (isset($_SESSION['flash'])) {  ?>
-       <div class='alert alert-primary'><?=$_SESSION['flash']?></div>
-    <?php    unset($_SESSION['flash']); 
-    }
+     $flash = Flash::get();
+     if($flash) { ?>
+        <div class="alert alert-<?= $flash['type'] ?>"><?= $flash['message']?></div>
+    <?php }
+    ?>
 
-
-    if (isset($_SESSION['errors']) && !empty($_SESSION['errors'])) { ?>
+    <?php if (isset($_SESSION['errors']) && !empty($_SESSION['errors'])) { ?>
     <div class="alert alert-secondary">
     <?php foreach ($_SESSION['errors'] as $error) { ?>
             <?= htmlspecialchars($error) ?>
@@ -33,8 +34,8 @@ if (isset($_SESSION['errors']['database'])) {
             
     </div>
         <?php unset($_SESSION['errors']); 
+    
     }
-
     ?>
     <h2 class="text-center">Bienvenue sur votre espace <?= $user->getFirstname()?> </h2>
     <section class="row d-flex justify-content-center">

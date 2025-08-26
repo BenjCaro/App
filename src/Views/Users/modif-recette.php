@@ -3,18 +3,18 @@ namespace Carbe\App\Views\Users;
 
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\IngredientModel;
-
+use Carbe\App\Services\Flash;
 /** @var mixed $i */
 /** @var \Carbe\App\Models\RecipeModel $recipe */
 /** @var \Carbe\App\Models\IngredientModel[] $ingredients */
 ?>
 
 <main class='container p-3 bg-light'> 
-    <?php
-    if (isset($_SESSION['flash'])) {  ?>
-       <div class='alert alert-primary'><?=$_SESSION['flash']?></div>
-    <?php    unset($_SESSION['flash']); 
-    }
+   <?php
+     $flash = Flash::get();
+     if($flash) { ?>
+        <div class="alert alert-<?= $flash['type'] ?>"><?= $flash['message']?></div>
+    <?php }
     ?>
     <h2 class='text-center fs-2 mb-3'><?= $recipe->getTitle() ?>  </h2>
     <span class="badge text-bg-secondary"> <?= $recipe->getCategory()->getName()?></span>

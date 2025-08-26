@@ -1,7 +1,7 @@
 <?php 
 
 namespace Carbe\App\Views\Users;
-
+use Carbe\App\Services\Flash;
 use Carbe\App\Models\PostModel;
 
 /** @var \Carbe\App\Models\PostModel $post */
@@ -9,11 +9,12 @@ use Carbe\App\Models\PostModel;
 
 
 <main class="container p-3 bg-light">
-    <?php
-     if (isset($_SESSION['flash'])) {  ?>
-       <div class='alert alert-primary'><?=$_SESSION['flash']?></div>
-    <?php    unset($_SESSION['flash']); 
-    }
+   <?php
+     $flash = Flash::get();
+     if($flash) { ?>
+        <div class="alert alert-<?= $flash['type'] ?>"><?= $flash['message']?></div>
+    <?php }
+    
 
 
     if (isset($_SESSION['errors']) && !empty($_SESSION['errors'])) { ?>
