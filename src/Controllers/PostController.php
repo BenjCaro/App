@@ -13,13 +13,8 @@ class PostController extends BaseController {
 
         session_start();
 
-        if (Auth::isAuth()) {
+        Auth::isAuth();
             
-            Flash::set("Connectez-vous pour accèder à cette page!", "secondary");
-            header('Location: /login');
-            exit();
-    }
-
         $postModel = new PostModel($this->pdo);
         $post = $postModel->getCommentById($id);
 
@@ -116,7 +111,6 @@ public function updateComment(int $id) :void {
         $_SESSION['errors'] ="Commentaire non modifié.";
 
     }
-
     
 }
 
@@ -133,7 +127,6 @@ public function deleteComment(int $id) :void {
         $post = new PostModel($this->pdo);
         $post->delete($id);
 
-        
         Flash::set("Commentaire supprimé avec succés !", "primary");
         header("Location: /mon-compte");
         exit;
@@ -143,8 +136,6 @@ public function deleteComment(int $id) :void {
 
         $_SESSION['errors'] = "Le commentaire n'a pas ete supprimé!";
         header("Location: /mon-compte");
-
-
 
     }
 

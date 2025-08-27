@@ -2,14 +2,31 @@
 
 namespace Carbe\App\Services;
 
-class Flash {
+class Flash {   
 
-    public static function set(string $message, string $type) {
+/**
+* Stocke un message flash en session.
+*
+* @param string $message Le message à afficher
+* @param string $type    Le type du message (ex: 'success', 'error', 'secondary')
+*
+* @return void
+*/
+
+
+    public static function set(string $message, string $type) :void  {
         $_SESSION['flash'] = [
             "message" => $message,
             "type" => $type
         ];
     }
+
+/**
+* Récupère et supprime le message flash stocké en session.
+*
+* @return array{message: string, type: string}|null
+
+*/
 
       public static function get(): ?array
     {
