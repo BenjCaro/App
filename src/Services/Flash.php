@@ -8,7 +8,7 @@ class Flash {
 * Stocke un message flash en session.
 *
 * @param string $message Le message à afficher
-* @param string $type    Le type du message (ex: 'success', 'error', 'secondary')
+* @param string $type correspond à la classe css Bootstrap (ex: 'success', 'error', 'secondary')
 *
 * @return void
 */
