@@ -23,7 +23,7 @@ private UserModel $userModel;
 
                 session_start();
                 if (!$this->validateLoginInput($email, $password)) {
-                    // $_SESSION['flash'] = "Identifiants invalides";
+                    
                     Flash::set("Identifiants invalides", "secondary");
                     header("Location: /login");
                     exit();
@@ -32,7 +32,7 @@ private UserModel $userModel;
                 $auth_user= $this->userModel->findUserByEmail($email);
         
                 if(!$auth_user) {
-                   Flash::set("Mail ou mot de passe manquant", "secondary");
+                   Flash::set("Utilisateur non trouvé, Verifier vos identifiants.", "secondary");
                     header("Location: /login");
                     exit();
 

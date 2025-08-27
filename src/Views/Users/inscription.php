@@ -19,26 +19,26 @@ $_SESSION['csrf_token'] = $token;
                     <?php endif; ?>
             <div class="mb-3 pt-2">
                     <label for="name" class="form-label text-cacao fw-bold">Nom *</label>
-                    <input type="text" id="name" name="name" class="form-control" value="<?= isset($_SESSION['old']['name']) ? htmlspecialchars($_SESSION['old']['name']) : ''  ?>" required>
+                    <input type="text" id="name" name="name" class="form-control" value="<?= $old['name'] ?? ''  ?>" required>
                     <?php if (!empty($_SESSION['errors']['name'])): ?>
                         <div class="alert alert-secondary mt-2"><?= $_SESSION['errors']['name'] ?></div>
-                        <?php unset($_SESSION['errors']['name'], $_SESSION['old']['name']); ?>
+                        <?php unset($_SESSION['errors']['name']); ?>
                     <?php endif; ?>
             </div>
             <div class="mb-3 pt-2">
                     <label for="firstname" class="form-label text-cacao fw-bold">Prénom *</label>
-                    <input type="text" id="firstname" name="firstname" class="form-control" value="<?= isset($_SESSION['old']['firstname']) ? htmlspecialchars($_SESSION['old']['firstname']) : ''  ?>" required>
+                    <input type="text" id="firstname" name="firstname" class="form-control" value="<?= $old['name'] ?? ''  ?>" required>
                     <?php if (!empty($_SESSION['errors']['name'])): ?>
                         <div class="alert alert-secondary mt-2"><?= $_SESSION['errors']['name'] ?></div>
-                        <?php unset($_SESSION['errors']['name'], $_SESSION['old']['firstname']); ?>
+                        <?php unset($_SESSION['errors']['name']); ?>
                     <?php endif; ?>
             </div>
             <div class="mb-3 pt-2">
                     <label for="email" class="form-label text-cacao fw-bold">Email *</label>
-                    <input type="email" id="email" name="email" class="form-control" value="<?= isset($_SESSION['old']['email']) ? htmlspecialchars($_SESSION['old']['email']) : ''  ?>" required>
+                    <input type="email" id="email" name="email" class="form-control" value="<?= $old['email'] ?? ''   ?>" required>
                     <?php if (!empty($_SESSION['errors']['email'])): ?>
                         <div class="alert alert-secondary mt-2"><?= $_SESSION['errors']['email'] ?></div>
-                        <?php unset($_SESSION['errors']['email'], $_SESSION['old']['email']); ?>
+                        <?php unset($_SESSION['errors']['email']); ?>
                     <?php endif; ?>
             </div>
             <div class="mb-3 pt-2">
@@ -70,8 +70,3 @@ $_SESSION['csrf_token'] = $token;
         </form>
     </div>
 </main>
-<?php
-if (isset($_SESSION['old'])) {
-    unset($_SESSION['old']);
-}
-?>

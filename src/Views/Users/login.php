@@ -16,7 +16,7 @@ use Carbe\App\Services\Flash;
         <form method="post" action="/login" class="form-control p-3 border-gris bg-gris shadow-sm p-3 mb-5 bg-body-gris rounded" style="--bs-bg-opacity: .5;">
             <div class="mb-3 pt-2">
                 <label for="email"  class="form-label">Email</label>
-                <input type="email" name="email" id="email" class="form-control" required>
+                <input type="email" value="<?=  $old['email'] ?? ''   ?>" name="email" id="email" class="form-control" required>
             </div>
             <div class="mb-3">
             <label for="password"  class="form-label">Mot de passe</label> 
