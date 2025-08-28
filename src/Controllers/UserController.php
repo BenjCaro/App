@@ -77,7 +77,7 @@ class UserController extends BaseController {
             $errors['password'] = "Le mot de passe doit contenir au moins 8 caractères.";
         }
         
-         if( $password !== $confirm) {
+        if( $password !== $confirm) {
              $errors['confirm'] = "Les mots de passe ne correspondent pas.";
          }
 

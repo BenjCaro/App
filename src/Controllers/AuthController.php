@@ -18,10 +18,15 @@ private UserModel $userModel;
         
     }
         
-    public function login(string $email, string $password) :void {
+    public function login(string $token, string $email, string $password) :void {
                 
-
+                
                 session_start();
+                if (empty($token) || $_SESSION['csrf_token'] !== $token) {    
+                    Flash::set("Une erreur de Connexion est survenue!", "secondary");
+                    header("Location: /login");
+                    exit;
+                }
                 if (!$this->validateLoginInput($email, $password)) {
                     
                     Flash::set("Identifiants invalides", "secondary");
@@ -46,6 +51,7 @@ private UserModel $userModel;
                 Flash::set("Connexion réussie. Bienvenue " . $auth_user->getFirstname() . "!", "primary");
                 header("Location: /");
                 exit();
+
             } else {
                 
                 Flash::set("Mot de passe incorrect", "secondary");

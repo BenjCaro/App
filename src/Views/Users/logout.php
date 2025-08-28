@@ -5,7 +5,7 @@ use Carbe\App\Services\Auth;
 session_start();
 
 Auth::offAuth();
-Flash::set("Déconnexion réussie", "primary");
+Flash::set("Déconnexion réussie, A bientôt", "primary");
 
 header("Location: /");
 exit();

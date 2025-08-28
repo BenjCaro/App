@@ -125,10 +125,11 @@ $router->map('GET', '/login', function() {
  });
 
 $router->map('POST', '/login', function() {
+    $token = $_POST['_token'];
     $email= $_POST['email']; 
     $password= $_POST['password'];
     $auth = new AuthController();
-    $auth->login($email, $password);
+    $auth->login($token, $email, $password);
 });
 
 $router->map('GET', '/inscription', function(){
