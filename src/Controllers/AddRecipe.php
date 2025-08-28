@@ -63,6 +63,7 @@ class AddRecipe extends BaseController {
 
      Auth::isAuth();
 
+     $token = $data['_token'];
      $title = trim($data['title']);
      $idUser = $data['id_user'];
      $idCategory = $data['id_category'];
@@ -74,6 +75,12 @@ class AddRecipe extends BaseController {
      $unit = $data['unit'];
 
      $errors = [];
+
+     if(empty($token) || $_SESSION['csrf_token'] !== $token) {
+          Flash::set("Erreur survenue.", "secondary");
+          header('Location: /ajout-recette');
+          exit;
+     }
 
      if(empty($title)) {
           $errors['title'] = "Veuillez donner un titre à la recette.";

@@ -1,6 +1,6 @@
 <?php
 namespace Carbe\App\Views\Users;
-
+use Carbe\App\Services\Csrf;
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\IngredientModel;
 use Carbe\App\Services\Flash;
@@ -21,6 +21,8 @@ use Carbe\App\Services\Flash;
     <span class="badge text-bg-secondary">Temps de préparation: <?= $recipe->getDuration()?> minutes</span>
     <form action="/update/recette" method="POST" class="mt-4" onsubmit="return confirm('Etes vous sur de vouloir modifier votre recette?');">
             <input type="hidden" name="id" value="<?= $recipe->getId() ?>">
+            <?php $token = Csrf::get();  ?>
+            <input type="hidden" name="_token" value="<?= $token ?>">
             <h3 class="text-center">Modifier les ingrédients</h3>
             <?php if(!$recipe->getIngredients()) { ?>
                 <div class="alert alert-secondary text-center" role="alert">
