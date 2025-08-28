@@ -7,6 +7,7 @@ use Carbe\App\Models\RecipeIngredientModel;
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Services\Auth;
 use Carbe\App\Services\Flash;
+use Carbe\App\Services\Csrf;
 
 use Exception;
 class AddRecipe extends BaseController {
@@ -76,11 +77,7 @@ class AddRecipe extends BaseController {
 
      $errors = [];
 
-     if(empty($token) || $_SESSION['csrf_token'] !== $token) {
-          Flash::set("Erreur survenue.", "secondary");
-          header('Location: /ajout-recette');
-          exit;
-     }
+     Csrf::check($token, "/mon-compte");
 
      if(empty($title)) {
           $errors['title'] = "Veuillez donner un titre à la recette.";

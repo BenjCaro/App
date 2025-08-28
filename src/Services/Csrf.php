@@ -11,4 +11,13 @@ class Csrf {
         return $token;
     }
 
+    public static function check($token, $view) {
+
+          if(empty($token) || $_SESSION['csrf_token'] !== $token) {
+          Flash::set("Erreur survenue.", "secondary");
+          header("Location: .$view");
+          exit;
+     }
+    }
+
 }
