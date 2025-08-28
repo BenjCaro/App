@@ -1,10 +1,12 @@
 <?php
 namespace Carbe\App\Views\Pages;
+use Carbe\App\Services\Flash;
+use Carbe\App\Services\Auth;
 session_start();
 
+Auth::offAuth();
+Flash::set("Déconnexion réussie", "primary");
 
-unset($_SESSION['auth_user']); 
-$_SESSION['flash'] = "Déconnexion réussie.";
 header("Location: /");
 exit();
 

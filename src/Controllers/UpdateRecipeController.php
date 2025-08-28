@@ -4,12 +4,15 @@ use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\RecipeIngredientModel;
 use Carbe\App\Models\CategoryModel;
 use Carbe\App\Models\IngredientModel;
+use Carbe\App\Services\Auth;
 use Exception;
-
+use Carbe\App\Services\Flash;
 
 class UpdateRecipeController extends BaseController {
 
     public function index(string $slug) :void {
+
+        Auth::isAuth();
 
         $recipeModel = new RecipeModel($this->pdo); 
         $recipe = $recipeModel->getRecipeBySlug($slug);
@@ -25,10 +28,30 @@ class UpdateRecipeController extends BaseController {
         ]);
     }
 
-    public function updateRecipe(int $id, array $data) {
+/**
+ * @param array<string, mixed> $data
+ */
+
+
+public function updateRecipe(int $id, array $data) :void {
         
         session_start();
+        Auth::isAuth();
 
+        $recipeModel = new RecipeModel($this->pdo);
+        $recipe = $recipeModel->findById($id);
+
+        if (!$recipe) {
+            
+            Flash::set("Recette introuvable", "secondary");
+            header('Location: /mes-recettes');
+            exit;
+        }
+
+    // Vérifie que l'utilisateur connecté est bien le propriétaire
+        $this->checkUser($recipe->getIdUser());
+      
+ 
         $id = $data['id'];
         // $duration = trim($data['duration']);
         $description = $data['description'] ?? null;
@@ -54,7 +77,6 @@ class UpdateRecipeController extends BaseController {
         $recipeIngredientModel = new RecipeIngredientModel($this->pdo);
         $recipeIngredientModel->deleteByRecipeId($id);
 
-    
         foreach ($ingredients as $i => $ingredient) {
           $recipeIngredientModel->insert(
                 [
@@ -67,8 +89,9 @@ class UpdateRecipeController extends BaseController {
         }
 
          $this->pdo->commit();
-         $_SESSION['flash'] = "Mise à jour de la recette réussie!";
+         Flash::set("Mise à jour de la recette réussie", "primary");
          header('Location: /mon-compte');
+         exit;
 
         } catch(Exception $e) {
             $this->pdo->rollBack();
@@ -79,21 +102,42 @@ class UpdateRecipeController extends BaseController {
         
     }
 
-    public function deleteIngredient(int $id, string $slug) {
+    public function deleteIngredient(int $id, string $slug) :void {
         
         session_start();
+        Auth::isAuth();
+        $recipeModel = new RecipeModel($this->pdo);
+        $recipe = $recipeModel->findById($id);
+
+        if (!$recipe) {
+           
+            Flash::set("Recette introuvable", "secondary");
+            header('Location: /mes-recettes');
+            exit;
+        }
+
+        $this->checkUser($recipe->getIdUser());
+     
 
          $ingredient = new RecipeIngredientModel($this->pdo);
          $ingredient->removeIngredient($id);
 
          $recipe = new RecipeModel($this->pdo);
          $recipe->getRecipeBySlug($slug);
-         $_SESSION['flash']= "Ingrédient retiré avec succes!";
+         
+         Flash::set("Ingrédient retiré avec succes!", "primary");
          header("Location: /update/recette/$slug");
-
+        exit;
     }
 
-    private function descriptionInJson(string|array $steps) :?string {
+
+/**
+ * Convertit les étapes des recettes en JSON.
+ *
+ * @param string|string[] $steps
+ */
+
+private function descriptionInJson(string|array $steps) :string {
 
      
      $steps = array_map('trim', $steps); 
@@ -103,7 +147,13 @@ class UpdateRecipeController extends BaseController {
 
      }
 
-       private function getCategories() {
+
+/**
+ * 
+ * @return CategoryModel[]
+ * 
+ */
+private function getCategories() :array {
         
        $categoryModel = new CategoryModel($this->pdo);
        $categories = $categoryModel->findAll();
@@ -111,7 +161,13 @@ class UpdateRecipeController extends BaseController {
 
   }
 
- private function getIngredients() {
+  /**
+ * 
+ * @return IngredientModel[]
+ * 
+ */
+
+ private function getIngredients() :array {
       $ingredientModel = new IngredientModel($this->pdo);
       $ingredients = $ingredientModel->findAll();
       return $ingredients;

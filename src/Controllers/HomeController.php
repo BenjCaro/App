@@ -14,8 +14,8 @@ class HomeController extends BaseController {
 
      
       if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+        session_start();
+      }
       // affichage des favoris de l'utilisateur connecté
 
       $userModel = new UserModel($this->pdo);

@@ -118,11 +118,11 @@ public function setCategory(CategoryModel $category):void {
 
 
 /**
- * @throws \Exception Si aucune recette n'est trouvée pour le slug donné
+ * @return null Si aucune recette n'est trouvée pour le slug donné
  * @return RecipeModel
  */
 
-public function getRecipeBySlug(string $slug) :RecipeModel {  
+public function getRecipeBySlug(string $slug) :?RecipeModel {  
     $stmt = $this->pdo->prepare("SELECT
      recipes.id AS recipe_id, 
      recipes.title, 
@@ -145,7 +145,7 @@ public function getRecipeBySlug(string $slug) :RecipeModel {
    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
   
    if (!$data) {
-        throw new \Exception("Aucune recette trouvée pour le slug : $slug");
+       return null;
     }
 
     
@@ -186,6 +186,10 @@ public function getRecipeBySlug(string $slug) :RecipeModel {
     return $recipe;
 }
 
+/**
+ * @return RecipeModel|null
+ */
+
 public function newRecipe() :?RecipeModel {
       $stmt = $this->pdo->prepare("
       SELECT 
@@ -215,10 +219,11 @@ public function newRecipe() :?RecipeModel {
         'slug' => $data['category_slug']
     ];
 
-         $category = new CategoryModel($this->pdo);
-         $category->hydrate($categoryData);
-    
-         $this->hydrate([
+        $category = new CategoryModel($this->pdo);
+        $category->hydrate($categoryData);
+        $recipe = new RecipeModel($this->pdo);
+
+        $recipe->hydrate([
             'id' => $data['id'],
             'title' => $data['title'],
             'slug' => $data['recipe_slug'],
@@ -226,9 +231,10 @@ public function newRecipe() :?RecipeModel {
             'duration' => $data['duration'],
             'description' => $data['description']
         ]);
-         $this->setCategory($category);
+        
+        $recipe->setCategory($category);
 
-         return $this;
+        return $recipe;
 
    }
 
@@ -259,7 +265,7 @@ public function getMostPopularRecipe() :?RecipeModel {
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($data) {
-        // Hydrater la catégorie
+       
         $category = new CategoryModel($this->pdo);
         $category->hydrate([
             'id' => $data['category_id'],
@@ -267,8 +273,9 @@ public function getMostPopularRecipe() :?RecipeModel {
             'slug' => $data['category_slug']
         ]);
 
-        // Hydrater la recette
-        $this->hydrate([
+        
+        $recipe = new RecipeModel($this->pdo);
+        $recipe->hydrate([
             'id' => $data['recipe_id'],
             'title' => $data['recipe_title'],
             'slug' => $data['recipe_slug'],
@@ -279,9 +286,9 @@ public function getMostPopularRecipe() :?RecipeModel {
             'description' => $data['description']
         ]);
 
-        $this->setCategory($category);
+        $recipe->setCategory($category);
 
-        return $this;
+        return $recipe;
     }
 
     return null;
@@ -367,6 +374,10 @@ public function getAllRecipesByCategory(int $idCategory) :array {
 
     return $recipes;
 }
+
+/**
+ * @return RecipeModel[]
+ */
 
 public function getRecipesByUser(int $idUser) :array {
     $stmt = $this->pdo->prepare('SELECT recipes.id, recipes.title, recipes.slug, categories.name 

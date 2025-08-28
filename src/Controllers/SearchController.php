@@ -4,7 +4,7 @@ namespace Carbe\App\Controllers;
 use Carbe\App\Models\SearchModel;
 
 class SearchController extends BaseController {
-    public function query() {
+    public function query() :void {
         $search = $_GET['q'] ?? '';
 
         $model = new SearchModel($this->pdo);

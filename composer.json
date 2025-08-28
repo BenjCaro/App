@@ -7,7 +7,10 @@
             "Carbe\\App\\config\\": "config/"
             
 
-        }
+        },
+         "files": [
+            "src/Services/Auth.php"
+    ]
     },
     "authors": [
         {

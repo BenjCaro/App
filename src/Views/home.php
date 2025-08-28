@@ -1,18 +1,22 @@
 <?php
 namespace Carbe\App\Views;
 
-/** @var Carbe\App\Models\RecipeModel[] $favoris */
-/** @var Carbe\App\Models\RecipeModel $lastRecipe */
-/** @var Carbe\App\Models\RecipeModel $popularRecipe */
-/** @var Carbe\App\Models\CategoryModel $categories */
+use Carbe\App\Models\CategoryModel;
+use Carbe\App\Models\RecipeModel;
+use Carbe\App\Services\Flash;
+
+/** @var \Carbe\App\Models\RecipeModel[] $favoris */
+/** @var \Carbe\App\Models\RecipeModel|null $lastRecipe */
+/** @var \Carbe\App\Models\RecipeModel|null $popularRecipe */
+/** @var \Carbe\App\Models\CategoryModel[] $categories */
 
 ?>
 <main class='container p-3 bg-light'>
     <?php
-    if (isset($_SESSION['flash'])) {  ?>
-       <div class='alert alert-primary'><?=$_SESSION['flash']?></div>
-    <?php    unset($_SESSION['flash']); 
-    }
+     $flash = Flash::get();
+     if($flash) { ?>
+        <div class="alert alert-<?= $flash['type'] ?>"><?= $flash['message']?></div>
+    <?php }
     ?>
     <div class="search-bar">
         <form class="d-flex gap-2" method="get" action="/search">
@@ -34,7 +38,7 @@ namespace Carbe\App\Views;
                         <h3 class="card-subtitle text-body-secondary fs-4 mt-2 mb-2"> 
                                 <?= $recipe->getTitle()?>
                         </h3>
-                        <span class="badge text-bg-secondary"><?= htmlspecialchars($recipe->getDuration()) . ' minutes' ?></span>
+                        <span class="badge text-bg-secondary"><?= htmlspecialchars(strval($recipe->getDuration())) . ' minutes' ?></span>
                         <span class="badge text-bg-secondary"><?= $recipe->getCategory()->getName(); ?></span> <br>
                         <button type="button" class="btn btn-secondary mt-2"><a class="text-black nav-link" href="/recette/<?= $recipe->getSlug()?>">Voir la recette</a></button>
                         <?php } ?>
@@ -52,13 +56,14 @@ namespace Carbe\App\Views;
             <div class="card bg-gris h-100 border border-primary">
                 <div class="card-body">
                     <h2 class='card-title'>Dernière Recette</h2>
-                    <?php if(!$lastRecipe)  { ?>
+                  
+                    <?php if($lastRecipe === null)  { ?>
                             <div class="text-center">Pas encore de recette</div>
                      <?php  } else {?>
                         <h3 class="card-subtitle mb-2 text-body-secondary fs-4"> 
                                 <?= $lastRecipe->getTitle()?>
                         </h3>
-                        <span class="badge text-bg-secondary"><?= htmlspecialchars($lastRecipe->getDuration()) . ' minutes' ?></span>
+                        <span class="badge text-bg-secondary"><?= $lastRecipe->getDuration() . ' minutes' ?></span>
                         <span class="badge text-bg-secondary"><?=  ucwords($lastRecipe->getCategory()->getName());?></span> <br>
                        <button type="button" class="btn btn-secondary mt-2"><a class="text-black nav-link" href="/recette/<?= $lastRecipe->getSlug()?>">Voir la recette</a></button>
                     <?php } ?>
@@ -69,13 +74,14 @@ namespace Carbe\App\Views;
             <div class="card bg-gris h-100 border border-primary" >
                 <div class="card-body">
                     <h2 class='card-title'>Recettes Populaires</h2>
-                         <?php if(!$popularRecipe)  { ?>
+                   
+                         <?php if($popularRecipe === null) { ?>
                             <div class="text-center">Pas encore de recette</div>
                         <?php  } else {?>
                         <h3 class="card-subtitle mb-2 text-body-secondary fs-4"> 
                                 <?= $popularRecipe->getTitle()?>
                         </h3>
-                        <span class="badge text-bg-secondary"><?= htmlspecialchars($popularRecipe->getDuration()) . ' minutes' ?></span>
+                        <span class="badge text-bg-secondary"><?= htmlspecialchars(strval($popularRecipe->getDuration())) . ' minutes' ?></span>
                         <span class="badge text-bg-secondary"><?=  ucwords($popularRecipe->getCategory()->getName());?></span> <br>
                         <button type="button" class="btn btn-secondary mt-2"><a class="text-black nav-link" href="/recette/<?= $popularRecipe->getSlug()?>">Voir la recette</a></button>      
                         <?php } ?>

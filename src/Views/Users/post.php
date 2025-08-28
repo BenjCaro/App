@@ -1,15 +1,20 @@
 <?php 
 
 namespace Carbe\App\Views\Users;
+use Carbe\App\Services\Flash;
+use Carbe\App\Models\PostModel;
+
+/** @var \Carbe\App\Models\PostModel $post */
 ?>
 
 
 <main class="container p-3 bg-light">
-    <?php
-     if (isset($_SESSION['flash'])) {  ?>
-       <div class='alert alert-primary'><?=$_SESSION['flash']?></div>
-    <?php    unset($_SESSION['flash']); 
-    }
+   <?php
+     $flash = Flash::get();
+     if($flash) { ?>
+        <div class="alert alert-<?= $flash['type'] ?>"><?= $flash['message']?></div>
+    <?php }
+    
 
 
     if (isset($_SESSION['errors']) && !empty($_SESSION['errors'])) { ?>
@@ -23,9 +28,9 @@ namespace Carbe\App\Views\Users;
     }
 
     ?>
-    <h2 class="text-center">Recette : <?= htmlspecialchars($post->getRecipe()->getTitle()) ?></h2>
+    <h2 class="text-center">Recette : <?= $post->getRecipe()->getTitle() ?></h2>
     <div class="d-flex justify-content-center">
-        <form action="/mes-commentaires/commentaire-<?=htmlspecialchars($post->getId())?>" method="post" id="formPostEdit" class="card col-12 col-md-8 col-lg-6 p-4 shadow">
+        <form action="/mes-commentaires/commentaire-<?=htmlspecialchars(strval($post->getId()))?>" method="post" id="formPostEdit" class="card col-12 col-md-8 col-lg-6 p-4 shadow">
 
             <div class="mb-3">
                 <label for="title" class="form-label">Titre du commentaire</label>
@@ -44,7 +49,7 @@ namespace Carbe\App\Views\Users;
         </form>
     </div>
     <div class="d-flex justify-content-center">
-        <form id="formDelete" action="/mes-commentaires/suppr/commentaire-<?=htmlspecialchars($post->getId())?>" method="POST" class="card col-12 col-md-8 col-lg-6 p-4 shadow">
+        <form id="formDelete" action="/mes-commentaires/suppr/commentaire-<?=$post->getId()?>" method="POST" class="card col-12 col-md-8 col-lg-6 p-4 shadow">
              <button type="submit" class="btn btn-sm btn-secondary">Supprimer votre commentaire</button>
         </form>
     </div>

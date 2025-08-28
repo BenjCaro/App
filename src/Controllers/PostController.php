@@ -4,6 +4,8 @@ namespace Carbe\App\Controllers;
 use Carbe\App\Models\PostModel;
 use Carbe\App\Models\RecipeModel;
 use Exception;
+use Carbe\App\Services\Flash;
+use  Carbe\App\Services\Auth;
 
 class PostController extends BaseController {
 
@@ -11,12 +13,8 @@ class PostController extends BaseController {
 
         session_start();
 
-        if (!isset($_SESSION['auth_user'])) {
-            $_SESSION['flash'] = "Connectez-vous pour accèder à cette page!";
-            header('Location: /login');
-            exit();
-    }
-
+        Auth::isAuth();
+            
         $postModel = new PostModel($this->pdo);
         $post = $postModel->getCommentById($id);
 
@@ -28,8 +26,16 @@ class PostController extends BaseController {
 
     }
 
+/**
+ * @param string $slug
+ * 
+ * 
+ */
+
+
    public function addComments($slug) :void {
     session_start();
+    Auth::isAuth();
 
     $userId = $_SESSION['auth_user']['id'];
     
@@ -45,7 +51,7 @@ class PostController extends BaseController {
     $recipeModel = new RecipeModel($this->pdo);
     $recipe = $recipeModel->getRecipeBySlug($slug);
 
-    if (!$recipe) {
+    if ($recipe === null) {
         $_SESSION['errors'] = "Recette introuvable.";
         header("Location: /");
         exit;
@@ -63,6 +69,7 @@ class PostController extends BaseController {
         $post->insert($commentData);
 
         $_SESSION['flash'] = "Commentaire ajouté avec succès !";
+        Flash::set("Commentaire ajouté avec succès !", "primary");
     } catch(Exception $e) {
         
         // error_log
@@ -74,6 +81,11 @@ class PostController extends BaseController {
 public function updateComment(int $id) :void {
     
     session_start();
+    Auth::isAuth();
+    $post = (new PostModel($this->pdo))->findById($id);
+
+
+    $this->checkUser($post->getIdUser());
 
     $title = trim($_POST['title']);
     $content = trim($_POST['content']);
@@ -89,7 +101,7 @@ public function updateComment(int $id) :void {
         'content' => $content
     ]);  
 
-        $_SESSION['flash'] = "Commentaire modifié avec succés !";
+        Flash::set("Commentaire modifié avec succés !", "primary");
         header("Location: /mes-commentaires/commentaire-$id");
 
         exit();
@@ -99,21 +111,23 @@ public function updateComment(int $id) :void {
         $_SESSION['errors'] ="Commentaire non modifié.";
 
     }
-
     
 }
 
-public function deleteComment(int $id) {
-      session_start();
-   // ajoute rdes verifications et msg de succes ou echec 
+public function deleteComment(int $id) :void {
+    
+    session_start();
+    Auth::isAuth();
+    $post = (new PostModel($this->pdo))->findById($id);
+
+    $this->checkUser($post->getIdUser());
 
     try {
 
         $post = new PostModel($this->pdo);
-        $post->setId($id);
-        $post->delete();
+        $post->delete($id);
 
-        $_SESSION['flash'] = "Commentaire supprimé avec succés !";
+        Flash::set("Commentaire supprimé avec succés !", "primary");
         header("Location: /mon-compte");
         exit;
 
@@ -122,8 +136,6 @@ public function deleteComment(int $id) {
 
         $_SESSION['errors'] = "Le commentaire n'a pas ete supprimé!";
         header("Location: /mon-compte");
-
-
 
     }
 

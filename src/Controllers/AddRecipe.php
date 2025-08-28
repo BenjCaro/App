@@ -5,10 +5,15 @@ use Carbe\App\Models\CategoryModel;
 use Carbe\App\Models\IngredientModel;
 use Carbe\App\Models\RecipeIngredientModel;
 use Carbe\App\Models\RecipeModel;
+use Carbe\App\Services\Auth;
+use Carbe\App\Services\Flash;
+
 use Exception;
 class AddRecipe extends BaseController {
     
-    public function index() {
+    public function index() :void {
+
+     Auth::isAuth();
 
        $categories = $this->getCategories();
        $ingredients = $this->getIngredients();
@@ -20,6 +25,11 @@ class AddRecipe extends BaseController {
          ]);
     }
 
+ /**
+  * @return CategoryModel[]
+  *
+  */
+
   private function getCategories() {
         
        $categoryModel = new CategoryModel($this->pdo);
@@ -28,14 +38,30 @@ class AddRecipe extends BaseController {
 
   }
 
+ /**
+  * @return IngredientModel[]
+  *
+  */
  private function getIngredients() {
       $ingredientModel = new IngredientModel($this->pdo);
       $ingredients = $ingredientModel->findAll();
       return $ingredients;
  }
 
- public function createRecipe(array $data) {
+
+/**
+ * createRecipe() permet de créer une recette 
+ * et de l'inscrire en base dans deux tables :
+ *  - recipes
+ *  - recipes_ingredients
+ * 
+ * @param array<string, mixed> $data
+ */
+
+ public function createRecipe(array $data) :void {
      session_start();
+
+     Auth::isAuth();
 
      $title = trim($data['title']);
      $idUser = $data['id_user'];
@@ -111,8 +137,9 @@ class AddRecipe extends BaseController {
      }
      
           $this->pdo->commit();
-          $_SESSION['flash'] = "Création de la recette " . $title . " réussie!";
+          Flash::set("Création de la recette " . $title . " réussie!", "primary");
           header('Location: /');
+          exit;
 
      } catch(Exception $e) {
 
@@ -123,6 +150,11 @@ class AddRecipe extends BaseController {
      }
  } 
 
+ /**
+  * A partir du titre de la recette donné par l'utilisateur 
+  * cette methode permet de créer le slug 
+  */
+
    private function generateSlug(string $string) :string {
 
           $string = mb_strtolower($string);
@@ -131,6 +163,12 @@ class AddRecipe extends BaseController {
           $slug = trim($string, '-');
           return $slug;
    }
+
+
+   /**
+    * Cette methode permet de convertir en json la description de la recette 
+    * avant l'inscription en base de données
+    */
 
    private function descriptionInJson(string $steps) :string {
 

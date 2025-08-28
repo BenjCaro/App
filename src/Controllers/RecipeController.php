@@ -4,6 +4,9 @@ namespace Carbe\App\Controllers;
 use Carbe\App\Models\PostModel;
 use Carbe\App\Models\RecipeModel;
 
+use  Carbe\App\Services\Auth;
+use Carbe\App\Services\Flash;
+
 class RecipeController extends BaseController {
      
     
@@ -11,25 +14,45 @@ class RecipeController extends BaseController {
 
             $recipeModel = new RecipeModel($this->pdo); 
             $recipe = $recipeModel->getRecipeBySlug($slug);
-            $id = $recipe->getId();
-            $postModel = new PostModel($this->pdo);
-            $posts = $postModel->showApprovedComments($id);
 
-            $this->render('Pages/recette',[
-                'title' => 'Petit Creux | ' . ucfirst($recipe->getTitle()),
-                'recipe' => $recipe,
-                'posts' => $posts
-            ]); 
+            if ($recipe === null) {
+
+                
+                Flash::set("La recette n'existe pas", "secondary");
+                header('Location: /home');
+                exit;
+
+            } 
+                
+                $id = $recipe->getId();
+                $postModel = new PostModel($this->pdo);
+                $posts = $postModel->showApprovedComments($id);
+
+                $this->render('Pages/recette',[
+                    'title' => 'Petit Creux | ' . ucfirst($recipe->getTitle()),
+                    'recipe' => $recipe,
+                    'posts' => $posts
+                ]); 
+
+            
 
       }
 
       public function deleteRecipe(int $idRecipe) :void {
 
-         $recipeModel = new RecipeModel($this->pdo);
-         $recipeModel->setId($idRecipe);
-         $recipeModel->delete();
+        session_start();
+        Auth::isAuth();
+        $recipe = new RecipeModel($this->pdo);
+        $recipe->findById($idRecipe);
 
-         $_SESSION['flash'] = "Recette supprimée.";
+        $this->checkUser($recipe->getIdUser());
 
+        $recipeModel = new RecipeModel($this->pdo);
+        $recipeModel->delete($idRecipe);
+
+        
+        Flash::set("Recette Supprimée", "primary");
+        header('Location: /mon-compte');
+        exit();
       }
 }

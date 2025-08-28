@@ -2,6 +2,8 @@
 namespace Carbe\App\Controllers;
 
 use Carbe\App\Models\FavorisModel;
+use Carbe\App\Services\Auth;
+use Carbe\App\Services\Flash;
 
 
 class FavorisController extends BaseController {
@@ -19,16 +21,20 @@ class FavorisController extends BaseController {
     {
     session_start();
 
+    Auth::isAuth();
+
     if(!$this->favorisModel->ifFavorisExist($idUser, $idRecipe)) {
          $this->favorisModel->insert([
             'id_user' => $idUser,
             'id_recipe' => $idRecipe
         ]);
     
-        $_SESSION['flash'] = "Ajout aux favoris réussis";
+       
+        Flash::set("Ajout aux favoris réussis", "primary");
         
     } else {
-        $_SESSION['flash'] = "Recette deja ajoutée aux favoris";
+       
+        Flash::set("Recette deja ajoutée aux favoris", "secondary");
     }
     
 
@@ -37,8 +43,15 @@ class FavorisController extends BaseController {
    public function delete(int $idUser, int $idRecipe):void {
         
         session_start();
+        Auth::isAuth();
+        $idUser = $_SESSION['auth_user']['id'];
+        $this->checkUser($idUser);
+        
         $this->favorisModel->removeFavoris($idUser,$idRecipe);
-        $_SESSION['flash'] = "Recette supprimée des favoris";
+      
+        Flash::set("Recette supprimée des favoris", "primary");
+        header('Location: /mon-compte');
+        exit();
     }
 }
 ?>

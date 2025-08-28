@@ -2,6 +2,10 @@
 namespace Carbe\App\Controllers;
 
 use Carbe\App\Models\UserModel;
+use Carbe\App\Services\Flash;
+/**
+ * Controller qui gère la connexion d'un utilisateur à l'application
+ */
 
 class AuthController extends BaseController {
 
@@ -19,7 +23,8 @@ private UserModel $userModel;
 
                 session_start();
                 if (!$this->validateLoginInput($email, $password)) {
-                     $_SESSION['flash'] = "Identifiants invalides";
+                    
+                    Flash::set("Identifiants invalides", "secondary");
                     header("Location: /login");
                     exit();
                 }
@@ -27,7 +32,7 @@ private UserModel $userModel;
                 $auth_user= $this->userModel->findUserByEmail($email);
         
                 if(!$auth_user) {
-                   $_SESSION['flash'] = "Email ou mot de passe manquant.";
+                   Flash::set("Utilisateur non trouvé, Verifier vos identifiants.", "secondary");
                     header("Location: /login");
                     exit();
 
@@ -38,20 +43,27 @@ private UserModel $userModel;
                 $_SESSION['auth_user'] = [
                     'id' => $auth_user->getId()
                 ];
-                $_SESSION['flash'] = "Connexion réussie. Bienvenue " . $auth_user->getFirstname() . "!";
+                Flash::set("Connexion réussie. Bienvenue " . $auth_user->getFirstname() . "!", "primary");
                 header("Location: /");
                 exit();
             } else {
-                $_SESSION['flash'] = "Mot de passe incorrect.";
+                
+                Flash::set("Mot de passe incorrect", "secondary");
                 header("Location: /login");
                 exit();
             }
 
     }
 
-    private function validateLoginInput(string $email, string $password): bool {
-            return isset($email, $password) && !empty($email) && !empty($password);
-    }
+/**
+ * Methode privée au Controller pour vérifier si email et mot de passe ne sont pas vide
+ * 
+ */
+
+private function validateLoginInput(?string $email, ?string $password): bool {
+    return !empty($email) && !empty($password);
+}
+
 
 
 }

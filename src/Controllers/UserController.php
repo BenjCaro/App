@@ -5,6 +5,9 @@ namespace Carbe\App\Controllers;
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\UserModel;
 use Carbe\App\Models\PostModel;
+use Carbe\App\Services\Auth;
+use Carbe\App\Services\Flash;
+
 use Exception;
 use \PDOException;
 
@@ -21,25 +24,10 @@ class UserController extends BaseController {
         $this->recipeModel = new RecipeModel($this->pdo);
         $this->postModel = new PostModel($this->pdo);
     }
-
-
-    private function isAuth(): void {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        if (!isset($_SESSION['auth_user'])) {
-            $_SESSION['flash'] = "Connectez-vous pour accèder à cette page!";
-            header('Location: /login');
-            exit();
-        }
-    }
-
-    
          
     public function getMyProfil(): void {
 
-        $this->isAuth();
+        Auth::isAuth();
 
         $userId = $_SESSION['auth_user']['id'];
         $user = $this->userModel->findById($userId);
@@ -58,6 +46,10 @@ class UserController extends BaseController {
         ]);        
     }
 
+
+ /**
+ * @param array<string, string> $data
+ */
     public function createUser(array $data) :void {
         session_start();
         
@@ -95,7 +87,7 @@ class UserController extends BaseController {
 
         if (!empty($errors)) {
             $_SESSION['errors'] = $errors;
-            $_SESSION['old'] = $_POST;
+            
             header('Location: /inscription');
             exit;
         }
@@ -114,7 +106,8 @@ class UserController extends BaseController {
         try {
 
             $this->userModel->insert($userData);
-            $_SESSION['flash'] = "Bienvenue, inscription réussie !";
+           
+            Flash::set("Bienvenue, inscription réussie !", "primary");
             header('Location: /');
             exit;
 
@@ -128,8 +121,8 @@ class UserController extends BaseController {
 
             } else {
                 
-                $_SESSION['flash'] = "Une erreur technique est survenue. Veuillez réessayer plus tard.";
                 
+                Flash::set("Une erreur technique est survenue. Veuillez réessayer plus tard.", "secondary");
                 error_log($e->getMessage());
                 header('Location: /inscription');
                 exit;
@@ -137,8 +130,12 @@ class UserController extends BaseController {
         }  
     }
 
-  public function updateInformations(int $id, array $data) :void
-{
+
+/**
+ * @param array<string, string> $data
+ */
+
+  public function updateInformations(int $id, array $data) :void {
     $errors = [];
     $user = new UserModel($this->pdo);
 
@@ -174,7 +171,8 @@ class UserController extends BaseController {
             'email' => $email
         ]);
 
-        $_SESSION['flash'] = "Vos informations ont été mises à jour.";
+        
+        Flash::set("Vos informations ont été mises à jour.", "primary");       
         header("Location: /mon-compte");
         exit;
 
@@ -185,6 +183,11 @@ class UserController extends BaseController {
         exit;
     }
 }
+
+
+/**
+ * @param array<string, string> $data
+ */
 
     public function updateDescription(int $id, array $data) :void {
 
@@ -198,8 +201,10 @@ class UserController extends BaseController {
             'description' => $description
         ]);
 
-            $_SESSION['flash'] = "Votre description a été modifiée.";
+            
+            Flash::set("Votre description a été modifiée.", "primary");
             header("Location: /mon-compte");
+            exit;
 
         } catch(Exception $e) {
 
