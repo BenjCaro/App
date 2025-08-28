@@ -87,7 +87,7 @@ class UserController extends BaseController {
 
         if (!empty($errors)) {
             $_SESSION['errors'] = $errors;
-            $_SESSION['old'] = $_POST;
+            
             header('Location: /inscription');
             exit;
         }
