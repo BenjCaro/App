@@ -61,7 +61,7 @@ public function updateRecipe(int $id, array $data) :void {
         $quantity= $data['quantites'];
         $unit = $data['unit'];
 
-        Csrf::check($token, "/mon-compte");
+        Csrf::check("update_recipe", $token, "/mon-compte");
         
         if (!empty($description)) {
         $description = $this->descriptionInJson($description);

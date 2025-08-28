@@ -77,7 +77,7 @@ class AddRecipe extends BaseController {
 
      $errors = [];
 
-     Csrf::check($token, "/mon-compte");
+     Csrf::check("add_recipe", $token, "/mon-compte");
 
      if(empty($title)) {
           $errors['title'] = "Veuillez donner un titre à la recette.";

@@ -11,7 +11,7 @@ use Carbe\App\Services\Csrf;
     </h2>
     <div class="d-flex flex-column w-50 m-auto">
         <form action="/inscription" method="POST" class="form-control pb-2 border-gris bg-gris shadow-sm p-3 mb-5 bg-body-gris rounded" style="--bs-bg-opacity: .5;">
-            <?php $token = Csrf::get();?>
+            <?php $token = Csrf::get("submit");?>
             <input type="hidden" name="_token" value="<?= $token ?>">
             <?php if (!empty($_SESSION['errors']['_token'])): ?>
                         <div class="alert alert-secondary mt-2"><?= $_SESSION['errors']['_token'] ?></div>

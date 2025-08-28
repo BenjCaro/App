@@ -30,7 +30,7 @@ use Carbe\App\Services\Flash;
     <?php endif; ?>
    <form action="/ajout-recette" method="post" class="form-control pb-2 border-gris bg-gris shadow-sm p-3 mb-5 bg-body-gris rounded" style="--bs-bg-opacity: .5;">
             <input type="hidden" name="id_user" id="id_user" value="<?=$_SESSION['auth_user']['id'] ?>">
-            <?php $token = Csrf::get();  ?>
+            <?php $token = Csrf::get("add_recipe");  ?>
             <input type="hidden" name="_token" value="<?= $token ?>">
             <div class="mb-2">
                 <label for="title" class="form-label fw-bold">Titre de la recette</label>

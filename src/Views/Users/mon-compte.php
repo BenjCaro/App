@@ -5,6 +5,7 @@ use Carbe\App\Models\UserModel;
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\PostModel;
 use Carbe\App\Services\Flash;
+use Carbe\App\Services\Csrf;
 
 /** @var \Carbe\App\Models\PostModel[] $posts */
 /** @var \Carbe\App\Models\UserModel $user */
@@ -41,6 +42,8 @@ if (isset($_SESSION['errors']['database'])) {
     <section class="row d-flex justify-content-center">
         <h3 class="text-center">Mes informations</h3>
         <form class="card col-6" id="formInformation" action="/mon-compte/update-profil" method="POST">
+            <?php $token = Csrf::get("update_profil");  ?>
+            <input type="hidden" name="_token" value="<?= $token ?>">
             <div class="card-body">
                 <div class="mb-2">
                     <label for="name" class="form-label">Nom</label>
@@ -60,6 +63,8 @@ if (isset($_SESSION['errors']['database'])) {
             </div>    
         </form>
         <form class="card col-6" id="formDescription" action="/mon-compte/update-description" method="POST">
+            <?php $token = Csrf::get("update_description");  ?>
+            <input type="hidden" name="_token" value="<?= $token ?>">
             <div class="card-body">
                 <div class="mb-2">
                     <label for="membership" class="form-label">Membre depuis</label>

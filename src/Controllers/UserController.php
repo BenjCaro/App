@@ -7,6 +7,7 @@ use Carbe\App\Models\UserModel;
 use Carbe\App\Models\PostModel;
 use Carbe\App\Services\Auth;
 use Carbe\App\Services\Flash;
+use Carbe\App\Services\Csrf;
 
 use Exception;
 use \PDOException;
@@ -63,9 +64,7 @@ class UserController extends BaseController {
         
         $errors = [];
 
-        if (empty($token) || $_SESSION['csrf_token'] !== $_POST['_token']) {
-            $errors['_token'] = "Impossibilité de valider l'inscription.";
-        }
+        Csrf::check("submit", $token, "/inscription");
 
         if (!$email) {
             $errors['email'] = "Adresse e-mail invalide.";
@@ -139,10 +138,13 @@ class UserController extends BaseController {
     $errors = [];
     $user = new UserModel($this->pdo);
 
+    $token = $data["_token"];
     $name = trim($data['name'] ?? '');
     $firstname = trim($data['firstname'] ?? '');
     $emailInput = trim($data['email'] ?? ''); // valeur brute
     $email = filter_var($emailInput, FILTER_VALIDATE_EMAIL); // email validé ou false
+
+    Csrf::check("update_profil", $token, "/mon-compte");
 
     // Vérif champs obligatoires
     if (!$name || !$firstname || !$emailInput) {
@@ -190,9 +192,10 @@ class UserController extends BaseController {
  */
 
     public function updateDescription(int $id, array $data) :void {
-
+        
+        $token = $data["_token"];
         $description = $data['description'] ?? null;
-
+        Csrf::check("update_description", $token, "/mon-compte");
         $user = new UserModel($this->pdo);
 
         
@@ -211,9 +214,6 @@ class UserController extends BaseController {
            $_SESSION['errors'] = "La modification a échouée.";
            header("Location: /mon-compte");
         }
-        
-
-        
 
     }
 

@@ -21,7 +21,7 @@ use Carbe\App\Services\Flash;
     <span class="badge text-bg-secondary">Temps de préparation: <?= $recipe->getDuration()?> minutes</span>
     <form action="/update/recette" method="POST" class="mt-4" onsubmit="return confirm('Etes vous sur de vouloir modifier votre recette?');">
             <input type="hidden" name="id" value="<?= $recipe->getId() ?>">
-            <?php $token = Csrf::get();  ?>
+            <?php $token = Csrf::get("update_recipe");  ?>
             <input type="hidden" name="_token" value="<?= $token ?>">
             <h3 class="text-center">Modifier les ingrédients</h3>
             <?php if(!$recipe->getIngredients()) { ?>
