@@ -42,6 +42,7 @@ use Carbe\App\Models\PostModel;
             </div>
             <div id="formDiv" class="d-flex justify-content-center mb-2 gap-2">
                 <button type="button" id="editPost" class="btn btn-sm btn-primary">Modifier votre commentaire</button>
+                <button type="submit" id="hiddenSubmit" class="d-none"></button>
             </div>
             <div class="mt-1">
                 Posté le : <?= htmlspecialchars($post->getCreatedAt()) ?>
@@ -50,7 +51,7 @@ use Carbe\App\Models\PostModel;
     </div>
     <div class="d-flex justify-content-center">
         <form id="formDelete" action="/mes-commentaires/suppr/commentaire-<?=$post->getId()?>" method="POST" class="card col-12 col-md-8 col-lg-6 p-4 shadow">
-             <button type="submit" class="btn btn-sm btn-secondary">Supprimer votre commentaire</button>
+            <button type="submit" class="btn btn-sm btn-secondary">Supprimer votre commentaire</button>
         </form>
     </div>
 </main>
