@@ -3,6 +3,7 @@
 namespace Carbe\App\Views\Users;
 use Carbe\App\Services\Flash;
 use Carbe\App\Models\PostModel;
+use Carbe\App\Services\Csrf;
 
 /** @var \Carbe\App\Models\PostModel $post */
 ?>
@@ -31,7 +32,8 @@ use Carbe\App\Models\PostModel;
     <h2 class="text-center">Recette : <?= $post->getRecipe()->getTitle() ?></h2>
     <div class="d-flex justify-content-center">
         <form action="/mes-commentaires/commentaire-<?=htmlspecialchars(strval($post->getId()))?>" method="post" id="formPostEdit" class="card col-12 col-md-8 col-lg-6 p-4 shadow">
-
+            <?php $token = Csrf::get("update_post");  ?>
+            <input type="hidden" name="_token" value="<?= $token ?>">
             <div class="mb-3">
                 <label for="title" class="form-label">Titre du commentaire</label>
                 <input class="form-control bg-gris" type="text" id="title" name="title" value="<?= htmlspecialchars($post->getTitle()) ?>" readonly>

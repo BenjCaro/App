@@ -5,7 +5,9 @@ use Carbe\App\Models\PostModel;
 use Carbe\App\Models\RecipeModel;
 use Exception;
 use Carbe\App\Services\Flash;
-use  Carbe\App\Services\Auth;
+use Carbe\App\Services\Auth;
+use Carbe\App\Services\Csrf;
+
 
 class PostController extends BaseController {
 
@@ -89,9 +91,9 @@ public function updateComment(int $id) :void {
 
     $title = trim($_POST['title']);
     $content = trim($_POST['content']);
+    $token = $_POST['_token'];
 
-    // vérifier que id_user et id_recipe correspondent avec le commentaire à modifier
-    // avant de soumettre la req SQL de modification
+    Csrf::check("update_post", $token, "/mes-commentaires/commentaire-$id");
 
     try {
 
