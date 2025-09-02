@@ -7,7 +7,7 @@
  */
 
 
-export function edit(form, fields, button) {
+export function edit(form, fields, button, hiddenSubmitButton) {
     let editing = false;
     let originalValues = fields.map(field => field.value);
    
@@ -47,7 +47,7 @@ export function edit(form, fields, button) {
 
 
         } else {
-            form.querySelector('#hiddenSubmit').click();
+            hiddenSubmitButton.click();
 
         }
 

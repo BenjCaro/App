@@ -78,7 +78,7 @@ if (isset($_SESSION['errors']['database'])) {
                 </div>
                 <div class="d-flex justify-content-center mb-2 gap-2">
                     <button type="button" id="editDescription" class="btn btn-sm btn-primary">Modifier ma description</button>
-                    <button type="submit" id="hiddenSubmit" class="d-none"></button>
+                    <button type="submit" id="hiddenDescriptionSubmit" class="d-none"></button>
                 </div>
             </div>
         </form>
