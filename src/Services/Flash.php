@@ -15,7 +15,11 @@ class Flash {
 
 
     public static function set(string $message, string $type) :void  {
-        $_SESSION['flash'] = [
+
+        if(!isset($_SESSION['flash'])) {
+            $_SESSION['flash'] = [];
+        }
+        $_SESSION['flash'][] = [
             "message" => $message,
             "type" => $type
         ];
@@ -31,7 +35,7 @@ class Flash {
       public static function get(): ?array
     {
         if (!isset($_SESSION['flash'])) {
-            return null;
+            return [];
         }
 
         $flash = $_SESSION['flash'];

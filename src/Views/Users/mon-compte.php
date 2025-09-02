@@ -22,9 +22,9 @@ if (isset($_SESSION['errors']['database'])) {
 
 <main class='container p-3 bg-light border-end border-start border-secondary'>
     <?php
-     $flash = Flash::get();
-     if($flash) { ?>
-        <div class="alert alert-<?= $flash['type'] ?>"><?= $flash['message']?></div>
+     $messages = Flash::get();
+     foreach($messages as $message) { ?>
+        <div class="alert alert-<?= $message['type'] ?>"><?= $message['message']?></div>
     <?php }
     ?>
 

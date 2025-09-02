@@ -10,14 +10,12 @@ use Carbe\App\Services\Csrf;
 
 
 <main class="container p-3 bg-light">
-   <?php
-     $flash = Flash::get();
-     if($flash) { ?>
-        <div class="alert alert-<?= $flash['type'] ?>"><?= $flash['message']?></div>
+  <?php
+     $messages = Flash::get();
+     foreach($messages as $message) { ?>
+        <div class="alert alert-<?= $message['type'] ?>"><?= $message['message']?></div>
     <?php }
     
-
-
     if (isset($_SESSION['errors']) && !empty($_SESSION['errors'])) { ?>
     <div class="alert alert-secondary">
     <?php foreach ($_SESSION['errors'] as $error) { ?>
