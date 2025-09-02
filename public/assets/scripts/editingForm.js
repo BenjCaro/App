@@ -10,12 +10,12 @@
 export function edit(form, fields, button) {
     let editing = false;
     let originalValues = fields.map(field => field.value);
-
+   
     const cancelBtn = document.createElement('button');
-       cancelBtn.classList.add('btn', 'btn-secondary');
-       cancelBtn.type = "button";
-       cancelBtn.textContent = "Annuler";
-       cancelBtn.addEventListener('click', () => {
+    cancelBtn.classList.add('btn', 'btn-secondary');
+    cancelBtn.type = "button";
+    cancelBtn.textContent = "Annuler";
+    cancelBtn.addEventListener('click', () => {
             editing = false;
             button.textContent = "Modifier mon commentaire";
             button.classList.replace("btn-secondary", "btn-primary");
@@ -47,8 +47,8 @@ export function edit(form, fields, button) {
 
 
         } else {
-            form.requestSubmit();
-            
+            form.querySelector('#hiddenSubmit').click();
+
         }
 
        }); 
