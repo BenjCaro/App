@@ -195,10 +195,6 @@ class UserController extends BaseController {
         
         $token = $data["_token"];
         $description = $data['description'] ?? null;
-        
-        var_dump($_SESSION['csrf_tokens']['update_description']); 
-        exit;
-
         Csrf::check("update_description", $token, "/mon-compte");
         $user = new UserModel($this->pdo);
 
@@ -221,8 +217,7 @@ class UserController extends BaseController {
 
     }
 
-   private function availableEmail(string $email, ?int $currentUserId = null): bool 
-{
+   private function availableEmail(string $email, ?int $currentUserId = null): bool {
     $user = $this->userModel->findUserByEmail($email);
 
     // Si aucun utilisateur trouvé → email dispo

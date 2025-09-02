@@ -88,11 +88,12 @@ $router->map('POST', '/mon-compte/update-description', function() {
     
     session_start();
     $id = $_SESSION['auth_user']['id'];
-    
+    var_dump($_POST);
     $description = $_POST['description'];
     $user = new UserController();
-    $user->updateDescription($id, 
-            ['description' => $description]);
+    $user->updateDescription($id,
+            ['_token' => $_POST['_token'],
+             'description' => $description]);
             
 });
 
