@@ -2,9 +2,18 @@
 
 namespace Carbe\App\Services;
 
+
 class Csrf {
 
-    public static function get($formName) {
+    /**
+     * Génère un token CSRF pour protéger contre le Cross-Site Request Forgery
+     * 
+     * @param string $formName correspond au nom du formulaire
+     * @return string un token enregistré dans la session
+     * 
+     */
+
+    public static function get(string $formName) :string {
        
        
         if (!isset($_SESSION['csrf_tokens']) || !is_array($_SESSION['csrf_tokens'])) {
@@ -18,13 +27,22 @@ class Csrf {
         return $_SESSION['csrf_tokens'][$formName];
     }
 
-    public static function check($formName, $token, $view) {
+    /**
+     * Effectue la comparaison entre le token enregistré dans la base et le token envoyé par le formulaire
+     * 
+     * @param string $formName Nom du formulaire
+     * @param string $token le token envoyé par le formulaire
+     * @param string $view page de redirection si le verification échoue
+     * 
+     */
 
-          if(empty($token) || $_SESSION['csrf_tokens'][$formName] !== $token) {
+    public static function check(string $formName,string $token, string $view) :void {
+
+        if(empty($token) || $_SESSION['csrf_tokens'][$formName] !== $token) {
           Flash::set("Erreur survenue.", "secondary");
           header("Location: $view");
           exit;
-     }
+        }
     }
 
 }
