@@ -48,20 +48,17 @@ export function edit(form, fields, button) {
 
         } else {
             form.requestSubmit();
+            
         }
 
        }); 
 
        form.addEventListener('submit', (event)=> {
-           event.preventDefault();
-           if(confirm('Etes vous sur de valider vos modifications?')) {
-
-                form.submit();
-
-        } else {
-
-           cancelBtn.click();
-        }
+           
+           if(!confirm('Etes vous sur de valider vos modifications?')) {
+                event.preventDefault();
+                cancelBtn.click();
+        } 
        });
 
 
