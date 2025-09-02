@@ -63,7 +63,7 @@ class UserController extends BaseController {
         $description = trim($data['description']);
         
         $errors = [];
-
+        $_SESSION['old'] = $_POST;
         Csrf::check("submit", $token, "/inscription");
 
         if (!$email) {
