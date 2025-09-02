@@ -90,7 +90,6 @@ $router->map('POST', '/mon-compte/update-description', function() {
     $id = $_SESSION['auth_user']['id'];
     
     $description = $_POST['description'];
-    var_dump($description);
     $user = new UserController();
     $user->updateDescription($id, 
             ['description' => $description]);

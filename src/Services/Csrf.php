@@ -10,10 +10,12 @@ class Csrf {
         if (!isset($_SESSION['csrf_tokens']) || !is_array($_SESSION['csrf_tokens'])) {
             $_SESSION['csrf_tokens'] = []; 
         }
+
+        if(!isset($_SESSION['csrf_tokens'][$formName])) {
+            $_SESSION['csrf_tokens'][$formName] = bin2hex(random_bytes(32));
+        }
         
-        $token = bin2hex(random_bytes(32));
-        $_SESSION['csrf_tokens'][$formName] = $token;
-        return $token;
+        return $_SESSION['csrf_tokens'][$formName];
     }
 
     public static function check($formName, $token, $view) {

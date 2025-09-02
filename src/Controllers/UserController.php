@@ -195,6 +195,10 @@ class UserController extends BaseController {
         
         $token = $data["_token"];
         $description = $data['description'] ?? null;
+        
+        var_dump($_SESSION['csrf_tokens']['update_description']); 
+        exit;
+
         Csrf::check("update_description", $token, "/mon-compte");
         $user = new UserModel($this->pdo);
 

@@ -16,6 +16,7 @@ if (isset($_SESSION['errors']['database'])) {
     echo $_SESSION['errors']['database'];
     unset($_SESSION['errors']['database']); 
 }
+  
 
 ?>
 
@@ -59,6 +60,7 @@ if (isset($_SESSION['errors']['database'])) {
                 </div>
                  <div class="d-flex justify-content-center mb-2 gap-2">
                     <button type="button" id="editInformation" class="btn btn-sm btn-primary">Modifier mes informations</button>
+                    <button type="submit" id="hiddenSubmit" class="d-none"></button>
                 </div>
             </div>    
         </form>
@@ -76,6 +78,7 @@ if (isset($_SESSION['errors']['database'])) {
                 </div>
                 <div class="d-flex justify-content-center mb-2 gap-2">
                     <button type="button" id="editDescription" class="btn btn-sm btn-primary">Modifier ma description</button>
+                    <button type="submit" id="hiddenSubmit" class="d-none"></button>
                 </div>
             </div>
         </form>
