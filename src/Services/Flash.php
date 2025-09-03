@@ -25,6 +25,18 @@ class Flash {
         ];
     }
 
+    public static function setErrorsForm(string $key, string $message, string $type = "secondary") :void {
+
+        if(!isset($_SESSION['errors'][$key])) {
+            $_SESSION['errors']['key'] = [];
+        }
+
+        $_SESSION['errors'][$key] = [
+            "message" => $message, 
+            "type" => $type
+        ];
+    }
+
 /**
 * Récupère et supprime le message flash stocké en session.
 *
@@ -32,8 +44,8 @@ class Flash {
 
 */
 
-      public static function get(): ?array
-    {
+    public static function get(): ?array  {
+       
         if (!isset($_SESSION['flash'])) {
             return [];
         }
@@ -41,6 +53,16 @@ class Flash {
         $flash = $_SESSION['flash'];
         unset($_SESSION['flash']); 
         return $flash;
+    }
+
+    public static function showErrorsForm($key) {
+        if(!isset($_SESSION['errors'][$key])) {
+            return [];
+        }
+
+        $errors = $_SESSION['errors'][$key];
+        unset($_SESSION['errors'][$key]);
+        return $errors;
     }
 
 }

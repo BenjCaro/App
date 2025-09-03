@@ -62,34 +62,47 @@ class UserController extends BaseController {
         $confirm = trim($data['confirm-password']);
         $description = trim($data['description']);
         
-        $errors = [];
+       // $errors = [];
         $_SESSION['old'] = $_POST;
         Csrf::check("submit", $token, "/inscription");
 
         if (!$email) {
-            $errors['email'] = "Adresse e-mail invalide.";
+            Flash::setErrorsForm('email', 'Adresse e-mail invalide');
+            header('Location: /inscription');
+            exit;
+          //  $errors['email'] = "Adresse e-mail invalide.";
         } elseif (!$this->availableEmail($email)) {
-            $errors['email'] = "Adresse e-mail déja utilisée.";
-        }
-
-        if (strlen($password) < 8) {
-            $errors['password'] = "Le mot de passe doit contenir au moins 8 caractères.";
-        }
-        
-        if( $password !== $confirm) {
-             $errors['confirm'] = "Les mots de passe ne correspondent pas.";
-         }
-
-        if (empty($name) || empty($firstname)) {
-            $errors['name'] = "Nom et prénom sont obligatoires.";
-        }
-
-        if (!empty($errors)) {
-            $_SESSION['errors'] = $errors;
-            
+         //   $errors['email'] = "Adresse e-mail déja utilisée.";
+            Flash::setErrorsForm('email', 'Adresse e-email déja utilisée.');
             header('Location: /inscription');
             exit;
         }
+
+        if (strlen($password) < 8) {
+           // $errors['password'] = "Le mot de passe doit contenir au moins 8 caractères.";
+            Flash::setErrorsForm("password", "Le mot de passe doit contenir au moins 8 caractères");
+            header('Location: /inscription');
+            exit;
+        }
+        
+        if( $password !== $confirm) {
+           //  $errors['confirm'] = "Les mots de passe ne correspondent pas.";
+            Flash::setErrorsForm('confirm', "Les mots de passe ne correspondent pas." );
+            header('Location: /inscription');
+            exit;
+         }
+
+        if (empty($name) || empty($firstname)) {
+           // $errors['name'] = "Nom et prénom sont obligatoires.";
+           Flash::setErrorsForm('name', "Nom et prénom sont obligatoires.");
+        }
+
+        // if (!empty($errors)) {
+        //     $_SESSION['errors'] = $errors;
+            
+        //     header('Location: /inscription');
+        //     exit;
+        // }
         
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $userData = [
@@ -114,7 +127,7 @@ class UserController extends BaseController {
                 } catch (PDOException $e) {
             if ($e->getCode() === '23000') {
                 
-                $_SESSION['errors']['email'] = "Cet email est déjà enregistré.";
+                Flash::setErrorsForm('email', 'Adresse e-mail déja enregistrée');
                 header('Location: /inscription');
                 exit;
 
