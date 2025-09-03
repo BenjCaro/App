@@ -51,7 +51,15 @@ use Carbe\App\Services\Flash;
             </div>
             <div class="mb-2">
                 <label for="ingredients" class="form-label">Sélectionner les ingrédients</label>
-                <div id="ingredients-container"></div>
+                <div id="ingredients-container"
+     data-ingredients='<?= json_encode(array_map(function($ingredient) {
+         return [
+             "id" => $ingredient->getId(),
+             "name" => $ingredient->getName()
+         ];
+     }, $ingredients), JSON_HEX_APOS | JSON_HEX_QUOT) ?>'>
+</div>
+
                 <button type="button" onclick="addIngredient()" class="btn btn-sm btn-outline-secondary">+ Ajouter un ingrédient</button>
             </div>
             <div class="mb-2">
@@ -64,12 +72,4 @@ use Carbe\App\Services\Flash;
         </form>
     </div>
 </main>
-<script>
-    const ingredientsData = <?= json_encode(array_map(function($ingredient) {
-    return [
-        'id' => $ingredient->getId(),
-        'name' => $ingredient->getName()
-    ];
-}, $ingredients)); ?>;
-</script>
 <script type="text/javascript" src="/assets/scripts/addIngredient.js"></script>
