@@ -8,7 +8,7 @@ class DashboardController extends BaseController {
 
     public function index() :void {
         
-        Auth::isAdmin();
+       // Auth::isAdmin();
 
         $this->render('dashboard',  [
             'title' => 'Petit Creux | Dashboard',
