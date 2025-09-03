@@ -2,16 +2,16 @@
 namespace Carbe\App\Controllers\Admin;
 
 use Carbe\App\Controllers\BaseController;
+use Carbe\App\Services\Auth;
 
 class DashboardController extends BaseController {
 
     public function index() :void {
-        if (session_status() === PHP_SESSION_NONE) {
-                session_start();
-            }
+        
+        Auth::isAdmin();
 
         $this->render('dashboard',  [
-        'title' => 'Petit Creux | Dashboard',
+            'title' => 'Petit Creux | Dashboard',
         
       ]);
     }
