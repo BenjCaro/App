@@ -3,6 +3,7 @@ namespace Carbe\App\Controllers;
 
 use Carbe\App\Models\UserModel;
 use Carbe\App\Services\Flash;
+use Carbe\App\Services\Csrf;
 /**
  * Controller qui gère la connexion d'un utilisateur à l'application
  */
@@ -18,10 +19,13 @@ private UserModel $userModel;
         
     }
         
-    public function login(string $email, string $password) :void {
+    public function login(string $token, string $email, string $password) :void {
                 
-
+                
                 session_start();
+                Csrf::check("signin",$token, "/login");
+                $_SESSION['old'] = $_POST;
+            
                 if (!$this->validateLoginInput($email, $password)) {
                     
                     Flash::set("Identifiants invalides", "secondary");
@@ -46,6 +50,7 @@ private UserModel $userModel;
                 Flash::set("Connexion réussie. Bienvenue " . $auth_user->getFirstname() . "!", "primary");
                 header("Location: /");
                 exit();
+
             } else {
                 
                 Flash::set("Mot de passe incorrect", "secondary");

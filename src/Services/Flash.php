@@ -15,8 +15,24 @@ class Flash {
 
 
     public static function set(string $message, string $type) :void  {
-        $_SESSION['flash'] = [
+
+        if(!isset($_SESSION['flash'])) {
+            $_SESSION['flash'] = [];
+        }
+        $_SESSION['flash'][] = [
             "message" => $message,
+            "type" => $type
+        ];
+    }
+
+    public static function setErrorsForm(string $key, string $message, string $type = "secondary") :void {
+
+        if(!isset($_SESSION['errors'][$key])) {
+            $_SESSION['errors']['key'] = [];
+        }
+
+        $_SESSION['errors'][$key] = [
+            "message" => $message, 
             "type" => $type
         ];
     }
@@ -28,15 +44,25 @@ class Flash {
 
 */
 
-      public static function get(): ?array
-    {
+    public static function get(): ?array  {
+       
         if (!isset($_SESSION['flash'])) {
-            return null;
+            return [];
         }
 
         $flash = $_SESSION['flash'];
         unset($_SESSION['flash']); 
         return $flash;
+    }
+
+    public static function showErrorsForm($key) {
+        if(!isset($_SESSION['errors'][$key])) {
+            return [];
+        }
+
+        $errors = $_SESSION['errors'][$key];
+        unset($_SESSION['errors'][$key]);
+        return $errors;
     }
 
 }

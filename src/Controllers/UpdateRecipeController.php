@@ -7,6 +7,7 @@ use Carbe\App\Models\IngredientModel;
 use Carbe\App\Services\Auth;
 use Exception;
 use Carbe\App\Services\Flash;
+use Carbe\App\Services\Csrf;
 
 class UpdateRecipeController extends BaseController {
 
@@ -51,7 +52,7 @@ public function updateRecipe(int $id, array $data) :void {
     // Vérifie que l'utilisateur connecté est bien le propriétaire
         $this->checkUser($recipe->getIdUser());
       
- 
+        $token = $data['_token'];
         $id = $data['id'];
         // $duration = trim($data['duration']);
         $description = $data['description'] ?? null;
@@ -59,8 +60,10 @@ public function updateRecipe(int $id, array $data) :void {
         $ingredients = $data['ingredients'];
         $quantity= $data['quantites'];
         $unit = $data['unit'];
+
+        Csrf::check("update_recipe", $token, "/mon-compte");
         
-          if (!empty($description)) {
+        if (!empty($description)) {
         $description = $this->descriptionInJson($description);
         } else {
         $description = null; 

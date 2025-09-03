@@ -7,6 +7,7 @@ use Carbe\App\Models\UserModel;
 use Carbe\App\Models\PostModel;
 use Carbe\App\Services\Auth;
 use Carbe\App\Services\Flash;
+use Carbe\App\Services\Csrf;
 
 use Exception;
 use \PDOException;
@@ -61,36 +62,47 @@ class UserController extends BaseController {
         $confirm = trim($data['confirm-password']);
         $description = trim($data['description']);
         
-        $errors = [];
-
-        if (empty($token) || $_SESSION['csrf_token'] !== $_POST['_token']) {
-            $errors['_token'] = "Impossibilité de valider l'inscription.";
-        }
+       // $errors = [];
+        $_SESSION['old'] = $_POST;
+        Csrf::check("submit", $token, "/inscription");
 
         if (!$email) {
-            $errors['email'] = "Adresse e-mail invalide.";
+            Flash::setErrorsForm('email', 'Adresse e-mail invalide');
+            header('Location: /inscription');
+            exit;
+          //  $errors['email'] = "Adresse e-mail invalide.";
         } elseif (!$this->availableEmail($email)) {
-            $errors['email'] = "Adresse e-mail déja utilisée.";
-        }
-
-        if (strlen($password) < 8) {
-            $errors['password'] = "Le mot de passe doit contenir au moins 8 caractères.";
-        }
-        
-         if( $password !== $confirm) {
-             $errors['confirm'] = "Les mots de passe ne correspondent pas.";
-         }
-
-        if (empty($name) || empty($firstname)) {
-            $errors['name'] = "Nom et prénom sont obligatoires.";
-        }
-
-        if (!empty($errors)) {
-            $_SESSION['errors'] = $errors;
-            
+         //   $errors['email'] = "Adresse e-mail déja utilisée.";
+            Flash::setErrorsForm('email', 'Adresse e-email déja utilisée.');
             header('Location: /inscription');
             exit;
         }
+
+        if (strlen($password) < 8) {
+           // $errors['password'] = "Le mot de passe doit contenir au moins 8 caractères.";
+            Flash::setErrorsForm("password", "Le mot de passe doit contenir au moins 8 caractères");
+            header('Location: /inscription');
+            exit;
+        }
+        
+        if( $password !== $confirm) {
+           //  $errors['confirm'] = "Les mots de passe ne correspondent pas.";
+            Flash::setErrorsForm('confirm', "Les mots de passe ne correspondent pas." );
+            header('Location: /inscription');
+            exit;
+         }
+
+        if (empty($name) || empty($firstname)) {
+           // $errors['name'] = "Nom et prénom sont obligatoires.";
+           Flash::setErrorsForm('name', "Nom et prénom sont obligatoires.");
+        }
+
+        // if (!empty($errors)) {
+        //     $_SESSION['errors'] = $errors;
+            
+        //     header('Location: /inscription');
+        //     exit;
+        // }
         
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $userData = [
@@ -115,7 +127,7 @@ class UserController extends BaseController {
                 } catch (PDOException $e) {
             if ($e->getCode() === '23000') {
                 
-                $_SESSION['errors']['email'] = "Cet email est déjà enregistré.";
+                Flash::setErrorsForm('email', 'Adresse e-mail déja enregistrée');
                 header('Location: /inscription');
                 exit;
 
@@ -139,10 +151,13 @@ class UserController extends BaseController {
     $errors = [];
     $user = new UserModel($this->pdo);
 
+    $token = $data["_token"];
     $name = trim($data['name'] ?? '');
     $firstname = trim($data['firstname'] ?? '');
     $emailInput = trim($data['email'] ?? ''); // valeur brute
     $email = filter_var($emailInput, FILTER_VALIDATE_EMAIL); // email validé ou false
+
+    Csrf::check("update_profil", $token, "/mon-compte");
 
     // Vérif champs obligatoires
     if (!$name || !$firstname || !$emailInput) {
@@ -190,9 +205,10 @@ class UserController extends BaseController {
  */
 
     public function updateDescription(int $id, array $data) :void {
-
+        
+        $token = $data["_token"];
         $description = $data['description'] ?? null;
-
+        Csrf::check("update_description", $token, "/mon-compte");
         $user = new UserModel($this->pdo);
 
         
@@ -211,14 +227,10 @@ class UserController extends BaseController {
            $_SESSION['errors'] = "La modification a échouée.";
            header("Location: /mon-compte");
         }
-        
-
-        
 
     }
 
-   private function availableEmail(string $email, ?int $currentUserId = null): bool 
-{
+   private function availableEmail(string $email, ?int $currentUserId = null): bool {
     $user = $this->userModel->findUserByEmail($email);
 
     // Si aucun utilisateur trouvé → email dispo

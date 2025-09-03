@@ -5,6 +5,7 @@ use Carbe\App\Models\UserModel;
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\PostModel;
 use Carbe\App\Services\Flash;
+use Carbe\App\Services\Csrf;
 
 /** @var \Carbe\App\Models\PostModel[] $posts */
 /** @var \Carbe\App\Models\UserModel $user */
@@ -15,14 +16,15 @@ if (isset($_SESSION['errors']['database'])) {
     echo $_SESSION['errors']['database'];
     unset($_SESSION['errors']['database']); 
 }
+  
 
 ?>
 
 <main class='container p-3 bg-light border-end border-start border-secondary'>
     <?php
-     $flash = Flash::get();
-     if($flash) { ?>
-        <div class="alert alert-<?= $flash['type'] ?>"><?= $flash['message']?></div>
+     $messages = Flash::get();
+     foreach($messages as $message) { ?>
+        <div class="alert alert-<?= $message['type'] ?>"><?= $message['message']?></div>
     <?php }
     ?>
 
@@ -41,6 +43,8 @@ if (isset($_SESSION['errors']['database'])) {
     <section class="row d-flex justify-content-center">
         <h3 class="text-center">Mes informations</h3>
         <form class="card col-6" id="formInformation" action="/mon-compte/update-profil" method="POST">
+            <?php $token = Csrf::get("update_profil");  ?>
+            <input type="hidden" name="_token" value="<?= $token ?>">
             <div class="card-body">
                 <div class="mb-2">
                     <label for="name" class="form-label">Nom</label>
@@ -56,10 +60,13 @@ if (isset($_SESSION['errors']['database'])) {
                 </div>
                  <div class="d-flex justify-content-center mb-2 gap-2">
                     <button type="button" id="editInformation" class="btn btn-sm btn-primary">Modifier mes informations</button>
+                    <button type="submit" id="hiddenSubmit" class="d-none"></button>
                 </div>
             </div>    
         </form>
         <form class="card col-6" id="formDescription" action="/mon-compte/update-description" method="POST">
+            <?php $token = Csrf::get("update_description");  ?>
+            <input type="hidden" name="_token" value="<?= $token ?>">
             <div class="card-body">
                 <div class="mb-2">
                     <label for="membership" class="form-label">Membre depuis</label>
@@ -71,6 +78,7 @@ if (isset($_SESSION['errors']['database'])) {
                 </div>
                 <div class="d-flex justify-content-center mb-2 gap-2">
                     <button type="button" id="editDescription" class="btn btn-sm btn-primary">Modifier ma description</button>
+                    <button type="submit" id="hiddenDescriptionSubmit" class="d-none"></button>
                 </div>
             </div>
         </form>

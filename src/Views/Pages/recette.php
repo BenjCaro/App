@@ -5,6 +5,7 @@ namespace Carbe\App\Views\Pages;
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\PostModel;
 use Carbe\App\Services\Flash;
+use Carbe\App\Services\Csrf;
 
 /** @var \Carbe\App\Models\PostModel[] $posts */
 /** @var \Carbe\App\Models\RecipeModel $recipe */
@@ -13,9 +14,9 @@ use Carbe\App\Services\Flash;
 
 <main class='container p-3 bg-light'> 
     <?php
-     $flash = Flash::get();
-     if($flash) { ?>
-        <div class="alert alert-<?= $flash['type'] ?>"><?= $flash['message']?></div>
+     $messages = Flash::get();
+     foreach($messages as $message) { ?>
+        <div class="alert alert-<?= $message['type'] ?>"><?= $message['message']?></div>
     <?php }
     ?>
     <?php if (isset($_SESSION['errors'])) {  ?>
@@ -85,7 +86,7 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
     <?php if (isset($_SESSION['auth_user'])): ?>
     <div class="d-flex justify-content-between mt-4">
         <div>
-            <button id="btnPost" class="btn btn-primary">Laisser un commentaire</button>
+            <button id="btnPost" data-slug="<?= htmlspecialchars($recipe->getSlug()) ?>" data-token="<?= htmlspecialchars(Csrf::get("add_comment")) ?>" class="btn btn-primary">Laisser un commentaire</button>
         </div>
         <div>
            <form action="/recette/<?= htmlspecialchars($recipe->getSlug()) ?>/favoris" method="POST">
@@ -98,8 +99,4 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
     <?php endif; ?>
     <section id="container" class="d-flex justify-content-center mt-2"></section>  
 </main>
-
-<script>
-    const slug = <?= json_encode($recipe->getSlug())?>
- </script>
  <script type="text/javascript" src="/assets/scripts/addComment.js"></script>

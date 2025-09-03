@@ -1,6 +1,6 @@
 <?php
 namespace Carbe\App\Views\Users;
-
+use Carbe\App\Services\Csrf;
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\IngredientModel;
 use Carbe\App\Services\Flash;
@@ -11,9 +11,9 @@ use Carbe\App\Services\Flash;
 
 <main class='container p-3 bg-light'> 
    <?php
-     $flash = Flash::get();
-     if($flash) { ?>
-        <div class="alert alert-<?= $flash['type'] ?>"><?= $flash['message']?></div>
+     $messages = Flash::get();
+     foreach($messages as $message) { ?>
+        <div class="alert alert-<?= $message['type'] ?>"><?= $message['message']?></div>
     <?php }
     ?>
     <h2 class='text-center fs-2 mb-3'><?= $recipe->getTitle() ?>  </h2>
@@ -21,6 +21,8 @@ use Carbe\App\Services\Flash;
     <span class="badge text-bg-secondary">Temps de préparation: <?= $recipe->getDuration()?> minutes</span>
     <form action="/update/recette" method="POST" class="mt-4" onsubmit="return confirm('Etes vous sur de vouloir modifier votre recette?');">
             <input type="hidden" name="id" value="<?= $recipe->getId() ?>">
+            <?php $token = Csrf::get("update_recipe");  ?>
+            <input type="hidden" name="_token" value="<?= $token ?>">
             <h3 class="text-center">Modifier les ingrédients</h3>
             <?php if(!$recipe->getIngredients()) { ?>
                 <div class="alert alert-secondary text-center" role="alert">
@@ -50,7 +52,14 @@ use Carbe\App\Services\Flash;
             </div>
             <?php endforeach; } ?>
             <h3 class="text-center">Ajouter des ingrédients</h3>
-            <div id="ingredients-container"></div>
+            <div id="ingredients-container"
+                    data-ingredients='<?= json_encode(array_map(function($ingredient) {
+                        return [
+                            "id" => $ingredient->getId(),
+                            "name" => $ingredient->getName()
+                        ];
+                    }, $ingredients), JSON_HEX_APOS | JSON_HEX_QUOT) ?>'>
+                </div>
             <button type="button" onclick="addIngredient()" class="btn btn-sm btn-outline-secondary">+ Ajouter un ingrédient</button>
             <?php
             $steps = json_decode($recipe->getDescription(), true);
@@ -85,13 +94,5 @@ use Carbe\App\Services\Flash;
     </form>
 
 </main>
-<script>
-    const ingredientsData = <?= json_encode(array_map(function($ingredient) {
-    return [
-        'id' => $ingredient->getId(),
-        'name' => $ingredient->getName()
-    ];
-}, $ingredients)); ?>;
-</script>
 <script type="text/javascript" src="/assets/scripts/addIngredient.js"></script>
 <script type="text/javascript" src="/assets/scripts/addStep.js"></script>

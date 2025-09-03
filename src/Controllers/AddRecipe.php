@@ -7,6 +7,7 @@ use Carbe\App\Models\RecipeIngredientModel;
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Services\Auth;
 use Carbe\App\Services\Flash;
+use Carbe\App\Services\Csrf;
 
 use Exception;
 class AddRecipe extends BaseController {
@@ -63,6 +64,7 @@ class AddRecipe extends BaseController {
 
      Auth::isAuth();
 
+     $token = $data['_token'];
      $title = trim($data['title']);
      $idUser = $data['id_user'];
      $idCategory = $data['id_category'];
@@ -74,6 +76,8 @@ class AddRecipe extends BaseController {
      $unit = $data['unit'];
 
      $errors = [];
+
+     Csrf::check("add_recipe", $token, "/mon-compte");
 
      if(empty($title)) {
           $errors['title'] = "Veuillez donner un titre à la recette.";

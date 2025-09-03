@@ -1,19 +1,23 @@
 <?php
 namespace Carbe\App\Views\Pages;
 use Carbe\App\Services\Flash;
+use Carbe\App\Services\Csrf;
+
 ?>
 
 
 <main class='container p-3 bg-light'>
     <?php
-     $flash = Flash::get();
-     if($flash) { ?>
-        <div class="alert alert-<?= $flash['type'] ?>"><?= $flash['message']?></div>
+     $messages = Flash::get();
+     foreach($messages as $message) { ?>
+        <div class="alert alert-<?= $message['type'] ?>"><?= $message['message']?></div>
     <?php }
     ?>
     <h2 class="text-center mb-2">Connexion</h2>  
     <div class="d-flex flex-column w-25 m-auto">
         <form method="post" action="/login" class="form-control p-3 border-gris bg-gris shadow-sm p-3 mb-5 bg-body-gris rounded" style="--bs-bg-opacity: .5;">
+            <?php $token = Csrf::get("signin");  ?>
+            <input type="hidden" name="_token" value="<?= $token ?>">
             <div class="mb-3 pt-2">
                 <label for="email"  class="form-label">Email</label>
                 <input type="email" value="<?=  $old['email'] ?? ''   ?>" name="email" id="email" class="form-control" required>

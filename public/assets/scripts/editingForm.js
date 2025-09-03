@@ -7,15 +7,15 @@
  */
 
 
-export function edit(form, fields, button) {
+export function edit(form, fields, button, hiddenSubmitButton) {
     let editing = false;
     let originalValues = fields.map(field => field.value);
-
+   
     const cancelBtn = document.createElement('button');
-       cancelBtn.classList.add('btn', 'btn-secondary');
-       cancelBtn.type = "button";
-       cancelBtn.textContent = "Annuler";
-       cancelBtn.addEventListener('click', () => {
+    cancelBtn.classList.add('btn', 'btn-secondary');
+    cancelBtn.type = "button";
+    cancelBtn.textContent = "Annuler";
+    cancelBtn.addEventListener('click', () => {
             editing = false;
             button.textContent = "Modifier mon commentaire";
             button.classList.replace("btn-secondary", "btn-primary");
@@ -47,21 +47,18 @@ export function edit(form, fields, button) {
 
 
         } else {
-            form.requestSubmit();
+            hiddenSubmitButton.click();
+
         }
 
        }); 
 
        form.addEventListener('submit', (event)=> {
-           event.preventDefault();
-           if(confirm('Etes vous sur de valider vos modifications?')) {
-
-                form.submit();
-
-        } else {
-
-           cancelBtn.click();
-        }
+           
+           if(!confirm('Etes vous sur de valider vos modifications?')) {
+                event.preventDefault();
+                cancelBtn.click();
+        } 
        });
 
 

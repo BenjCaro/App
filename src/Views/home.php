@@ -13,9 +13,9 @@ use Carbe\App\Services\Flash;
 ?>
 <main class='container p-3 bg-light'>
     <?php
-     $flash = Flash::get();
-     if($flash) { ?>
-        <div class="alert alert-<?= $flash['type'] ?>"><?= $flash['message']?></div>
+     $messages = Flash::get();
+     foreach($messages as $message) { ?>
+        <div class="alert alert-<?= $message['type'] ?>"><?= $message['message']?></div>
     <?php }
     ?>
     <div class="search-bar">

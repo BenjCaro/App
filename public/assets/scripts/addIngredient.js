@@ -1,6 +1,6 @@
    function addIngredient() {
         const container = document.getElementById('ingredients-container');
-
+        const ingredientsData = JSON.parse(container.dataset.ingredients);
         const div = document.createElement('div');
         div.classList.add('d-flex', 'mb-2', 'gap-2', 'align-items-center');
 

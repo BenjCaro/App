@@ -1,4 +1,6 @@
 const btnPost = document.getElementById('btnPost');
+const slug = btnPost.dataset.slug;
+const tokenValue = btnPost.dataset.token;
 const container = document.getElementById('container');
 btnPost.addEventListener('click', (event) => {
 
@@ -9,6 +11,11 @@ btnPost.addEventListener('click', (event) => {
         form.method = "post";
         form.action = `/recette/${slug}/commentaires`;
 
+        const token = document.createElement('input');
+        token.type = "hidden";
+        token.name = "_token";
+        token.required = true;
+        token.value = tokenValue;
 
         const input = document.createElement('input');
         input.type = 'text';
@@ -40,6 +47,7 @@ btnPost.addEventListener('click', (event) => {
         btnContainer.appendChild(submitBtn);
         btnContainer.appendChild(cancelBtn);
 
+        form.appendChild(token);
         form.appendChild(input);
         form.appendChild(textarea);
         form.appendChild(btnContainer);

@@ -5,7 +5,9 @@ use Carbe\App\Models\PostModel;
 use Carbe\App\Models\RecipeModel;
 use Exception;
 use Carbe\App\Services\Flash;
-use  Carbe\App\Services\Auth;
+use Carbe\App\Services\Auth;
+use Carbe\App\Services\Csrf;
+
 
 class PostController extends BaseController {
 
@@ -41,7 +43,7 @@ class PostController extends BaseController {
     
     $title = trim($_POST['title']);
     $content = trim($_POST['content']);
-
+    $token = $_POST['_token'];
     
     if (empty($title) || empty($content)) {
         $_SESSION['errors'] = "Veuillez remplir les champs pour commenter la recette !";
@@ -57,6 +59,8 @@ class PostController extends BaseController {
         exit;
     }
 
+    Csrf::check("add_comment", $token, "/recette/$slug");
+
     $commentData = [
         'id_user' => $userId,
         'id_recipe' => $recipe->getId(),
@@ -68,7 +72,7 @@ class PostController extends BaseController {
         $post = new PostModel($this->pdo);
         $post->insert($commentData);
 
-        $_SESSION['flash'] = "Commentaire ajouté avec succès !";
+       // $_SESSION['flash'] = "Commentaire ajouté avec succès !";
         Flash::set("Commentaire ajouté avec succès !", "primary");
     } catch(Exception $e) {
         
@@ -89,9 +93,9 @@ public function updateComment(int $id) :void {
 
     $title = trim($_POST['title']);
     $content = trim($_POST['content']);
+    $token = $_POST['_token'];
 
-    // vérifier que id_user et id_recipe correspondent avec le commentaire à modifier
-    // avant de soumettre la req SQL de modification
+    Csrf::check("update_post", $token, "/mes-commentaires/commentaire-$id");
 
     try {
 
