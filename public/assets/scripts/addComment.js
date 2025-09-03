@@ -1,4 +1,6 @@
 const btnPost = document.getElementById('btnPost');
+const slug = btnPost.dataset.slug;
+const tokenValue = btnPost.dataset.token;
 const container = document.getElementById('container');
 btnPost.addEventListener('click', (event) => {
 

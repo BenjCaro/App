@@ -86,7 +86,7 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
     <?php if (isset($_SESSION['auth_user'])): ?>
     <div class="d-flex justify-content-between mt-4">
         <div>
-            <button id="btnPost" class="btn btn-primary">Laisser un commentaire</button>
+            <button id="btnPost" data-slug="<?= htmlspecialchars($recipe->getSlug()) ?>" data-token="<?= htmlspecialchars(Csrf::get("add_comment")) ?>" class="btn btn-primary">Laisser un commentaire</button>
         </div>
         <div>
            <form action="/recette/<?= htmlspecialchars($recipe->getSlug()) ?>/favoris" method="POST">
@@ -99,9 +99,4 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
     <?php endif; ?>
     <section id="container" class="d-flex justify-content-center mt-2"></section>  
 </main>
-
-<script>
-    const slug = <?= json_encode($recipe->getSlug()) ?>;
-    const tokenValue = <?= json_encode(Csrf::get("add_comment")) ?>;
- </script>
  <script type="text/javascript" src="/assets/scripts/addComment.js"></script>
