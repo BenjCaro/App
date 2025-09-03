@@ -52,7 +52,14 @@ use Carbe\App\Services\Flash;
             </div>
             <?php endforeach; } ?>
             <h3 class="text-center">Ajouter des ingrédients</h3>
-            <div id="ingredients-container"></div>
+            <div id="ingredients-container"
+                    data-ingredients='<?= json_encode(array_map(function($ingredient) {
+                        return [
+                            "id" => $ingredient->getId(),
+                            "name" => $ingredient->getName()
+                        ];
+                    }, $ingredients), JSON_HEX_APOS | JSON_HEX_QUOT) ?>'>
+                </div>
             <button type="button" onclick="addIngredient()" class="btn btn-sm btn-outline-secondary">+ Ajouter un ingrédient</button>
             <?php
             $steps = json_decode($recipe->getDescription(), true);
@@ -87,13 +94,5 @@ use Carbe\App\Services\Flash;
     </form>
 
 </main>
-<script>
-    const ingredientsData = <?= json_encode(array_map(function($ingredient) {
-    return [
-        'id' => $ingredient->getId(),
-        'name' => $ingredient->getName()
-    ];
-}, $ingredients)); ?>;
-</script>
 <script type="text/javascript" src="/assets/scripts/addIngredient.js"></script>
 <script type="text/javascript" src="/assets/scripts/addStep.js"></script>
