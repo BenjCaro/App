@@ -5,6 +5,7 @@ namespace Carbe\App\Views\Pages;
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\PostModel;
 use Carbe\App\Services\Flash;
+use Carbe\App\Services\Csrf;
 
 /** @var \Carbe\App\Models\PostModel[] $posts */
 /** @var \Carbe\App\Models\RecipeModel $recipe */
@@ -100,6 +101,7 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
 </main>
 
 <script>
-    const slug = <?= json_encode($recipe->getSlug())?>
+    const slug = <?= json_encode($recipe->getSlug()) ?>;
+    const tokenValue = <?= json_encode(Csrf::get("add_comment")) ?>;
  </script>
  <script type="text/javascript" src="/assets/scripts/addComment.js"></script>

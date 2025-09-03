@@ -43,7 +43,7 @@ class PostController extends BaseController {
     
     $title = trim($_POST['title']);
     $content = trim($_POST['content']);
-
+    $token = $_POST['_token'];
     
     if (empty($title) || empty($content)) {
         $_SESSION['errors'] = "Veuillez remplir les champs pour commenter la recette !";
@@ -59,6 +59,8 @@ class PostController extends BaseController {
         exit;
     }
 
+    Csrf::check("add_comment", $token, "/recette/$slug");
+
     $commentData = [
         'id_user' => $userId,
         'id_recipe' => $recipe->getId(),
@@ -70,7 +72,7 @@ class PostController extends BaseController {
         $post = new PostModel($this->pdo);
         $post->insert($commentData);
 
-        $_SESSION['flash'] = "Commentaire ajouté avec succès !";
+       // $_SESSION['flash'] = "Commentaire ajouté avec succès !";
         Flash::set("Commentaire ajouté avec succès !", "primary");
     } catch(Exception $e) {
         
