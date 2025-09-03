@@ -52,14 +52,13 @@ use Carbe\App\Services\Flash;
             <div class="mb-2">
                 <label for="ingredients" class="form-label">Sélectionner les ingrédients</label>
                 <div id="ingredients-container"
-     data-ingredients='<?= json_encode(array_map(function($ingredient) {
-         return [
-             "id" => $ingredient->getId(),
-             "name" => $ingredient->getName()
-         ];
-     }, $ingredients), JSON_HEX_APOS | JSON_HEX_QUOT) ?>'>
-</div>
-
+                    data-ingredients='<?= json_encode(array_map(function($ingredient) {
+                        return [
+                            "id" => $ingredient->getId(),
+                            "name" => $ingredient->getName()
+                        ];
+                    }, $ingredients), JSON_HEX_APOS | JSON_HEX_QUOT) ?>'>
+                </div>
                 <button type="button" onclick="addIngredient()" class="btn btn-sm btn-outline-secondary">+ Ajouter un ingrédient</button>
             </div>
             <div class="mb-2">
