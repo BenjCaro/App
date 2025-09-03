@@ -25,7 +25,18 @@ class BaseController {
         extract($data);
         require_once VIEW_PATH . '/Partials/header.php';
         require_once VIEW_PATH . '/Partials/banniere.php';
-        require_once VIEW_PATH . '/' . $view . '.php';
+        
+        $adminView = VIEW_PATH . '/Admin/' . $view . '.php';
+        $mainView  = VIEW_PATH . '/' . $view . '.php';
+
+        if (file_exists($adminView)) {
+            require_once $adminView;
+        } elseif (file_exists($mainView)) {
+            require_once $mainView;
+        } else {
+            
+            die("Vue introuvable : " . $view);
+        }
 
         require_once VIEW_PATH . '/Partials/footer.php';
 
