@@ -2,6 +2,7 @@
 namespace Carbe\App\Controllers\Admin;
 
 use Carbe\App\Controllers\BaseController;
+use Carbe\App\Controllers\UserController;
 use Carbe\App\Models\UserModel;
 use Carbe\App\Services\Auth;
 
@@ -12,12 +13,22 @@ class DashboardController extends BaseController {
       Auth::isAdmin();
         
       $adminId = $_SESSION['auth_user']['id'];
-      $admin = new UserModel($this->pdo);
-      $admin->findById($adminId);
+      $adminModel = new UserModel($this->pdo);
+      $admin = $adminModel->findById($adminId);
+
+      // afficher les nouveaux utilisateurs
+
+      $userModel = new UserModel($this->pdo);
+      $users = $userModel->getAllUsers();
+      
+      // afficher les nouvelles recettes
+      // afficher les dernieres commentaires 
+
         
       $this->render('dashboard',  [
             'title' => 'Petit Creux | Dashboard',
-            //'admin' => $admin
+            'admin' => $admin,
+            'users' => $users
         
       ]);
     }

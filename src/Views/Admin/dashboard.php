@@ -6,9 +6,7 @@ namespace Carbe\App\Views\Admin;
 ?>
 
 <main class='container p-3 bg-light'>
-    <section>
-       
-    </section>
+    <h1 class="text-center">Bienvenue <?= htmlspecialchars($admin->getName()) ?></h1>
     <section class="row d-flex justify-content-center">
         <h3 class="text-center mt-4 mb-4">Derniers Utilisateurs</h3>
         <div class="table-responsive">
@@ -23,13 +21,17 @@ namespace Carbe\App\Views\Admin;
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="">Voir utilisateur</a></td>
-                    </tr>
+                    <?php  foreach($users as $user) {  ?>
+                        <tr>
+                            <td><?= htmlspecialchars($user->getName()) ?></td>
+                            <td><?= htmlspecialchars($user->getFirstName()) ?></td>
+                            <td><?= htmlspecialchars($user->getEmail()) ?></td>
+                            <td><?= htmlspecialchars($user->getCreatedAt()) ?></td>
+                            <td><a href="/profil/utilisateur-<?= $user->getId() ?>">Voir plus</a></td>  
+                        </tr>
+                        
+                     <?php   } ?>
+                    
                 </tbody>
             </table>
         </div>
