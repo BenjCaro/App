@@ -24,7 +24,9 @@ private UserModel $userModel;
                 
                 session_start();
                 Csrf::check("signin",$token, "/login");
-                $_SESSION['old'] = $_POST;
+                $_SESSION['old'] = [
+                        'email' => $_POST['email'] ?? ''
+                    ];
             
                 if (!$this->validateLoginInput($email, $password)) {
                     
