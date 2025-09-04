@@ -9,7 +9,7 @@ use Carbe\App\Services\Flash;
 /** @var \Carbe\App\Models\RecipeModel|null $lastRecipe */
 /** @var \Carbe\App\Models\RecipeModel|null $popularRecipe */
 /** @var \Carbe\App\Models\CategoryModel[] $categories */
-var_dump($_SESSION);
+
 ?>
 <main class='container p-3 bg-light'>
     <?php

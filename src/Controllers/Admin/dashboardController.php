@@ -9,7 +9,7 @@ class DashboardController extends BaseController {
 
     public function index() :void {
         
-      Auth::isAdmin();
+      // Auth::isAdmin();
         
        $adminId = $_SESSION['auth_user']['id'];
        $admin = new UserModel($this->pdo);
