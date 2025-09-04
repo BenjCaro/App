@@ -24,14 +24,15 @@ namespace Carbe\App\Views\Admin;
                 </div>
                 <div class="collapse navbar-collapse" id="menuPrincipal">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item fs-5"><a class="nav-link" href="">Lien</a></li>
-                        <li class="nav-item fs-5"><a class="nav-link" href="">Lien</a></li>
-                        <li class="nav-item fs-5"><a class="nav-link" href="/mon-compte">Lien</a>
-                        <li class="nav-item fs-5"><a class="nav-link" href="/logout">Connexion Deconnexion</a></li>      
+                        <li class="nav-item fs-5"><a class="nav-link" href="">Utilisateurs</a></li>
+                        <li class="nav-item fs-5"><a class="nav-link" href="">Recettes</a></li>
+                        <li class="nav-item fs-5"><a class="nav-link" href="">Commentaires</a></li>
+                        <li class="nav-item fs-5"><a class="nav-link" href="">Catégories</a></li> 
+                        <li class="nav-item fs-5"><a class="nav-link" href="">Ingrédients</a></li>
+                        <li class="nav-item fs-5"><a class="nav-link" href="">Déconnexion</a></li>      
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-</body>
 </body>

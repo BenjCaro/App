@@ -25,7 +25,7 @@ namespace Carbe\App\Views\Admin;
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
+                        <td><a href="">Voir utilisateur</a></td>
                     </tr>
                 </tbody>
             </table>
@@ -46,7 +46,7 @@ namespace Carbe\App\Views\Admin;
                     <tr>
                         <td></td>
                         <td></td>
-                        <td></td>
+                        <td><a href="">Voir recette</a></td>
                     </tr>
                 </tbody>
             </table>
@@ -67,7 +67,7 @@ namespace Carbe\App\Views\Admin;
                     <tr>
                         <td></td>
                         <td></td>
-                        <td></td>
+                        <td><a href="">Voir commentaire</a></td>
                     </tr>
                 </tbody>
             </table>
