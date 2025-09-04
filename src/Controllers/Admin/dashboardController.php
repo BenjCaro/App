@@ -9,15 +9,15 @@ class DashboardController extends BaseController {
 
     public function index() :void {
         
-      // Auth::isAdmin();
+      Auth::isAdmin();
         
-       $adminId = $_SESSION['auth_user']['id'];
-       $admin = new UserModel($this->pdo);
-       $admin->findById($adminId);
+      $adminId = $_SESSION['auth_user']['id'];
+      $admin = new UserModel($this->pdo);
+      $admin->findById($adminId);
         
-        $this->render('dashboard',  [
+      $this->render('dashboard',  [
             'title' => 'Petit Creux | Dashboard',
-            'admin' => $admin
+            //'admin' => $admin
         
       ]);
     }

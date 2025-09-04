@@ -47,7 +47,8 @@ private UserModel $userModel;
                 if (password_verify($password, $auth_user->getPassword())) {
                 
                 $_SESSION['auth_user'] = [
-                    'id' => $auth_user->getId()
+                    'id' => $auth_user->getId(),
+                    'role' => $auth_user->getRole()
                 ];
                 Flash::set("Connexion réussie. Bienvenue " . $auth_user->getFirstname() . "!", "primary");
                 header("Location: /");
