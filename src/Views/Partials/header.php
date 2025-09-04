@@ -1,5 +1,7 @@
 <?php
 
+namespace Carbe\App\Views\Partials;
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }

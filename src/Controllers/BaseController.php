@@ -23,11 +23,28 @@ class BaseController {
     protected function render(string $view, array $data = []) :void {
 
         extract($data);
-        require_once VIEW_PATH . '/Partials/header.php';
-        require_once VIEW_PATH . '/Partials/banniere.php';
-        require_once VIEW_PATH . '/' . $view . '.php';
+        
+        $adminView = VIEW_PATH . '/Admin/' . $view . '.php';
+        $mainView  = VIEW_PATH . '/' . $view . '.php';
 
-        require_once VIEW_PATH . '/Partials/footer.php';
+        if (file_exists($adminView)) {
+
+            require_once VIEW_PATH . '/Admin/header.php';
+            require_once $adminView;
+          //  require_once VIEW_PATH . '/Partials/footer.php';
+
+        } elseif (file_exists($mainView)) {
+            require_once VIEW_PATH . '/Partials/header.php';
+            require_once VIEW_PATH . '/Partials/banniere.php';
+            require_once $mainView;
+            require_once VIEW_PATH . '/Partials/footer.php';
+
+        } else {
+
+            die("Vue introuvable : " . $view);
+        }
+
+        
 
     }
 

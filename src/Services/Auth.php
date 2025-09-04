@@ -24,6 +24,24 @@ class Auth {
         }
     }
 
+    public static function isAdmin(): void {
+         if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (
+            !isset($_SESSION['auth_user']) || 
+            !isset($_SESSION['auth_user']['role']) || 
+            $_SESSION['auth_user']['role'] !== 'admin' 
+            ) {
+            
+            Flash::set("Vous ne possédez pas les autorisations pour accéder à cette page", "secondary");
+            header('Location: /');
+            exit();
+        }
+
+    }
+
     /**
      * Deconnecte l'utilisateur en supprimant la session
      * 
