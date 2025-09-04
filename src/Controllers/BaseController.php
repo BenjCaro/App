@@ -29,21 +29,23 @@ class BaseController {
 
         if (file_exists($adminView)) {
 
-            $adminView = VIEW_PATH . '/Admin/header.php';
+            require_once VIEW_PATH . '/Admin/header.php';
             require_once VIEW_PATH . '/Partials/banniere.php';
             require_once $adminView;
+            require_once VIEW_PATH . '/Partials/footer.php';
 
         } elseif (file_exists($mainView)) {
             require_once VIEW_PATH . '/Partials/header.php';
             require_once VIEW_PATH . '/Partials/banniere.php';
             require_once $mainView;
+            require_once VIEW_PATH . '/Partials/footer.php';
 
         } else {
 
             die("Vue introuvable : " . $view);
         }
 
-        require_once VIEW_PATH . '/Partials/footer.php';
+        
 
     }
 
