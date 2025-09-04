@@ -20,7 +20,7 @@ namespace Carbe\App\Views\Admin;
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div>
-                    <span class="nav-item fs-5">Tableau de Bord</span>
+                    <a href="/admin" class="nav-link fs-5">Tableau de Bord</a>
                 </div>
                 <div class="collapse navbar-collapse" id="menuPrincipal">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
