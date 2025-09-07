@@ -2,7 +2,6 @@
 
 namespace Carbe\App\Views\Admin;
 
-
 ?>
 
 <main class='container p-3 bg-light'>
@@ -43,16 +42,20 @@ namespace Carbe\App\Views\Admin;
                 <thead class="table-light">
                     <tr>
                         <th>Createur</th>
+                        <th>Catégorie</th>
                         <th>Titre</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <?php foreach($recipes as $recipe) { ?>
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <td><?= htmlspecialchars($recipe->getUser()->getName()) . ' ' .htmlspecialchars($recipe->getUser()->getFirstname()) ?></td>
+                        <td><?= htmlspecialchars($recipe->getCategory()->getName()) ?></td>
+                        <td><?= htmlspecialchars($recipe->getTitle()) ?></td>
                         <td><a href="">Voir recette</a></td>
                     </tr>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>

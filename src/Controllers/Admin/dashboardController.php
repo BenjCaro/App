@@ -2,7 +2,7 @@
 namespace Carbe\App\Controllers\Admin;
 
 use Carbe\App\Controllers\BaseController;
-use Carbe\App\Controllers\UserController;
+use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\UserModel;
 use Carbe\App\Services\Auth;
 
@@ -22,13 +22,18 @@ class DashboardController extends BaseController {
       $users = $userModel->getAllUsers();
       
       // afficher les nouvelles recettes
+
+      $recipeModel = new RecipeModel($this->pdo);
+      $recipes = $recipeModel->getLastestRecipes();
+      
       // afficher les dernieres commentaires 
 
         
       $this->render('dashboard',  [
             'title' => 'Petit Creux | Dashboard',
             'admin' => $admin,
-            'users' => $users
+            'users' => $users,
+            'recipes' => $recipes
         
       ]);
     }
