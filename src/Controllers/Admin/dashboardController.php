@@ -2,6 +2,7 @@
 namespace Carbe\App\Controllers\Admin;
 
 use Carbe\App\Controllers\BaseController;
+use Carbe\App\Models\PostModel;
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\UserModel;
 use Carbe\App\Services\Auth;
@@ -28,12 +29,16 @@ class DashboardController extends BaseController {
       
       // afficher les dernieres commentaires 
 
+      $postModel = new PostModel($this->pdo);
+      $posts = $postModel->getLastestPost();
+
         
       $this->render('dashboard',  [
             'title' => 'Petit Creux | Dashboard',
             'admin' => $admin,
             'users' => $users,
-            'recipes' => $recipes
+            'recipes' => $recipes,
+            'posts' => $posts
         
       ]);
     }

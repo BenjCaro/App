@@ -66,17 +66,23 @@ namespace Carbe\App\Views\Admin;
             <table class="table table-bordered table-hover">
                 <thead class="table-light">
                     <tr>
+                        <th>Date</th>
                         <th>Rédacteur</th>
                         <th>Recette</th>
+                        <th>Titre commentaire</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <?php foreach($posts as $post) { ?>
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <td><?= htmlspecialchars($post->getCreatedAt())?></td>
+                        <td><?= htmlspecialchars($post->getAuthor()->getName()) . ' ' . htmlspecialchars($post->getAuthor()->getFirstname()) ?></td>
+                        <td><?= htmlspecialchars($post->getRecipe()->getTitle()) ?></td>
+                        <td><?= htmlspecialchars($post->getTitle()) ?></td>
                         <td><a href="">Voir commentaire</a></td>
                     </tr>
+                 <?php } ?>
                 </tbody>
             </table>
         </div>
