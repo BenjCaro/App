@@ -53,7 +53,7 @@ namespace Carbe\App\Views\Admin;
                         <td><?= htmlspecialchars($recipe->getUser()->getName()) . ' ' .htmlspecialchars($recipe->getUser()->getFirstname()) ?></td>
                         <td><?= htmlspecialchars($recipe->getCategory()->getName()) ?></td>
                         <td><?= htmlspecialchars($recipe->getTitle()) ?></td>
-                        <td><a href="">Voir recette</a></td>
+                        <td><a href="/recette/<?= urlencode($recipe->getSlug()) ?>">Voir recette</a></td>
                     </tr>
                     <?php } ?>
                 </tbody>
@@ -80,7 +80,7 @@ namespace Carbe\App\Views\Admin;
                         <td><?= htmlspecialchars($post->getAuthor()->getName()) . ' ' . htmlspecialchars($post->getAuthor()->getFirstname()) ?></td>
                         <td><?= htmlspecialchars($post->getRecipe()->getTitle()) ?></td>
                         <td><?= htmlspecialchars($post->getTitle()) ?></td>
-                        <td><a href="">Voir commentaire</a></td>
+                        <td><a href="/recette/<?= urlencode($post->getRecipe()->getSlug())?>#post-<?=$post->getId() ?>">Voir commentaire</a></td>
                     </tr>
                  <?php } ?>
                 </tbody>
