@@ -31,7 +31,7 @@ class BaseController {
 
             require_once VIEW_PATH . '/Admin/header.php';
             require_once $adminView;
-          //  require_once VIEW_PATH . '/Partials/footer.php';
+            require_once VIEW_PATH . '/Partials/footer.php';
 
         } elseif (file_exists($mainView)) {
             require_once VIEW_PATH . '/Partials/header.php';
