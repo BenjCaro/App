@@ -7,6 +7,7 @@ use Carbe\App\Controllers\RecipeController;
 use Carbe\App\Controllers\AboutController;
 use Carbe\App\Controllers\AddRecipe;
 use Carbe\App\Controllers\Admin\DashboardController;
+use Carbe\App\Controllers\Admin\ProfileUserController;
 use Carbe\App\Controllers\AuthController;
 use Carbe\App\Controllers\FavorisController;
 use Carbe\App\Controllers\LoginController;
@@ -227,4 +228,13 @@ $router->map('POST', '/mes-commentaires/suppr/commentaire-[*:id]', function($id)
 $router->map('GET', '/admin', function() {
     $view = new DashboardController();
     $view->index();
+});
+
+
+$router->map('GET', '/profil/utilisateur-[*:id]', function($id) {
+    
+    $view = new ProfileUserController();
+    $view->index($id);
+   
+
 });
