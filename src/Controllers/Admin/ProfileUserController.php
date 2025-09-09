@@ -25,7 +25,7 @@ class ProfileUserController extends BaseController {
         $posts = $postModel->getCommentsByUser($id);
 
         $this->render('user_profile', [
-            'title' => 'Petit Creux| Profil Utilisateur',
+            'title' => 'Petit Creux | Profil Utilisateur',
             'user' => $user,
             'favoris' => $favoris,
             'recipes' => $recipes,

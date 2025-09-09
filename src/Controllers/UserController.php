@@ -153,9 +153,26 @@ class UserController extends BaseController {
     $user = new UserModel($this->pdo);
 
     $token = $data["_token"];
+   
 
-    Csrf::check("update_profil", $token, "/mon-compte");
-   // Csrf::check("admin_update_profil", $token, "/admin");
+
+    if ($token === ($_SESSION['csrf_tokens']['update_profil'] ?? '')) {
+
+            $formKey = 'update_profil';
+            $returnTo = '/mon-compte';
+    } elseif ($token === ($_SESSION['csrf_tokens']['admin_update_profil'] ?? '')) {
+
+            $formKey = 'admin_update_profil';
+            $returnTo = '/admin';
+    } else {
+
+            Flash::set('Erreur', 'secondary');
+            header('Location: /admin');
+            exit;
+        }
+
+    Csrf::check($formKey, $token, $returnTo);
+   
 
     $name = trim($data['name'] ?? '');
     $firstname = trim($data['firstname'] ?? '');
@@ -177,7 +194,7 @@ class UserController extends BaseController {
     
     if (!empty($errors)) {
         $_SESSION['errors'] = $errors;
-        header("Location: /mon-compte");
+        header("Location: $returnTo");
         exit;
     }
 
@@ -191,13 +208,13 @@ class UserController extends BaseController {
 
         
         Flash::set("Vos informations ont été mises à jour.", "primary");       
-        header("Location: /mon-compte");
+        header("Location: $returnTo");
         exit;
 
     } catch(Exception $e) {
         error_log("Erreur update user : " . $e->getMessage());
         $_SESSION['errors'] = ["La modification a échoué."];
-        header("Location: /mon-compte");
+        header("Location: $returnTo");
         exit;
     }
 }

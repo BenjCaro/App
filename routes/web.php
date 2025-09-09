@@ -247,6 +247,8 @@ $router->map('POST', '/admin/profil/utilisateur-[*:id]/update-informations', fun
 
 });
 
+// DESCRIPTION
+
 $router->map('POST', '/admin/profil/suppr-utilisateur-[*:id]', function($id) {
     
     session_start();
