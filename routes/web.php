@@ -6,6 +6,7 @@ use Carbe\App\Controllers\CategoryController;
 use Carbe\App\Controllers\RecipeController;
 use Carbe\App\Controllers\AboutController;
 use Carbe\App\Controllers\AddRecipe;
+use Carbe\App\Controllers\Admin\AdminController;
 use Carbe\App\Controllers\Admin\DashboardController;
 use Carbe\App\Controllers\Admin\ProfileUserController;
 use Carbe\App\Controllers\AuthController;
@@ -16,7 +17,7 @@ use Carbe\App\Controllers\SearchController;
 use Carbe\App\Controllers\SigninController;
 use Carbe\App\Controllers\UpdateRecipeController;
 use Carbe\App\Controllers\UserController;
-
+use Carbe\App\Models\UserModel;
 
 $router->map('GET', '/', function() {
     
@@ -243,5 +244,13 @@ $router->map('POST', '/admin/profil/utilisateur-[*:id]/update-informations', fun
     session_start();
     $update = new UserController();
     $update->updateInformations($id, $_POST);
+
+});
+
+$router->map('POST', '/admin/profil/suppr-utilisateur-[*:id]', function($id) {
+    
+    session_start();
+    $deleteUser = new AdminController();
+    $deleteUser->deleteUser($id);
 
 });
