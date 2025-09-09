@@ -6,7 +6,7 @@ use Carbe\App\Services\Csrf;
 
 <main class='container p-3 bg-light border-end border-start border-secondary'>
     <section class="row d-flex flex-column align-items-center justify-content-center gap-2">
-        <h3 class="text-center">Informations</h3>
+        <h3 class="text-center">Informations <?= htmlspecialchars($user->getName() . ' ' . $user->getFirstname()) ?></h3>
         <form class="card col-6" id="formInformation" action="" method="POST">
          <!-- à definir -->   <?php $token = Csrf::get("");  ?>
             <input type="hidden" name="_token" value="<?= $token ?>">
@@ -48,8 +48,43 @@ use Carbe\App\Services\Csrf;
             </div>
         </form>
     </section>
+    <section class="row d-flex justify-content-center">
+        <h3 class="text-center mt-4 mb-4">Recettes ajoutées par <?= htmlspecialchars($user->getName() . ' ' . $user->getFirstname()) ?></h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Catégorie</th>
+                    <th>Titre</th>
+                    <th>Lien</th>
+                    <th>Modifier</th>
+                    <th>Supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($recipes as $recipe) { ?>
+                    <tr>
+                        <td><?= htmlspecialchars($recipe->getCategory()->getName()) ?></td>
+                        <td><?= htmlspecialchars($recipe->getTitle()) ?></td>
+                        <td><a href="/recette/<?= urlencode($recipe->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Consulter</a></td>
+                        <td>
+                           <button type="submit" class="btn btn-sm btn-primary"><a href="/update/recette/<?= urlencode($recipe->getSlug()) ?>" class="nav-link">Modifier</a></button>
+                        </td>
+                        <td>
+                            <form method="POST" action="/mon-compte/suppr-recette" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette recette ?');">
+                                <input type="hidden" name="recipe" value="<?= $recipe->getId()?>">
+                                <button type="submit" class="btn btn-sm btn-secondary">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php  } ?>
+               
+            </tbody>
+            </table>
+        </div>
+    </section>
      <section class="row d-flex justify-content-center">
-        <h3 class="text-center mt-4 mb-4">Favoris</h3>
+        <h3 class="text-center mt-4 mb-4">Favoris de <?= htmlspecialchars($user->getName() . ' ' . $user->getFirstname()) ?></h3>
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <thead class="table-light">
@@ -61,14 +96,14 @@ use Carbe\App\Services\Csrf;
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($favoris as $recipe) { ?>
+                    <?php foreach ($favoris as $favori) { ?>
                     <tr>
-                        <td><?= htmlspecialchars($recipe->getCategory()->getName())?></td>
-                        <td><?= htmlspecialchars($recipe->getTitle()) ?></td>
-                        <td><a href="/recette/<?= urlencode($recipe->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Consulter</a></td>
+                        <td><?= htmlspecialchars($favori->getCategory()->getName())?></td>
+                        <td><?= htmlspecialchars($favori->getTitle()) ?></td>
+                        <td><a href="/recette/<?= urlencode($favori->getSlug()) ?>" class="btn btn-sm btn-outline-primary">Consulter</a></td>
                         <td>
                             <form method="POST" action="/mon-compte/suppr-favoris" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer des favoris ?');">
-                                <input type="hidden" name="favoris" value="<?= $recipe->getId()?>">
+                                <input type="hidden" name="favoris" value="<?= $favori->getId()?>">
                                 <button type="submit" class="btn btn-sm btn-secondary">Supprimer</button>
                             </form>
                         </td>
@@ -79,3 +114,4 @@ use Carbe\App\Services\Csrf;
         </div>
     </section>
 </main>
+<script type="module" src="/assets/scripts/Admin/updateProfileUser.js"></script>

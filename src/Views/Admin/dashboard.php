@@ -20,7 +20,8 @@ namespace Carbe\App\Views\Admin;
                     </tr>
                 </thead>
                 <tbody>
-                    <?php  foreach($users as $user) {  ?>
+                    <?php if(!empty($users)) {
+                     foreach($users as $user) {  ?>
                         <tr>
                             <td><?= htmlspecialchars($user->getName()) ?></td>
                             <td><?= htmlspecialchars($user->getFirstName()) ?></td>
@@ -29,7 +30,7 @@ namespace Carbe\App\Views\Admin;
                             <td><a href="/profil/utilisateur-<?= $user->getId() ?>">Voir plus</a></td>  
                         </tr>
                         
-                     <?php   } ?>
+                     <?php   }} ?>
                     
                 </tbody>
             </table>
