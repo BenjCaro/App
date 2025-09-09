@@ -118,5 +118,39 @@ use Carbe\App\Services\Csrf;
             </table>
         </div>
     </section>
+    <section>
+        <h3 class="text-center mt-4 mb-4">Mes Commentaires</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Date</th>
+                    <th>Recette</th>
+                    <th>Consulter la recette</th>
+                    <th>Etat</th>
+                    <th>Voir le commentaire</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($posts as $post) { ?>
+                    <tr id="<?= $post->getId()?>">
+                        <td><?= htmlspecialchars($post->getCreatedAt()) ?></td>
+                        <td><?= htmlspecialchars($post->getRecipe()->getTitle()) ?></td>
+                        <td><a href="/recette/<?= urlencode($post->getRecipe()->getSlug())?>#post-<?=$post->getId() ?>" class="btn btn-sm btn-outline-primary">Voir la recette</a></td>
+                        <?php if(($post->getIsApproved()) === true) { ?>
+                            <td>Publié</td>
+                       <?php } else {  ?>
+                            <td>En attente de validation</td>
+                        <?php  } ?>
+                        <td>
+                           <button type="submit" class="btn btn-sm btn-primary"><a href="/mes-commentaires/commentaire-<?=$post->getId()?>" class="nav-link">Modifier le commentaire</a></button>
+                        </td>
+                    </tr>
+                <?php  } ?>
+               
+            </tbody>
+            </table>
+        </div>
+    </section>
 </main>
 <script type="module" src="/assets/scripts/Admin/updateProfileUser.js"></script>

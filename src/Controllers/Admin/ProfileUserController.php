@@ -21,14 +21,15 @@ class ProfileUserController extends BaseController {
         $recipes = $recipeModel->getRecipesByUser($id);
         $favoris = $user->getFavoris();
 
-      //  $postModel = new PostModel($this->pdo);
-        
+        $postModel = new PostModel($this->pdo);
+        $posts = $postModel->getCommentsByUser($id);
 
         $this->render('user_profile', [
             'title' => 'Petit Creux| Profil Utilisateur',
             'user' => $user,
             'favoris' => $favoris,
-            'recipes' => $recipes
+            'recipes' => $recipes,
+            'posts' => $posts
         ]);
 
     }
