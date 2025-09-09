@@ -49,6 +49,16 @@ use Carbe\App\Services\Csrf;
                 </div>
             </div>
         </form>
+        <form class="card col-6" action="" method="">
+            <div class="card-body">
+                <label for="role" class="form-label">Status</label>
+                <input type="role" name="role" id="role" class="form-control bg-gris" value="<?= $user->getRole(); ?>" readonly>
+            </div>
+            <div class="d-flex justify-content-center mb-2 gap-2">
+                    <button type="button" id="" class="btn btn-sm btn-primary">Modifier le rôle</button>
+                    <button type="submit" id="" class="d-none"></button>
+                </div>
+        </form>
         <form id="formDelete" action="/admin/profil/suppr-utilisateur-<?= htmlspecialchars($user->getId()) ?>" method="POST" class="card col-12 col-md-8 col-lg-6 p-4 shadow">
             <button type="submit" class="btn btn-sm btn-secondary">Supprimer <?= htmlspecialchars($user->getName() . ' ' . $user->getFirstname()) ?> </button>
         </form>
