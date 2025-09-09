@@ -148,17 +148,20 @@ class UserController extends BaseController {
  */
 
   public function updateInformations(int $id, array $data) :void {
+    
     $errors = [];
     $user = new UserModel($this->pdo);
 
     $token = $data["_token"];
+
+    Csrf::check("update_profil", $token, "/mon-compte");
+   // Csrf::check("admin_update_profil", $token, "/admin");
+
     $name = trim($data['name'] ?? '');
     $firstname = trim($data['firstname'] ?? '');
     $emailInput = trim($data['email'] ?? ''); // valeur brute
     $email = filter_var($emailInput, FILTER_VALIDATE_EMAIL); // email validé ou false
-
-    Csrf::check("update_profil", $token, "/mon-compte");
-
+   
     // Vérif champs obligatoires
     if (!$name || !$firstname || !$emailInput) {
         $errors[] = "Tous les champs sont obligatoires.";

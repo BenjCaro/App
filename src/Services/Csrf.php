@@ -45,4 +45,12 @@ class Csrf {
         }
     }
 
+    public static function isValid(string $formName, string $token): bool
+    {
+    return !empty($token) 
+        && isset($_SESSION['csrf_tokens'][$formName]) 
+        && $_SESSION['csrf_tokens'][$formName] === $token;
+    }
+
+
 }

@@ -231,10 +231,17 @@ $router->map('GET', '/admin', function() {
 });
 
 
-$router->map('GET', '/profil/utilisateur-[*:id]', function($id) {
+$router->map('GET', '/admin/profil/utilisateur-[*:id]', function($id) {
     
     $view = new ProfileUserController();
     $view->index($id);
+
+});
+
+$router->map('POST', '/admin/profil/utilisateur-[*:id]/update-informations', function($id) {
    
+    session_start();
+    $update = new UserController();
+    $update->updateInformations($id, $_POST);
 
 });

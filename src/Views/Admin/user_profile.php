@@ -2,13 +2,15 @@
 
 namespace Carbe\App\Views\Admin;
 use Carbe\App\Services\Csrf;
+
+
 ?>
 
 <main class='container p-3 bg-light border-end border-start border-secondary'>
     <section class="row d-flex flex-column align-items-center justify-content-center gap-2">
         <h3 class="text-center">Informations <?= htmlspecialchars($user->getName() . ' ' . $user->getFirstname()) ?></h3>
-        <form class="card col-6" id="formInformation" action="" method="POST">
-         <!-- à definir -->   <?php $token = Csrf::get("");  ?>
+        <form class="card col-6" id="formInformation" action="/admin/profil/utilisateur-<?= htmlspecialchars($user->getId()) ?>/update-informations" method="POST">
+         <!-- à definir -->   <?php $token = Csrf::get("admin_update_profil");  ?>
             <input type="hidden" name="_token" value="<?= $token ?>">
             <div class="card-body">
                 <div class="mb-2">
@@ -30,7 +32,7 @@ use Carbe\App\Services\Csrf;
             </div>    
         </form>
         <form class="card col-6" id="formDescription" action="" method="POST">
-         <!-- à definir -->   <?php $token = Csrf::get("");  ?> 
+         <!-- à definir -->   <?php $token = Csrf::get("admin_update_description");  ?> 
             <input type="hidden" name="_token" value="<?= $token ?>">
             <div class="card-body">
                 <div class="mb-2">
@@ -46,6 +48,9 @@ use Carbe\App\Services\Csrf;
                     <button type="submit" id="hiddenDescriptionSubmit" class="d-none"></button>
                 </div>
             </div>
+        </form>
+        <form id="formDelete" action="" method="POST" class="card col-12 col-md-8 col-lg-6 p-4 shadow">
+            <button type="submit" class="btn btn-sm btn-secondary">Supprimer <?= htmlspecialchars($user->getName() . ' ' . $user->getFirstname()) ?> </button>
         </form>
     </section>
     <section class="row d-flex justify-content-center">

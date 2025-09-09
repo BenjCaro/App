@@ -27,7 +27,7 @@ namespace Carbe\App\Views\Admin;
                             <td><?= htmlspecialchars($user->getFirstName()) ?></td>
                             <td><?= htmlspecialchars($user->getEmail()) ?></td>
                             <td><?= htmlspecialchars($user->getCreatedAt()) ?></td>
-                            <td><a href="/profil/utilisateur-<?= $user->getId() ?>">Voir plus</a></td>  
+                            <td><a href="/admin/profil/utilisateur-<?= $user->getId() ?>">Voir plus</a></td>  
                         </tr>
                         
                      <?php   }} ?>
