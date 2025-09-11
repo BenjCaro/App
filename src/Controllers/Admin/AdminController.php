@@ -7,11 +7,14 @@ use Exception;
 use Carbe\App\Models\UserModel;
 use Carbe\App\Services\Flash;
 use Carbe\App\Services\Csrf;
+use Carbe\App\Services\Auth;
 
 class AdminController extends BaseController  {
 
         public function deleteUser(int $id) {
 
+            
+            Auth::isAdmin();
 
             $userModel = new UserModel($this->pdo);
             $user = $userModel->findById($id);
@@ -40,6 +43,8 @@ class AdminController extends BaseController  {
     public function updateRole(int $id, string $role) :void {
 
         session_start();
+
+        Auth::isAdmin();
 
         $token = $_POST['_token'];
         Csrf::check('admin_update_role', $token, '/admin');

@@ -254,7 +254,6 @@ $router->map('POST', '/admin/profil/utilisateur-[*:id]/update-description', func
      $description->updateDescription($id, $_POST);
 });
 
-// ROLE
 
 $router->map('POST', '/admin/profil/utilisateur-[*:id]/update-role', function($id) {
     session_start();
