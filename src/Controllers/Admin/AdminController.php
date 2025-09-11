@@ -11,7 +11,7 @@ use Carbe\App\Services\Auth;
 
 class AdminController extends BaseController  {
 
-        public function deleteUser(int $id) {
+        public function deleteUser(int $id) :void {
 
             
             Auth::isAdmin();
