@@ -31,7 +31,7 @@ class Flash {
             $_SESSION['errors'][$key] = [];
         }
 
-        $_SESSION['errors'][$key] = [
+        $_SESSION['errors'][$key][] = [
             "message" => $message, 
             "type" => $type
         ];
@@ -57,20 +57,17 @@ class Flash {
 
 
 /**
-* Récupère et supprime le ou les messages erreur dans la remplissage du formulaire.
-*
-* @return array{ message: string, type: string}
-* @param string key correspond au champs du formulaire qui provoque l'erreur
-*/
-
-    public static function showErrorsForm($key) :array {
-        if(!isset($_SESSION['errors'][$key])) {
-            return [];
-        }
-
-        $errors = $_SESSION['errors'][$key];
-        unset($_SESSION['errors'][$key]);
-        return $errors;
+ * @param string $key Correspond au champ du formulaire qui provoque l'erreur
+ * @return array<int, array{message: string, type: string}>
+ */
+public static function showErrorsForm(string $key): array {
+    if (!isset($_SESSION['errors'][$key])) {
+        return [];
     }
+
+    $errors = $_SESSION['errors'][$key];
+    unset($_SESSION['errors'][$key]);
+    return $errors;
+}
 
 }
