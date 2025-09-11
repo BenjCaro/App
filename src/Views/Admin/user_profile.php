@@ -31,7 +31,7 @@ use Carbe\App\Services\Csrf;
                 </div>
             </div>    
         </form>
-        <form class="card col-6" id="formDescription" action="" method="POST">
+        <form class="card col-6" id="formDescription" action="/admin/profil/utilisateur-<?= htmlspecialchars($user->getId()) ?>/update-description" method="POST">
             <?php $token = Csrf::get("admin_update_description");  ?> 
             <input type="hidden" name="_token" value="<?= $token ?>">
             <div class="card-body">
@@ -49,7 +49,7 @@ use Carbe\App\Services\Csrf;
                 </div>
             </div>
         </form>
-        <form class="card col-6" action="" id="formRole" method="POST">
+        <form class="card col-6" action="/admin/profil/utilisateur-<?= htmlspecialchars($user->getId()) ?>/update-role" id="formRole" method="POST">
             <div class="card-body">
                 <?php $token = Csrf::get("admin_update_role");  ?>
                 <input type="hidden" name="_token" value="<?= $token ?>">

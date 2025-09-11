@@ -247,7 +247,21 @@ $router->map('POST', '/admin/profil/utilisateur-[*:id]/update-informations', fun
 
 });
 
-// DESCRIPTION
+
+$router->map('POST', '/admin/profil/utilisateur-[*:id]/update-description', function($id) {
+     session_start();
+     $description = new UserController();
+     $description->updateDescription($id, $_POST);
+});
+
+// ROLE
+
+$router->map('POST', '/admin/profil/utilisateur-[*:id]/update-role', function($id) {
+    session_start();
+
+    $role = new AdminController();
+    $role->updateRole($id, $_POST['role']);
+});
 
 $router->map('POST', '/admin/profil/suppr-utilisateur-[*:id]', function($id) {
     

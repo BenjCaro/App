@@ -6,6 +6,7 @@ use Carbe\App\Controllers\BaseController;
 use Exception;
 use Carbe\App\Models\UserModel;
 use Carbe\App\Services\Flash;
+use Carbe\App\Services\Csrf;
 
 class AdminController extends BaseController  {
 
@@ -34,6 +35,35 @@ class AdminController extends BaseController  {
         
         header('Location: /admin');
         exit;
+    }
+
+    public function updateRole(int $id, string $role) :void {
+
+        session_start();
+
+        $token = $_POST['_token'];
+        Csrf::check('admin_update_role', $token, '/admin');
+
+        $role = $_POST['role'];
+
+        $user = new UserModel($this->pdo);
+        
+        try{
+             $user->update($id, [
+            'role' => $role
+        ]);
+
+            
+            Flash::set("Le role utilisateur a été modifiée.", "primary");
+            header("Location: /admin");
+            exit;
+
+        } catch(Exception $e) {
+
+           Flash::set("La modifcation a échouée", "secondary");
+           header("Location: /admin");
+        }
+
     }
 
 
