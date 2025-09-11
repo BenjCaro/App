@@ -10,7 +10,7 @@ use Carbe\App\Services\Csrf;
     <section class="row d-flex flex-column align-items-center justify-content-center gap-2">
         <h3 class="text-center">Informations <?= htmlspecialchars($user->getName() . ' ' . $user->getFirstname()) ?></h3>
         <form class="card col-6" id="formInformation" action="/admin/profil/utilisateur-<?= htmlspecialchars($user->getId()) ?>/update-informations" method="POST">
-         <!-- à definir -->   <?php $token = Csrf::get("admin_update_profil");  ?>
+            <?php $token = Csrf::get("admin_update_profil");  ?>
             <input type="hidden" name="_token" value="<?= $token ?>">
             <div class="card-body">
                 <div class="mb-2">
@@ -32,7 +32,7 @@ use Carbe\App\Services\Csrf;
             </div>    
         </form>
         <form class="card col-6" id="formDescription" action="" method="POST">
-         <!-- à definir -->   <?php $token = Csrf::get("admin_update_description");  ?> 
+            <?php $token = Csrf::get("admin_update_description");  ?> 
             <input type="hidden" name="_token" value="<?= $token ?>">
             <div class="card-body">
                 <div class="mb-2">
@@ -49,14 +49,19 @@ use Carbe\App\Services\Csrf;
                 </div>
             </div>
         </form>
-        <form class="card col-6" action="" method="">
+        <form class="card col-6" action="" id="formRole" method="POST">
             <div class="card-body">
-                <label for="role" class="form-label">Status</label>
-                <input type="role" name="role" id="role" class="form-control bg-gris" value="<?= $user->getRole(); ?>" readonly>
+                <?php $token = Csrf::get("admin_update_role");  ?>
+                <input type="hidden" name="_token" value="<?= $token ?>">
+                <label for="role" class="form-label">Modifier le role de l'utilisateur</label>
+                <select name="role" id="role" class="form-select bg-gris" disabled>
+                    <option value="<?= $user->getRole() ?> ?>"><?= $user->getRole() ?></option>
+                    <option value="admin">admin</option>
+                </select>
             </div>
             <div class="d-flex justify-content-center mb-2 gap-2">
-                    <button type="button" id="" class="btn btn-sm btn-primary">Modifier le rôle</button>
-                    <button type="submit" id="" class="d-none"></button>
+                    <button type="button" id="editRole" class="btn btn-sm btn-primary">Modifier le rôle</button>
+                    <button type="submit" id="hiddenSubmitRole" class="d-none"></button>
                 </div>
         </form>
         <form id="formDelete" action="/admin/profil/suppr-utilisateur-<?= htmlspecialchars($user->getId()) ?>" method="POST" class="card col-12 col-md-8 col-lg-6 p-4 shadow">
