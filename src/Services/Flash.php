@@ -28,7 +28,7 @@ class Flash {
     public static function setErrorsForm(string $key, string $message, string $type = "secondary") :void {
 
         if(!isset($_SESSION['errors'][$key])) {
-            $_SESSION['errors']['key'] = [];
+            $_SESSION['errors'][$key] = [];
         }
 
         $_SESSION['errors'][$key] = [
@@ -40,11 +40,11 @@ class Flash {
 /**
 * Récupère et supprime le message flash stocké en session.
 *
-* @return array{message: string, type: string}|null
+* @return array<int, array{ message: string, type: string}>
 
 */
 
-    public static function get(): ?array  {
+    public static function get(): array  {
        
         if (!isset($_SESSION['flash'])) {
             return [];
@@ -55,7 +55,15 @@ class Flash {
         return $flash;
     }
 
-    public static function showErrorsForm($key) {
+
+/**
+* Récupère et supprime le ou les messages erreur dans la remplissage du formulaire.
+*
+* @return array{ message: string, type: string}
+* @param string key correspond au champs du formulaire qui provoque l'erreur
+*/
+
+    public static function showErrorsForm($key) :array {
         if(!isset($_SESSION['errors'][$key])) {
             return [];
         }

@@ -239,6 +239,10 @@ public function getCommentsByUser(int $id) :array {
 }
 
 
+/**
+ * @return PostModel[]
+ */
+
 public function getLastestPost() :array {
     $stmt = $this->pdo->prepare("
     SELECT 

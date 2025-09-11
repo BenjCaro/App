@@ -417,6 +417,10 @@ public function getRecipesByUser(int $idUser) :array {
     
     }
 
+/**
+ * @return RecipeModel[]
+ */
+
 public function getLastestRecipes() :array {
     $stmt = $this->pdo->prepare('
     SELECT 
