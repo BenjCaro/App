@@ -28,10 +28,10 @@ class Flash {
     public static function setErrorsForm(string $key, string $message, string $type = "secondary") :void {
 
         if(!isset($_SESSION['errors'][$key])) {
-            $_SESSION['errors']['key'] = [];
+            $_SESSION['errors'][$key] = [];
         }
 
-        $_SESSION['errors'][$key] = [
+        $_SESSION['errors'][$key][] = [
             "message" => $message, 
             "type" => $type
         ];
@@ -40,11 +40,11 @@ class Flash {
 /**
 * Récupère et supprime le message flash stocké en session.
 *
-* @return array{message: string, type: string}|null
+* @return array<int, array{ message: string, type: string}>
 
 */
 
-    public static function get(): ?array  {
+    public static function get(): array  {
        
         if (!isset($_SESSION['flash'])) {
             return [];
@@ -55,14 +55,19 @@ class Flash {
         return $flash;
     }
 
-    public static function showErrorsForm($key) {
-        if(!isset($_SESSION['errors'][$key])) {
-            return [];
-        }
 
-        $errors = $_SESSION['errors'][$key];
-        unset($_SESSION['errors'][$key]);
-        return $errors;
+/**
+ * @param string $key Correspond au champ du formulaire qui provoque l'erreur
+ * @return array<int, array{message: string, type: string}>
+ */
+public static function showErrorsForm(string $key): array {
+    if (!isset($_SESSION['errors'][$key])) {
+        return [];
     }
+
+    $errors = $_SESSION['errors'][$key];
+    unset($_SESSION['errors'][$key]);
+    return $errors;
+}
 
 }

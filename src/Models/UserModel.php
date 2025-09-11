@@ -173,6 +173,37 @@ public function getFavoris() :array {
     return $recipes;
   }
 
+/**
+ * getAllUsers pour recuperer tout les utilisateurs de Petit Creux dont le role est user 
+ * 
+ * @return UserModel[]
+ */
+ 
+public function getAllUsers() :?array {
+    $stmt = $this->pdo->prepare('SELECT users.id, users.name, users.firstname, users.email, users.role, users.createdAt 
+            FROM users 
+            WHERE users.role = "user"
+            ORDER BY createdAt 
+            LIMIT 10');
+    $stmt->execute();
+
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    if(!$results) {
+      return null;
+
+    }
+
+    $users = [];
+
+    foreach($results as $result) {
+       $user = new UserModel($this->pdo);
+       $user->hydrate($result);
+       $users[] = $user;
+    }
+
+    return $users;
+  }
 
 
 }

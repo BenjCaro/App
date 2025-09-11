@@ -6,7 +6,9 @@ use Carbe\App\Controllers\CategoryController;
 use Carbe\App\Controllers\RecipeController;
 use Carbe\App\Controllers\AboutController;
 use Carbe\App\Controllers\AddRecipe;
+use Carbe\App\Controllers\Admin\AdminController;
 use Carbe\App\Controllers\Admin\DashboardController;
+use Carbe\App\Controllers\Admin\ProfileUserController;
 use Carbe\App\Controllers\AuthController;
 use Carbe\App\Controllers\FavorisController;
 use Carbe\App\Controllers\LoginController;
@@ -15,7 +17,7 @@ use Carbe\App\Controllers\SearchController;
 use Carbe\App\Controllers\SigninController;
 use Carbe\App\Controllers\UpdateRecipeController;
 use Carbe\App\Controllers\UserController;
-
+use Carbe\App\Models\UserModel;
 
 $router->map('GET', '/', function() {
     
@@ -227,4 +229,43 @@ $router->map('POST', '/mes-commentaires/suppr/commentaire-[*:id]', function($id)
 $router->map('GET', '/admin', function() {
     $view = new DashboardController();
     $view->index();
+});
+
+
+$router->map('GET', '/admin/profil/utilisateur-[*:id]', function($id) {
+    
+    $view = new ProfileUserController();
+    $view->index($id);
+
+});
+
+$router->map('POST', '/admin/profil/utilisateur-[*:id]/update-informations', function($id) {
+   
+    session_start();
+    $update = new UserController();
+    $update->updateInformations($id, $_POST);
+
+});
+
+
+$router->map('POST', '/admin/profil/utilisateur-[*:id]/update-description', function($id) {
+     session_start();
+     $description = new UserController();
+     $description->updateDescription($id, $_POST);
+});
+
+
+$router->map('POST', '/admin/profil/utilisateur-[*:id]/update-role', function($id) {
+    session_start();
+
+    $role = new AdminController();
+    $role->updateRole($id, $_POST['role']);
+});
+
+$router->map('POST', '/admin/profil/suppr-utilisateur-[*:id]', function($id) {
+    
+    session_start();
+    $deleteUser = new AdminController();
+    $deleteUser->deleteUser($id);
+
 });

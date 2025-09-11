@@ -23,7 +23,8 @@ export function edit(form, fields, button, hiddenSubmitButton) {
             fields.forEach((field, index) => {
                 field.value = originalValues[index];
                 field.setAttribute("readonly", true);
-                field.classList.add("bg-gris")
+                field.setAttribute("disabled", true);
+                field.classList.add("bg-gris");
        });
             cancelBtn.remove();
          
@@ -39,6 +40,7 @@ export function edit(form, fields, button, hiddenSubmitButton) {
           button.classList.replace("btn-primary", "btn-secondary");
           fields.forEach(field => {
              field.removeAttribute("readonly");
+             field.removeAttribute('disabled');
              field.classList.remove("bg-gris");
           });
           

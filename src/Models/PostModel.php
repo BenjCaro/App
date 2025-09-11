@@ -238,4 +238,60 @@ public function getCommentsByUser(int $id) :array {
    return $posts;
 }
 
+
+/**
+ * @return PostModel[]
+ */
+
+public function getLastestPost() :array {
+    $stmt = $this->pdo->prepare("
+    SELECT 
+    posts.id,
+    posts.title,
+    posts.createdAt,
+    users.name AS user_name,
+    users.firstname AS user_firstname,
+    recipes.title AS recipe_title,
+    recipes.slug AS recipe_slug
+    FROM posts
+    JOIN users ON users.id = posts.id_user
+    JOIN recipes ON recipes.id = posts.id_recipe
+    ORDER BY createdAt DESC
+    LIMIT 5
+    ");
+
+    $stmt->execute();
+    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    if(!$data) {
+      return [];
+   }
+
+   $posts = [];
+
+   foreach($data as $row) {
+      $post = new PostModel($this->pdo);
+      $post->hydrate($row);
+
+      $recipe = new RecipeModel($this->pdo);
+      $recipe->hydrate([
+            'title' => $row['recipe_title'],
+            'slug' => $row['recipe_slug']
+      ]);
+
+      $user = new UserModel($this->pdo);
+      $user->hydrate([
+         'name' => $row['user_name'],
+         'firstname' => $row['user_firstname']
+      ]);
+
+      $post->setRecipe($recipe);
+      $post->setAuthor($user);
+
+     $posts[] = $post;
+   }
+
+   return $posts;
+}
+
 }

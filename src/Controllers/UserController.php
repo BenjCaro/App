@@ -148,17 +148,37 @@ class UserController extends BaseController {
  */
 
   public function updateInformations(int $id, array $data) :void {
+    
     $errors = [];
     $user = new UserModel($this->pdo);
 
     $token = $data["_token"];
+   
+
+
+    if ($token === ($_SESSION['csrf_tokens']['update_profil'] ?? '')) {
+
+            $formKey = 'update_profil';
+            $returnTo = '/mon-compte';
+    } elseif ($token === ($_SESSION['csrf_tokens']['admin_update_profil'] ?? '')) {
+
+            $formKey = 'admin_update_profil';
+            $returnTo = '/admin';
+    } else {
+
+            Flash::set('Erreur', 'secondary');
+            header('Location: /admin');
+            exit;
+        }
+
+    Csrf::check($formKey, $token, $returnTo);
+   
+
     $name = trim($data['name'] ?? '');
     $firstname = trim($data['firstname'] ?? '');
     $emailInput = trim($data['email'] ?? ''); // valeur brute
     $email = filter_var($emailInput, FILTER_VALIDATE_EMAIL); // email validé ou false
-
-    Csrf::check("update_profil", $token, "/mon-compte");
-
+   
     // Vérif champs obligatoires
     if (!$name || !$firstname || !$emailInput) {
         $errors[] = "Tous les champs sont obligatoires.";
@@ -174,7 +194,7 @@ class UserController extends BaseController {
     
     if (!empty($errors)) {
         $_SESSION['errors'] = $errors;
-        header("Location: /mon-compte");
+        header("Location: $returnTo");
         exit;
     }
 
@@ -188,13 +208,13 @@ class UserController extends BaseController {
 
         
         Flash::set("Vos informations ont été mises à jour.", "primary");       
-        header("Location: /mon-compte");
+        header("Location: $returnTo");
         exit;
 
     } catch(Exception $e) {
         error_log("Erreur update user : " . $e->getMessage());
         $_SESSION['errors'] = ["La modification a échoué."];
-        header("Location: /mon-compte");
+        header("Location: $returnTo");
         exit;
     }
 }
@@ -207,8 +227,27 @@ class UserController extends BaseController {
     public function updateDescription(int $id, array $data) :void {
         
         $token = $data["_token"];
+
+        if ($token === ($_SESSION['csrf_tokens']['update_description'] ?? '')) {
+
+            $formKey = 'update_description';
+            $returnTo = '/mon-compte';
+
+        } elseif ($token === ($_SESSION['csrf_tokens']['admin_update_description'] ?? '')) {
+
+                $formKey = 'admin_update_description';
+                $returnTo = '/admin';
+
+        } else {
+
+                Flash::set('Erreur', 'secondary');
+                header('Location: /admin');
+                exit;
+            }
+
+        Csrf::check($formKey, $token, $returnTo);
         $description = $data['description'] ?? null;
-        Csrf::check("update_description", $token, "/mon-compte");
+        
         $user = new UserModel($this->pdo);
 
         
@@ -219,13 +258,13 @@ class UserController extends BaseController {
 
             
             Flash::set("Votre description a été modifiée.", "primary");
-            header("Location: /mon-compte");
+            header("Location: $returnTo");
             exit;
 
         } catch(Exception $e) {
 
            $_SESSION['errors'] = "La modification a échouée.";
-           header("Location: /mon-compte");
+           header("Location: $returnTo");
         }
 
     }
