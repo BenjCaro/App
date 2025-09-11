@@ -1,6 +1,15 @@
 <?php
 
 namespace Carbe\App\Views\Admin;
+
+use Carbe\App\Models\RecipeModel;
+use Carbe\App\Models\UserModel;
+use Carbe\App\Models\PostModel;
+
+/** @var UserModel $admin */
+/** @var RecipeModel[] $recipes */
+/** @var PostModel[] $posts */
+
 use Carbe\App\Services\Flash;
 ?>
 

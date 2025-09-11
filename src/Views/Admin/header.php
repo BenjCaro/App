@@ -1,6 +1,9 @@
 <?php
 
 namespace Carbe\App\Views\Admin;
+
+/** @var string $title */
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }

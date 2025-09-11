@@ -1,6 +1,13 @@
 <?php 
 
 namespace Carbe\App\Views\Admin;
+use Carbe\App\Models\RecipeModel;
+use Carbe\App\Models\UserModel;
+use Carbe\App\Models\PostModel;
+/** @var UserModel $user */
+/** @var RecipeModel[] $recipes */
+/** @var PostModel[] $posts */
+/** @var RecipeModel[] $favoris */
 use Carbe\App\Services\Csrf;
 
 
@@ -9,7 +16,7 @@ use Carbe\App\Services\Csrf;
 <main class='container p-3 bg-light border-end border-start border-secondary'>
     <section class="row d-flex flex-column align-items-center justify-content-center gap-2">
         <h3 class="text-center">Informations <?= htmlspecialchars($user->getName() . ' ' . $user->getFirstname()) ?></h3>
-        <form class="card col-6" id="formInformation" action="/admin/profil/utilisateur-<?= htmlspecialchars($user->getId()) ?>/update-informations" method="POST">
+        <form class="card col-6" id="formInformation" action="/admin/profil/utilisateur-<?= $user->getId() ?>/update-informations" method="POST">
             <?php $token = Csrf::get("admin_update_profil");  ?>
             <input type="hidden" name="_token" value="<?= $token ?>">
             <div class="card-body">
@@ -31,7 +38,7 @@ use Carbe\App\Services\Csrf;
                 </div>
             </div>    
         </form>
-        <form class="card col-6" id="formDescription" action="/admin/profil/utilisateur-<?= htmlspecialchars($user->getId()) ?>/update-description" method="POST">
+        <form class="card col-6" id="formDescription" action="/admin/profil/utilisateur-<?= $user->getId() ?>/update-description" method="POST">
             <?php $token = Csrf::get("admin_update_description");  ?> 
             <input type="hidden" name="_token" value="<?= $token ?>">
             <div class="card-body">
@@ -49,7 +56,7 @@ use Carbe\App\Services\Csrf;
                 </div>
             </div>
         </form>
-        <form class="card col-6" action="/admin/profil/utilisateur-<?= htmlspecialchars($user->getId()) ?>/update-role" id="formRole" method="POST">
+        <form class="card col-6" action="/admin/profil/utilisateur-<?= $user->getId() ?>/update-role" id="formRole" method="POST">
             <div class="card-body">
                 <?php $token = Csrf::get("admin_update_role");  ?>
                 <input type="hidden" name="_token" value="<?= $token ?>">
@@ -64,7 +71,7 @@ use Carbe\App\Services\Csrf;
                     <button type="submit" id="hiddenSubmitRole" class="d-none"></button>
                 </div>
         </form>
-        <form id="formDelete" action="/admin/profil/suppr-utilisateur-<?= htmlspecialchars($user->getId()) ?>" method="POST" class="card col-12 col-md-8 col-lg-6 p-4 shadow">
+        <form id="formDelete" action="/admin/profil/suppr-utilisateur-<?= $user->getId() ?>" method="POST" class="card col-12 col-md-8 col-lg-6 p-4 shadow">
             <button type="submit" class="btn btn-sm btn-secondary">Supprimer <?= htmlspecialchars($user->getName() . ' ' . $user->getFirstname()) ?> </button>
         </form>
     </section>
