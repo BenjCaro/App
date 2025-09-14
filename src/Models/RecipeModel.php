@@ -274,6 +274,7 @@ public function getMostPopularRecipe() :?RecipeModel {
         FROM recipes
         JOIN favoris ON recipes.id = favoris.id_recipe
         JOIN categories ON recipes.id_category = categories.id
+        WHERE recipes.states = 'published',
         GROUP BY recipes.id
         ORDER BY popularity DESC
         LIMIT 1
@@ -350,7 +351,7 @@ public function getAllRecipesWithCategory() :array {
  * @return RecipeModel[]
  */
 public function getAllRecipesByCategory(int $idCategory) :array {
-    $stmt = $this->pdo->prepare('
+    $stmt = $this->pdo->prepare("
     SELECT 
     recipes.id AS recipe_id, 
     recipes.title, 
@@ -364,8 +365,8 @@ public function getAllRecipesByCategory(int $idCategory) :array {
     categories.image 
     FROM `recipes` 
     JOIN categories ON recipes.id_category = categories.id 
-    WHERE categories.id = :id;
-    ');
+    WHERE categories.id = :id AND recipes.states = 'published'"
+    );
 
     $stmt->execute(['id' => $idCategory]);
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
