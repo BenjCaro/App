@@ -24,6 +24,16 @@ class Auth {
         }
     }
 
+   public static function viewAuth(): bool
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    return isset($_SESSION['auth_user']);
+}
+
+
     public static function isAdmin(): void {
          if (session_status() === PHP_SESSION_NONE) {
             session_start();
@@ -41,6 +51,17 @@ class Auth {
         }
 
     }
+
+    public static function viewAdmin(): bool
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    return isset($_SESSION['auth_user']) 
+        && $_SESSION['auth_user']['role'] === 'admin';
+}
+
 
     /**
      * Deconnecte l'utilisateur en supprimant la session
