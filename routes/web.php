@@ -280,6 +280,12 @@ $router->map("GET", '/admin/tous-les-utilisateurs', function(){
 
 $router->map("GET", "/admin/search", function(){
         
-        $search = new SearchController();
-        $search->adminQuery();
+    $search = new SearchController();
+    $search->adminQuery();
+});
+
+$router->map("GET", "/admin/toutes-les-recettes", function() {
+    
+    $view = new AdminController();
+    $view->viewAllRecipes();
 });

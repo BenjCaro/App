@@ -274,7 +274,7 @@ public function getMostPopularRecipe() :?RecipeModel {
         FROM recipes
         JOIN favoris ON recipes.id = favoris.id_recipe
         JOIN categories ON recipes.id_category = categories.id
-        WHERE recipes.states = 'published',
+        WHERE recipes.state = 'published'
         GROUP BY recipes.id
         ORDER BY popularity DESC
         LIMIT 1
@@ -365,7 +365,7 @@ public function getAllRecipesByCategory(int $idCategory) :array {
     categories.image 
     FROM `recipes` 
     JOIN categories ON recipes.id_category = categories.id 
-    WHERE categories.id = :id AND recipes.states = 'published'"
+    WHERE categories.id = :id AND recipes.state = 'published'"
     );
 
     $stmt->execute(['id' => $idCategory]);
