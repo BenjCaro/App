@@ -25,6 +25,7 @@ class RecipeModel extends BaseModel {
     private string $createdAt;
     private int $duration;
     private ?string $description;
+    private string $state;
     private CategoryModel $category;
     private UserModel $user;
 
@@ -98,6 +99,14 @@ public function getDescription() :?string {
 public function setDescription(?string $description) :void {
     $this->description = $description;
   }
+
+public function getState() :string {
+    return $this->state;
+}
+
+public function setState(string $state) :void {
+    $this->state = $state;
+}
 
 /** @return RecipeIngredientModel[] $ingredients */
 
