@@ -36,17 +36,16 @@ use Carbe\App\Services\Flash;
                 </thead>
                 <tbody>
                     <?php if(!empty($users)) {
-                     foreach($users as $user) {  ?>
+                     foreach($users as $i => $user) :  ?>
+                     <?php if($i >= 10) break; ?>
                         <tr>
                             <td><?= htmlspecialchars($user->getName()) ?></td>
                             <td><?= htmlspecialchars($user->getFirstName()) ?></td>
                             <td><?= htmlspecialchars($user->getEmail()) ?></td>
                             <td><?= htmlspecialchars($user->getCreatedAt()) ?></td>
                             <td><a href="/admin/profil/utilisateur-<?= $user->getId() ?>">Voir plus</a></td>  
-                        </tr>
-                        
-                     <?php   }} ?>
-                    
+                        </tr> 
+                     <?php endforeach; } ?>  
                 </tbody>
             </table>
         </div>
