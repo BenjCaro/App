@@ -183,8 +183,7 @@ public function getAllUsers() :?array {
     $stmt = $this->pdo->prepare('SELECT users.id, users.name, users.firstname, users.email, users.role, users.createdAt 
             FROM users 
             WHERE users.role = "user"
-            ORDER BY createdAt 
-            LIMIT 10');
+            ORDER BY createdAt ');
     $stmt->execute();
 
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);

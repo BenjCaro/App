@@ -56,7 +56,7 @@ class BaseModel {
 
         foreach($result as $data) {
             
-            $object = new static($this->pdo); // instancie la classe enfant qui appelle findById
+            $object = new static($this->pdo); 
             $object->hydrate($data);
             $objects[] = $object;  
         }

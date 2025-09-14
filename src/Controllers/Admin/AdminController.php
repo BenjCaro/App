@@ -14,9 +14,15 @@ class AdminController extends BaseController  {
         public function viewAllUsers() :void {
 
         Auth::isAdmin();
+        
+        $userModel = new UserModel($this->pdo);
+        $users = $userModel->getAllUsers();
+
 
         $this->render('all_users', [
-            'title' => 'Petit Creux | Tous les utilisateurs'
+
+            'title' => 'Petit Creux | Tous les utilisateurs',
+            'users' => $users
         ]);
     }
 

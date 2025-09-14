@@ -11,7 +11,7 @@ use Carbe\App\Services\Flash;
         <div class="alert alert-<?= $message['type'] ?>"><?= $message['message']?></div>
     <?php }
     ?>
-    <h1 class="text-center">Bienvenue <?= htmlspecialchars($admin->getName()) ?></h1>
+    <h1 class="text-center">Utilisateurs</h1>
     <section class="row d-flex justify-content-center">
         <h3 class="text-center mt-4 mb-4">Derniers Utilisateurs</h3>
         <div class="table-responsive">
@@ -42,3 +42,4 @@ use Carbe\App\Services\Flash;
             </table>
         </div>
     </section>
+</main>
