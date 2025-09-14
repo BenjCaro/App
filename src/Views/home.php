@@ -18,15 +18,17 @@ use Carbe\App\Services\Flash;
         <div class="alert alert-<?= $message['type'] ?>"><?= $message['message']?></div>
     <?php }
     ?>
-    <div class="search-bar">
-        <form class="d-flex gap-2" method="get" action="/search">
-            <input class="form-control" type="text" name="q" placeholder="Rechercher..." required>
-            <button class="btn btn-secondary" type="submit">🔍</button>
+    <section class="mb-4 d-flex justify-content-center">
+        <form method="get" action="/search" class="w-50">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Rechercher..." name="q" required>
+                <button class="btn btn-primary" type="submit">🔍</button>
+            </div>
         </form>
-    </div>
+   </section>
     <div class="grid mt-1 mb-3">
         <section class="favoris">
-            <div class="card bg-gris h-100 border border-primary" >
+            <div class="card bg-white h-100 border border-primary" >
                 <div class="card-body ">
                 <?php if (isset($_SESSION['auth_user'])):  ?>
                     <h2 class='card-title text-center'>Vos favoris</h2>
@@ -53,7 +55,7 @@ use Carbe\App\Services\Flash;
             </div>
         </section>
         <section class="last_recipe">
-            <div class="card bg-gris h-100 border border-primary">
+            <div class="card bg-white h-100 border border-primary">
                 <div class="card-body">
                     <h2 class='card-title'>Dernière Recette</h2>
                   
@@ -71,7 +73,7 @@ use Carbe\App\Services\Flash;
             </div>
         </section>
         <section class="popular_recipe">
-            <div class="card bg-gris h-100 border border-primary" >
+            <div class="card bg-white h-100 border border-primary" >
                 <div class="card-body">
                     <h2 class='card-title'>Recettes Populaires</h2>
                    
@@ -89,7 +91,7 @@ use Carbe\App\Services\Flash;
             </div>
         </section>
         <section class="categories text-center">
-            <div class="card bg-gris h-100 border border-primary" >
+            <div class="card bg-white h-100 border border-primary" >
                 <div class="card-body">
                     <h2 class='card-title'>Catégories</h2>
                     <div class="d-flex justify-content-evenly align-items-start">

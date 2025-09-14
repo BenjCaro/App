@@ -27,26 +27,25 @@ use Carbe\App\Services\Flash;
             <table class="table table-bordered table-hover">
                 <thead class="table-light">
                     <tr>
+                        <th>Date d'inscription</th>
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>Email</th>
-                        <th>Membre depuis</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if(!empty($users)) {
-                     foreach($users as $user) {  ?>
+                     foreach($users as $i => $user) :  ?>
+                     <?php if($i >= 10) break; ?>
                         <tr>
+                            <td><?= htmlspecialchars($user->getCreatedAt()) ?></td>
                             <td><?= htmlspecialchars($user->getName()) ?></td>
                             <td><?= htmlspecialchars($user->getFirstName()) ?></td>
-                            <td><?= htmlspecialchars($user->getEmail()) ?></td>
-                            <td><?= htmlspecialchars($user->getCreatedAt()) ?></td>
+                            <td><?= htmlspecialchars($user->getEmail()) ?></td>                            
                             <td><a href="/admin/profil/utilisateur-<?= $user->getId() ?>">Voir plus</a></td>  
-                        </tr>
-                        
-                     <?php   }} ?>
-                    
+                        </tr> 
+                     <?php endforeach; } ?>  
                 </tbody>
             </table>
         </div>
