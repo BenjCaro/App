@@ -269,3 +269,9 @@ $router->map('POST', '/admin/profil/suppr-utilisateur-[*:id]', function($id) {
     $deleteUser->deleteUser($id);
 
 });
+
+$router->map("GET", '/admin/tous-les-utilisateurs', function(){
+     
+    $view = new AdminController();
+    $view->viewAllUsers();
+});

@@ -11,6 +11,15 @@ use Carbe\App\Services\Auth;
 
 class AdminController extends BaseController  {
 
+        public function viewAllUsers() :void {
+
+        Auth::isAdmin();
+
+        $this->render('all_users', [
+            'title' => 'Petit Creux | Tous les utilisateurs'
+        ]);
+    }
+
         public function deleteUser(int $id) :void {
 
             
