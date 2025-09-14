@@ -51,6 +51,12 @@ private UserModel $userModel;
                     'role' => $auth_user->getRole()
                 ];
                 Flash::set("Connexion réussie. Bienvenue " . $auth_user->getFirstname() . "!", "primary");
+
+                if($_SESSION['auth_user']['role']=== 'admin') {
+                    header("Location: /admin");
+                    exit;
+                } 
+
                 header("Location: /");
                 exit();
 
