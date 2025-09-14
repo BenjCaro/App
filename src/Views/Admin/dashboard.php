@@ -25,7 +25,7 @@ use Carbe\App\Services\Flash;
         <h3 class="text-center mt-4 mb-4">Derniers Utilisateurs</h3>
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
-                <thead class="table-light">
+                <thead class="table-secondary">
                     <tr>
                         <th>Date d'inscription</th>
                         <th>Nom</th>
@@ -54,7 +54,7 @@ use Carbe\App\Services\Flash;
         <h3 class="text-center mt-4 mb-4">Dernieres Recettes</h3>
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
-                <thead class="table-light">
+                <thead class="table-secondary">
                     <tr>
                         <th>Createur</th>
                         <th>Catégorie</th>
@@ -79,7 +79,7 @@ use Carbe\App\Services\Flash;
         <h3 class="text-center mt-4 mb-4">Derniers Commentaires</h3>
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
-                <thead class="table-light">
+                <thead class="table-secondary">
                     <tr>
                         <th>Date</th>
                         <th>Rédacteur</th>

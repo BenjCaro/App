@@ -23,7 +23,7 @@ use Carbe\App\Services\Flash;
    <section class="row d-flex justify-content-center">
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
-                <thead class="table-light">
+                <thead class="table-secondary">
                     <tr>
                         <th>Membre depuis</th>
                         <th>Nom</th>
