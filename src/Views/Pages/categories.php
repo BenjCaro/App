@@ -12,7 +12,7 @@ use Carbe\App\Models\RecipeModel;
 <main class='container p-3 bg-light border-end border-start border-secondary'>
     <div>
        <section class="categories text-center">
-            <div class="card bg-gris h-100 border border-primary" >
+            <div class="card bg-white h-100 border border-primary" >
                 <div class="card-body">
                     <h2 class='card-title text-center'>Catégories</h2>
                     <div class="d-flex justify-content-evenly align-items-start">
@@ -31,7 +31,7 @@ use Carbe\App\Models\RecipeModel;
                     $recipes = $entry['recipes'];
              ?>
             <section class="mt-2 mb-2">
-                <div class="card bg-gris h-100 border border-primary p-3">
+                <div class="card bg-white h-100 border border-primary p-3">
                     <h2 class="text-center">
                         <?= htmlspecialchars($category->getName()) ?>
                     </h2>
