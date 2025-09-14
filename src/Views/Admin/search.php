@@ -1,26 +1,10 @@
 <?php
-
 namespace Carbe\App\Views\Admin;
-use Carbe\App\Services\Flash;
-?>
 
+?>
 <main class='container p-3 bg-light'>
-    <?php
-     $messages = Flash::get();
-     foreach($messages as $message) { ?>
-        <div class="alert alert-<?= $message['type'] ?>"><?= $message['message']?></div>
-    <?php }
-    ?>
-    <h1 class="text-center">Utilisateurs</h1>
-    <section class="mb-2">
-        <div class="search-bar">
-        <form class="d-flex gap-2" method="get" action="/admin/search">
-            <input class="form-control" type="text" name="q" placeholder="Rechercher un utilisateur" required>
-            <button class="btn btn-secondary" type="submit">🔍</button>
-        </form>
-    </div>
-    </section>
     <section class="row d-flex justify-content-center">
+        <h1 class="text-center">Résultat(s)</h1>
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <thead class="table-light">

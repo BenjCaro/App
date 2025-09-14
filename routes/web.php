@@ -17,6 +17,7 @@ use Carbe\App\Controllers\SearchController;
 use Carbe\App\Controllers\SigninController;
 use Carbe\App\Controllers\UpdateRecipeController;
 use Carbe\App\Controllers\UserController;
+use Carbe\App\Models\SearchModel;
 use Carbe\App\Models\UserModel;
 
 $router->map('GET', '/', function() {
@@ -274,4 +275,11 @@ $router->map("GET", '/admin/tous-les-utilisateurs', function(){
      
     $view = new AdminController();
     $view->viewAllUsers();
+});
+
+
+$router->map("GET", "/admin/search", function(){
+        
+        $search = new SearchController();
+        $search->adminQuery();
 });

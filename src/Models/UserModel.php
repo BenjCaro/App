@@ -204,6 +204,34 @@ public function getAllUsers() :?array {
     return $users;
   }
 
+/**
+ * @return Usermodel[]|null
+ * 
+ */
+
+  public function findUserWithName(string $search) :?array {
+      $stmt = $this->pdo->prepare('
+      SELECT id, name, firstname, email, role, createdAt
+      FROM users
+      WHERE LOWER(name) LIKE LOWER(:search) OR LOWER(firstname) LIKE LOWER(:search)
+  ');
+  $stmt->execute(['search' => "%$search%"]);
+
+
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+     
+    $users = [];
+
+    foreach($results as $data) {
+      $user = new UserModel($this->pdo);
+      $user->hydrate($data);
+      $users[] = $user;
+    }
+    
+    return $users;
+
+  }
 
 }
 
