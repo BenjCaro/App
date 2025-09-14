@@ -45,7 +45,7 @@ class SearchController extends BaseController {
             
         }
 
-        $this->render('Admin/search', [
+        $this->render('search_user', [
             "title" => 'Petit Creux | Résultats de la recherche',
             'users' => $users
         ]);

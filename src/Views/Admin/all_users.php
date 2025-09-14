@@ -12,15 +12,15 @@ use Carbe\App\Services\Flash;
     <?php }
     ?>
     <h1 class="text-center">Utilisateurs</h1>
-    <section class="mb-2">
-        <div class="search-bar">
-        <form class="d-flex gap-2" method="get" action="/admin/search">
-            <input class="form-control" type="text" name="q" placeholder="Rechercher un utilisateur" required>
-            <button class="btn btn-secondary" type="submit">🔍</button>
+    <section class="mb-4 d-flex justify-content-center">
+        <form method="get" action="/admin/search" class="w-50">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Rechercher un utilisateur" name="q" required>
+                <button class="btn btn-primary" type="submit">🔍</button>
+            </div>
         </form>
-    </div>
-    </section>
-    <section class="row d-flex justify-content-center">
+   </section>
+   <section class="row d-flex justify-content-center">
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <thead class="table-light">
