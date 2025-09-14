@@ -34,8 +34,8 @@ use Carbe\App\Services\Flash;
                 <tbody>
                     <?php foreach($recipes as $recipe) { ?>
                     <tr>
-                        
-                        
+                        <td><?= htmlspecialchars($recipe->getUser()->getName()) . ' ' .htmlspecialchars($recipe->getUser()->getFirstname()) ?></td>
+                        <td><?= htmlspecialchars($recipe->getCategory()->getName()) ?></td>
                         <td><?= htmlspecialchars($recipe->getTitle()) ?></td>
                         <td><a href="/recette/<?= urlencode($recipe->getSlug()) ?>">Voir recette</a></td>
                     </tr>

@@ -92,7 +92,7 @@ class AdminController extends BaseController  {
         Auth::isAdmin();
 
         $recipeModel = new RecipeModel($this->pdo);
-        $recipes = $recipeModel->findAll();
+       $recipes = $recipeModel->getAllRecipes();
 
         $this->render('all_recipes', [
             'title' => 'Petit Creux | Toutes les recettes',

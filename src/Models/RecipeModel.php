@@ -483,7 +483,65 @@ public function getLastestRecipes() :array {
 
     return $recipes;
 }
+
+/**
+ * 
+ * @return RecipeModel[]|null
+ */
  
+public function getAllRecipes() :array {
+    $stmt = $this->pdo->prepare("SELECT 
+    recipes.id AS recipe_id, 
+    recipes.title, 
+    recipes.id_user, 
+    recipes.slug,
+    recipes.createdAt,
+    recipes.state,
+    categories.name, 
+    categories.id AS category_id,
+    users.id AS user_id,
+    users.name AS user_name,
+    users.firstname AS user_firstname
+    FROM `recipes` 
+    JOIN categories ON recipes.id_category = categories.id 
+    JOIN users ON recipes.id_user = users.id");
+
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $recipes = [];
+
+    
+    $recipes = [];
+
+    foreach($results as $data) {
+
+      $categoryData = ['id' => $data['category_id'],
+                       'name' => $data['name']
+                     ];
+
+      $category = new CategoryModel($this->pdo);
+      $category->hydrate($categoryData);
+
+      $userData = ['id' => $data['user_id'],
+                   'name' => $data['user_name'],
+                   'firstname' => $data['user_firstname']
+                  ];
+     $user = new UserModel($this->pdo);
+     $user->hydrate($userData);
+
+      $recipe = new RecipeModel($this->pdo);
+      $recipe->hydrate($data);
+      $recipe->setCategory($category);
+      $recipe->setUser($user);
+
+      $recipes[] = $recipe;
+
+    }
+
+    return $recipes;
+
+}
  }
 
 
