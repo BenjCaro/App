@@ -147,15 +147,20 @@ public function getRecipeBySlug(string $slug) :?RecipeModel {
      recipes.slug,
      recipes.duration, 
      recipes.description,
+     recipes.state,
+     recipes.createdAt,
      ingredients.name,
      ingredients.id,
      recipes_ingredients.quantity,
      recipes_ingredients.unit,
-     categories.name AS category_name
+     categories.name AS category_name,
+     users.name AS user_name,
+     users.firstname AS user_firstname
     FROM recipes 
     LEFT JOIN recipes_ingredients ON recipes.id = recipes_ingredients.id_recipe
     LEFT JOIN ingredients ON ingredients.id = recipes_ingredients.id_ingredient
     JOIN categories ON categories.id = recipes.id_category
+    JOIN users ON users.id = recipes.id_user
     WHERE recipes.slug = :slug");
     $stmt->execute([
        'slug' => $slug
@@ -174,6 +179,8 @@ public function getRecipeBySlug(string $slug) :?RecipeModel {
         'title' => $data[0]['title'],
         'duration' => $data[0]['duration'],
         'description' => $data[0]['description'],
+        'state' => $data[0]['state'],
+        'createdAt' => $data[0]['createdAt']
 
     ]);
 
@@ -200,6 +207,11 @@ public function getRecipeBySlug(string $slug) :?RecipeModel {
     $category->hydrate(['name' =>$row['category_name']]);
     $recipe->setCategory($category);
 
+    $user = new Usermodel($this->pdo);
+    $user->hydrate(['name' => $row['user_name'],
+                    'firstname' => $row['user_firstname']
+    ]);
+    $recipe->setUser($user);
     $recipe->setIngredients($ingredients);
     return $recipe;
 }
@@ -440,6 +452,7 @@ public function getLastestRecipes() :array {
     recipes.id_user, 
     recipes.slug,
     recipes.createdAt, 
+    recipes.state,
     categories.name, 
     categories.id AS category_id,
     users.id AS user_id,

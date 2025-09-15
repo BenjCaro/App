@@ -129,7 +129,7 @@ public function getFavoris() :array {
                                   JOIN favoris ON favoris.id_user = users.id
                                   JOIN recipes ON favoris.id_recipe = recipes.id
                                   JOIN categories ON categories.id = recipes.id_category
-                                  WHERE users.id = :id");
+                                  WHERE users.id = :id AND recipes.state = 'published'");
 
      $stmt->execute([
         'id' => $this->getId()

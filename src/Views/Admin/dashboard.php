@@ -59,6 +59,7 @@ use Carbe\App\Services\Flash;
                         <th>Createur</th>
                         <th>Catégorie</th>
                         <th>Titre</th>
+                        <th>Statut</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -68,6 +69,7 @@ use Carbe\App\Services\Flash;
                         <td><?= htmlspecialchars($recipe->getUser()->getName()) . ' ' .htmlspecialchars($recipe->getUser()->getFirstname()) ?></td>
                         <td><?= htmlspecialchars($recipe->getCategory()->getName()) ?></td>
                         <td><?= htmlspecialchars($recipe->getTitle()) ?></td>
+                        <td><?= htmlspecialchars($recipe->getState()) ?></td>
                         <td><a href="/recette/<?= urlencode($recipe->getSlug()) ?>">Voir recette</a></td>
                     </tr>
                     <?php } ?>

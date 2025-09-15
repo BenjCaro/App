@@ -28,6 +28,39 @@ use Carbe\App\Services\Auth;
     <h2 class='text-center fs-2 mb-3'><?= $recipe->getTitle() ?>  </h2>
     <span class="badge text-bg-secondary"> <?= $recipe->getCategory()->getName()?></span>
     <span class="badge text-bg-secondary">Temps de préparation: <?= $recipe->getDuration()?> minutes</span>
+    <?php if (Auth::viewAdmin()): ?>
+        <section class="row d-flex flex-column align-items-center justify-content-center gap-2">
+        <h3 class="text-center">Informations</h3>
+        <form class="card col-6" action="">
+            <div class="card-body">
+                <div class="mb-2">
+                    <label for="">Créateur</label>
+                    <input type="text" class="form-control bg-gris" value="<?= htmlspecialchars($recipe->getUser()->getName())?> <?= htmlspecialchars($recipe->getUser()->getFirstname())?>">
+                </div>
+                <div>
+                    <label for="">Date de création</label>
+                    <input type="text" class="form-control bg-gris" value="<?= htmlspecialchars($recipe->getCreatedAt())?>">
+                </div>
+            </div>
+        </form>
+        <form class="card col-6" id="formState" action="" method="POST">
+            <?php $token = Csrf::get("admin_update_recipe");?>
+            <input type="hidden" name="_token" value="<?= $token ?>">
+            <div class="card-body">
+                <div class="mb-2">
+                    <label for="">Etat</label>
+                    <select class="form-select bg-gris" name="" id="" disabled>
+                        <option value="<?= htmlspecialchars($recipe->getState()) ?>">En attente</option>
+                        <option value="published">Publier</option>
+                    </select>
+                </div>
+                 <div class="d-flex justify-content-center mb-2 gap-2">
+                    <button type="button" id="editState" class="btn btn-sm btn-primary">Autoriser la publication</button>
+                    <button type="submit" id="hiddenSubmit" class="d-none"></button>
+                </div>
+            </div>    
+        </form>
+    <?php endif; ?>
     <section>
         <h3 class='mt-3 fs-3 text-center'>Ingrédients</h3>
         <div class="card bg-white border border-primary w-50 p-3 mx-auto">
@@ -83,26 +116,22 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
             <?php endforeach; ?>
         <?php endif; ?>
     </section>
-
-    <?php if (Auth::viewAuth()): ?>
-    <div class="d-flex justify-content-between mt-4">
-        <div>
-            <button id="btnPost" data-slug="<?= htmlspecialchars($recipe->getSlug()) ?>" data-token="<?= htmlspecialchars(Csrf::get("add_comment")) ?>" class="btn btn-primary">Laisser un commentaire</button>
-        </div>
-        <div>
-           <form action="/recette/<?= htmlspecialchars($recipe->getSlug()) ?>/favoris" method="POST">
-                <input type="hidden" name="user" value="<?= $_SESSION['auth_user']['id']; ?>" >
-                <input type="hidden" name="recipe" value="<?= $recipe->getId(); ?>">
-                <button class="btn btn-primary">Ajouter aux favoris</button>
-            </form>
-        </div>
-    </div>
-    <?php endif; ?>
-    <section id="container" class="d-flex justify-content-center mt-2"></section>  
     <section>
-        <?php if(Auth::viewAdmin()): ?>
-        <p>Réservé à l'admin</p>
-        <?php endif; ?>
+        <?php if (Auth::viewAuth()): ?>
+        <div class="d-flex justify-content-between mt-4">
+            <div>
+                <button id="btnPost" data-slug="<?= htmlspecialchars($recipe->getSlug()) ?>" data-token="<?= htmlspecialchars(Csrf::get("add_comment")) ?>" class="btn btn-primary">Laisser un commentaire</button>
+            </div>
+            <div>
+            <form action="/recette/<?= htmlspecialchars($recipe->getSlug()) ?>/favoris" method="POST">
+                    <input type="hidden" name="user" value="<?= $_SESSION['auth_user']['id']; ?>" >
+                    <input type="hidden" name="recipe" value="<?= $recipe->getId(); ?>">
+                    <button class="btn btn-primary">Ajouter aux favoris</button>
+                </form>
+            </div>
+        </div>
+    <?php endif; ?>
     </section>
+    <section id="container" class="d-flex justify-content-center mt-2"></section>  
 </main>
  <script type="text/javascript" src="/assets/scripts/addComment.js"></script>
