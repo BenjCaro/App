@@ -6,4 +6,6 @@ const stateField = document.getElementById('stateField');
 
 const btnEditState = document.getElementById('editState');
 
-edit(formState, [stateField], btnEditState);
+const hiddenSubmitButton = document.getElementById('hiddenSubmit');
+
+edit(formState, [stateField], btnEditState, hiddenSubmitButton);

@@ -43,9 +43,10 @@ use Carbe\App\Services\Auth;
                 </div>
             </div>
         </form>
-        <form class="card col-6" id="formState" action="" method="POST">
+        <form class="card col-6" id="formState" action="/admin/state/recette-<?= htmlspecialchars($recipe->getSlug()) ?>" method="POST">
             <?php $token = Csrf::get("admin_update_recipe");?>
             <input type="hidden" name="_token" value="<?= $token ?>">
+            <input type="hidden" name="id" value="<?= $recipe->getId() ?>">
             <div class="card-body">
                 <div class="mb-2">
                     <label for="state">Etat</label>

@@ -124,4 +124,37 @@ class AdminController extends BaseController  {
         exit;
     }
 
+    public function publishRecipe(int $id, string $slug, string $state) {
+        
+        session_start();
+
+        Auth::isAdmin();
+        $token = $_POST['_token'];
+        Csrf::check('admin_update_recipe', $token, '/recette/' . $slug);
+
+        $state = $_POST['state'];
+        $id = $_POST['id'];
+
+        $recipe = new RecipeModel($this->pdo);
+
+        try { 
+        
+            $recipe->update($id, [
+                'state' => $state
+            ]);
+            Flash::set("La recette  a été publiée.", "primary");
+            header("Location: '/recette/' . $slug");
+            exit;
+
+        } catch(Exception $e) {
+
+            Flash::set("La modifcation a échouée", "secondary");
+            header("Location: '/recette/' . $slug");
+
+
+        }
+
+
+    }
+
 }

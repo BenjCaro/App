@@ -295,3 +295,8 @@ $router->map("POST", "/admin/suppression-recette-[*:id]", function($id){
     $recipe = new AdminController();
     $recipe->deleteRecipe($id);
 });
+
+$router->map("POST", "/admin/state/recette-[*:slug]", function($slug){
+    $recipe = new AdminController();
+    $recipe->publishRecipe($_POST['id'], $slug, $_POST['state']);
+ });
