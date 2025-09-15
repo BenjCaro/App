@@ -221,6 +221,7 @@ public function newRecipe() :?RecipeModel {
          categories.slug AS category_slug 
       FROM recipes 
       JOIN categories ON id_category = categories.id 
+      WHERE recipes.state = 'published'
       ORDER BY createdAt
       DESC LIMIT 1;");
 

@@ -6,6 +6,7 @@ use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\PostModel;
 use Carbe\App\Services\Flash;
 use Carbe\App\Services\Csrf;
+use Carbe\App\Services\Auth;
 
 /** @var \Carbe\App\Models\PostModel[] $posts */
 /** @var \Carbe\App\Models\RecipeModel $recipe */
@@ -29,7 +30,7 @@ use Carbe\App\Services\Csrf;
     <span class="badge text-bg-secondary">Temps de préparation: <?= $recipe->getDuration()?> minutes</span>
     <section>
         <h3 class='mt-3 fs-3 text-center'>Ingrédients</h3>
-        <div class="card bg-gris border border-primary w-50 p-3 mx-auto">
+        <div class="card bg-white border border-primary w-50 p-3 mx-auto">
             <ul class="card-body list-unstyled">
             <?php if(!$recipe->getIngredients()) { ?>
                 <p>La recette n'a pas d'ingrédients.</p>
@@ -52,7 +53,7 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
 ?>
     <section>
         <h3 class="mt-3 fs-3 text-center">Préparation</h3>
-        <div class="card bg-gris border border-primary w-50 p-3 mx-auto">
+        <div class="card bg-white border border-primary w-50 p-3 mx-auto">
             <ol class="card-body">
             <?php if(!$steps) {?>
                 <p>La recette n'a actuellement pas d'étape de préparation.</p>
@@ -83,7 +84,7 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
         <?php endif; ?>
     </section>
 
-    <?php if (isset($_SESSION['auth_user'])): ?>
+    <?php if (Auth::viewAuth()): ?>
     <div class="d-flex justify-content-between mt-4">
         <div>
             <button id="btnPost" data-slug="<?= htmlspecialchars($recipe->getSlug()) ?>" data-token="<?= htmlspecialchars(Csrf::get("add_comment")) ?>" class="btn btn-primary">Laisser un commentaire</button>
@@ -98,5 +99,10 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
     </div>
     <?php endif; ?>
     <section id="container" class="d-flex justify-content-center mt-2"></section>  
+    <section>
+        <?php if(Auth::viewAdmin()): ?>
+        <p>Réservé à l'admin</p>
+        <?php endif; ?>
+    </section>
 </main>
  <script type="text/javascript" src="/assets/scripts/addComment.js"></script>
