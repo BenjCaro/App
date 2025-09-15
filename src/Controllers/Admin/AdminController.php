@@ -92,7 +92,7 @@ class AdminController extends BaseController  {
         Auth::isAdmin();
 
         $recipeModel = new RecipeModel($this->pdo);
-       $recipes = $recipeModel->getAllRecipes();
+        $recipes = $recipeModel->getAllRecipes();
 
         $this->render('all_recipes', [
             'title' => 'Petit Creux | Toutes les recettes',
@@ -100,5 +100,28 @@ class AdminController extends BaseController  {
         ]);
     }
 
+    public function deleteRecipe(int $id) {
+
+        Auth::isAdmin();
+
+        $recipeModel = new RecipeModel($this->pdo);
+        $recipe = $recipeModel->findById($id);
+
+        if(!$recipe) {
+            Flash::set('Recette non trouvée.', 'secondary');
+            exit;
+        }
+
+        try {
+
+            $recipeModel->delete($id);
+            Flash::set("Recette supprimée avec succés !", "primary");
+        } catch(Exception $e) {
+            Flash::set("Erreur dans la suppression", "secondary");
+        }
+
+        header('Location: /admin');
+        exit;
+    }
 
 }

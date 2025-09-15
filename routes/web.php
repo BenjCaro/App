@@ -289,3 +289,9 @@ $router->map("GET", "/admin/toutes-les-recettes", function() {
     $view = new AdminController();
     $view->viewAllRecipes();
 });
+
+$router->map("POST", "/admin/suppression-recette-[*:id]", function($id){
+
+    $recipe = new AdminController();
+    $recipe->deleteRecipe($id);
+});
