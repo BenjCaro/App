@@ -48,8 +48,8 @@ use Carbe\App\Services\Auth;
             <input type="hidden" name="_token" value="<?= $token ?>">
             <div class="card-body">
                 <div class="mb-2">
-                    <label for="">Etat</label>
-                    <select class="form-select bg-gris" name="" id="" disabled>
+                    <label for="state">Etat</label>
+                    <select class="form-select bg-gris" name="state" id="stateField" disabled>
                         <option value="<?= htmlspecialchars($recipe->getState()) ?>">En attente</option>
                         <option value="published">Publier</option>
                     </select>
@@ -138,3 +138,4 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
     <section id="container" class="d-flex justify-content-center mt-2"></section>  
 </main>
  <script type="text/javascript" src="/assets/scripts/addComment.js"></script>
+ <script type="module" src="/assets/scripts/admin/stateRecipe.js"></script>
