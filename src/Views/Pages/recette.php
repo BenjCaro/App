@@ -50,9 +50,10 @@ use Carbe\App\Services\Auth;
             <div class="card-body">
                 <div class="mb-2">
                     <label for="state">Etat</label>
+                    <?php $state = htmlspecialchars($recipe->getState()); ?>
                     <select class="form-select bg-gris" name="state" id="stateField" disabled>
-                        <option value="<?= htmlspecialchars($recipe->getState()) ?>"><?= htmlspecialchars($recipe->getState()) ?></option>
-                        <option value="published">Publier</option>
+                        <option value="<?= $state ?>"> <?= $state ?> </option>
+                        <option value="<?= $state === "published" ? 'pending' : "published" ?>"><?= $state === "published" ? 'pending' : "published" ?></option>
                     </select>
                 </div>
                  <div class="d-flex justify-content-center mb-2 gap-2">
