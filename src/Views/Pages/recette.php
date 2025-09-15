@@ -51,7 +51,7 @@ use Carbe\App\Services\Auth;
                 <div class="mb-2">
                     <label for="state">Etat</label>
                     <select class="form-select bg-gris" name="state" id="stateField" disabled>
-                        <option value="<?= htmlspecialchars($recipe->getState()) ?>">En attente</option>
+                        <option value="<?= htmlspecialchars($recipe->getState()) ?>"><?= htmlspecialchars($recipe->getState()) ?></option>
                         <option value="published">Publier</option>
                     </select>
                 </div>

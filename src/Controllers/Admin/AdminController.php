@@ -143,13 +143,14 @@ class AdminController extends BaseController  {
                 'state' => $state
             ]);
             Flash::set("La recette  a été publiée.", "primary");
-            header("Location: '/recette/' . $slug");
+            header("Location: /recette/" . $slug);
             exit;
+
 
         } catch(Exception $e) {
 
             Flash::set("La modifcation a échouée", "secondary");
-            header("Location: '/recette/' . $slug");
+            header("Location: /recette/" . $slug);
 
 
         }
