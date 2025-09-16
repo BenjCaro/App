@@ -42,7 +42,7 @@ use Carbe\App\Services\Flash;
                         </h3>
                         <span class="badge text-bg-secondary"><?= htmlspecialchars(strval($recipe->getDuration())) . ' minutes' ?></span>
                         <span class="badge text-bg-secondary"><?= $recipe->getCategory()->getName(); ?></span> <br>
-                        <button type="button" class="btn btn-secondary mt-2"><a class="text-black nav-link" href="/recette/<?= $recipe->getSlug()?>">Voir la recette</a></button>
+                        <button type="button" class="btn btn-primary mt-2"><a class="text-black nav-link" href="/recette/<?= $recipe->getSlug()?>">Voir la recette</a></button>
                         <?php } ?>
                     <?php endif; ?>
                     <?php else: ?>
@@ -67,7 +67,7 @@ use Carbe\App\Services\Flash;
                         </h3>
                         <span class="badge text-bg-secondary"><?= $lastRecipe->getDuration() . ' minutes' ?></span>
                         <span class="badge text-bg-secondary"><?=  ucwords($lastRecipe->getCategory()->getName());?></span> <br>
-                       <button type="button" class="btn btn-secondary mt-2"><a class="text-black nav-link" href="/recette/<?= $lastRecipe->getSlug()?>">Voir la recette</a></button>
+                       <button type="button" class="btn btn-primary mt-2"><a class="text-black nav-link" href="/recette/<?= $lastRecipe->getSlug()?>">Voir la recette</a></button>
                     <?php } ?>
                 </div>
             </div>
@@ -85,7 +85,7 @@ use Carbe\App\Services\Flash;
                         </h3>
                         <span class="badge text-bg-secondary"><?= htmlspecialchars(strval($popularRecipe->getDuration())) . ' minutes' ?></span>
                         <span class="badge text-bg-secondary"><?=  ucwords($popularRecipe->getCategory()->getName());?></span> <br>
-                        <button type="button" class="btn btn-secondary mt-2"><a class="text-black nav-link" href="/recette/<?= $popularRecipe->getSlug()?>">Voir la recette</a></button>      
+                        <button type="button" class="btn btn-primary mt-2"><a class="text-black nav-link" href="/recette/<?= $popularRecipe->getSlug()?>">Voir la recette</a></button>      
                         <?php } ?>
                 </div>
             </div>

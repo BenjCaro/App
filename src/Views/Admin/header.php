@@ -32,7 +32,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item fs-5"><a class="nav-link" href="/admin">Tableau de Bord</a></li>
                         <li class="nav-item fs-5"><a class="nav-link" href="/admin/tous-les-utilisateurs">Utilisateurs</a></li>
-                        <li class="nav-item fs-5"><a class="nav-link" href="">Recettes</a></li>
+                        <li class="nav-item fs-5"><a class="nav-link" href="/admin/toutes-les-recettes">Recettes</a></li>
                         <li class="nav-item fs-5"><a class="nav-link" href="">Commentaires</a></li>
                         <li class="nav-item fs-5"><a class="nav-link" href="">Catégories</a></li> 
                         <li class="nav-item fs-5"><a class="nav-link" href="">Ingrédients</a></li>

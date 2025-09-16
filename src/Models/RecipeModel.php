@@ -25,6 +25,7 @@ class RecipeModel extends BaseModel {
     private string $createdAt;
     private int $duration;
     private ?string $description;
+    private string $state;
     private CategoryModel $category;
     private UserModel $user;
 
@@ -99,6 +100,14 @@ public function setDescription(?string $description) :void {
     $this->description = $description;
   }
 
+public function getState() :string {
+    return $this->state;
+}
+
+public function setState(string $state) :void {
+    $this->state = $state;
+}
+
 /** @return RecipeIngredientModel[] $ingredients */
 
   public function getIngredients(): array {
@@ -138,15 +147,20 @@ public function getRecipeBySlug(string $slug) :?RecipeModel {
      recipes.slug,
      recipes.duration, 
      recipes.description,
+     recipes.state,
+     recipes.createdAt,
      ingredients.name,
      ingredients.id,
      recipes_ingredients.quantity,
      recipes_ingredients.unit,
-     categories.name AS category_name
+     categories.name AS category_name,
+     users.name AS user_name,
+     users.firstname AS user_firstname
     FROM recipes 
     LEFT JOIN recipes_ingredients ON recipes.id = recipes_ingredients.id_recipe
     LEFT JOIN ingredients ON ingredients.id = recipes_ingredients.id_ingredient
     JOIN categories ON categories.id = recipes.id_category
+    JOIN users ON users.id = recipes.id_user
     WHERE recipes.slug = :slug");
     $stmt->execute([
        'slug' => $slug
@@ -165,6 +179,8 @@ public function getRecipeBySlug(string $slug) :?RecipeModel {
         'title' => $data[0]['title'],
         'duration' => $data[0]['duration'],
         'description' => $data[0]['description'],
+        'state' => $data[0]['state'],
+        'createdAt' => $data[0]['createdAt']
 
     ]);
 
@@ -191,6 +207,11 @@ public function getRecipeBySlug(string $slug) :?RecipeModel {
     $category->hydrate(['name' =>$row['category_name']]);
     $recipe->setCategory($category);
 
+    $user = new Usermodel($this->pdo);
+    $user->hydrate(['name' => $row['user_name'],
+                    'firstname' => $row['user_firstname']
+    ]);
+    $recipe->setUser($user);
     $recipe->setIngredients($ingredients);
     return $recipe;
 }
@@ -212,6 +233,7 @@ public function newRecipe() :?RecipeModel {
          categories.slug AS category_slug 
       FROM recipes 
       JOIN categories ON id_category = categories.id 
+      WHERE recipes.state = 'published'
       ORDER BY createdAt
       DESC LIMIT 1;");
 
@@ -265,6 +287,7 @@ public function getMostPopularRecipe() :?RecipeModel {
         FROM recipes
         JOIN favoris ON recipes.id = favoris.id_recipe
         JOIN categories ON recipes.id_category = categories.id
+        WHERE recipes.state = 'published'
         GROUP BY recipes.id
         ORDER BY popularity DESC
         LIMIT 1
@@ -341,7 +364,7 @@ public function getAllRecipesWithCategory() :array {
  * @return RecipeModel[]
  */
 public function getAllRecipesByCategory(int $idCategory) :array {
-    $stmt = $this->pdo->prepare('
+    $stmt = $this->pdo->prepare("
     SELECT 
     recipes.id AS recipe_id, 
     recipes.title, 
@@ -355,8 +378,8 @@ public function getAllRecipesByCategory(int $idCategory) :array {
     categories.image 
     FROM `recipes` 
     JOIN categories ON recipes.id_category = categories.id 
-    WHERE categories.id = :id;
-    ');
+    WHERE categories.id = :id AND recipes.state = 'published'"
+    );
 
     $stmt->execute(['id' => $idCategory]);
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -429,6 +452,7 @@ public function getLastestRecipes() :array {
     recipes.id_user, 
     recipes.slug,
     recipes.createdAt, 
+    recipes.state,
     categories.name, 
     categories.id AS category_id,
     users.id AS user_id,
@@ -473,7 +497,65 @@ public function getLastestRecipes() :array {
 
     return $recipes;
 }
+
+/**
+ * 
+ * @return RecipeModel[]|null
+ */
  
+public function getAllRecipes() :array {
+    $stmt = $this->pdo->prepare("SELECT 
+    recipes.id AS recipe_id, 
+    recipes.title, 
+    recipes.id_user, 
+    recipes.slug,
+    recipes.createdAt,
+    recipes.state,
+    categories.name, 
+    categories.id AS category_id,
+    users.id AS user_id,
+    users.name AS user_name,
+    users.firstname AS user_firstname
+    FROM `recipes` 
+    JOIN categories ON recipes.id_category = categories.id 
+    JOIN users ON recipes.id_user = users.id");
+
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $recipes = [];
+
+    
+    $recipes = [];
+
+    foreach($results as $data) {
+
+      $categoryData = ['id' => $data['category_id'],
+                       'name' => $data['name']
+                     ];
+
+      $category = new CategoryModel($this->pdo);
+      $category->hydrate($categoryData);
+
+      $userData = ['id' => $data['user_id'],
+                   'name' => $data['user_name'],
+                   'firstname' => $data['user_firstname']
+                  ];
+     $user = new UserModel($this->pdo);
+     $user->hydrate($userData);
+
+      $recipe = new RecipeModel($this->pdo);
+      $recipe->hydrate($data);
+      $recipe->setCategory($category);
+      $recipe->setUser($user);
+
+      $recipes[] = $recipe;
+
+    }
+
+    return $recipes;
+
+}
  }
 
 

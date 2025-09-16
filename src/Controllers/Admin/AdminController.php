@@ -3,6 +3,7 @@
 namespace Carbe\App\Controllers\Admin;
 
 use Carbe\App\Controllers\BaseController;
+use Carbe\App\Models\RecipeModel;
 use Exception;
 use Carbe\App\Models\UserModel;
 use Carbe\App\Services\Flash;
@@ -11,7 +12,7 @@ use Carbe\App\Services\Auth;
 
 class AdminController extends BaseController  {
 
-        public function viewAllUsers() :void {
+    public function viewAllUsers() :void {
 
         Auth::isAdmin();
         
@@ -26,7 +27,7 @@ class AdminController extends BaseController  {
         ]);
     }
 
-        public function deleteUser(int $id) :void {
+    public function deleteUser(int $id) :void {
 
             
             Auth::isAdmin();
@@ -86,5 +87,75 @@ class AdminController extends BaseController  {
 
     }
 
+    public function viewAllRecipes():void {
+
+        Auth::isAdmin();
+
+        $recipeModel = new RecipeModel($this->pdo);
+        $recipes = $recipeModel->getAllRecipes();
+
+        $this->render('all_recipes', [
+            'title' => 'Petit Creux | Toutes les recettes',
+            'recipes' => $recipes
+        ]);
+    }
+
+    public function deleteRecipe(int $id) {
+
+        Auth::isAdmin();
+
+        $recipeModel = new RecipeModel($this->pdo);
+        $recipe = $recipeModel->findById($id);
+
+        if(!$recipe) {
+            Flash::set('Recette non trouvée.', 'secondary');
+            exit;
+        }
+
+        try {
+
+            $recipeModel->delete($id);
+            Flash::set("Recette supprimée avec succés !", "primary");
+        } catch(Exception $e) {
+            Flash::set("Erreur dans la suppression", "secondary");
+        }
+
+        header('Location: /admin');
+        exit;
+    }
+
+    public function publishRecipe(int $id, string $slug, string $state) {
+        
+        session_start();
+
+        Auth::isAdmin();
+        $token = $_POST['_token'];
+        Csrf::check('admin_update_recipe', $token, '/recette/' . $slug);
+
+        $state = $_POST['state'];
+        $id = $_POST['id'];
+
+        $recipe = new RecipeModel($this->pdo);
+
+        try { 
+        
+            $recipe->update($id, [
+                'state' => $state
+            ]);
+            Flash::set("Le statut de la recette a ete modifié.", "primary");
+            header("Location: /recette/" . $slug);
+            exit;
+
+
+        } catch(Exception $e) {
+
+            Flash::set("La modifcation a échouée", "secondary");
+            header("Location: /recette/" . $slug);
+
+
+        }
+
+
+    }
 
 }

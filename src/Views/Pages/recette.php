@@ -6,6 +6,7 @@ use Carbe\App\Models\RecipeModel;
 use Carbe\App\Models\PostModel;
 use Carbe\App\Services\Flash;
 use Carbe\App\Services\Csrf;
+use Carbe\App\Services\Auth;
 
 /** @var \Carbe\App\Models\PostModel[] $posts */
 /** @var \Carbe\App\Models\RecipeModel $recipe */
@@ -27,9 +28,47 @@ use Carbe\App\Services\Csrf;
     <h2 class='text-center fs-2 mb-3'><?= $recipe->getTitle() ?>  </h2>
     <span class="badge text-bg-secondary"> <?= $recipe->getCategory()->getName()?></span>
     <span class="badge text-bg-secondary">Temps de préparation: <?= $recipe->getDuration()?> minutes</span>
+    <?php if (Auth::viewAdmin()): ?>
+        <section class="row d-flex flex-column align-items-center justify-content-center gap-2">
+        <h3 class="text-center">Informations</h3>
+        <form class="card col-6" action="">
+            <div class="card-body">
+                <div class="mb-2">
+                    <label for="">Créateur</label>
+                    <input type="text" class="form-control bg-gris" value="<?= htmlspecialchars($recipe->getUser()->getName())?> <?= htmlspecialchars($recipe->getUser()->getFirstname())?>">
+                </div>
+                <div>
+                    <label for="">Date de création</label>
+                    <input type="text" class="form-control bg-gris" value="<?= htmlspecialchars($recipe->getCreatedAt())?>">
+                </div>
+            </div>
+        </form>
+        <form class="card col-6" id="formState" action="/admin/state/recette-<?= htmlspecialchars($recipe->getSlug()) ?>" method="POST">
+            <?php $token = Csrf::get("admin_update_recipe");?>
+            <input type="hidden" name="_token" value="<?= $token ?>">
+            <input type="hidden" name="id" value="<?= $recipe->getId() ?>">
+            <div class="card-body">
+                <div class="mb-2">
+                    <label for="state">Etat</label>
+                    <?php $state = htmlspecialchars($recipe->getState()); ?>
+                    <select class="form-select bg-gris" name="state" id="stateField" disabled>
+                        <option value="<?= $state ?>"> <?= $state ?> </option>
+                        <option value="<?= $state === "published" ? 'pending' : "published" ?>"><?= $state === "published" ? 'pending' : "published" ?></option>
+                    </select>
+                </div>
+                 <div class="d-flex justify-content-center mb-2 gap-2">
+                    <button type="button" id="editState" class="btn btn-sm btn-primary"><?= $state === "published" ? "Mettre en attente" : "Autoriser la publication" ?></button>
+                    <button type="submit" id="hiddenSubmit" class="d-none"></button>
+                </div>
+            </div>    
+        </form>
+        <form id="" action="/admin/suppression-recette-<?= $recipe->getId()?>" method="POST" class="card col-12 col-md-8 col-lg-6 p-4 shadow">
+            <button type="submit" class="btn btn-sm btn-secondary">Supprimer cette recette </button>
+        </form>
+    <?php endif; ?>
     <section>
         <h3 class='mt-3 fs-3 text-center'>Ingrédients</h3>
-        <div class="card bg-gris border border-primary w-50 p-3 mx-auto">
+        <div class="card bg-white border border-primary w-50 p-3 mx-auto">
             <ul class="card-body list-unstyled">
             <?php if(!$recipe->getIngredients()) { ?>
                 <p>La recette n'a pas d'ingrédients.</p>
@@ -52,7 +91,7 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
 ?>
     <section>
         <h3 class="mt-3 fs-3 text-center">Préparation</h3>
-        <div class="card bg-gris border border-primary w-50 p-3 mx-auto">
+        <div class="card bg-white border border-primary w-50 p-3 mx-auto">
             <ol class="card-body">
             <?php if(!$steps) {?>
                 <p>La recette n'a actuellement pas d'étape de préparation.</p>
@@ -82,21 +121,23 @@ $steps = json_decode($recipe->getDescription(), true); // true pour avoir un tab
             <?php endforeach; ?>
         <?php endif; ?>
     </section>
-
-    <?php if (isset($_SESSION['auth_user'])): ?>
-    <div class="d-flex justify-content-between mt-4">
-        <div>
-            <button id="btnPost" data-slug="<?= htmlspecialchars($recipe->getSlug()) ?>" data-token="<?= htmlspecialchars(Csrf::get("add_comment")) ?>" class="btn btn-primary">Laisser un commentaire</button>
+    <section>
+        <?php if (Auth::viewAuth()): ?>
+        <div class="d-flex justify-content-between mt-4">
+            <div>
+                <button id="btnPost" data-slug="<?= htmlspecialchars($recipe->getSlug()) ?>" data-token="<?= htmlspecialchars(Csrf::get("add_comment")) ?>" class="btn btn-primary">Laisser un commentaire</button>
+            </div>
+            <div>
+            <form action="/recette/<?= htmlspecialchars($recipe->getSlug()) ?>/favoris" method="POST">
+                    <input type="hidden" name="user" value="<?= $_SESSION['auth_user']['id']; ?>" >
+                    <input type="hidden" name="recipe" value="<?= $recipe->getId(); ?>">
+                    <button class="btn btn-primary">Ajouter aux favoris</button>
+                </form>
+            </div>
         </div>
-        <div>
-           <form action="/recette/<?= htmlspecialchars($recipe->getSlug()) ?>/favoris" method="POST">
-                <input type="hidden" name="user" value="<?= $_SESSION['auth_user']['id']; ?>" >
-                <input type="hidden" name="recipe" value="<?= $recipe->getId(); ?>">
-                <button class="btn btn-primary">Ajouter aux favoris</button>
-            </form>
-        </div>
-    </div>
     <?php endif; ?>
+    </section>
     <section id="container" class="d-flex justify-content-center mt-2"></section>  
 </main>
  <script type="text/javascript" src="/assets/scripts/addComment.js"></script>
+ <script type="module" src="/assets/scripts/admin/stateRecipe.js"></script>

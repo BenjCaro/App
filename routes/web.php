@@ -280,6 +280,23 @@ $router->map("GET", '/admin/tous-les-utilisateurs', function(){
 
 $router->map("GET", "/admin/search", function(){
         
-        $search = new SearchController();
-        $search->adminQuery();
+    $search = new SearchController();
+    $search->adminQuery();
 });
+
+$router->map("GET", "/admin/toutes-les-recettes", function() {
+    
+    $view = new AdminController();
+    $view->viewAllRecipes();
+});
+
+$router->map("POST", "/admin/suppression-recette-[*:id]", function($id){
+
+    $recipe = new AdminController();
+    $recipe->deleteRecipe($id);
+});
+
+$router->map("POST", "/admin/state/recette-[*:slug]", function($slug){
+    $recipe = new AdminController();
+    $recipe->publishRecipe($_POST['id'], $slug, $_POST['state']);
+ });

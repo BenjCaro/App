@@ -25,7 +25,7 @@ use Carbe\App\Services\Flash;
         <h3 class="text-center mt-4 mb-4">Derniers Utilisateurs</h3>
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
-                <thead class="table-light">
+                <thead class="table-secondary">
                     <tr>
                         <th>Date d'inscription</th>
                         <th>Nom</th>
@@ -54,11 +54,12 @@ use Carbe\App\Services\Flash;
         <h3 class="text-center mt-4 mb-4">Dernieres Recettes</h3>
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
-                <thead class="table-light">
+                <thead class="table-secondary">
                     <tr>
                         <th>Createur</th>
                         <th>Catégorie</th>
                         <th>Titre</th>
+                        <th>Statut</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -68,6 +69,7 @@ use Carbe\App\Services\Flash;
                         <td><?= htmlspecialchars($recipe->getUser()->getName()) . ' ' .htmlspecialchars($recipe->getUser()->getFirstname()) ?></td>
                         <td><?= htmlspecialchars($recipe->getCategory()->getName()) ?></td>
                         <td><?= htmlspecialchars($recipe->getTitle()) ?></td>
+                        <td><?= htmlspecialchars($recipe->getState()) ?></td>
                         <td><a href="/recette/<?= urlencode($recipe->getSlug()) ?>">Voir recette</a></td>
                     </tr>
                     <?php } ?>
@@ -79,7 +81,7 @@ use Carbe\App\Services\Flash;
         <h3 class="text-center mt-4 mb-4">Derniers Commentaires</h3>
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
-                <thead class="table-light">
+                <thead class="table-secondary">
                     <tr>
                         <th>Date</th>
                         <th>Rédacteur</th>
