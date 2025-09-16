@@ -3,7 +3,9 @@
 namespace Carbe\App\Views\Admin; ?>
 
 <section class="row d-flex justify-content-center">
-        <h1 class="text-center">Résultat(s)</h1>
+    <h1 class="text-center">Résultat(s)</h1>
+
+    <?php if (!empty($results)) : ?>
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <thead class="table-light">
@@ -16,17 +18,21 @@ namespace Carbe\App\Views\Admin; ?>
                     </tr>
                 </thead>
                 <tbody>
-                  <?php if(!empty($results)) {
-                     foreach($results as $user) {  ?>
-                           <tr>
-                              <td><?= htmlspecialchars($user->getCreatedAt()) ?></td>
-                              <td><?= htmlspecialchars($user->getName()) ?></td>
-                              <td><?= htmlspecialchars($user->getFirstName()) ?></td>
-                              <td><?= htmlspecialchars($user->getEmail()) ?></td>
-                              <td><a href="/admin/profil/utilisateur-<?= $user->getId() ?>">Voir plus</a></td>                  
-                           </tr>
-         <?php   }} ?>
+                    <?php foreach ($results as $user) : ?>
+                        <tr>
+                            <td><?= htmlspecialchars($user->getCreatedAt()) ?></td>
+                            <td><?= htmlspecialchars($user->getName()) ?></td>
+                            <td><?= htmlspecialchars($user->getFirstName()) ?></td>
+                            <td><?= htmlspecialchars($user->getEmail()) ?></td>
+                            <td>
+                                <a href="/admin/profil/utilisateur-<?= urlencode($user->getId()) ?>">Voir plus</a>
+                            </td>                  
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
-    </section>
+    <?php else : ?>
+        <p class="text-center">Aucun utilisateur trouvé.</p>
+    <?php endif; ?>
+</section>
