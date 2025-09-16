@@ -12,10 +12,15 @@ use Carbe\App\Services\Flash;
     <?php }
     ?>
     <h1 class="text-center">Recettes</h1>
-    <section class="mb-4 d-flex justify-content-center">
-        <form method="get" action="" class="w-50">
+     <section class="mb-4 d-flex justify-content-center">
+        <form method="get" action="/admin/search" class="w-50">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Rechercher une recette" name="q" required>
+                <input type="text" class="form-control" placeholder="Recherche" name="q" required>
+                <select class="form-select" name="type">
+                    <option value="recipe">Recette</option>
+                    <option value="user">Utilisateur</option>
+                    <option value="category">Catégorie</option>
+                </select>
                 <button class="btn btn-primary" type="submit">🔍</button>
             </div>
         </form>

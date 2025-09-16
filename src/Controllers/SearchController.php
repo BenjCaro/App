@@ -3,52 +3,91 @@
 namespace Carbe\App\Controllers;
 use Carbe\App\Models\SearchModel;
 use Carbe\App\Models\UserModel;
+use Carbe\App\Models\RecipeModel;
 use Carbe\App\Services\Auth;
 
 class SearchController extends BaseController {
    
     public function query() :void {
-        $search = $_GET['q'] ?? '';
-
-        $model = new SearchModel($this->pdo);
-
         
-        $recipes = [];
+        $search = $_GET['q'] ?? '';
+        $type = $_GET['type'] ?? 'recipe';
+       
+        $results = [];
         $totalResults = 0;
 
         if ($search) {
-            $data = $model->getRecipeWithTitle($search);
-            $recipes = $data['recipes'];
-            $totalResults = $data['totalResults'];
+            
+            switch($type) {
+                case "recipe":
+                    $model = new SearchModel($this->pdo);
+                    $data = $model->getRecipeWithTitle($search);
+                    $results = $data['recipes'];
+                    $totalResults = $data['totalResults'];
+                    break;
+                
+                case "ingredient":
+                    //
+                    //
+                    break;
+                
+                case "category":
+                    //
+                    //
+                    break;
+
+                default:
+                  $results = [];
+            }
+            
         }
 
         $this->render('Pages/search', [
             'title' => 'Petit Creux | Résultats de recherches',
-            'results' => $recipes,
+            'results' => $results,
             'totalResults' => $totalResults,
             'search' => $search
         ]);
     }
 
-    public function adminQuery() :void {
+    public function adminQuery() :void
+{
+    Auth::isAdmin();
 
-        Auth::isAdmin();
+    $search = $_GET["q"] ?? "";
+    $type   = $_GET["type"] ?? "user"; // valeur par défaut
 
-        $search = $_GET["q"] ?? "";
+    $results = [];
+    
 
-        $query = new UserModel($this->pdo);
+    if ($search) {
+        switch ($type) {
+            case "user":
+                $model = new UserModel($this->pdo);
+                $results = $model->findUserWithName($search);
+                break;
 
-        $users = [];
+            case "recipe":
+                $model = new RecipeModel($this->pdo);
+                $results = $model->searchRecipeWithTitle($search);
+                break;
 
-        if($search) {
-            $users = $query->findUserWithName($search);
-            
+            // case "category":
+            //     $model = new CategoryModel($this->pdo);
+            //     $results = $model->findCategoryWithName($search);
+            //     break;
+
+            default:
+                $results = [];
         }
-
-        $this->render('search_user', [
-            "title" => 'Petit Creux | Résultats de la recherche',
-            'users' => $users
-        ]);
     }
+
+    $this->render('search_results', [
+        "title"   => 'Petit Creux | Résultats de la recherche',
+        "type"    => $type,
+        "results" => $results
+    ]);
+}
+
 }
 

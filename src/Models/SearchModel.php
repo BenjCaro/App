@@ -23,7 +23,7 @@ class SearchModel extends BaseModel {
             COUNT(*) OVER() AS total_results
             FROM recipes
             JOIN categories ON categories.id = recipes.id_category
-            WHERE recipes.title LIKE :search;
+            WHERE recipes.title LIKE :search AND recipes.state = 'published';
         ");
         $stmt->execute(['search' => "%$search%"]);
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
