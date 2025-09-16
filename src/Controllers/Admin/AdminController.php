@@ -142,7 +142,7 @@ class AdminController extends BaseController  {
             $recipe->update($id, [
                 'state' => $state
             ]);
-            Flash::set("La recette  a été publiée.", "primary");
+            Flash::set("Le statut de la recette a ete modifié.", "primary");
             header("Location: /recette/" . $slug);
             exit;
 

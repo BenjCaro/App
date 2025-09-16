@@ -57,7 +57,7 @@ use Carbe\App\Services\Auth;
                     </select>
                 </div>
                  <div class="d-flex justify-content-center mb-2 gap-2">
-                    <button type="button" id="editState" class="btn btn-sm btn-primary">Autoriser la publication</button>
+                    <button type="button" id="editState" class="btn btn-sm btn-primary"><?= $state === "published" ? "Mettre en attente" : "Autoriser la publication" ?></button>
                     <button type="submit" id="hiddenSubmit" class="d-none"></button>
                 </div>
             </div>    
