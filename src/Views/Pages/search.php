@@ -15,19 +15,23 @@ use Carbe\App\Models\RecipeModel;
         pour « <?= htmlspecialchars($search) ?> »
     </h2>
     <?php if($results) { ?>
-        <?php foreach($results as $result) {  ?>
-                <div>
-                    <h3 class="card-subtitle text-body-secondary fs-4 mt-2 mb-2"> 
-                                <?= $result->getTitle()?>
+        <div class="row g-3">
+            <?php foreach($results as $result) {  ?>
+                <div class="col-md-4">
+                    <div class="card h-100 bg-white border border-secondary p-2 d-flex flex-column justify-content-end">
+                        <h3 class="card-subtitle text-body-secondary fs-4 mt-2 mb-2"> 
+                            <?= $result->getTitle()?>
                         </h3>
-                        <span class="badge text-bg-secondary"><?= htmlspecialchars(strval($result->getDuration())) . ' minutes' ?></span>
+                        <span class="badge text-bg-secondary mb-1"><?= htmlspecialchars(strval($result->getDuration())) . ' minutes' ?></span>
                         <span class="badge text-bg-secondary"><?= $result->getCategory()->getName(); ?></span> <br>
-                        <button type="button" class="btn btn-secondary mt-2"><a class="text-black nav-link" href="/recette/<?= $result->getSlug()?>">Voir la recette</a></button>
-                </div>
-                        <?php } ?>
+                        <button type="button" class="btn btn-primary mt-2"><a class="text-black nav-link" href="/recette/<?= $result->getSlug()?>">Voir la recette</a></button>
+                    </div>
+                </div>      
+            <?php } ?>
+        </div>
         
     <?php } else { ?>
-         <div>Pas de résultats</div>
+         <div class="text-center">Aucun résultat.</div>
      <?php }   ?>
     
 
