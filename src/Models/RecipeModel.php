@@ -525,9 +525,6 @@ public function getAllRecipes() :array {
 
     $recipes = [];
 
-    
-    $recipes = [];
-
     foreach($results as $data) {
 
       $categoryData = ['id' => $data['category_id'],
@@ -556,6 +553,65 @@ public function getAllRecipes() :array {
     return $recipes;
 
 }
+
+/**
+ * 
+ * @return RecipeModel[]|null
+ */
+
+public function searchRecipeWithTitle(string $search) :?array {  
+    $stmt = $this->pdo->prepare("SELECT
+     recipes.id AS recipe_id, 
+     recipes.title, 
+     recipes.slug,
+     recipes.duration, 
+     recipes.description,
+     recipes.state,
+     recipes.createdAt,
+     categories.name AS category_name,
+     users.name AS user_name,
+     users.firstname AS user_firstname
+    FROM recipes 
+    JOIN categories ON categories.id = recipes.id_category
+    JOIN users ON users.id = recipes.id_user
+    WHERE LOWER(title) LIKE LOWER(:search)");
+
+    $stmt->execute([
+       'search' => "%$search%"
+    ]);
+
+   $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  
+   if (!$data) {
+       return null;
+    }
+
+    $recipes = [];
+
+    foreach($data as $row) {
+        $recipe = new RecipeModel($this->pdo);
+        $recipe->hydrate($row);
+
+        $category = new CategoryModel($this->pdo);
+        $category->hydrate([
+            "name" => $row['category_name']
+        ]);
+
+        $recipe->setCategory($category);
+
+        $user = new UserModel($this->pdo);
+        $user->hydrate([
+            "name" => $row['user_name'],
+            "firstname" => $row['user_firstname']
+        ]);
+
+        $recipe->setUser($user);
+        $recipes[] = $recipe;
+    }
+
+        return $recipes;
+
+    }
  }
 
 

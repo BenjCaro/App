@@ -3,6 +3,7 @@
 namespace Carbe\App\Controllers;
 use Carbe\App\Models\SearchModel;
 use Carbe\App\Models\UserModel;
+use Carbe\App\Models\RecipeModel;
 use Carbe\App\Services\Auth;
 
 class SearchController extends BaseController {
@@ -35,7 +36,7 @@ class SearchController extends BaseController {
     Auth::isAdmin();
 
     $search = $_GET["q"] ?? "";
-    $type   = $_GET["type"] ?? "user"; // 👈 valeur par défaut
+    $type   = $_GET["type"] ?? "user"; // valeur par défaut
 
     $results = [];
 
@@ -47,14 +48,14 @@ class SearchController extends BaseController {
                 break;
 
             case "recipe":
-                // $model = new RecipeModel($this->pdo);
-              //  $results = $model->findRecipeWithName($search);
+                $model = new RecipeModel($this->pdo);
+                $results = $model->searchRecipeWithTitle($search);
                 break;
 
-            case "category":
-              //  $model = new CategoryModel($this->pdo);
-               // $results = $model->findCategoryWithName($search);
-                break;
+            // case "category":
+            //     $model = new CategoryModel($this->pdo);
+            //     $results = $model->findCategoryWithName($search);
+            //     break;
 
             default:
                 $results = [];
