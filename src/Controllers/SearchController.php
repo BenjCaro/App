@@ -30,25 +30,43 @@ class SearchController extends BaseController {
         ]);
     }
 
-    public function adminQuery() :void {
+    public function adminQuery() :void
+{
+    Auth::isAdmin();
 
-        Auth::isAdmin();
+    $search = $_GET["q"] ?? "";
+    $type   = $_GET["type"] ?? "user"; // 👈 valeur par défaut
 
-        $search = $_GET["q"] ?? "";
+    $results = [];
 
-        $query = new UserModel($this->pdo);
+    if ($search) {
+        switch ($type) {
+            case "user":
+                $model = new UserModel($this->pdo);
+                $results = $model->findUserWithName($search);
+                break;
 
-        $users = [];
+            case "recipe":
+                // $model = new RecipeModel($this->pdo);
+              //  $results = $model->findRecipeWithName($search);
+                break;
 
-        if($search) {
-            $users = $query->findUserWithName($search);
-            
+            case "category":
+              //  $model = new CategoryModel($this->pdo);
+               // $results = $model->findCategoryWithName($search);
+                break;
+
+            default:
+                $results = [];
         }
-
-        $this->render('search_user', [
-            "title" => 'Petit Creux | Résultats de la recherche',
-            'users' => $users
-        ]);
     }
+
+    $this->render('search_results', [
+        "title"   => 'Petit Creux | Résultats de la recherche',
+        "type"    => $type,
+        "results" => $results
+    ]);
+}
+
 }
 

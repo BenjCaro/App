@@ -17,14 +17,14 @@ namespace Carbe\App\Views\Admin;
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if(!empty($users)) {
-                     foreach($users as $user) {  ?>
+                    <?php if(!empty($results)) {
+                     foreach($results as $result) {  ?>
                         <tr>
-                            <td><?= htmlspecialchars($user->getCreatedAt()) ?></td>
-                            <td><?= htmlspecialchars($user->getName()) ?></td>
-                            <td><?= htmlspecialchars($user->getFirstName()) ?></td>
-                            <td><?= htmlspecialchars($user->getEmail()) ?></td>
-                            <td><a href="/admin/profil/utilisateur-<?= $user->getId() ?>">Voir plus</a></td>  
+                            <td><?= htmlspecialchars($result->getCreatedAt()) ?></td>
+                            <td><?= htmlspecialchars($result->getName()) ?></td>
+                            <td><?= htmlspecialchars($result->getFirstName()) ?></td>
+                            <td><?= htmlspecialchars($result->getEmail()) ?></td>
+                            <td><a href="/admin/profil/utilisateur-<?= $result->getId() ?>">Voir plus</a></td>  
                         </tr>
                         
                      <?php   }} ?>
