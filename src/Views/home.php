@@ -22,9 +22,8 @@ use Carbe\App\Services\Flash;
         <form method="get" action="/search" class="w-50">
             <div class="input-group">
                 <select class="form-select" name="type">
-                    <option value="recipe">Recette</option>
-                    <option value="category">Catégorie</option>
-                    <option value="ingredient">Ingrédient</option>
+                    <option value="recipe">Recherche par Recette</option>
+                    <option value="ingredient">Recherche par Ingrédient</option>
                 </select>
                 <input type="text" class="form-control" placeholder="Recherche" name="q" required>
                 <button class="btn btn-primary" type="submit">🔍</button>
@@ -103,14 +102,16 @@ use Carbe\App\Services\Flash;
                         <?php foreach($categories as $category)  { ?>
                         <div class="d-flex flex-column justify-content-center mt-2">
                             <a class="text-secondary text-cacao nav-link" href="/categories/<?= $category->getSlug(); ?>"><?= ucwords($category->getName());?></a>
-                            <img class="icone" alt="icone <?=$category->getName(); ?>" src="/assets/images/<?= $category->getImage();?>"/>
+                            <img class="icone" alt="icone <?=$category->getName(); ?>" src="/assets/images/categories/<?= $category->getImage();?>"/>
                         </div>
                     <?php    } ?>   
                     </div>    
                 </div>
             </div>
         </section>
-        <a href="/ajout-recette">Ajouter une recette</a>
+        <button class="btn btn-dark w-50">
+            <a class="nav-link" href="/ajout-recette">Partager une recette avec nous</a>
+        </button>
     </div>
    
      
