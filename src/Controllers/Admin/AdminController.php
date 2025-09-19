@@ -3,6 +3,7 @@
 namespace Carbe\App\Controllers\Admin;
 
 use Carbe\App\Controllers\BaseController;
+use Carbe\App\Models\CategoryModel;
 use Carbe\App\Models\RecipeModel;
 use Exception;
 use Carbe\App\Models\UserModel;
@@ -44,13 +45,14 @@ class AdminController extends BaseController  {
                 
                 $userModel->delete($id);
                 Flash::set("Utilisateur supprimé avec succés !", "primary");
-              
+                exit;
             }
 
             catch(Exception $e) {
 
-                Flash::set("Erreur dans la suppression", "secondary");        
-        }
+                Flash::set("Erreur dans la suppression", "secondary");  
+                exit;      
+        }   
         
         header('Location: /admin');
         exit;
@@ -157,5 +159,75 @@ class AdminController extends BaseController  {
 
 
     }
+    
+   /**
+   * Ajouter une catégorie via un formulaire présent dans le panneau ADMIN
+   * 
+   * 
+   */
+
+    public function createCategory(array $data) :void {
+
+       session_start();
+       Auth::isAdmin();
+
+      
+       // $token = $data['_token'];
+
+        // Csrf::check();
+       $name = trim($data['name']);
+       $slug = trim($data['slug']);
+
+       // gérer l'image et l'ajouter dans categoryData
+       
+       $categoryData = [
+        'name' => $name,
+        'slug' => $slug
+       ];
+       
+      try {
+        $model = new CategoryModel($this->pdo);
+        $model->insert($categoryData);
+
+        Flash::set("Ajout de la catégorie réussi.", "primary");
+        header("Location: /admin");
+        exit;
+
+      } catch(Exception $e) {
+         
+        Flash::set("Catégorie non ajoutée.", "secondary");
+        // prévoir la redirection
+        // exit;
+      }
+
+
+
+    }
+
+    // supprimer une catégorie
+
+    public function deleteCategory(int $id) :void {
+        Auth::isAdmin();
+
+        $categoryModel = new CategoryModel($this->pdo);
+        $category= $categoryModel->findById($id);
+
+        if(!$category) {
+            Flash::set('Catégorie non trouvée.', 'secondary');
+            exit;
+        }
+
+        try {
+            $categoryModel->delete($id);
+            Flash::set("Utilisateur supprimé avec succés !", "primary");
+            exit;
+        } catch(Exception $e) {
+
+            Flash::set("Erreur dans la suppression", "secondary");  
+            exit;   
+        } 
+    }
+
+    // modifier une catégorie
 
 }
