@@ -207,6 +207,8 @@ class AdminController extends BaseController  {
     // supprimer une catégorie
 
     public function deleteCategory(int $id) :void {
+        
+        session_start();
         Auth::isAdmin();
 
         $categoryModel = new CategoryModel($this->pdo);
