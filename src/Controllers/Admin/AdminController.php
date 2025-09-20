@@ -178,6 +178,14 @@ class AdminController extends BaseController  {
        $name = trim($data['name']);
        $slug = trim($data['slug']);
 
+       $categoryModel = new CategoryModel($this->pdo);
+       $category = $categoryModel->getCatByName($name);
+
+       if($category) {
+            Flash::set('La catégorie existe déja', 'secondary');
+            exit;
+       }
+
        // gérer l'image et l'ajouter dans categoryData
        
        $categoryData = [
@@ -231,5 +239,47 @@ class AdminController extends BaseController  {
     }
 
     // modifier une catégorie
+
+    public function updateCategory(int $id, array $data) :void {
+
+        session_start();
+        Auth::isAdmin();
+
+        // $token = $_POST['token'];
+        // Csrf::check();
+        $name = trim($data['name']);
+        $slug = trim($data['slug']);
+
+        $categoryModel = new CategoryModel($this->pdo);
+        $category = $categoryModel->getCatByName($name);
+
+        if($category && $category['id'] !== $id) {
+                Flash::set('La catégorie existe déja', 'secondary');
+                exit;
+        }
+
+        $categoryData = [
+        'name' => $name,
+        'slug' => $slug
+       ];
+
+       try {
+
+        $model = new CategoryModel($this->pdo);
+        $model->update($id ,$categoryData);
+
+        Flash::set("Modification de la catégorie réussie.", "primary");
+        header("Location: /admin");
+        exit;
+
+       } catch(Exception $e) {
+            Flash::set("Catégorie non modifiée.", "secondary");
+            // prévoir la redirection
+            // exit;
+       }
+
+
+        
+    }
 
 }
