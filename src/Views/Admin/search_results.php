@@ -22,7 +22,7 @@ namespace Carbe\App\Views\Admin;
         <?php elseif ($type === "recipe"): ?>
             <?php include 'search_recipes.php'; ?>
         <?php elseif ($type === "category"): ?>
-            <?php include 'partials/search_categories.php'; ?>
+            <?php include 'search_categories.php'; ?>
         <?php endif; ?>   
    </section>
     

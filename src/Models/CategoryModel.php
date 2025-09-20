@@ -96,4 +96,35 @@ public function getCatByName(string $name) :array|false
       return $results ?: false;
 
  }
+
+
+ /**
+  * 
+  * @return CategoryModel[]
+  */
+
+public function findCategoryWithName($search) :array {
+    $stmt = $this->pdo->prepare("SELECT
+        categories.name 
+        FROM categories
+        WHERE name LIKE :search;
+    ");
+
+    $stmt->execute(['search' => "%$search%"]);
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $categories = [];
+
+    foreach($results as $data) {
+       $category = new CategoryModel($this->pdo);
+       $category->hydrate($data);
+       $categories[] = $category;
+
+    }
+
+    return $categories;
+
+
+}
+
 }
