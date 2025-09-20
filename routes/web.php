@@ -7,6 +7,7 @@ use Carbe\App\Controllers\RecipeController;
 use Carbe\App\Controllers\AboutController;
 use Carbe\App\Controllers\AddRecipe;
 use Carbe\App\Controllers\Admin\AdminController;
+use Carbe\App\Controllers\Admin\AllCategoriesController;
 use Carbe\App\Controllers\Admin\DashboardController;
 use Carbe\App\Controllers\Admin\ProfileUserController;
 use Carbe\App\Controllers\AuthController;
@@ -17,6 +18,8 @@ use Carbe\App\Controllers\SearchController;
 use Carbe\App\Controllers\SigninController;
 use Carbe\App\Controllers\UpdateRecipeController;
 use Carbe\App\Controllers\UserController;
+use Carbe\App\Controllers\Admin\AllUsersController;
+use Carbe\App\Models\CategoryModel;
 use Carbe\App\Models\SearchModel;
 use Carbe\App\Models\UserModel;
 
@@ -273,7 +276,7 @@ $router->map('POST', '/admin/profil/suppr-utilisateur-[*:id]', function($id) {
 
 $router->map("GET", '/admin/tous-les-utilisateurs', function(){
      
-    $view = new AdminController();
+    $view = new AllUsersController;
     $view->viewAllUsers();
 });
 
@@ -299,4 +302,9 @@ $router->map("POST", "/admin/suppression-recette-[*:id]", function($id){
 $router->map("POST", "/admin/state/recette-[*:slug]", function($slug){
     $recipe = new AdminController();
     $recipe->publishRecipe($_POST['id'], $slug, $_POST['state']);
+ });
+
+ $router->map("GET", "/admin/categories", function() {
+    $view = new AllCategoriesController();
+    $view->index();
  });
