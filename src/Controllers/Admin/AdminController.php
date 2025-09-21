@@ -154,10 +154,7 @@ class AdminController extends BaseController  {
             Flash::set("La modifcation a échouée", "secondary");
             header("Location: /recette/" . $slug);
 
-
         }
-
-
     }
     
    /**
@@ -209,9 +206,6 @@ class AdminController extends BaseController  {
         // prévoir la redirection
         // exit;
       }
-
-
-
     }
 
     // supprimer une catégorie
