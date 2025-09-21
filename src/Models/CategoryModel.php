@@ -11,6 +11,7 @@ class CategoryModel extends BaseModel {
     private string $name;
     private string $slug;
     private ?string $image;
+    private int $totalRecipes = 0;
 
   /**
  * @param array<string, mixed> $data
@@ -39,11 +40,19 @@ class CategoryModel extends BaseModel {
      return $this->slug;
   }
 
+  public function getTotalRecipes() :int {
+    return $this->totalRecipes;
+  }
+
+  public function setTotalRecipes(int $totalRecipes):void {
+    $this->totalRecipes = $totalRecipes;
+  }
+
   public function setSlug(string $slug) : void {
      $this->slug = $slug;
   }
 
-  public function getImage() :string {
+  public function getImage() :?string {
     return $this->image;
   }
 
@@ -104,10 +113,13 @@ public function getCatByName(string $name) :array|false
   */
 
 public function findCategoryWithName($search) :array {
-    $stmt = $this->pdo->prepare("SELECT
-        categories.name 
-        FROM categories
-        WHERE name LIKE :search;
+    $stmt = $this->pdo->prepare("
+         SELECT categories.name,
+         COUNT(recipes.id) AS total_recipes
+         FROM categories
+         LEFT JOIN recipes ON recipes.id_category = categories.id
+         WHERE name LIKE :search
+         GROUP BY categories.name;
     ");
 
     $stmt->execute(['search' => "%$search%"]);
@@ -118,11 +130,45 @@ public function findCategoryWithName($search) :array {
     foreach($results as $data) {
        $category = new CategoryModel($this->pdo);
        $category->hydrate($data);
+       $category->setTotalRecipes($data['total_recipes']);
        $categories[] = $category;
 
     }
 
     return $categories;
+
+}
+
+/**
+ * Méthode permettant d'afficher le nombre de recettes par catégorie
+ * LEFT JOIN permet d'afficher les catégories sans recette
+ * @return CategoryModel[]
+ */
+
+public function countRecipesByCat() :array {
+      $stmt = $this->pdo->prepare("
+         SELECT categories.name, categories.slug,
+         COUNT(recipes.id) AS total_recipes
+         FROM categories
+         LEFT JOIN recipes ON recipes.id_category = categories.id
+         GROUP BY categories.id, categories.name;
+      ");
+      $stmt->execute();
+
+      $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      $categories = [];
+
+      foreach($results as $data) {
+        $category = new CategoryModel($this->pdo);
+        $category->hydrate($data);
+       // $category->setTotalRecipes($data['total_recipes']);
+
+        $categories[] = $category;
+
+      }
+
+      return $categories;
 
 
 }

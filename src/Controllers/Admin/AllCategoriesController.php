@@ -10,12 +10,14 @@ class AllCategoriesController extends BaseController {
     public function index() :void {
         
         $categoryModel = new CategoryModel($this->pdo);
-        $categories= $categoryModel->findAll();
-
+        $categories= $categoryModel->countRecipesByCat();
+        
+        
 
           $this->render("categories", [
             'title' => 'Petit Creux | Catégories',
             'categories' => $categories
+            
         ]);
     }
 }

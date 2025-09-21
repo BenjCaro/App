@@ -32,6 +32,7 @@ use Carbe\App\Services\Flash;
                 <thead class="table-secondary">
                     <tr>
                         <th>Nom</th>
+                        <th>Nombre de recettes</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -40,6 +41,8 @@ use Carbe\App\Services\Flash;
                      foreach($categories as $category) {  ?>
                         <tr>
                             <td><?= htmlspecialchars($category->getName()) ?></td>
+                            <td><?= $category->getTotalRecipes() ?></td>
+                            <td><a href="/admin/categorie/<?= $category->getSlug() ?>">Voir la catégorie</a></td>
                         </tr>
                         
                      <?php   }} ?> 
