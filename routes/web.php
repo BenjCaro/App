@@ -315,3 +315,8 @@ $router->map("POST", "/admin/state/recette-[*:slug]", function($slug){
       $category = new AdminCategoryController();
       $category->displayRecipesByCat($slug);
 }); 
+
+$router->map("POST", "/admin/suppression-categorie-[*:id]", function($id){
+    $category = new AdminController();
+    $category->deleteCategory($id);
+});

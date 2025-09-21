@@ -62,7 +62,7 @@ use Carbe\App\Services\Auth;
                 </div>
             </div>    
         </form>
-        <form id="" action="/admin/suppression-recette-<?= $recipe->getId()?>" method="POST" class="card col-12 col-md-8 col-lg-6 p-4 shadow">
+        <form  action="/admin/suppression-recette-<?= $recipe->getId()?>" method="POST" class="card col-12 col-md-8 col-lg-6 p-4 shadow">
             <button type="submit" class="btn btn-sm btn-secondary">Supprimer cette recette </button>
         </form>
     <?php endif; ?>

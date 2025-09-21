@@ -27,6 +27,7 @@ use Carbe\App\Services\Flash;
         </form>
    </section>
     <section class="row d-flex justify-content-center">
+        <h2 class="text-center">Catégories existantes</h2>
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <thead class="table-secondary">
@@ -50,5 +51,21 @@ use Carbe\App\Services\Flash;
                 </tbody>
             </table>
         </div>
+    </section>
+    <section class="row d-flex flex-column align-items-center justify-content-center gap-2">
+        <h2 class="text-center">Créer une catégorie</h2>
+        <form action="" class="bg-gris card col-6" method="POST">
+                <input type="hidden" name="">
+                <div class="card-body">
+                    <div class="mb-2">
+                        <label for="">Nom de la catégorie</label>
+                        <input class="form-control" type="text" name="" id="">
+                    </div>
+                    <div class="d-flex justify-content-center mb-2 gap-2">
+                        <button type="button" id="" class="btn btn-sm btn-primary">Valider la création</button>
+                        <button type="submit" id="" class="d-none"></button>
+                    </div>
+                </div>
+        </form>
     </section>
 </main>

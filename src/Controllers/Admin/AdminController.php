@@ -176,7 +176,9 @@ class AdminController extends BaseController  {
 
         // Csrf::check();
        $name = trim($data['name']);
-       $slug = trim($data['slug']);
+       
+       // transformer le nom en slug ;) 
+       // utiliser generateSlug() ds AddRecipe \Controller
 
        $categoryModel = new CategoryModel($this->pdo);
        $category = $categoryModel->getCatByName($name);
@@ -190,7 +192,7 @@ class AdminController extends BaseController  {
        
        $categoryData = [
         'name' => $name,
-        'slug' => $slug
+       // 'slug' => $slug
        ];
        
       try {
@@ -229,11 +231,13 @@ class AdminController extends BaseController  {
 
         try {
             $categoryModel->delete($id);
-            Flash::set("Utilisateur supprimé avec succés !", "primary");
+            Flash::set("Catégorie supprimée avec succés !", "primary");
+            header('Location: /admin/categories');
             exit;
         } catch(Exception $e) {
 
             Flash::set("Erreur dans la suppression", "secondary");  
+            header('Location: /admin/categories');
             exit;   
         } 
     }
