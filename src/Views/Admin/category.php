@@ -46,6 +46,9 @@ use Carbe\App\Services\Csrf;
                 </div>
             </div>    
         </form>
+        <form id="" action="" method="POST" class="card col-12 col-md-8 col-lg-6 p-4 shadow">
+            <button type="submit" class="btn btn-sm btn-secondary">Supprimer la catégorie</button>
+        </form>
    </section>
     <section class="row d-flex justify-content-center">
         <h2 class="text-center">Toutes les recettes de la catégorie:</h2>
