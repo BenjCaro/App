@@ -89,21 +89,26 @@ public function getCatByName(string $name) :array|false
 
  }
 /**
- * @return array<string, mixed>|false
+ * @return CategoryModel|null
  */
 
 
- public function getCatBySlug(string $slug) :array|false
- {
+ public function getCatBySlug(string $slug) :?CategoryModel {
     
-     $stmt = $this->pdo->prepare('SELECT categories.id, categories.name
+     $stmt = $this->pdo->prepare('SELECT categories.id, categories.name, categories.slug
       FROM `categories` 
       WHERE categories.slug = :slug');
       $stmt->execute(['slug' => $slug]);
-      $results= $stmt->fetch(PDO::FETCH_ASSOC);
+      $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-      return $results ?: false;
+        if (!$data) {
+        return null; 
+    }
 
+      $category = new CategoryModel($this->pdo);
+      $category->hydrate($data);
+
+      return $category;
  }
 
 

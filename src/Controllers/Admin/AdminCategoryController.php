@@ -34,10 +34,10 @@ class AdminCategoryController extends BaseController {
           $category = $categoryModel->getCatBySlug($slug);
           
           $recipeModel = new RecipeModel($this->pdo);
-          $recipes= $recipeModel->getAllRecipesByCategory($category['id']);
+          $recipes= $recipeModel->getAllRecipesByCategory($category->getId());
 
           $this->render('category', [
-               'title' => 'Petit Creux | '  . ucfirst($category['name']),
+               'title' => 'Petit Creux | '  . ucfirst($category->getName()),
                'recipes' => $recipes,
                'category' => $category
 

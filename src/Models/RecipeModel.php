@@ -420,6 +420,7 @@ public function getAllRecipesByCategory(int $idCategory) :array {
     recipes.createdAt, 
     recipes.duration, 
     recipes.description, 
+    recipes.state,
     categories.name, 
     categories.id AS category_id,
     categories.image 
