@@ -152,7 +152,7 @@ public function findCategoryWithName($search) :array {
 
 public function countRecipesByCat() :array {
       $stmt = $this->pdo->prepare("
-         SELECT categories.name, categories.slug,
+         SELECT categories.name, categories.slug, categories.image,
          COUNT(recipes.id) AS total_recipes
          FROM categories
          LEFT JOIN recipes ON recipes.id_category = categories.id

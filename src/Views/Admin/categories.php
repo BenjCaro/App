@@ -33,6 +33,7 @@ use Carbe\App\Services\Flash;
                 <thead class="table-secondary">
                     <tr>
                         <th>Nom</th>
+                        <th>Icône</th>
                         <th>Nombre de recettes</th>
                         <th>Action</th>
                     </tr>
@@ -42,6 +43,7 @@ use Carbe\App\Services\Flash;
                      foreach($categories as $category) {  ?>
                         <tr>
                             <td><?= htmlspecialchars($category->getName()) ?></td>
+                            <td><img class="icone" alt="icone <?=$category->getName(); ?>" src="/assets/images/categories/<?= $category->getImage();?>"/></td>
                             <td><?= $category->getTotalRecipes() ?></td>
                             <td><a href="/admin/categories/<?= $category->getSlug() ?>">Voir la catégorie</a></td>
                         </tr>
@@ -60,6 +62,10 @@ use Carbe\App\Services\Flash;
                     <div class="mb-2">
                         <label for="">Nom de la catégorie</label>
                         <input class="form-control" type="text" name="" id="">
+                    </div>
+                    <div class="mb-2">
+                        <label for="formFile" class="form-label">Ajouter un icone au format .svg</label>
+                        <input class="form-control" type="file" id="formFile">
                     </div>
                     <div class="d-flex justify-content-center mb-2 gap-2">
                         <button type="button" id="" class="btn btn-sm btn-primary">Valider la création</button>
