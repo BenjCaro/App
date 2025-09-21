@@ -6,6 +6,7 @@ use Carbe\App\Controllers\CategoryController;
 use Carbe\App\Controllers\RecipeController;
 use Carbe\App\Controllers\AboutController;
 use Carbe\App\Controllers\AddRecipe;
+use Carbe\App\Controllers\Admin\AdminCategoryController;
 use Carbe\App\Controllers\Admin\AdminController;
 use Carbe\App\Controllers\Admin\AllCategoriesController;
 use Carbe\App\Controllers\Admin\DashboardController;
@@ -95,7 +96,7 @@ $router->map('POST', '/mon-compte/update-description', function() {
     
     session_start();
     $id = $_SESSION['auth_user']['id'];
-    var_dump($_POST);
+    
     $description = $_POST['description'];
     $user = new UserController();
     $user->updateDescription($id,
@@ -305,6 +306,12 @@ $router->map("POST", "/admin/state/recette-[*:slug]", function($slug){
  });
 
  $router->map("GET", "/admin/categories", function() {
-    $view = new AllCategoriesController();
+    $view = new AdminCategoryController();
     $view->index();
  });
+
+
+ $router->map('GET', '/admin/categories/[*:slug]', function($slug) {    // page catégories ex: categories/dessert 
+      $category = new AdminCategoryController();
+      $category->displayRecipesByCat($slug);
+}); 

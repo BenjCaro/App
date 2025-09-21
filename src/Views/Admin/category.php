@@ -12,7 +12,7 @@ use Carbe\App\Services\Flash;
         <div class="alert alert-<?= $message['type'] ?>"><?= $message['message']?></div>
     <?php }
     ?>
-    <h1 class="text-center">Catégories</h1>
+    <h1 class="text-center"><?= ucfirst($category['name']) ?></h1>
     <section class="mb-4 d-flex justify-content-center">
         <form method="get" action="/admin/search" class="w-50">
             <div class="input-group">
@@ -31,18 +31,18 @@ use Carbe\App\Services\Flash;
             <table class="table table-bordered table-hover">
                 <thead class="table-secondary">
                     <tr>
-                        <th>Nom</th>
-                        <th>Nombre de recettes</th>
+                        <th>Date</th>
+                        <th>Titre</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                     <?php if(!empty($categories)) {
-                     foreach($categories as $category) {  ?>
+                     <?php if(!empty($recipes)) {
+                     foreach($recipes as $recipe) {  ?>
                         <tr>
-                            <td><?= htmlspecialchars($category->getName()) ?></td>
-                            <td><?= $category->getTotalRecipes() ?></td>
-                            <td><a href="/admin/categories/<?= $category->getSlug() ?>">Voir la catégorie</a></td>
+                            <td><?= htmlspecialchars($recipe->getCreatedAt()) ?></td>
+                            <td><?= htmlspecialchars($recipe->getTitle()) ?></td>
+                            <td><a href="/recette/<?= urlencode($recipe->getSlug()) ?>">Voir recette</a></td>
                         </tr>
                         
                      <?php   }} ?> 

@@ -363,7 +363,7 @@ public function getAllRecipesWithCategory() :array {
  /**
  * @return RecipeModel[]
  */
-public function getAllRecipesByCategory(int $idCategory) :array {
+public function getAllPublishRecipesByCategory(int $idCategory) :array {
     $stmt = $this->pdo->prepare("
     SELECT 
     recipes.id AS recipe_id, 
@@ -379,6 +379,53 @@ public function getAllRecipesByCategory(int $idCategory) :array {
     FROM `recipes` 
     JOIN categories ON recipes.id_category = categories.id 
     WHERE categories.id = :id AND recipes.state = 'published'"
+    );
+
+    $stmt->execute(['id' => $idCategory]);
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $recipes = [];
+
+    foreach($results as $data) {
+
+      $categoryData = ['id' => $data['category_id'],
+                       'name' => $data['name'],
+                       'image'=> $data['image']
+                     ];
+
+      $category = new CategoryModel($this->pdo);
+      $category->hydrate($categoryData);
+
+      $recipe = new RecipeModel($this->pdo);
+      $recipe->hydrate($data);
+      $recipe->setCategory($category);
+
+      $recipes[] = $recipe;
+
+    }
+
+    return $recipes;
+}
+
+ /**
+ * @return RecipeModel[]
+ */
+public function getAllRecipesByCategory(int $idCategory) :array {
+    $stmt = $this->pdo->prepare("
+    SELECT 
+    recipes.id AS recipe_id, 
+    recipes.title, 
+    recipes.id_user, 
+    recipes.slug,
+    recipes.createdAt, 
+    recipes.duration, 
+    recipes.description, 
+    categories.name, 
+    categories.id AS category_id,
+    categories.image 
+    FROM `recipes` 
+    JOIN categories ON recipes.id_category = categories.id 
+    WHERE categories.id = :id "
     );
 
     $stmt->execute(['id' => $idCategory]);
