@@ -56,20 +56,19 @@ use Carbe\App\Services\Flash;
     </section>
     <section class="row d-flex flex-column align-items-center justify-content-center gap-2">
         <h2 class="text-center">Créer une catégorie</h2>
-        <form action="" class="bg-gris card col-6" method="POST">
+        <form action="/admin/newCategory" class="bg-gris card col-6" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="">
                 <div class="card-body">
                     <div class="mb-2">
                         <label for="">Nom de la catégorie</label>
-                        <input class="form-control" type="text" name="" id="">
+                        <input class="form-control" type="text" name="name" value="" required>
                     </div>
                     <div class="mb-2">
                         <label for="formFile" class="form-label">Ajouter un icone au format .svg</label>
-                        <input class="form-control" type="file" id="formFile">
+                        <input class="form-control" type="file" id="formFile" name="image" required>
                     </div>
                     <div class="d-flex justify-content-center mb-2 gap-2">
-                        <button type="button" id="" class="btn btn-sm btn-primary">Valider la création</button>
-                        <button type="submit" id="" class="d-none"></button>
+                        <button type="submit" id="" class="btn btn-sm btn-primary">Valider la création</button>
                     </div>
                 </div>
         </form>

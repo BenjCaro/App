@@ -164,7 +164,7 @@ class AdminController extends BaseController  {
    * 
    */
 
-    public function createCategory(array $data) :void {
+    public function createCategory() :void {
 
        session_start();
        Auth::isAdmin();
@@ -173,7 +173,12 @@ class AdminController extends BaseController  {
        // $token = $data['_token'];
 
         // Csrf::check();
-       $name = trim($data['name']);
+       $name = isset($_POST['name']) ? trim($_POST['name']) : null;
+
+       if(empty($name)) {
+           Flash::set('Nom Obligatoire', 'secondary');
+           exit;
+       }
        
        $categoryModel = new CategoryModel($this->pdo);
        $category = $categoryModel->getCatByName($name);
@@ -185,26 +190,38 @@ class AdminController extends BaseController  {
 
        $slug = SlugService::generateSlug($name);
 
-       // gérer l'image et l'ajouter dans categoryData
-       
+       // gérer l'image et ajouter le nom de l'image dans categoryData
+
+       $imageName = basename($_FILES['image']['name']);
+       $imageTmp = $_FILES['image']['tmp_name'];
+       $destination = dirname(__DIR__, 2) . '/App/public/assets/images/categories/' . $imageName;
+
+       if( isset($image) && is_uploaded_file($imageTmp)) {
+
+        move_uploaded_file($imageTmp, $destination);
+          
+       }
+
        $categoryData = [
         'name' => $name,
-        'slug' => $slug
+        'slug' => $slug,
+        'image' => $imageName
        ];
        
       try {
+
         $model = new CategoryModel($this->pdo);
         $model->insert($categoryData);
 
         Flash::set("Ajout de la catégorie réussi.", "primary");
-        header("Location: /admin");
+        header("Location: /admin/categories");
         exit;
 
       } catch(Exception $e) {
          
         Flash::set("Catégorie non ajoutée.", "secondary");
-        // prévoir la redirection
-        // exit;
+        header("Location: /admin/categories");
+        exit;
       }
     }
 
