@@ -10,6 +10,7 @@ use Carbe\App\Models\UserModel;
 use Carbe\App\Services\Flash;
 use Carbe\App\Services\Csrf;
 use Carbe\App\Services\Auth;
+use Carbe\App\Services\SlugService;
 
 class AdminController extends BaseController  {
 
@@ -174,9 +175,6 @@ class AdminController extends BaseController  {
         // Csrf::check();
        $name = trim($data['name']);
        
-       // transformer le nom en slug ;) 
-       // utiliser generateSlug() ds AddRecipe \Controller
-
        $categoryModel = new CategoryModel($this->pdo);
        $category = $categoryModel->getCatByName($name);
 
@@ -185,11 +183,13 @@ class AdminController extends BaseController  {
             exit;
        }
 
+       $slug = SlugService::generateSlug($name);
+
        // gérer l'image et l'ajouter dans categoryData
        
        $categoryData = [
         'name' => $name,
-       // 'slug' => $slug
+        'slug' => $slug
        ];
        
       try {

@@ -6,7 +6,7 @@ class SlugService {
 
 
   /**
-  * A partir du titre  donné par l'utilisateur 
+  * A partir du titre donné par l'utilisateur 
   * cette methode permet de créer le slug 
   *
   */
