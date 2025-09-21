@@ -42,10 +42,10 @@ public function index(): void
           $category = $categoryModel->getCatBySlug($slug);
           
           $recipeModel = new RecipeModel($this->pdo);
-          $recipes= $recipeModel->getAllRecipesByCategory($category['id']); // id dynamique des catégories
+          $recipes= $recipeModel->getAllPublishRecipesByCategory($category->getId()); // id dynamique des catégories
 
           $this->render('Pages/category', [
-               'title' => 'Petit Creux | '  . ucfirst($category['name']),
+               'title' => 'Petit Creux | '  . ucfirst($category->getName()),
                'recipes' => $recipes,
                'category' => $category
 

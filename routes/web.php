@@ -6,7 +6,9 @@ use Carbe\App\Controllers\CategoryController;
 use Carbe\App\Controllers\RecipeController;
 use Carbe\App\Controllers\AboutController;
 use Carbe\App\Controllers\AddRecipe;
+use Carbe\App\Controllers\Admin\AdminCategoryController;
 use Carbe\App\Controllers\Admin\AdminController;
+use Carbe\App\Controllers\Admin\AllCategoriesController;
 use Carbe\App\Controllers\Admin\DashboardController;
 use Carbe\App\Controllers\Admin\ProfileUserController;
 use Carbe\App\Controllers\AuthController;
@@ -17,6 +19,8 @@ use Carbe\App\Controllers\SearchController;
 use Carbe\App\Controllers\SigninController;
 use Carbe\App\Controllers\UpdateRecipeController;
 use Carbe\App\Controllers\UserController;
+use Carbe\App\Controllers\Admin\AllUsersController;
+use Carbe\App\Models\CategoryModel;
 use Carbe\App\Models\SearchModel;
 use Carbe\App\Models\UserModel;
 
@@ -92,7 +96,7 @@ $router->map('POST', '/mon-compte/update-description', function() {
     
     session_start();
     $id = $_SESSION['auth_user']['id'];
-    var_dump($_POST);
+    
     $description = $_POST['description'];
     $user = new UserController();
     $user->updateDescription($id,
@@ -273,7 +277,7 @@ $router->map('POST', '/admin/profil/suppr-utilisateur-[*:id]', function($id) {
 
 $router->map("GET", '/admin/tous-les-utilisateurs', function(){
      
-    $view = new AdminController();
+    $view = new AllUsersController;
     $view->viewAllUsers();
 });
 
@@ -300,3 +304,19 @@ $router->map("POST", "/admin/state/recette-[*:slug]", function($slug){
     $recipe = new AdminController();
     $recipe->publishRecipe($_POST['id'], $slug, $_POST['state']);
  });
+
+ $router->map("GET", "/admin/categories", function() {
+    $view = new AdminCategoryController();
+    $view->index();
+ });
+
+
+ $router->map('GET', '/admin/categories/[*:slug]', function($slug) {    // page catégories ex: categories/dessert 
+      $category = new AdminCategoryController();
+      $category->displayRecipesByCat($slug);
+}); 
+
+$router->map("POST", "/admin/suppression-categorie-[*:id]", function($id){
+    $category = new AdminController();
+    $category->deleteCategory($id);
+});

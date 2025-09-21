@@ -22,9 +22,8 @@ use Carbe\App\Services\Flash;
         <form method="get" action="/search" class="w-50">
             <div class="input-group">
                 <select class="form-select" name="type">
-                    <option value="recipe">Recette</option>
-                    <option value="category">Catégorie</option>
-                    <option value="ingredient">Ingrédient</option>
+                    <option value="recipe">Recherche par Recette</option>
+                    <option value="ingredient">Recherche par Ingrédient</option>
                 </select>
                 <input type="text" class="form-control" placeholder="Recherche" name="q" required>
                 <button class="btn btn-primary" type="submit">🔍</button>
@@ -33,7 +32,7 @@ use Carbe\App\Services\Flash;
    </section>
     <div class="grid mt-1 mb-3">
         <section class="favoris">
-            <div class="card bg-white h-100 border border-primary" >
+            <div class="card bg-white h-100 border border-dark" >
                 <div class="card-body ">
                 <?php if (isset($_SESSION['auth_user'])):  ?>
                     <h2 class='card-title text-center'>Vos favoris</h2>
@@ -60,7 +59,7 @@ use Carbe\App\Services\Flash;
             </div>
         </section>
         <section class="last_recipe">
-            <div class="card bg-white h-100 border border-primary">
+            <div class="card bg-white h-100 border border-dark">
                 <div class="card-body">
                     <h2 class='card-title'>Dernière Recette</h2>
                   
@@ -78,7 +77,7 @@ use Carbe\App\Services\Flash;
             </div>
         </section>
         <section class="popular_recipe">
-            <div class="card bg-white h-100 border border-primary" >
+            <div class="card bg-white h-100 border border-dark" >
                 <div class="card-body">
                     <h2 class='card-title'>Recettes Populaires</h2>
                    
@@ -96,21 +95,23 @@ use Carbe\App\Services\Flash;
             </div>
         </section>
         <section class="categories text-center">
-            <div class="card bg-white h-100 border border-primary" >
+            <div class="card bg-white h-100 border border-dark" >
                 <div class="card-body">
                     <h2 class='card-title'>Catégories</h2>
                     <div class="d-flex justify-content-evenly align-items-start">
                         <?php foreach($categories as $category)  { ?>
                         <div class="d-flex flex-column justify-content-center mt-2">
                             <a class="text-secondary text-cacao nav-link" href="/categories/<?= $category->getSlug(); ?>"><?= ucwords($category->getName());?></a>
-                            <img class="icone" alt="icone <?=$category->getName(); ?>" src="/assets/images/<?= $category->getImage();?>"/>
+                            <img class="icone" alt="icone <?=$category->getName(); ?>" src="/assets/images/categories/<?= $category->getImage();?>"/>
                         </div>
                     <?php    } ?>   
                     </div>    
                 </div>
             </div>
         </section>
-        <a href="/ajout-recette">Ajouter une recette</a>
+        <button class="btn btn-dark w-50">
+            <a class="nav-link" href="/ajout-recette">Partager une recette avec nous</a>
+        </button>
     </div>
    
      

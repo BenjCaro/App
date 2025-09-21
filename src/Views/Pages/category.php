@@ -10,7 +10,7 @@ use Carbe\App\Models\CategoryModel;
 ?>
 
 <main class='container p-3 bg-light border-end border-start border-secondary'> 
-     <h2 class="text-center"><?= ucfirst($category['name']) ?></h2>
+     <h2 class="text-center"><?= ucfirst($category->getName()) ?></h2>
      <div class="row g-3">
         <?php foreach ($recipes as $recipe): ?>
             <div class="col-md-4">

@@ -1,7 +1,7 @@
 <?php
 
 namespace Carbe\App\Controllers;
-use Carbe\App\Models\SearchModel;
+use Carbe\App\Models\CategoryModel;
 use Carbe\App\Models\UserModel;
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Services\Auth;
@@ -20,7 +20,7 @@ class SearchController extends BaseController {
             
             switch($type) {
                 case "recipe":
-                    $model = new SearchModel($this->pdo);
+                    $model = new RecipeModel($this->pdo);
                     $data = $model->getRecipeWithTitle($search);
                     $results = $data['recipes'];
                     $totalResults = $data['totalResults'];
@@ -72,10 +72,10 @@ class SearchController extends BaseController {
                 $results = $model->searchRecipeWithTitle($search);
                 break;
 
-            // case "category":
-            //     $model = new CategoryModel($this->pdo);
-            //     $results = $model->findCategoryWithName($search);
-            //     break;
+            case "category":
+                $model = new CategoryModel($this->pdo);
+                $results = $model->findCategoryWithName($search);
+                break;
 
             default:
                 $results = [];

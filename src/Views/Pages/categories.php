@@ -19,7 +19,7 @@ use Carbe\App\Models\RecipeModel;
                         <?php foreach($categories as $category)  { ?>
                         <div class="d-flex flex-column justify-content-center mt-2">
                             <a class="text-secondary text-cacao nav-link" href="/categories/<?= $category->getSlug(); ?>"><?= ucwords($category->getName());?></a>
-                            <img class="icone" alt="icone <?=$category->getName(); ?>" src="/assets/images/<?= $category->getImage();?>"/>
+                            <img class="icone" alt="icone <?=$category->getName(); ?>" src="/assets/images/categories/<?= $category->getImage();?>"/>
                         </div>
                     <?php    } ?>   
                     </div>    

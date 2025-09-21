@@ -3,6 +3,7 @@
 namespace Carbe\App\Controllers\Admin;
 
 use Carbe\App\Controllers\BaseController;
+use Carbe\App\Models\CategoryModel;
 use Carbe\App\Models\RecipeModel;
 use Exception;
 use Carbe\App\Models\UserModel;
@@ -44,13 +45,14 @@ class AdminController extends BaseController  {
                 
                 $userModel->delete($id);
                 Flash::set("Utilisateur supprimé avec succés !", "primary");
-              
+                exit;
             }
 
             catch(Exception $e) {
 
-                Flash::set("Erreur dans la suppression", "secondary");        
-        }
+                Flash::set("Erreur dans la suppression", "secondary");  
+                exit;      
+        }   
         
         header('Location: /admin');
         exit;
@@ -156,6 +158,132 @@ class AdminController extends BaseController  {
         }
 
 
+    }
+    
+   /**
+   * Ajouter une catégorie via un formulaire présent dans le panneau ADMIN
+   * 
+   * 
+   */
+
+    public function createCategory(array $data) :void {
+
+       session_start();
+       Auth::isAdmin();
+
+      
+       // $token = $data['_token'];
+
+        // Csrf::check();
+       $name = trim($data['name']);
+       
+       // transformer le nom en slug ;) 
+       // utiliser generateSlug() ds AddRecipe \Controller
+
+       $categoryModel = new CategoryModel($this->pdo);
+       $category = $categoryModel->getCatByName($name);
+
+       if($category) {
+            Flash::set('La catégorie existe déja', 'secondary');
+            exit;
+       }
+
+       // gérer l'image et l'ajouter dans categoryData
+       
+       $categoryData = [
+        'name' => $name,
+       // 'slug' => $slug
+       ];
+       
+      try {
+        $model = new CategoryModel($this->pdo);
+        $model->insert($categoryData);
+
+        Flash::set("Ajout de la catégorie réussi.", "primary");
+        header("Location: /admin");
+        exit;
+
+      } catch(Exception $e) {
+         
+        Flash::set("Catégorie non ajoutée.", "secondary");
+        // prévoir la redirection
+        // exit;
+      }
+
+
+
+    }
+
+    // supprimer une catégorie
+
+    public function deleteCategory(int $id) :void {
+        
+        session_start();
+        Auth::isAdmin();
+
+        $categoryModel = new CategoryModel($this->pdo);
+        $category= $categoryModel->findById($id);
+
+        if(!$category) {
+            Flash::set('Catégorie non trouvée.', 'secondary');
+            exit;
+        }
+
+        try {
+            $categoryModel->delete($id);
+            Flash::set("Catégorie supprimée avec succés !", "primary");
+            header('Location: /admin/categories');
+            exit;
+        } catch(Exception $e) {
+
+            Flash::set("Erreur dans la suppression", "secondary");  
+            header('Location: /admin/categories');
+            exit;   
+        } 
+    }
+
+    // modifier une catégorie
+
+    public function updateCategory(int $id, array $data) :void {
+
+        session_start();
+        Auth::isAdmin();
+
+        // $token = $_POST['token'];
+        // Csrf::check();
+        $name = trim($data['name']);
+        $slug = trim($data['slug']);
+
+        $categoryModel = new CategoryModel($this->pdo);
+        $category = $categoryModel->getCatByName($name);
+
+        if($category && $category['id'] !== $id) {
+                Flash::set('La catégorie existe déja', 'secondary');
+                exit;
+        }
+
+        $categoryData = [
+        'name' => $name,
+        'slug' => $slug
+       ];
+
+       try {
+
+        $model = new CategoryModel($this->pdo);
+        $model->update($id ,$categoryData);
+
+        Flash::set("Modification de la catégorie réussie.", "primary");
+        header("Location: /admin");
+        exit;
+
+       } catch(Exception $e) {
+            Flash::set("Catégorie non modifiée.", "secondary");
+            // prévoir la redirection
+            // exit;
+       }
+
+
+        
     }
 
 }
