@@ -176,9 +176,10 @@ class AdminController extends BaseController  {
        $name = isset($_POST['name']) ? trim($_POST['name']) : null;
 
        if(empty($name)) {
-           Flash::set('Nom Obligatoire', 'secondary');
+           Flash::setErrorsForm("name", 'Nom Obligatoire', 'secondary');
            exit;
        }
+
        
        $categoryModel = new CategoryModel($this->pdo);
        $category = $categoryModel->getCatByName($name);

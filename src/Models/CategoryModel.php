@@ -88,6 +88,7 @@ public function getCatByName(string $name) :array|false
       return $results ?: false;
 
  }
+ 
 /**
  * @return CategoryModel|null
  */
@@ -117,7 +118,7 @@ public function getCatByName(string $name) :array|false
   * @return CategoryModel[]
   */
 
-public function findCategoryWithName($search) :array {
+public function searchCategoryWithName($search) :array {
     $stmt = $this->pdo->prepare("
          SELECT categories.name,
          COUNT(recipes.id) AS total_recipes
@@ -143,6 +144,7 @@ public function findCategoryWithName($search) :array {
     return $categories;
 
 }
+
 
 /**
  * Méthode permettant d'afficher le nombre de recettes par catégorie

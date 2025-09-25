@@ -74,7 +74,7 @@ class SearchController extends BaseController {
 
             case "category":
                 $model = new CategoryModel($this->pdo);
-                $results = $model->findCategoryWithName($search);
+                $results = $model->searchCategoryWithName($search);
                 break;
 
             default:

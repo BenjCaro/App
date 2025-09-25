@@ -63,6 +63,11 @@ use Carbe\App\Services\Csrf;
                     <div class="mb-2">
                         <label for="">Nom de la catégorie</label>
                         <input class="form-control" type="text" name="name" value="" required>
+                        <?php 
+                        $nameErrors = Flash::showErrorsForm("image");
+                        foreach($nameErrors as $nameError) { ?>
+                            <div class="alert alert-<?= $nameError['type'] ?> mt-2"><?= $nameError['message'] ?></div>
+                        <?php   } ?>
                     </div>
                     <div class="mb-2">
                         <label for="formFile" class="form-label">Ajouter un icone au format .svg</label>
