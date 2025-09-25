@@ -11,6 +11,7 @@ use Carbe\App\Services\Flash;
 use Carbe\App\Services\Csrf;
 use Carbe\App\Services\Auth;
 use Carbe\App\Services\SlugService;
+use Carbe\App\Services\PicService;
 
 class AdminController extends BaseController  {
 
@@ -169,7 +170,6 @@ class AdminController extends BaseController  {
        session_start();
        Auth::isAdmin();
 
-      
        $token = $_POST['_token'];
 
        Csrf::check("create_category", $token, "/admin/categories");
@@ -192,75 +192,12 @@ class AdminController extends BaseController  {
        }
 
        $slug = SlugService::generateSlug($name);
-
-       $imageName = basename($_FILES['image']['name']);
-       $imageTmp = $_FILES['image']['tmp_name'];
-
-       // contrôler la size
-       $imageSize = $_FILES['image']['size'];
-       $allowedMaxSize = 2* 1024 *1024; 
-
-       if($imageSize === 0) {
-          Flash::setErrorsForm("image","Image vide", "secondary");
-         header("Location: /admin/categories");
-         exit;  
-       }
-
-       if($imageSize > $allowedMaxSize) {
-         Flash::setErrorsForm("image","Image trop lourde", "secondary");
-         header("Location: /admin/categories");
-         exit;  
-       }
-
-       // contrôler le type 
-
-       $allowedTypes = [".svg", ".jpg", ".png"];
-       $extensionImage = strrchr($imageName, '.');
-       
-       // contrôler le mime 
-
-       $finfo = new \finfo(FILEINFO_MIME_TYPE); // Retourne le type mime
-
-        /* Récupère le mime-type d'un fichier spécifique */
-        
-       $imageMime = $finfo->file($imageTmp);
-
-       $allowedMimes = [
-            'image/jpeg',
-            'image/png',
-            'image/svg+xml'
-        ];
-
-      
-       if(isset($imageTmp) && is_uploaded_file($imageTmp)) {
-        
-            if(!in_array($extensionImage, $allowedTypes) || !in_array($imageMime, $allowedMimes)){
-                Flash::set("Extension non autorisée", "secondary");
-                header("Location: /admin/categories");
-                exit;
-            };
-
-            $newImageName = uniqid('cat_', true) . $extensionImage;
-            $destination = dirname(__DIR__, 3) . '/public/assets/images/categories/' . $newImageName;
-
-            if (!move_uploaded_file($imageTmp, $destination)) {
-                Flash::set("Échec du transfert de l'image", "secondary");
-                header("Location: /admin/categories");
-                exit;
-            }
-            
-            } else {
-                Flash::set("Erreur dans l'upload de l'icone : mauvaise extension.", "secondary");
-                header('Location: /admin/categories');
-                exit;
-        }
-
-        // fin du contrôle de l'image
+       $image = PicService::AvailablePics('image');
 
        $categoryData = [
         'name' => $name,
         'slug' => $slug,
-        'image' => $newImageName
+        'image' => $image
        ];
        
       try {
