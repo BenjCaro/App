@@ -64,7 +64,7 @@ use Carbe\App\Services\Csrf;
                         <label for="">Nom de la catégorie</label>
                         <input class="form-control" type="text" name="name" value="" required>
                         <?php 
-                        $nameErrors = Flash::showErrorsForm("image");
+                        $nameErrors = Flash::showErrorsForm("name");
                         foreach($nameErrors as $nameError) { ?>
                             <div class="alert alert-<?= $nameError['type'] ?> mt-2"><?= $nameError['message'] ?></div>
                         <?php   } ?>

@@ -177,6 +177,7 @@ class AdminController extends BaseController  {
 
        if(empty($name)) {
            Flash::setErrorsForm("name", 'Nom Obligatoire', 'secondary');
+           header("Location: /admin/categories");
            exit;
        }
 
@@ -185,7 +186,8 @@ class AdminController extends BaseController  {
        $category = $categoryModel->getCatByName($name);
 
        if($category) {
-            Flash::set('La catégorie existe déja', 'secondary');
+            Flash::setErrorsForm("name",'La catégorie existe déja', 'secondary');
+            header("Location: /admin/categories");
             exit;
        }
 
