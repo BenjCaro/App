@@ -170,9 +170,9 @@ class AdminController extends BaseController  {
        Auth::isAdmin();
 
       
-       // $token = $data['_token'];
+       $token = $_POST['_token'];
 
-        // Csrf::check();
+       Csrf::check("create_category", $token, "/admin/categories");
        $name = isset($_POST['name']) ? trim($_POST['name']) : null;
 
        if(empty($name)) {
@@ -190,17 +190,67 @@ class AdminController extends BaseController  {
 
        $slug = SlugService::generateSlug($name);
 
-       // gérer l'image et ajouter le nom de l'image dans categoryData
-
        $imageName = basename($_FILES['image']['name']);
        $imageTmp = $_FILES['image']['tmp_name'];
-       $destination = dirname(__DIR__, 2) . '/App/public/assets/images/categories/' . $imageName;
+       $destination = dirname(__DIR__, 3) . '/public/assets/images/categories/' . $imageName;
 
-       if( isset($image) && is_uploaded_file($imageTmp)) {
+       // contrôler la size
+       $imageSize = $_FILES['image']['size'];
+       $allowedMaxSize = 2* 1024 *1024; 
 
-        move_uploaded_file($imageTmp, $destination);
-          
+       if($imageSize === 0) {
+          Flash::setErrorsForm("image","Image vide", "secondary");
+         header("Location: /admin/categories");
+         exit;  
        }
+
+       if($imageSize > $allowedMaxSize) {
+         Flash::setErrorsForm("image","Image trop lourde", "secondary");
+         header("Location: /admin/categories");
+         exit;  
+       }
+
+       // contrôler le type 
+
+       $allowedTypes = [".svg", ".jpg", ".png"];
+       $extensionImage = strrchr($imageName, '.');
+       
+       // contrôler le mime 
+
+       $finfo = new \finfo(FILEINFO_MIME_TYPE); // Retourne le type mime
+
+        /* Récupère le mime-type d'un fichier spécifique */
+        
+       $imageMime = $finfo->file($imageTmp);
+
+       $allowedMimes = [
+            'image/jpeg',
+            'image/png',
+            'image/svg+xml'
+        ];
+
+      
+       if(isset($imageTmp) && is_uploaded_file($imageTmp)) {
+        
+            if(!in_array($extensionImage, $allowedTypes) || !in_array($imageMime, $allowedMimes)){
+                Flash::set("Extension non autorisée", "secondary");
+                header("Location: /admin/categories");
+                exit;
+            };
+
+            if (!move_uploaded_file($imageTmp, $destination)) {
+                Flash::set("Échec du transfert de l'image", "secondary");
+                header("Location: /admin/categories");
+                exit;
+            }
+            
+            } else {
+                Flash::set("Erreur dans l'upload de l'icone : mauvaise extension.", "secondary");
+                header('Location: /admin/categories');
+                exit;
+        }
+
+        // fin du contrôle de l'image
 
        $categoryData = [
         'name' => $name,
