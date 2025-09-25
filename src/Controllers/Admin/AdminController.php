@@ -192,7 +192,6 @@ class AdminController extends BaseController  {
 
        $imageName = basename($_FILES['image']['name']);
        $imageTmp = $_FILES['image']['tmp_name'];
-       $destination = dirname(__DIR__, 3) . '/public/assets/images/categories/' . $imageName;
 
        // contrôler la size
        $imageSize = $_FILES['image']['size'];
@@ -238,6 +237,9 @@ class AdminController extends BaseController  {
                 exit;
             };
 
+            $newImageName = uniqid('cat_', true) . $extensionImage;
+            $destination = dirname(__DIR__, 3) . '/public/assets/images/categories/' . $newImageName;
+
             if (!move_uploaded_file($imageTmp, $destination)) {
                 Flash::set("Échec du transfert de l'image", "secondary");
                 header("Location: /admin/categories");
@@ -255,7 +257,7 @@ class AdminController extends BaseController  {
        $categoryData = [
         'name' => $name,
         'slug' => $slug,
-        'image' => $imageName
+        'image' => $newImageName
        ];
        
       try {
