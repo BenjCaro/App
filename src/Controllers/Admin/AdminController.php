@@ -13,6 +13,13 @@ use Carbe\App\Services\Auth;
 use Carbe\App\Services\SlugService;
 use Carbe\App\Services\PicService;
 
+/** 
+ * AdminController gère les actions de l'administrateur 
+ * creation, modification et suppression des utilisateurs, recettes, ingrédients
+ * commentaires. 
+ * 
+ */
+
 class AdminController extends BaseController  {
 
     public function viewAllUsers() :void {

@@ -7,6 +7,13 @@ use Carbe\App\Models\CategoryModel;
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Services\Auth;
 
+/**
+ * AdminCategoryController transmet les données liées aux catégories aux vues : 
+ * Admin/category.php 
+ * Admin/categories.php
+ * 
+ */
+
 class AdminCategoryController extends BaseController {
      
     public function index() :void {
