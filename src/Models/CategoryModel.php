@@ -79,7 +79,7 @@ class CategoryModel extends BaseModel {
 public function getCatByName(string $name) :array|false
  {
     
-     $stmt = $this->pdo->prepare('SELECT categories.id, categories.name
+     $stmt = $this->pdo->prepare('SELECT categories.id, categories.name, categories.slug
       FROM `categories` 
       WHERE categories.name = :name');
       $stmt->execute(['name' => $name]);

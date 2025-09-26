@@ -252,20 +252,29 @@ class AdminController extends BaseController  {
         } 
     }
 
-    // modifier une catégorie
+  
+
+    /**
+     *  Méthode qui modifie les informations d'une catégorie :
+     *   nom
+     *   slug
+     * 
+     */
 
     public function updateCategory(int $id, array $data) :void {
 
         session_start();
         Auth::isAdmin();
 
-        // $token = $_POST['token'];
-        // Csrf::check();
+       
         $name = trim($data['name']);
-        $slug = trim($data['slug']);
-
+        
         $categoryModel = new CategoryModel($this->pdo);
         $category = $categoryModel->getCatByName($name);
+
+
+        $token = $_POST['_token'];
+        Csrf::check("admin_update_category", $token, "/admin/categories");
 
         if($category && $category['id'] !== $id) {
                 Flash::set('La catégorie existe déja', 'secondary');
@@ -273,27 +282,24 @@ class AdminController extends BaseController  {
         }
 
         $categoryData = [
-        'name' => $name,
-        'slug' => $slug
-       ];
+            'name' => $name,
+           // 'slug' => $slug
+        ];
 
        try {
 
-        $model = new CategoryModel($this->pdo);
-        $model->update($id ,$categoryData);
+            $model = new CategoryModel($this->pdo);
+            $model->update($id ,$categoryData);
 
-        Flash::set("Modification de la catégorie réussie.", "primary");
-        header("Location: /admin");
-        exit;
+            Flash::set("Modification de la catégorie réussie.", "primary");
+            header("Location: /admin/categories");
+            exit;
 
        } catch(Exception $e) {
             Flash::set("Catégorie non modifiée.", "secondary");
-            // prévoir la redirection
-            // exit;
-       }
-
-
-        
+            header("Location: /admin/categories");
+            exit;
+       }   
     }
 
 }
