@@ -192,7 +192,7 @@ class AdminController extends BaseController  {
        }
 
        $slug = SlugService::generateSlug($name);
-       $image = PicService::AvailablePics('image');
+       $image = PicService::AvailablePics('image', '/admin/categories', 'categories');
 
        $categoryData = [
         'name' => $name,
