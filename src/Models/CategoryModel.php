@@ -88,6 +88,7 @@ public function getCatByName(string $name) :array|false
       return $results ?: false;
 
  }
+ 
 /**
  * @return CategoryModel|null
  */
@@ -117,7 +118,7 @@ public function getCatByName(string $name) :array|false
   * @return CategoryModel[]
   */
 
-public function findCategoryWithName($search) :array {
+public function searchCategoryWithName($search) :array {
     $stmt = $this->pdo->prepare("
          SELECT categories.name,
          COUNT(recipes.id) AS total_recipes
@@ -144,6 +145,7 @@ public function findCategoryWithName($search) :array {
 
 }
 
+
 /**
  * Méthode permettant d'afficher le nombre de recettes par catégorie
  * LEFT JOIN permet d'afficher les catégories sans recette
@@ -152,7 +154,7 @@ public function findCategoryWithName($search) :array {
 
 public function countRecipesByCat() :array {
       $stmt = $this->pdo->prepare("
-         SELECT categories.name, categories.slug,
+         SELECT categories.name, categories.slug, categories.image,
          COUNT(recipes.id) AS total_recipes
          FROM categories
          LEFT JOIN recipes ON recipes.id_category = categories.id

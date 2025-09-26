@@ -8,6 +8,7 @@ use Carbe\App\Models\RecipeModel;
 use Carbe\App\Services\Auth;
 use Carbe\App\Services\Flash;
 use Carbe\App\Services\Csrf;
+use Carbe\App\Services\SlugService;
 
 use Exception;
 class AddRecipe extends BaseController {
@@ -109,7 +110,7 @@ class AddRecipe extends BaseController {
             exit;
      }
 
-     $slug = $this->generateSlug($title);
+     $slug = SlugService::generateSlug($title);
      $description = $this->descriptionInJson($description);
 
      $recipeData = [
@@ -153,21 +154,6 @@ class AddRecipe extends BaseController {
           exit;
      }
  } 
-
- /**
-  * A partir du titre de la recette donné par l'utilisateur 
-  * cette methode permet de créer le slug 
-  */
-
-   private function generateSlug(string $string) :string {
-
-          $string = mb_strtolower($string);
-          $string = preg_replace('/[^\w\s-]/', '', $string);
-          $string = preg_replace('/[\s]+/', '-', $string);  
-          $slug = trim($string, '-');
-          return $slug;
-   }
-
 
    /**
     * Cette methode permet de convertir en json la description de la recette 

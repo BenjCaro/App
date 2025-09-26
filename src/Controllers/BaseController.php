@@ -43,9 +43,6 @@ class BaseController {
 
             die("Vue introuvable : " . $view);
         }
-
-        
-
     }
 
 /** 

@@ -2,7 +2,7 @@
 
 namespace Carbe\App\Views\Admin;
 use Carbe\App\Services\Flash;
-
+use Carbe\App\Services\Csrf;
 ?>
 
 <main class='container p-3 bg-light'> 
@@ -33,6 +33,7 @@ use Carbe\App\Services\Flash;
                 <thead class="table-secondary">
                     <tr>
                         <th>Nom</th>
+                        <th>Icône</th>
                         <th>Nombre de recettes</th>
                         <th>Action</th>
                     </tr>
@@ -42,6 +43,7 @@ use Carbe\App\Services\Flash;
                      foreach($categories as $category) {  ?>
                         <tr>
                             <td><?= htmlspecialchars($category->getName()) ?></td>
+                            <td><img class="icone" alt="icone <?=$category->getName(); ?>" src="/assets/images/categories/<?= $category->getImage();?>"/></td>
                             <td><?= $category->getTotalRecipes() ?></td>
                             <td><a href="/admin/categories/<?= $category->getSlug() ?>">Voir la catégorie</a></td>
                         </tr>
@@ -54,16 +56,30 @@ use Carbe\App\Services\Flash;
     </section>
     <section class="row d-flex flex-column align-items-center justify-content-center gap-2">
         <h2 class="text-center">Créer une catégorie</h2>
-        <form action="" class="bg-gris card col-6" method="POST">
-                <input type="hidden" name="">
+        <form action="/admin/newCategory" class="bg-gris card col-6" method="POST" enctype="multipart/form-data">
+            <?php $token= Csrf::get("create_category") ?>
+                <input type="hidden" name="_token" value="<?= $token ?>">
                 <div class="card-body">
                     <div class="mb-2">
                         <label for="">Nom de la catégorie</label>
-                        <input class="form-control" type="text" name="" id="">
+                        <input class="form-control" type="text" name="name" value="" required>
+                        <?php 
+                        $nameErrors = Flash::showErrorsForm("name");
+                        foreach($nameErrors as $nameError) { ?>
+                            <div class="alert alert-<?= $nameError['type'] ?> mt-2"><?= $nameError['message'] ?></div>
+                        <?php   } ?>
+                    </div>
+                    <div class="mb-2">
+                        <label for="formFile" class="form-label">Ajouter un icone au format .svg</label>
+                        <input class="form-control" type="file" id="formFile" name="image" required>
+                        <?php 
+                        $imgErrors = Flash::showErrorsForm("image");
+                        foreach($imgErrors as $imgError) { ?>
+                            <div class="alert alert-<?= $imgError['type'] ?> mt-2"><?= $imgError['message'] ?></div>
+                        <?php   } ?>
                     </div>
                     <div class="d-flex justify-content-center mb-2 gap-2">
-                        <button type="button" id="" class="btn btn-sm btn-primary">Valider la création</button>
-                        <button type="submit" id="" class="d-none"></button>
+                        <button type="submit" id="" class="btn btn-sm btn-primary">Valider la création</button>
                     </div>
                 </div>
         </form>

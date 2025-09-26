@@ -10,6 +10,8 @@ use Carbe\App\Models\UserModel;
 use Carbe\App\Services\Flash;
 use Carbe\App\Services\Csrf;
 use Carbe\App\Services\Auth;
+use Carbe\App\Services\SlugService;
+use Carbe\App\Services\PicService;
 
 class AdminController extends BaseController  {
 
@@ -154,10 +156,7 @@ class AdminController extends BaseController  {
             Flash::set("La modifcation a échouée", "secondary");
             header("Location: /recette/" . $slug);
 
-
         }
-
-
     }
     
    /**
@@ -166,52 +165,56 @@ class AdminController extends BaseController  {
    * 
    */
 
-    public function createCategory(array $data) :void {
+    public function createCategory() :void {
 
        session_start();
        Auth::isAdmin();
 
-      
-       // $token = $data['_token'];
+       $token = $_POST['_token'];
 
-        // Csrf::check();
-       $name = trim($data['name']);
+       Csrf::check("create_category", $token, "/admin/categories");
+       $name = isset($_POST['name']) ? trim($_POST['name']) : null;
+
+       if(empty($name)) {
+           Flash::setErrorsForm("name", 'Nom Obligatoire', 'secondary');
+           header("Location: /admin/categories");
+           exit;
+       }
+
        
-       // transformer le nom en slug ;) 
-       // utiliser generateSlug() ds AddRecipe \Controller
-
        $categoryModel = new CategoryModel($this->pdo);
        $category = $categoryModel->getCatByName($name);
 
        if($category) {
-            Flash::set('La catégorie existe déja', 'secondary');
+            Flash::setErrorsForm("name",'La catégorie existe déja', 'secondary');
+            header("Location: /admin/categories");
             exit;
        }
 
-       // gérer l'image et l'ajouter dans categoryData
-       
+       $slug = SlugService::generateSlug($name);
+       $image = PicService::AvailablePics('image', '/admin/categories', 'categories');
+
        $categoryData = [
         'name' => $name,
-       // 'slug' => $slug
+        'slug' => $slug,
+        'image' => $image
        ];
        
       try {
+
         $model = new CategoryModel($this->pdo);
         $model->insert($categoryData);
 
         Flash::set("Ajout de la catégorie réussi.", "primary");
-        header("Location: /admin");
+        header("Location: /admin/categories");
         exit;
 
       } catch(Exception $e) {
          
         Flash::set("Catégorie non ajoutée.", "secondary");
-        // prévoir la redirection
-        // exit;
+        header("Location: /admin/categories");
+        exit;
       }
-
-
-
     }
 
     // supprimer une catégorie

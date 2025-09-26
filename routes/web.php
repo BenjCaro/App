@@ -320,3 +320,9 @@ $router->map("POST", "/admin/suppression-categorie-[*:id]", function($id){
     $category = new AdminController();
     $category->deleteCategory($id);
 });
+
+$router->map("POST", "/admin/newCategory", function(){
+
+    $category = new AdminController();
+    $category->createCategory(); 
+});

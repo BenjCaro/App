@@ -9,6 +9,7 @@ use Carbe\App\Models\UserModel;
 
 use PDO;
 use Exception;
+use Carbe\App\Services\SlugService;
 
 
 class RecipeModel extends BaseModel {
