@@ -321,7 +321,7 @@ $router->map("POST", "/admin/suppression-categorie-[*:id]", function($id){
     $category->deleteCategory($id);
 });
 
-$router->map("POST", "/admin/categorie/update-[*:id]", function($id) {
+$router->map("POST", "/admin/categorie/update-[i:id]", function($id) {
     
     $category = new AdminController();
     $category->updateCategory($id);
@@ -331,4 +331,10 @@ $router->map("POST", "/admin/newCategory", function(){
 
     $category = new AdminController();
     $category->createCategory(); 
+});
+
+
+$router->map("POST", "/admin/categorie/update-picture-[i:id]", function($id){
+    $category = new AdminController();
+    $category->updatePicCategory($id); 
 });

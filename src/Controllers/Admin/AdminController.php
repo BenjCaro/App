@@ -12,6 +12,7 @@ use Carbe\App\Services\Csrf;
 use Carbe\App\Services\Auth;
 use Carbe\App\Services\SlugService;
 use Carbe\App\Services\PicService;
+use PhpParser\Node\Stmt\TryCatch;
 
 /** 
  * AdminController gère les actions de l'administrateur 
@@ -281,7 +282,7 @@ class AdminController extends BaseController  {
         }
 
         $slug = SlugService::generateSlug($name);
-
+        
         $categoryData = [
             'name' => $name,
             'slug' => $slug
@@ -301,6 +302,36 @@ class AdminController extends BaseController  {
             header("Location: /admin/categories");
             exit;
        }   
+    }
+
+    public function updatePicCategory(int $id) {
+         
+        session_start();
+        Auth::isAdmin();
+
+        $token2 = $_POST['_token'];
+        Csrf::check("admin_picture", $token2, "/admin/categories");
+
+        if (isset($_FILES['image'])) {
+            $image = PicService::AvailablePics('image', '/admin/categories', 'categories');
+        }
+
+        try {
+
+            $model = new CategoryModel($this->pdo);
+            $model->update($id , 
+                ['image' => $image]);
+
+            Flash::set("Modification de la catégorie réussie.", "primary");
+            header("Location: /admin/categories");
+            exit;
+
+       } catch(Exception $e) {
+            Flash::set("Catégorie non modifiée.", "secondary");
+            header("Location: /admin/categories");
+            exit;
+       }   
+
     }
 
 }
