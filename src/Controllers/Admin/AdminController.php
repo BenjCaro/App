@@ -261,13 +261,12 @@ class AdminController extends BaseController  {
      * 
      */
 
-    public function updateCategory(int $id, array $data) :void {
+    public function updateCategory(int $id) :void {
 
         session_start();
         Auth::isAdmin();
 
-       
-        $name = trim($data['name']);
+        $name = isset($_POST['name']) ? trim($_POST['name']) : null;
         
         $categoryModel = new CategoryModel($this->pdo);
         $category = $categoryModel->getCatByName($name);
@@ -281,9 +280,11 @@ class AdminController extends BaseController  {
                 exit;
         }
 
+        $slug = SlugService::generateSlug($name);
+
         $categoryData = [
             'name' => $name,
-           // 'slug' => $slug
+            'slug' => $slug
         ];
 
        try {
