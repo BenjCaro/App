@@ -28,7 +28,7 @@ use Carbe\App\Services\Csrf;
         </form>
    </section>
    <section class="row d-flex flex-column align-items-center justify-content-center gap-2 mb-2">
-          <form class="card col-6" id="" action="" method="POST">
+          <form class="card col-6" id="formUpdateCategory" action="/admin/categorie/update-<?= $category->getId() ?>" method="POST">
             <?php $token = Csrf::get("admin_update_category");  ?>
             <input type="hidden" name="_token" value="<?= $token ?>">
             <div class="card-body">
@@ -36,15 +36,22 @@ use Carbe\App\Services\Csrf;
                     <label for="name" class="form-label">Nom</label>
                     <input type="text" id="name" name="name" class="form-control bg-gris" value="<?= $category->getName(); ?>" readonly>
                 </div>
-                <div class="mb-2">
-                    <label for="slug" class="form-label">Slug</label>
-                    <input type="text" class="form-control bg-gris" name="slug" id="slug" value="<?= $category->getSlug(); ?>" readonly>
-                </div>
-                 <div class="d-flex justify-content-center mb-2 gap-2">
-                    <button type="button" id="editInformation" class="btn btn-sm btn-primary">Modifier les informations</button>
+                <div class="d-flex justify-content-center mb-2 gap-2">
+                    <button type="button" id="editCategory" class="btn btn-sm btn-primary">Modifier la catégorie</button>
                     <button type="submit" id="hiddenSubmit" class="d-none"></button>
                 </div>
             </div>    
+        </form>
+        <form class="card col-6" id="formPic" action="/admin/categorie/update-picture-<?= $category->getId(); ?>" method="POST" enctype="multipart/form-data">
+            <?php $token2 = Csrf::get("admin_picture");  ?>
+            <input type="hidden" name="_token" value="<?= $token2?>">
+            <div class="mt-2 mb-2">
+                <label for="formFile" class="form-label">Ajouter un nouvel icone au format .svg</label>
+                <input class="form-control" type="file" id="formFile" name="image" required>
+            </div>
+            <div class="d-flex justify-content-center mb-2 gap-2">
+               <button type="submit" id="btnFormPic" class="btn btn-sm btn-primary">Modifier l'icône</button>      
+            </div>
         </form>
         <form action="/admin/suppression-categorie-<?= $category->getId()?>" method="POST" class="card col-12 col-md-8 col-lg-6 p-4 shadow">
             <!-- afficher un msg de confirmation avant suppression -->
@@ -80,3 +87,4 @@ use Carbe\App\Services\Csrf;
         </div>
     </section>
 </main>
+<script type="module" src="/assets/scripts/Admin/updateCategory.js"></script>

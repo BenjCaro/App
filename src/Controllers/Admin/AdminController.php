@@ -12,6 +12,14 @@ use Carbe\App\Services\Csrf;
 use Carbe\App\Services\Auth;
 use Carbe\App\Services\SlugService;
 use Carbe\App\Services\PicService;
+use PhpParser\Node\Stmt\TryCatch;
+
+/** 
+ * AdminController gère les actions de l'administrateur 
+ * creation, modification et suppression des utilisateurs, recettes, ingrédients
+ * commentaires. 
+ * 
+ */
 
 class AdminController extends BaseController  {
 
@@ -245,48 +253,85 @@ class AdminController extends BaseController  {
         } 
     }
 
-    // modifier une catégorie
+  
 
-    public function updateCategory(int $id, array $data) :void {
+    /**
+     *  Méthode qui modifie les informations d'une catégorie :
+     *   nom
+     *   slug
+     * 
+     */
+
+    public function updateCategory(int $id) :void {
 
         session_start();
         Auth::isAdmin();
 
-        // $token = $_POST['token'];
-        // Csrf::check();
-        $name = trim($data['name']);
-        $slug = trim($data['slug']);
-
+        $name = isset($_POST['name']) ? trim($_POST['name']) : null;
+        
         $categoryModel = new CategoryModel($this->pdo);
         $category = $categoryModel->getCatByName($name);
+
+
+        $token = $_POST['_token'];
+        Csrf::check("admin_update_category", $token, "/admin/categories");
 
         if($category && $category['id'] !== $id) {
                 Flash::set('La catégorie existe déja', 'secondary');
                 exit;
         }
 
+        $slug = SlugService::generateSlug($name);
+        
         $categoryData = [
-        'name' => $name,
-        'slug' => $slug
-       ];
+            'name' => $name,
+            'slug' => $slug
+        ];
 
        try {
 
-        $model = new CategoryModel($this->pdo);
-        $model->update($id ,$categoryData);
+            $model = new CategoryModel($this->pdo);
+            $model->update($id ,$categoryData);
 
-        Flash::set("Modification de la catégorie réussie.", "primary");
-        header("Location: /admin");
-        exit;
+            Flash::set("Modification de la catégorie réussie.", "primary");
+            header("Location: /admin/categories");
+            exit;
 
        } catch(Exception $e) {
             Flash::set("Catégorie non modifiée.", "secondary");
-            // prévoir la redirection
-            // exit;
-       }
+            header("Location: /admin/categories");
+            exit;
+       }   
+    }
 
+    public function updatePicCategory(int $id) {
+         
+        session_start();
+        Auth::isAdmin();
 
-        
+        $token2 = $_POST['_token'];
+        Csrf::check("admin_picture", $token2, "/admin/categories");
+
+        if (isset($_FILES['image'])) {
+            $image = PicService::AvailablePics('image', '/admin/categories', 'categories');
+        }
+
+        try {
+
+            $model = new CategoryModel($this->pdo);
+            $model->update($id , 
+                ['image' => $image]);
+
+            Flash::set("Modification de la catégorie réussie.", "primary");
+            header("Location: /admin/categories");
+            exit;
+
+       } catch(Exception $e) {
+            Flash::set("Catégorie non modifiée.", "secondary");
+            header("Location: /admin/categories");
+            exit;
+       }   
+
     }
 
 }
