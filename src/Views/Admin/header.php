@@ -35,7 +35,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         <li class="nav-item fs-5"><a class="nav-link" href="/admin/toutes-les-recettes">Recettes</a></li>
                         <li class="nav-item fs-5"><a class="nav-link" href="">Commentaires</a></li>
                         <li class="nav-item fs-5"><a class="nav-link" href="/admin/categories">Catégories</a></li> 
-                        <li class="nav-item fs-5"><a class="nav-link" href="">Ingrédients</a></li>
+                        <li class="nav-item fs-5"><a class="nav-link" href="/admin/ingredients">Ingrédients</a></li>
                         <li class="nav-item fs-5"><a class="nav-link" href="/logout">Déconnexion</a></li>   
                     </ul>
                 </div>
