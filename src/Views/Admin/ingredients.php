@@ -16,7 +16,14 @@ use Carbe\App\Services\Flash;
     <h1 class="text-center">
         Ingrédients
     </h1>
+    <section>
+      <!-- Rechercher un ingrédient ;) -->
+    </section>
+    <section>
+      <!-- Création ingrédient-->
+    </section>
     <section class="row d-flex justify-content-center">
+        <h2>Tout les ingrédients</h2>
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <thead class="table-secondary">
@@ -84,7 +91,9 @@ use Carbe\App\Services\Flash;
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="" method="POST" id="deleteForm">
+                        <form action="/admin/delete-ingredient" method="POST" id="deleteForm">
+                            <?php $tokenD = Csrf::get("delete_ingredient")?>
+                            <input type="hidden" name="_token" value="<?= $tokenD ?>">
                             <input type="hidden" name="id" value="">
                             <p>Es-tu sûr de vouloir supprimer cet ingrédient ?</p>
                             <div class="mt-3 d-flex justify-content-end">

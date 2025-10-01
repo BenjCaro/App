@@ -73,4 +73,40 @@ class AdminIngredientController extends BaseController {
         exit;
 
     }
+
+    public function deleteIngredient() {
+         
+        session_start();
+        Auth::isAdmin();
+
+        $token = $_POST['_token'];
+
+        Csrf::check("delete_ingredient", $token, "/admin/ingredients");
+
+         $ingredientModel = new IngredientModel($this->pdo);
+         $id = isset($_POST['id']) ? trim($_POST['id']) : null;
+
+        $ingredient = $ingredientModel->findById($id);
+
+        if(!$ingredient) {
+            Flash::set("L'ingrédient n'existe pas!", "secondary");
+            header("Location: /admin/ingredients");
+            exit;
+        }
+
+        try {
+            
+            $ingredientModel->delete($id);
+            Flash::set("Suppression réussie", "primary");
+            
+        } catch(Exception $e) {
+            error_log($e->getMessage());
+            Flash::set("Erreur dans la suppression", "secondary");
+            exit;
+        }
+
+        header("Location: /admin/ingredients");
+        exit;
+
+    }
 }

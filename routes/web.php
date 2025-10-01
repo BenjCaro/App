@@ -351,3 +351,8 @@ $router->map("POST", "/admin/update-ingredient", function() {
     $ingredient = new AdminIngredientController();
     $ingredient->updateIngredient();
 });
+
+$router->map("POST", "/admin/delete-ingredient", function() {
+     $ingredient = new AdminIngredientController();
+     $ingredient->deleteIngredient();
+});
