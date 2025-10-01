@@ -19,11 +19,37 @@ use Carbe\App\Services\Flash;
     <section>
       <!-- Rechercher un ingrédient ;) -->
     </section>
-    <section>
-      <!-- Création ingrédient-->
+    <section class="row d-flex flex-column align-items-center justify-content-center gap-2">
+      <h2 class="text-center">Créer un ingrédient</h2>
+        <form action="" method="POST" class="bg-gris card col-6 mb-3">
+           <div class="card-body">
+                <div class="mb-2">
+                    <label for="">Nom</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+                <div class="mb-2">
+                    <label for="">Type</label>
+                    <select name="type" id="" class="form-select" required>
+                        <option value="fruits">Fruits</option>
+                        <option value="legumes">Légumes</option>
+                        <option value="cereales">Céréales</option>
+                        <option value="legumineuses">Légumineuses</option>
+                        <option value="viandes">Viandes</option>
+                        <option value="poissons">Poissons</option>
+                        <option value="oeufs">Oeufs</option>
+                        <option value="laitier">Produits Laitiers</option>
+                        <option value="huiles">Huiles</option>
+                        <option value="sucres">Sucrés</option>
+                    </select>
+                </div>
+                 <div class="d-flex justify-content-center mb-2 gap-2">
+                    <button type="submit" id="" class="btn btn-sm btn-primary">Valider la création</button>
+                </div>
+           </div>
+        </form>
     </section>
     <section class="row d-flex justify-content-center">
-        <h2>Tout les ingrédients</h2>
+        <h2 class="text-center">Tout les ingrédients</h2>
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <thead class="table-secondary">
@@ -58,7 +84,7 @@ use Carbe\App\Services\Flash;
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Modifier l'ingrédient</h5>
+                        <h3 class="modal-title">Modifier l'ingrédient</h3>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                     </div>
                     <div class="modal-body">
@@ -87,7 +113,7 @@ use Carbe\App\Services\Flash;
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2>Supprimer l'ingrédient</h2>
+                        <h3>Supprimer l'ingrédient</h3>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                     </div>
                     <div class="modal-body">
