@@ -345,3 +345,9 @@ $router->map("GET", "/admin/ingredients", function(){
     $view = new AdminIngredientController();
     $view->index();
 });
+
+$router->map("POST", "/admin/update-ingredient", function() {
+     
+    $ingredient = new AdminIngredientController();
+    $ingredient->updateIngredient();
+});

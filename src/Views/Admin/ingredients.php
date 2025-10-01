@@ -2,9 +2,17 @@
 
 namespace Carbe\App\Views\Admin;
 
+use Carbe\App\Services\Csrf;
+use Carbe\App\Services\Flash;
 ?>
 
 <main class='container p-3 bg-light'> 
+    <?php
+     $messages = Flash::get();
+     foreach($messages as $message) { ?>
+        <div class="alert alert-<?= $message['type'] ?>"><?= $message['message']?></div>
+    <?php }
+    ?>
     <h1 class="text-center">
         Ingrédients
     </h1>
@@ -47,7 +55,9 @@ namespace Carbe\App\Views\Admin;
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="" method="post" id="updateForm">
+                        <form action="/admin/update-ingredient" method="post" id="updateForm">
+                            <?php $token = Csrf::get("update_ingredient"); ?>
+                            <input type="hidden" name="_token" value="<?= $token ?>">
                             <input type="hidden"  name="id" value="">
                             <div class="mb-3">
                                 <label for="ingredientName" class="form-label">Nom</label>
