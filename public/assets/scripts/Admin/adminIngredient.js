@@ -4,7 +4,6 @@ const updateForm = document.getElementById("updateForm");
         btn.addEventListener('click', () => {
             updateForm.querySelector('input[name="id"]').value = btn.dataset.id;
             updateForm.querySelector('input[name="name"]').value = btn.dataset.name;
-            updateForm.querySelector('input[name="type"]').value = btn.dataset.type;
             });
     });
 

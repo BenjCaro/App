@@ -98,7 +98,18 @@ use Carbe\App\Services\Flash;
                             </div>
                             <div class="mb-3">
                                 <label for="ingredientType" class="form-label">Type</label>
-                                <input type="text" id="ingredientType" name="type" class="form-control" value="">
+                                <select class="form-select" name="type" value="">
+                                    <option value="fruits">Fruits</option>
+                                        <option value="legumes">Légumes</option>
+                                        <option value="cereales">Céréales</option>
+                                        <option value="legumineuses">Légumineuses</option>
+                                        <option value="viandes">Viandes</option>
+                                        <option value="poissons">Poissons</option>
+                                        <option value="oeufs">Oeufs</option>
+                                        <option value="laitier">Produits Laitiers</option>
+                                        <option value="huiles">Huiles</option>
+                                        <option value="sucres">Sucrés</option>
+                                </select>
                             </div>
                             <div class="d-flex justify-content-end">
                                 <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Annuler</button>
