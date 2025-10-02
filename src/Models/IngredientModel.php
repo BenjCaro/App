@@ -49,7 +49,7 @@ class IngredientModel extends BaseModel {
 
  public function getIngredientName(string $name) :array|false {
       $stmt= $this->pdo->prepare("SELECT
-         ingredients.id, ingredients.name 
+         ingredients.id, ingredients.name, ingredients.type
          FROM ingredients 
          WHERE ingredients.name = :name");
 
@@ -58,5 +58,16 @@ class IngredientModel extends BaseModel {
 
       return $results ?: false;
  }
+
+ public function findIngredient(string $name): array {
+
+    $stmt = $this->pdo->prepare("SELECT
+         ingredients.id, ingredients.name, ingredients.type
+         FROM ingredients 
+         WHERE ingredients.name LIKE :name");
+    $stmt->execute([':name' => "%$name%"]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
 }

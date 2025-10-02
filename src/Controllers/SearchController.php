@@ -2,6 +2,7 @@
 
 namespace Carbe\App\Controllers;
 use Carbe\App\Models\CategoryModel;
+use Carbe\App\Models\IngredientModel;
 use Carbe\App\Models\UserModel;
 use Carbe\App\Models\RecipeModel;
 use Carbe\App\Services\Auth;
@@ -82,12 +83,26 @@ class SearchController extends BaseController {
         }
     }
 
-    $this->render('search_results', [
-        "title"   => 'Petit Creux | Résultats de la recherche',
-        "type"    => $type,
-        "results" => $results
-    ]);
-}
+        $this->render('search_results', [
+            "title"   => 'Petit Creux | Résultats de la recherche',
+            "type"    => $type,
+            "results" => $results
+        ]);
+    }
 
+    public function searchIngredient() :void {
+
+        Auth::isAdmin();
+
+        $search = $_GET["q"] ?? '';
+        // $type   = $_GET["type"];
+        
+        $ingredientModel = new IngredientModel($this->pdo);
+        $ingredients=  $ingredientModel->findIngredient($search);
+
+        header('Content-Type: application/json');
+        echo json_encode($ingredients);
+       
+    }
 }
 
