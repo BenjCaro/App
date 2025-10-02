@@ -8,7 +8,7 @@ use Carbe\App\Models\IngredientModel;
 use Carbe\App\Services\Csrf;
 use Carbe\App\Services\Flash;
 use Exception;
-use PhpParser\Node\Expr;
+
 
 class AdminIngredientController extends BaseController {
       
@@ -108,5 +108,61 @@ class AdminIngredientController extends BaseController {
         header("Location: /admin/ingredients");
         exit;
 
+    }
+
+    public function createIngredient(array $data) {
+         
+        session_start();
+        Auth::isAdmin();
+
+        $token = $data['_token'];
+        Csrf::check("create_ingredient", $token, "/admin/ingredients");
+
+        if (!isset($data['name']) || empty(trim($data['name']))) {
+            Flash::setErrorsForm("name", "Le nom est obligatoire.");
+            header("Location: /admin/ingredients");
+            exit;
+        }
+
+        $name = trim($data['name']);
+
+        $ingredientModel = new IngredientModel($this->pdo);
+        $ingredientName = $ingredientModel->getIngredientName($name);
+
+        if($ingredientName) {
+            Flash::setErrorsForm("name", "L'ingrédient existe déja.");
+            header("Location: /admin/ingredients");
+            exit;
+        }
+
+        if(!isset($data["type"]) || empty($data["type"])) {
+            Flash::setErrorsForm("type", "Type obligatoire.");
+            header("Location: /admin/ingredients");
+            exit;
+        }
+
+        $type = $data['type'];
+
+        $allowedTypes = ['fruits', 'sauces', 'legumes', 'viandes', 'cereales', 'legumineuses', 'poissons', 'oeufs', 'laitier', 'huiles', 'sucres'];
+        
+        if (!in_array($type, $allowedTypes, true)) {
+                Flash::setErrorsForm("type", "Type invalide.");
+                header("Location: /admin/ingredients");
+                exit;
+            }
+        
+         try {
+                $ingredientModel->insert(["name" => $name, "type" => $type]);
+                Flash::set("Ingrédient ajouté", "primary");
+
+         } catch(Exception $e) {
+                error_log($e->getMessage());
+                Flash::set("Erreur dans la création de l'ingrédient", "secondary");
+                exit;
+         }
+
+         header("Location: /admin/ingredients");
+         exit;
+        
     }
 }
