@@ -8,6 +8,7 @@ use Carbe\App\Controllers\AboutController;
 use Carbe\App\Controllers\AddRecipe;
 use Carbe\App\Controllers\Admin\AdminCategoryController;
 use Carbe\App\Controllers\Admin\AdminController;
+use Carbe\App\Controllers\Admin\AdminIngredientController;
 use Carbe\App\Controllers\Admin\AllCategoriesController;
 use Carbe\App\Controllers\Admin\DashboardController;
 use Carbe\App\Controllers\Admin\ProfileUserController;
@@ -337,4 +338,28 @@ $router->map("POST", "/admin/newCategory", function(){
 $router->map("POST", "/admin/categorie/update-picture-[i:id]", function($id){
     $category = new AdminController();
     $category->updatePicCategory($id); 
+});
+
+$router->map("GET", "/admin/ingredients", function(){
+    
+    $view = new AdminIngredientController();
+    $view->index();
+});
+
+$router->map("POST", "/admin/update-ingredient", function() {
+     
+    $ingredient = new AdminIngredientController();
+    $ingredient->updateIngredient();
+});
+
+$router->map("POST", "/admin/delete-ingredient", function() {
+     $ingredient = new AdminIngredientController();
+     $ingredient->deleteIngredient();
+});
+
+$router->map("POST", "/admin/insert-ingredient", function(){
+    //  var_dump($_POST);
+    //  exit;
+     $ingredient = new AdminIngredientController();
+     $ingredient->createIngredient($_POST);
 });

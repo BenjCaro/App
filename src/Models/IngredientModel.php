@@ -41,27 +41,22 @@ class IngredientModel extends BaseModel {
        $this->type = $type;
   }
 
-//   public function save() :bool {
-//      $stmt = $this->pdo->prepare("INSERT INTO ingredients (name, type)
-//      VALUES (:name, :type)");
-     
-//      return $stmt->execute([
 
-//         'name' => $this->getName(),
-//         'type' => $this->getType()
-//      ]);
-//   }
+/**
+ * @return array<string, mixed>|false
+ * 
+ */
 
-  // public function update() :bool {
-  //   $stmt = $this->pdo->prepare("UPDATE ingredients SET name = :name, type = :type WHERE id= :id");
+ public function getIngredientName(string $name) :array|false {
+      $stmt= $this->pdo->prepare("SELECT
+         ingredients.id, ingredients.name 
+         FROM ingredients 
+         WHERE ingredients.name = :name");
 
-  //   return $stmt->execute([
+      $stmt->execute(['name' => $name]);
+      $results = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  //       'id' => $this->getId(),
-  //       'name' => $this->getName(),
-  //       'type' => $this->getType()
-
-  //   ]);
-  // }
+      return $results ?: false;
+ }
 
 }

@@ -12,7 +12,7 @@ use Carbe\App\Services\Csrf;
 use Carbe\App\Services\Auth;
 use Carbe\App\Services\SlugService;
 use Carbe\App\Services\PicService;
-use PhpParser\Node\Stmt\TryCatch;
+
 
 /** 
  * AdminController gère les actions de l'administrateur 
@@ -25,7 +25,7 @@ class AdminController extends BaseController  {
 
     public function viewAllUsers() :void {
 
-        Auth::isAdmin();
+        
         
         $userModel = new UserModel($this->pdo);
         $users = $userModel->getAllUsers();

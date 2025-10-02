@@ -26,7 +26,6 @@ use Carbe\App\Services\Flash;
                       foreach($nameErrors as $nameError) { ?>
                         <div class="alert alert-<?= $nameError['type'] ?> mt-2"><?= $nameError['message'] ?></div>
                     <?php   } ?>
-                    
             </div>
             <div class="mb-3 pt-2">
                     <label for="firstname" class="form-label text-cacao fw-bold">Prénom *</label>
