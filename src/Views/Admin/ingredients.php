@@ -20,44 +20,50 @@ use Carbe\App\Services\Flash;
       <!-- Rechercher un ingrédient ;) -->
     </section>
     <section class="row d-flex flex-column align-items-center justify-content-center gap-2">
-      <h2 class="text-center">Créer un ingrédient</h2>
-        <form action="/admin/insert-ingredient" method="POST" class="bg-gris card col-6 mb-3">
-            <?php $tokenC = Csrf::get("create_ingredient") ?>
-            <input type="hidden" name="_token" value="<?= $tokenC ?>">
-           <div class="card-body">
-                <div class="mb-2">
-                    <label for="">Nom</label>
-                    <input type="text" name="name" class="form-control" required>
-                    <?php $nameErrors = Flash::showErrorsForm("name");
-                      foreach($nameErrors as $nameError) { ?>
-                        <div class="alert alert-<?= $nameError['type'] ?> mt-2"><?= $nameError['message'] ?></div>
-                    <?php   } ?>
+        <div>
+            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createForm" >Créer un ingrédient</button>
+        </div>
+        <div class="modal fade" id="createForm" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Créer un ingrédient</h3>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/admin/insert-ingredient" method="POST">
+                                    <?php $tokenC = Csrf::get("create_ingredient") ?>
+                                    <input type="hidden" name="_token" value="<?= $tokenC ?>">
+                                <div class="card-body">
+                                    <div class="mb-2">
+                                        <label for="">Nom</label>
+                                        <input type="text" name="name" class="form-control" required>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label for="">Type</label>
+                                        <select name="type" id="" class="form-select" required>
+                                            <option value="fruits">Fruits</option>
+                                            <option value="legumes">Légumes</option>
+                                            <option value="cereales">Céréales</option>
+                                            <option value="legumineuses">Légumineuses</option>
+                                            <option value="viandes">Viandes</option>
+                                            <option value="poissons">Poissons</option>
+                                            <option value="oeufs">Oeufs</option>
+                                            <option value="laitier">Produits Laitiers</option>
+                                            <option value="huiles">Huiles</option>
+                                            <option value="sucres">Sucrés</option>
+                                            <option value="sauces">Sauces</option>
+                                        </select>
+                                    </div>
+                                    <div class="d-flex justify-content-center mb-2 gap-2">
+                                        <button type="submit" id="" class="btn btn-sm btn-primary">Valider la création</button>
+                                    </div>
+                                </div>
+                           </form>
+                        </div>
                 </div>
-                <div class="mb-2">
-                    <label for="">Type</label>
-                    <select name="type" id="" class="form-select" required>
-                        <option value="fruits">Fruits</option>
-                        <option value="legumes">Légumes</option>
-                        <option value="cereales">Céréales</option>
-                        <option value="legumineuses">Légumineuses</option>
-                        <option value="viandes">Viandes</option>
-                        <option value="poissons">Poissons</option>
-                        <option value="oeufs">Oeufs</option>
-                        <option value="laitier">Produits Laitiers</option>
-                        <option value="huiles">Huiles</option>
-                        <option value="sucres">Sucrés</option>
-                        <option value="sauces">Sauces</option>
-                    </select>
-                    <?php $typeErrors = Flash::showErrorsForm("name");
-                      foreach($typeErrors as $typeError) { ?>
-                        <div class="alert alert-<?= $typeError['type'] ?> mt-2"><?= $typeError['message'] ?></div>
-                    <?php   } ?>
-                </div>
-                 <div class="d-flex justify-content-center mb-2 gap-2">
-                    <button type="submit" id="" class="btn btn-sm btn-primary">Valider la création</button>
-                </div>
-           </div>
-        </form>
+
+            </div>
+        </div>
     </section>
     <section class="row d-flex justify-content-center">
         <h2 class="text-center">Tout les ingrédients</h2>

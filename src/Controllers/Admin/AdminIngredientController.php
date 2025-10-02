@@ -130,13 +130,13 @@ class AdminIngredientController extends BaseController {
         $ingredientName = $ingredientModel->getIngredientName($name);
 
         if($ingredientName) {
-            Flash::setErrorsForm("name", "L'ingrédient existe déja.");
+            Flash::set("L'ingrédient existe déja.", "secondary");
             header("Location: /admin/ingredients");
             exit;
         }
 
         if(!isset($data["type"]) || empty($data["type"])) {
-            Flash::setErrorsForm("type", "Type obligatoire.");
+            Flash::set("Type obligatoire.", "secondary");
             header("Location: /admin/ingredients");
             exit;
         }
@@ -146,7 +146,7 @@ class AdminIngredientController extends BaseController {
         $allowedTypes = ['fruits', 'sauces', 'legumes', 'viandes', 'cereales', 'legumineuses', 'poissons', 'oeufs', 'laitier', 'huiles', 'sucres'];
         
         if (!in_array($type, $allowedTypes, true)) {
-                Flash::setErrorsForm("type", "Type invalide.");
+                Flash::set("Type invalide.", "secondary");
                 header("Location: /admin/ingredients");
                 exit;
             }
