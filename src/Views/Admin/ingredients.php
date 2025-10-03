@@ -18,7 +18,7 @@ use Carbe\App\Services\Flash;
     </h1>
     <section class="mb-4 d-flex justify-content-center flex-column align-content-center">
         
-            <div class="w-50 mx-auto">
+            <div class="w-50 mx-auto mb-3">
                 <div class="input-group">
                     <input id="searchInput" type="text" class="form-control" placeholder="Rechercher l'ingrédient" required>
                     <!-- <select class="form-select"  id="searchType">
@@ -37,10 +37,7 @@ use Carbe\App\Services\Flash;
                     <button id="searchBtn" class="btn btn-primary" type="submit">🔍</button>
                 </div>
             </div>
-            <div id="results">
-            <!-- afficher les résultats -->
-            </div>
-        
+            <div id="results"></div>
    </section>
     <section class="row d-flex flex-column align-items-center justify-content-center gap-2">
         <div>
@@ -186,38 +183,83 @@ use Carbe\App\Services\Flash;
 </main>
 <script src="/assets/scripts/Admin/adminIngredient.js" type="text/javascript"></script>
 
+
 <script>
     const searchIngredient = document.getElementById("searchBtn");
 
-    searchIngredient.addEventListener("click", async () => {
-        
-        const query = document.getElementById("searchInput").value.trim();
-       // const type = document.getElementById("searchType").value;
-        
-        if(!query) return;
+searchIngredient.addEventListener("click", async () => {
+    const query = document.getElementById("searchInput").value.trim();
+    
+    if (!query) return;
 
-        try {
-        
+    try {
         const response = await fetch(`/admin/ingredients/search?q=${encodeURIComponent(query)}`);
         const data = await response.json();
 
-        // Affichage des résultats
-        const resultsDiv = document.getElementById("results");
-        resultsDiv.innerHTML = ""; 
+        const resultsTable = document.getElementById("results");
+        resultsTable.innerHTML = ""; 
 
         if (data.length === 0) {
-        resultsDiv.innerHTML = "<p>Aucun résultat trouvé.</p>";
-        return;
+            resultsTable.innerHTML = "<p>Aucun résultat trouvé.</p>";
+            return;
         }
 
+        const table = document.createElement("table");
+        table.className = "table table-bordered table-hover";
+
+        const thead = document.createElement("thead");
+        thead.className = "table-secondary";
+        thead.innerHTML = `
+            <tr>
+                <th>Nom</th>
+                <th>Type</th>
+                <th colspan="2">Actions</th>
+            </tr>
+        `;
+        table.appendChild(thead);
+
+        const tbody = document.createElement("tbody");
+
         data.forEach(item => {
-        const el = document.createElement("div");
-        el.className = "card p-2 mb-2";
-        el.textContent = item.name; // adapter à la structure de tes données
-        resultsDiv.appendChild(el);
+            const row = document.createElement("tr");
+
+            const tdName = document.createElement("td");
+            tdName.textContent = item.name;
+            row.appendChild(tdName);
+
+            const tdType = document.createElement("td");
+            tdType.textContent = item.type;
+            row.appendChild(tdType);
+
+            const tdEdit = document.createElement("td");
+            tdEdit.innerHTML = `
+                <button type="button" class="btn btn-primary" 
+                    data-bs-toggle="modal" data-bs-target="#hiddenForm"
+                    data-id="${item.id}" data-name="${item.name}" data-type="${item.type}">
+                    Modifier
+                </button>
+            `;
+            row.appendChild(tdEdit);
+
+            const tdDelete = document.createElement("td");
+            tdDelete.innerHTML = `
+                <button class="btn btn-orange" 
+                    data-bs-toggle="modal" data-bs-target="#hiddenDeleteForm" 
+                    data-id="${item.id}">
+                    Supprimer
+                </button>
+            `;
+            row.appendChild(tdDelete);
+
+            tbody.appendChild(row);
         });
+
+        table.appendChild(tbody);
+        resultsTable.appendChild(table);
+
     } catch (err) {
         console.error("Erreur :", err);
     }
-    });
+});
+
 </script>

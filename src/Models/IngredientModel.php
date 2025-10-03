@@ -48,26 +48,27 @@ class IngredientModel extends BaseModel {
  */
 
  public function getIngredientName(string $name) :array|false {
-      $stmt= $this->pdo->prepare("SELECT
-         ingredients.id, ingredients.name, ingredients.type
-         FROM ingredients 
-         WHERE ingredients.name = :name");
+     
+          $stmt= $this->pdo->prepare("SELECT
+          ingredients.id, ingredients.name, ingredients.type
+          FROM ingredients 
+          WHERE ingredients.name = :name");
 
-      $stmt->execute(['name' => $name]);
-      $results = $stmt->fetch(PDO::FETCH_ASSOC);
+          $stmt->execute(['name' => $name]);
+          $results = $stmt->fetch(PDO::FETCH_ASSOC);
 
-      return $results ?: false;
- }
+          return $results ?: false;
+     }
 
  public function findIngredient(string $name): array {
 
-    $stmt = $this->pdo->prepare("SELECT
-         ingredients.id, ingredients.name, ingredients.type
-         FROM ingredients 
-         WHERE ingredients.name LIKE :name");
-    $stmt->execute([':name' => "%$name%"]);
+          $stmt = $this->pdo->prepare("SELECT
+               ingredients.id, ingredients.name, ingredients.type
+               FROM ingredients 
+               WHERE ingredients.name LIKE :name");
+          $stmt->execute([':name' => "%$name%"]);
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+          return $stmt->fetchAll(PDO::FETCH_ASSOC);
+     }
 
 }
