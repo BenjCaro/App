@@ -16,9 +16,29 @@ use Carbe\App\Services\Flash;
     <h1 class="text-center">
         Ingrédients
     </h1>
-    <section>
-      <!-- Rechercher un ingrédient ;) -->
-    </section>
+    <section class="mb-4 d-flex justify-content-center flex-column align-content-center">
+        
+            <div class="w-50 mx-auto mb-3">
+                <div class="input-group">
+                    <input id="searchInput" type="text" class="form-control" placeholder="Rechercher l'ingrédient" required>
+                    <!-- <select class="form-select"  id="searchType">
+                        <option value="fruits">Fruits</option>
+                        <option value="legumes">Légumes</option>
+                        <option value="cereales">Céréales</option>
+                        <option value="legumineuses">Légumineuses</option>
+                        <option value="viandes">Viandes</option>
+                        <option value="poissons">Poissons</option>
+                        <option value="oeufs">Oeufs</option>
+                        <option value="laitier">Produits Laitiers</option>
+                        <option value="huiles">Huiles</option>
+                        <option value="sucres">Sucrés</option>
+                        <option value="sauces">Sauces</option>
+                    </select> -->
+                    <button id="searchBtn" class="btn btn-primary" type="submit">🔍</button>
+                </div>
+            </div>
+            <div id="results"></div>
+   </section>
     <section class="row d-flex flex-column align-items-center justify-content-center gap-2">
         <div>
             <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createForm" >Créer un ingrédient</button>
@@ -162,4 +182,4 @@ use Carbe\App\Services\Flash;
     </section>
 </main>
 <script src="/assets/scripts/Admin/adminIngredient.js" type="text/javascript"></script>
-
+<script src="/assets/scripts/Admin/searchIngredient.js" type="text/javascript"></script>

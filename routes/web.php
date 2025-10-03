@@ -353,13 +353,19 @@ $router->map("POST", "/admin/update-ingredient", function() {
 });
 
 $router->map("POST", "/admin/delete-ingredient", function() {
-     $ingredient = new AdminIngredientController();
-     $ingredient->deleteIngredient();
+     
+    $ingredient = new AdminIngredientController();
+    $ingredient->deleteIngredient();
 });
 
 $router->map("POST", "/admin/insert-ingredient", function(){
-    //  var_dump($_POST);
-    //  exit;
-     $ingredient = new AdminIngredientController();
-     $ingredient->createIngredient($_POST);
+
+    $ingredient = new AdminIngredientController();
+    $ingredient->createIngredient($_POST);
+});
+
+
+$router->map("GET", "/admin/ingredients/search", function() {
+    $search = new SearchController();
+    $search->searchIngredient();
 });

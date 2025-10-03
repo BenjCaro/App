@@ -47,6 +47,13 @@ class AdminIngredientController extends BaseController {
 
         $name = isset($_POST['name']) ? trim($_POST['name']) : null;
 
+        if (!preg_match("/^[\p{L} '-]+$/u", $name)) {
+                
+                Flash::set("Nom d'ingredient invalide!", "secondary");
+                header("Location: /admin/ingredients");
+                exit;
+            } 
+
         $ingredientName = $ingredientModel->getIngredientName($name);
 
         if($ingredientName && (int)$ingredientName['id'] !== (int)$id) {
@@ -125,6 +132,13 @@ class AdminIngredientController extends BaseController {
         }
 
         $name = trim($data['name']);
+
+        if (!preg_match("/^[\p{L} '-]+$/u", $name)) {
+                
+            Flash::set("Nom d'ingredient invalide!", "secondary");
+            header("Location: /admin/ingredients");
+            exit;
+        } 
 
         $ingredientModel = new IngredientModel($this->pdo);
         $ingredientName = $ingredientModel->getIngredientName($name);
