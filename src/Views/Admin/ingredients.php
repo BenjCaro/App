@@ -16,29 +16,31 @@ use Carbe\App\Services\Flash;
     <h1 class="text-center">
         Ingrédients
     </h1>
-    <section class="mb-4 d-flex justify-content-center">
-        <div class="w-50">
-            <div class="input-group">
-                <input id="searchInput" type="text" class="form-control" placeholder="Rechercher l'ingrédient" required>
-                <!-- <select class="form-select"  id="searchType">
-                    <option value="fruits">Fruits</option>
-                    <option value="legumes">Légumes</option>
-                    <option value="cereales">Céréales</option>
-                    <option value="legumineuses">Légumineuses</option>
-                    <option value="viandes">Viandes</option>
-                    <option value="poissons">Poissons</option>
-                    <option value="oeufs">Oeufs</option>
-                    <option value="laitier">Produits Laitiers</option>
-                    <option value="huiles">Huiles</option>
-                    <option value="sucres">Sucrés</option>
-                    <option value="sauces">Sauces</option>
-                </select> -->
-                <button id="searchBtn" class="btn btn-primary" type="submit">🔍</button>
+    <section class="mb-4 d-flex justify-content-center flex-column align-content-center">
+        
+            <div class="w-50 mx-auto">
+                <div class="input-group">
+                    <input id="searchInput" type="text" class="form-control" placeholder="Rechercher l'ingrédient" required>
+                    <!-- <select class="form-select"  id="searchType">
+                        <option value="fruits">Fruits</option>
+                        <option value="legumes">Légumes</option>
+                        <option value="cereales">Céréales</option>
+                        <option value="legumineuses">Légumineuses</option>
+                        <option value="viandes">Viandes</option>
+                        <option value="poissons">Poissons</option>
+                        <option value="oeufs">Oeufs</option>
+                        <option value="laitier">Produits Laitiers</option>
+                        <option value="huiles">Huiles</option>
+                        <option value="sucres">Sucrés</option>
+                        <option value="sauces">Sauces</option>
+                    </select> -->
+                    <button id="searchBtn" class="btn btn-primary" type="submit">🔍</button>
+                </div>
             </div>
-        </div>
-        <div id="results">
-          <!-- afficher les résultats -->
-        </div>
+            <div id="results">
+            <!-- afficher les résultats -->
+            </div>
+        
    </section>
     <section class="row d-flex flex-column align-items-center justify-content-center gap-2">
         <div>
